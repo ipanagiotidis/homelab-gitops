@@ -4,7 +4,3 @@ resources:
 
 patches:
 - path: ./patches/argocd-cmd-params-cm.yaml
-  target:
-    kind: Configmap
-    name: argocd-cmd-params-cm
-    namespace: argocd
