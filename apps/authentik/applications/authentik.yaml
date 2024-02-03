@@ -17,7 +17,7 @@ spec:
     helm:
       releaseName: authentik
     valueFiles:
-      - $values/apps/authentik/values/values-test.yaml
+    - $values/apps/authentik/values/values-test.yaml
   - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
     targetRevision: master
     ref: values
