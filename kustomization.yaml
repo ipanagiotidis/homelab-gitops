@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - apps/argocd/applications/argocd-self.yaml
   - apps/metallb/applications/metallb.yaml
+  - apps/authentik/applications/authentik.yaml
