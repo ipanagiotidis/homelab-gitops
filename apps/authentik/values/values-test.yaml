@@ -19,7 +19,7 @@ ingress:
           pathType: Prefix
 
 postgresql:
-  enabled: false
+  enabled: true
   postgresqlPassword: "ThisIsNotASecurePassword"
 redis:
-  enabled: false
+  enabled: true
