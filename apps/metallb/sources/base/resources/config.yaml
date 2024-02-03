@@ -3,7 +3,6 @@ apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
   name: single-lb-pool
-  namespace: metallb-system
 spec:
   addresses:
   - 192.168.1.6-192.168.1.7
@@ -12,7 +11,6 @@ apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
 metadata:
   name: single-lb-l2ad
-  namespace: metallb-system
 spec:
   ipAddressPools:
   - single-lb-pool

@@ -1,0 +1,17 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: argocd-http
+spec:
+  entryPoints:
+    - web
+  routes:
+  - kind: Rule
+    match: Host(`argocd.yiannis.io`)
+    priority: 10
+    middlewares:
+      - name: redirect-http-https
+    services:
+    - kind: Service
+      name: argocd-server
+      port: http

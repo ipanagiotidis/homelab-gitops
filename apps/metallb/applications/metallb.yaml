@@ -11,7 +11,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: apps/metallb/sources
+    path: apps/metallb/sources/overlay
     repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
     targetRevision: master
   # Sync policy
