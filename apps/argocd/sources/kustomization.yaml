@@ -7,3 +7,4 @@ patches:
   target:
     kind: Configmap
     name: argocd-cmd-params-cm
+    namespace: argocd
