@@ -1,3 +1,6 @@
+nodeSelector:
+  extraDiskNode: "true"
+
 authentik:
   secret_key: "PleaseGenerateA50CharKey"
   # This sends anonymous usage-data, stack traces on errors and
