@@ -39,7 +39,8 @@ patches:
     apiVersion: v1
     kind: Deployment
     metadata:
-      name: local-path-storage
+      name: local-path-provisioner
+      namespace: local-path-storage
     spec:
       template:
         spec:
