@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+data:
+  url: http://argocd.yiannis.io
+  dex.config: |
+      connectors:
+      - config:
+          issuer: http://authentik.yiannis.io/application/o/argocd/
+          clientID: GdoBnvuol4QbMfc0Yuxffg8nrGaHs9ntXYjW2k7C
+          clientSecret: $dex.authentik.clientSecret
+          insecureEnableGroups: true
+          scopes:
+            - openid
+            - profile
+            - email
+        name: authentik
+        type: oidc
+        id: authentik
