@@ -10,7 +10,7 @@ patches:
     apiVersion: v1
     metadata:
       name: local-path-config
-      namespace: local-path-provisioner
+      namespace: local-path-storage
     data:
       config.json: |-
         {
@@ -32,14 +32,14 @@ patches:
     apiVersion: v1
     kind: Namespace
     metadata:
-      name: local-path-provisioner
+      name: local-path-storage
       labels:
         pod-security.kubernetes.io/enforce: privileged    
 - patch: |-
     apiVersion: v1
     kind: Deployment
     metadata:
-      name: local-path-provisioner
+      name: local-path-storage
     spec:
       template:
         spec:
