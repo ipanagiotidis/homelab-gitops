@@ -13,7 +13,7 @@ authentik:
 ingress:
   # Specify kubernetes ingress controller class name
   ingressClassName: traefik
-  enabled: false
+  enabled: true
   hosts:
     # Specify external host name
     - host: authentik.yiannis.io
