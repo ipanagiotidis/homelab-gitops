@@ -11,7 +11,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: apps/local-path-provisioner/sources/overlay
+    path: apps/local-storage-provisioner/sources/overlay
     repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
     targetRevision: master
   # Sync policy
