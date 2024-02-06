@@ -36,7 +36,7 @@ patches:
       labels:
         pod-security.kubernetes.io/enforce: privileged    
 - patch: |-
-    apiVersion: v1
+    apiVersion: apps/v1
     kind: Deployment
     metadata:
       name: local-path-provisioner
