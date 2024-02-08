@@ -4,11 +4,11 @@ kind: ConfigMap
 metadata:
   name: argocd-cm
 data:
-  url: http://argocd.yiannis.io
+  url: https://argocd.yiannis.io
   dex.config: |
       connectors:
       - config:
-          issuer: http://authentik.yiannis.io/application/o/argocd
+          issuer: https://authentik.yiannis.io/application/o/argocd
           clientID: GdoBnvuol4QbMfc0Yuxffg8nrGaHs9ntXYjW2k7C
           clientSecret: $dex.authentik.clientSecret
           insecureEnableGroups: true
