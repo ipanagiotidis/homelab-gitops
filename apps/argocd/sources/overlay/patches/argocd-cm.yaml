@@ -8,7 +8,7 @@ data:
   dex.config: |
     connectors:
     - config:
-        issuer: http://authentik.authentik.svc.cluster.local/application/o/argocd
+        issuer: http://authentik.authentik.svc.cluster.local/application/o/argocd/
         clientID: GdoBnvuol4QbMfc0Yuxffg8nrGaHs9ntXYjW2k7C
         clientSecret: $dex.authentik.clientSecret
         insecureEnableGroups: true
