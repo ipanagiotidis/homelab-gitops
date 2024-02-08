@@ -5,5 +5,5 @@ metadata:
   name: argocd-cmd-params-cm
 data:
   server.insecure: "true"
-  dexserver.disable.tls: "true"
-  server.dex.server.plaintext: "true"
+  #dexserver.disable.tls: "true"
+  #server.dex.server.plaintext: "true"
