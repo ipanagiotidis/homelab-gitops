@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -7,6 +8,6 @@ spec:
   template:
     spec:
       hostAliases:
-        - ip: 192.168.1.7
-          hostnames:
-            - "authentik.yiannis.io"
+      - ip: 192.168.1.7
+        hostnames:
+        - "authentik.yiannis.io"
