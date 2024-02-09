@@ -5,7 +5,7 @@ metadata:
 spec:
   ports:
   - appProtocol: TCP
-    name: https
+    name: http
     port: 5556
     protocol: TCP
     targetPort: 5556
