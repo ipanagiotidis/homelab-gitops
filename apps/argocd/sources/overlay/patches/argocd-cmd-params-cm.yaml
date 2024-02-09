@@ -6,4 +6,4 @@ metadata:
 data:
   server.insecure: "true"
   dexserver.disable.tls: "true"
-  #server.dex.server.plaintext: "true"
+  server.dex.server.plaintext: "true"
