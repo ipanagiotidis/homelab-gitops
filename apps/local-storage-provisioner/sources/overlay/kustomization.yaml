@@ -35,14 +35,14 @@ patches:
       name: local-path-storage
       labels:
         pod-security.kubernetes.io/enforce: privileged    
-# - patch: |-
-#     apiVersion: apps/v1
-#     kind: Deployment
-#     metadata:
-#       name: local-path-provisioner
-#       namespace: local-path-storage
-#     spec:
-#       template:
-#         spec:
-#           nodeSelector:
-#             extraDiskNode: "true"
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: local-path-provisioner
+      namespace: local-path-storage
+    spec:
+      template:
+        spec:
+          nodeSelector:
+            extraDiskNode: "true"
