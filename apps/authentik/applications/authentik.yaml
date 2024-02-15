@@ -19,7 +19,7 @@ spec:
       valueFiles:
         - $values/apps/authentik/values/values-test.yaml
   - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
-    targetRevision: master
+    targetRevision: dev
     ref: values
   # Sync policy
   syncPolicy:
