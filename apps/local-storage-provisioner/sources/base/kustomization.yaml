@@ -3,4 +3,4 @@ kind: Kustomization
 
 resources:
   - github.com/rancher/local-path-provisioner/deploy?ref=v0.0.26
-  - ./roles.yaml
+  #- ./roles.yaml

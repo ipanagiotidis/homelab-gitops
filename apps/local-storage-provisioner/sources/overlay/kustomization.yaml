@@ -5,6 +5,7 @@ resources:
   - ../base
 
 patches:
+- ./roles.yaml
 - patch: |-
     kind: ConfigMap
     apiVersion: v1
