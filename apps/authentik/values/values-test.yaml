@@ -21,9 +21,6 @@ authentik:
     enabled: false
   postgresql:
     password: "ThisIsNotASecurePassword"
-  nodeSelector:
-    extraDiskNode: "true"
-    kubernetes.io/hostname: k8s-node-4
 
 ingress:
   # Specify kubernetes ingress controller class name
