@@ -5,8 +5,8 @@ global:
       - "authentik.yiannis.io"
       - "argocd.yiannis.io"
 
-nodeSelector:
-  extraDiskNode: "true"
+  nodeSelector:
+    extraDiskNode: "true"
 
 authentik:
   secret_key: "PleaseGenerateA50CharKey"
