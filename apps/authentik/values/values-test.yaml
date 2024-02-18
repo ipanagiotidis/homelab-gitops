@@ -34,14 +34,13 @@ ingress:
           pathType: Prefix
 
 postgresql:
-  enabled: true
+  enabled: false
   postgresqlPassword: "ThisIsNotASecurePassword"
-  host: authentik.authentik-postgresql.cluster.local
   nodeSelector:
     extraDiskNode: "true"
     kubernetes.io/hostname: k8s-node-4
 redis:
-  enabled: true
+  enabled: false
   nodeSelector:
     extraDiskNode: "true"
     kubernetes.io/hostname: k8s-node-4
