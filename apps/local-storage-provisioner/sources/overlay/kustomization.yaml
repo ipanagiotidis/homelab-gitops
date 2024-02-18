@@ -21,6 +21,22 @@ patches:
                 }
                 ]
         }
+      helperPod.yaml: |-
+        apiVersion: v1
+        kind: Pod
+        metadata:
+          name: helper-pod
+          namespace: local-path-storage
+        spec:
+          priorityClassName: system-node-critical
+          tolerations:
+            - key: node.kubernetes.io/disk-pressure
+              operator: Exists
+              effect: NoSchedule
+          containers:
+          - name: helper-pod
+            image: busybox
+            imagePullPolicy: IfNotPresent
 - patch: |-
     apiVersion: storage.k8s.io/v1
     kind: StorageClass
