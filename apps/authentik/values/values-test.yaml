@@ -9,6 +9,10 @@ global:
     extraDiskNode: "true"
     kubernetes.io/hostname: k8s-node-4
 
+nodeSelector:
+  extraDiskNode: "true"
+  kubernetes.io/hostname: k8s-node-4
+
 authentik:
   secret_key: "PleaseGenerateA50CharKey"
   # This sends anonymous usage-data, stack traces on errors and
