@@ -3,9 +3,9 @@ kind: Kustomization
 
 resources: 
   - ../base
+  - ./roles.yaml
 
 patches:
-- ./roles.yaml
 - patch: |-
     kind: ConfigMap
     apiVersion: v1
