@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources: 
   - ../base
-  - ./roles.yaml
+  - .
 
 patches:
 - patch: |-
