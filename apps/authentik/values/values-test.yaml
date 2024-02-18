@@ -36,6 +36,9 @@ ingress:
 postgresql:
   enabled: true
   postgresqlPassword: "ThisIsNotASecurePassword"
+  nodeSelector:
+    extraDiskNode: "true"
+    kubernetes.io/hostname: k8s-node-4
 redis:
   enabled: true
   nodeSelector:
