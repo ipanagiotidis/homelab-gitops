@@ -13,16 +13,28 @@ rules:
     - get
     - list
     - watch
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: local-path-provisioner-workaround
-  namespace: local-path-storage
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: local-path-provisioner-workaround
-subjects:
-- kind: ServiceAccount
-  name: local-path-provisioner-service-account
+- apiGroups:
+    - ""
+  resources:
+    - pods
+  verbs:
+    - get
+    - list
+    - watch
+    - create
+    - patch
+    - update
+    - delete
+# ---
+# apiVersion: rbac.authorization.k8s.io/v1
+# kind: RoleBinding
+# metadata:
+#   name: local-path-provisioner-workaround
+#   namespace: local-path-storage
+# roleRef:
+#   apiGroup: rbac.authorization.k8s.io
+#   kind: Role
+#   name: local-path-provisioner-workaround
+# subjects:
+# - kind: ServiceAccount
+#   name: local-path-provisioner-service-account
