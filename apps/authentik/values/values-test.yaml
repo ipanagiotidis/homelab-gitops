@@ -1,9 +1,9 @@
 global:  
-  # hostAliases:
-  #   - ip: 192.168.1.7
-  #     hostnames:
-  #     - "authentik.yiannis.io"
-  #     - "argocd.yiannis.io"
+  hostAliases:
+    - ip: 192.168.1.7
+      hostnames:
+      - "authentik.yiannis.io"
+      - "argocd.yiannis.io"
 
   nodeSelector:
     extraDiskNode: "true"
