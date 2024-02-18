@@ -6,7 +6,7 @@ metadata:
   namespace: local-path-storage
 rules:
 - apiGroups:
-    - ''
+    - ""
   resources:
     - configmaps
   verbs:
