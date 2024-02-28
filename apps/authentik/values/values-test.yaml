@@ -37,7 +37,7 @@ postgresql:
     extraDiskNode: "true"
     kubernetes.io/hostname: k8s-node-4
 redis:
-  enabled: false
+  enabled: true
   nodeSelector:
     extraDiskNode: "true"
     kubernetes.io/hostname: k8s-node-4
