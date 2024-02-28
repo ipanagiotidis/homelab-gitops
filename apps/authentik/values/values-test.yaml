@@ -26,10 +26,7 @@ server:
     enabled: true
     hosts:
       # Specify external host name
-      - host: authentik.yiannis.io
-        paths:
-          - path: "/"
-            pathType: Prefix
+      - authentik.yiannis.io
 
 postgresql:
   enabled: true
