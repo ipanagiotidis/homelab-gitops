@@ -30,7 +30,8 @@ server:
 
 postgresql:
   enabled: true
-  postgresqlPassword: "ThisIsNotASecurePassword"
+  auth:
+    password: "ThisIsNotASecurePassword"
   nodeSelector:
     extraDiskNode: "true"
     kubernetes.io/hostname: k8s-node-4
