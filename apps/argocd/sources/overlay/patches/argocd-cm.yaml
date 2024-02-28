@@ -9,7 +9,7 @@ data:
     connectors:
     - config:
         issuer: http://authentik.yiannis.io/application/o/argocd/
-        clientID: GdoBnvuol4QbMfc0Yuxffg8nrGaHs9ntXYjW2k7C
+        clientID: 4RrCJ2nUrF7t8yxGdKDBe2s9Dxh64jsYFeMEs5Am
         clientSecret: $dex.authentik.clientSecret
         insecureEnableGroups: true
         scopes:
