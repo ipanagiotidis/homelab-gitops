@@ -19,16 +19,17 @@ authentik:
     password: "ThisIsNotASecurePassword"
   log_level: "info"
 
-ingress:
-  # Specify kubernetes ingress controller class name
-  ingressClassName: traefik
-  enabled: true
-  hosts:
-    # Specify external host name
-    - host: authentik.yiannis.io
-      paths:
-        - path: "/"
-          pathType: Prefix
+server:
+  ingress:
+    # Specify kubernetes ingress controller class name
+    ingressClassName: traefik
+    enabled: true
+    hosts:
+      # Specify external host name
+      - host: authentik.yiannis.io
+        paths:
+          - path: "/"
+            pathType: Prefix
 
 postgresql:
   enabled: true
