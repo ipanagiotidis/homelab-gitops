@@ -1,0 +1,62 @@
+# Configure options applied to all pods
+defaultPodOptions:
+  automountServiceAccountToken: false
+
+controllers:
+  # Configure the main controller
+  main:
+
+    # Configure the pod-specific securityContext
+    pod:
+      securityContext:
+        fsGroup: 1001
+        fsGroupChangePolicy: "OnRootMismatch"
+
+    containers:
+      # Configure the main application container
+      main:
+        image:
+          # -- image repository
+          repository: ghcr.io/onedr0p/qbittorrent
+          # -- image tag
+          # this example is not automatically updated, so be sure to use the latest image
+          tag: 4.6.3
+        # Configure the container-specific securityContext
+        securityContext:
+          runAsUser: 1001
+          runAsGroup: 1001
+
+
+service:
+  # Configure a service for the main application
+  main:
+    type: ClusterIP
+    ports:
+      http:
+        port: 8080
+
+ingress:
+  # Configure an Ingress for the main application
+  main:
+    enabled: true
+    ingressClassName: "traefik"
+    hosts:
+      - host: "qb.yiannis.io"
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              name: main
+              port: http
+
+persistence:
+  # Configure the main configuration storage location
+  config:
+    enabled: true
+    type: nfs
+    server: 192.168.1.10
+    path: /media/jellyfin
+    advancedMounts:
+      main:
+        main:
+          - path: /config
