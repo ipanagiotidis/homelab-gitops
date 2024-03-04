@@ -9,4 +9,4 @@ resources:
   - apps/qbittorrent/applications/qbittorrent.yaml
   - apps/jellyfin/applications/jellyfin.yaml
   - apps/gitea/applications/gitea.yaml
-  - apps/traefik/applications/traefik.yaml
+  #- apps/traefik/applications/traefik.yaml
