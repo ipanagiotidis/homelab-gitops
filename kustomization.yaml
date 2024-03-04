@@ -8,3 +8,4 @@ resources:
   - apps/local-storage-provisioner/applications/local-storage-provisioner.yaml
   - apps/qbittorrent/applications/qbittorrent.yaml
   - apps/jellyfin/applications/jellyfin.yaml
+  - apps/gitea/applications/gitea.yaml
