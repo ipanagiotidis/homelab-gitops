@@ -10,7 +10,6 @@ providers:
     enabled: true
     allowExternalNameServices: true
     allowEmptyServices: false
-    namespaces: []
     publishedService:
       enabled: true
 
@@ -21,8 +20,8 @@ service:
   # -- Additional annotations applied to both TCP and UDP services (e.g. for cloud provider specific config)
   annotations: 
     metallb.universe.tf/ip-allocated-from-pool: single-lb-pool
-  # spec:
-  #   loadBalancerIP: "192.168.1.7"
+  spec:
+    loadBalancerIP: "192.168.1.7"
 
 securityContext:
   capabilities:
