@@ -1,0 +1,45 @@
+updateStrategy:
+  # -- Customize updateStrategy: RollingUpdate or OnDelete
+  type: RollingUpdate
+  rollingUpdate:
+    maxUnavailable: 0
+    maxSurge: 1
+
+providers:
+  kubernetesIngress:
+    enabled: true
+    allowExternalNameServices: true
+    allowEmptyServices: false
+    namespaces: []
+    publishedService:
+      enabled: true
+
+service:
+  enabled: true
+  single: true
+  type: LoadBalancer
+  # -- Additional annotations applied to both TCP and UDP services (e.g. for cloud provider specific config)
+  annotations: 
+    metallb.universe.tf/ip-allocated-from-pool: single-lb-pool
+  spec:
+    loadBalancerIP: "192.168.1.7"
+
+securityContext:
+  capabilities:
+    drop: [ALL]
+  readOnlyRootFilesystem: true
+  allowPrivilegeEscalation: false
+
+#
+# -- Extra objects to deploy (value evaluated as a template)
+#
+# In some cases, it can avoid the need for additional, extended or adhoc deployments.
+# See #595 for more details and traefik/tests/values/extra.yaml for example.
+extraObjects: []
+
+# This will override the default Release Namespace for Helm.
+# It will not affect optional CRDs such as `ServiceMonitor` and `PrometheusRules`
+# namespaceOverride: traefik
+#
+## -- This will override the default app.kubernetes.io/instance label for all Objects.
+# instanceLabelOverride: traefik
