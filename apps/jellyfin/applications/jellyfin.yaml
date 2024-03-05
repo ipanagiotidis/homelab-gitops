@@ -11,7 +11,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   sources:
-  - path: apps/jellyfin/sources
+  - path: apps/jellyfin/sources/chart
     repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
     targetRevision: dev
   # Sync policy
