@@ -1,26 +1,24 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: authentik
+  name: cert-manager
   namespace: argocd
   labels:
-    app: authentik
+    app: cert-manager
 spec:
   destination:
-    namespace: authentik
+    namespace: cert-manager
     server: https://kubernetes.default.svc
   project: default
   sources:
-  - chart: authentik
-    repoURL: https://charts.goauthentik.io/
-    targetRevision: 2024.2.1
+  - chart: cert-manager
+    repoURL: https://charts.jetstack.io
+    targetRevision: 1.14.3
     helm:
-      releaseName: authentik
-      valueFiles:
-        - $values/apps/authentik/values/values.yaml
-  - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+      releaseName: cert-manager
+  - path: apps/cert-manager/sources/base
+    repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
     targetRevision: dev
-    ref: values
   # Sync policy
   syncPolicy:
     automated: # automated sync by default retries failed attempts 5 times with following delays between attempts ( 5s, 10s, 20s, 40s, 80s ); retry controlled using `retry` field.
