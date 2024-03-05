@@ -27,3 +27,11 @@ securityContext:
     drop: [ALL]
   readOnlyRootFilesystem: true
   allowPrivilegeEscalation: false
+
+env:
+  - name: TRAEFIK_ENTRYPOINTS_WEB_ADDRESS
+    value: :80
+  - name: TRAEFIK_ENTRYPOINTS_WEBSECURE_ADDRESS
+    value: :443
+  - name: TRAEFIK_ENTRYPOINTS_WEB_HTTP_REDIRECTIONS_ENTRYPOINT_TO
+    value: websecure
