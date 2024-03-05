@@ -1,3 +1,11 @@
+global:  
+  hostAliases:
+    - ip: 192.168.1.7
+      hostnames:
+      - "argocd.yiannis.io"
+      - "authentik.yiannis.io"
+      - "gitea.yiannis.io"
+
 redis-cluster:
   enabled: false
 postgresql:
@@ -29,6 +37,13 @@ gitea:
     indexer:
       ISSUE_INDEXER_TYPE: bleve
       REPO_INDEXER_ENABLED: true
+  oauth:
+    - name: "authentik"
+      provider: "openidConnect"
+      existingSecret: gitea-authentik-secret
+      autoDiscoverUrl: "https://authentik.yiannis.io/application/o/gitea-slug/.well-known/openid-configuration"
+      iconUrl: "https://goauthentik.io/img/icon.png"
+      scopes: "email profile"
 
 ingress:
   enabled: true
@@ -38,12 +53,3 @@ ingress:
       paths:
         - path: "/"
           pathType: Prefix
-
-gitea:
-  oauth:
-  - name: "authentik"
-    provider: "openidConnect"
-    existingSecret: gitea-authentik-secret
-    autoDiscoverUrl: "https://authentik.yiannis.io/application/o/gitea-slug/.well-known/openid-configuration"
-    iconUrl: "https://goauthentik.io/img/icon.png"
-    scopes: "email profile"

@@ -4,6 +4,7 @@ global:
       hostnames:
       - "argocd.yiannis.io"
       - "authentik.yiannis.io"
+      - "gitea.yiannis.io"
 
   nodeSelector:
     extraDiskNode: "true"

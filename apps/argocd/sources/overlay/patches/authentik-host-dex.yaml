@@ -10,3 +10,4 @@ spec:
       - ip: 192.168.1.7
         hostnames:
         - "authentik.yiannis.io"
+        - "gitea.yiannis.io"
