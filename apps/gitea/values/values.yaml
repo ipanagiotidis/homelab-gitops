@@ -39,10 +39,11 @@ ingress:
         - path: "/"
           pathType: Prefix
 
-oauth:
-  - name: "authentik"
-    provider: "openidConnect"
-    existingSecret: gitea-authentik-secret
-    autoDiscoveryUrl: "https://authentik.company/application/o/gitea-slug/.well-known/openid-configuration"
-    iconUrl: "https://goauthentik.io/img/icon.png"
-    scopes: "email profile"
+gitea:
+  oauth:
+    - name: "authentik"
+      provider: "openidConnect"
+      existingSecret: gitea-authentik-secret
+      autoDiscoveryUrl: "https://authentik.company/application/o/gitea-slug/.well-known/openid-configuration"
+      iconUrl: "https://goauthentik.io/img/icon.png"
+      scopes: "email profile"
