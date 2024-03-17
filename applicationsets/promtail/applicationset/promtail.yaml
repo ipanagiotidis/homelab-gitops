@@ -8,6 +8,7 @@ spec:
   - list:
     elements:
     - namespace: argocd
+    - namespace: jellyfin
   template:
     metadata:
       name: 'promtail-{{namespace}}'
