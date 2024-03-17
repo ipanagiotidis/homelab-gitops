@@ -41,6 +41,7 @@ spec:
               snippets:
                 pipelineStages:
                   - docker: {}
+                  - cri: {}
                 scrapeConfigs: |
                   - job_name: namespace-specific-logs
                     kubernetes_sd_configs:
