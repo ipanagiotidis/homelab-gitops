@@ -16,6 +16,9 @@ spec:
       labels:
         app: 'promtail-{{namespace}}'
     spec:
+      nodePlacement:
+        nodeSelector:
+          key1: value1
       destination:
         namespace: '{{namespace}}'
         server: https://kubernetes.default.svc
@@ -32,6 +35,7 @@ spec:
           #   - name: 'config.snippets.scrapeConfigs[0].kubernetes_sd_configs[0].namespaces.names'
           #     value: '{{namespace}}'
           values: |
+            tolerations: {}
             daemonset:
               enabled: false
             deployment:
