@@ -2,7 +2,7 @@ daemonset:
   enabled: false
 deployment:
   enabled: true
-  
+
 config:
   lokiAddress: http://loki.logging.svc.cluster.local:3100/loki/api/v1/push
 
@@ -14,8 +14,7 @@ config:
         kubernetes_sd_configs:
           - role: pod
             namespaces:
-              names:
-                - your-target-namespace
+              names: your-target-namespace
         relabel_configs:
           - action: replace
             source_labels:
