@@ -18,7 +18,7 @@ spec:
         app: promtail-{{namespace}}
     spec:
       destination:
-        namespace: {{namespace}}
+        namespace: "{{namespace}}"
         server: https://kubernetes.default.svc
       project: default
       sources:
