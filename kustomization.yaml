@@ -15,3 +15,4 @@ resources:
   - apps/tempo/applications/tempo.yaml
   #- apps/loki-stack/applications/loki-stack.yaml
   - apps/loki/applications/loki.yaml
+  - applicationsets/promtail/applicationset/promtail.yaml

@@ -1,0 +1,43 @@
+daemonset:
+  enabled: false
+deployment:
+  enabled: true
+  
+config:
+  lokiAddress: http://loki.logging.svc.cluster.local:3100/loki/api/v1/push
+
+  snippets:
+    pipelineStages:
+      - docker: {}
+    scrapeConfigs:
+      - job_name: namespace-specific-logs
+        kubernetes_sd_configs:
+          - role: pod
+            namespaces:
+              names:
+                - your-target-namespace
+        relabel_configs:
+          - action: replace
+            source_labels:
+              - __meta_kubernetes_pod_node_name
+            target_label: node_name
+          - action: replace
+            source_labels:
+              - __meta_kubernetes_namespace
+            target_label: namespace
+          - action: replace
+            source_labels:
+              - __meta_kubernetes_pod_name
+            target_label: pod_name
+          - action: labelmap
+            regex: __meta_kubernetes_pod_label_(.+)
+          - action: labelmap
+            regex: __meta_kubernetes_pod_annotation_(.+)
+          - action: replace
+            source_labels:
+              - __meta_kubernetes_pod_container_name
+            target_label: container_name
+          - action: replace
+            source_labels:
+              - __meta_kubernetes_pod_phase
+            target_label: pod_status
