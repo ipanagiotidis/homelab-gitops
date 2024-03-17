@@ -12,3 +12,4 @@ resources:
   - apps/traefik/applications/traefik.yaml
   - apps/cert-manager/applications/cert-manager.yaml
   - apps/kube-prometheus-stack/applications/kube-prometheus-stack.yaml
+  - apps/tempo/applications/tempo.yaml
