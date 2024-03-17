@@ -11,13 +11,13 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   sources:
-  - chart: traefikube-prometheus-stackk
+  - chart: kube-prometheus-stack
     repoURL: https://prometheus-community.github.io/helm-charts 
-    targetRevision: 21.1.0
+    targetRevision: 57.0.3
     helm:
-      releaseName: traefik
+      releaseName: kube-prometheus-stack
       valueFiles:
-        - $values/apps/traefik/values/values.yaml
+        - $values/apps/kube-prometheus-stack/values/values.yaml
   - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
     targetRevision: dev
     ref: values
