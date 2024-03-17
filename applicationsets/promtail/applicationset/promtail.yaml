@@ -29,8 +29,8 @@ spec:
           valueFiles:
             - $values/applicationsets/promtail/values/values.yaml
           parameters:
-          - name: 'config.snippets.scrapeConfigs[0].kubernetes_sd_configs[0].namespaces.names'
-            value: '{{namespace}}'
+            - name: 'config.snippets.scrapeConfigs[0].kubernetes_sd_configs[0].namespaces.names'
+              value: '{{namespace}}'
       - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
         targetRevision: dev
         ref: values
