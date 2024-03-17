@@ -14,3 +14,4 @@ resources:
   - apps/kube-prometheus-stack/applications/kube-prometheus-stack.yaml
   - apps/tempo/applications/tempo.yaml
   #- apps/loki-stack/applications/loki-stack.yaml
+  - apps/loki/applications/loki.yaml
