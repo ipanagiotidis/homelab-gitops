@@ -1,0 +1,58 @@
+alertmanager:
+  enabled: false
+kubeApiServer:
+  enabled: true
+kubelet:
+  enabled: false
+kubeControllerManager:
+  enabled: false
+coreDns:
+  enabled: false
+kubeDns:
+  enabled: false
+kubeEtcd:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeProxy:
+  enabled: false
+kubeStateMetrics:
+  enabled: false
+nodeExporter:
+  enabled: false
+grafana:
+  ingress:
+    enabled: true
+    hosts:
+      - gfn.yiannis.io
+  sidecar:
+    enabled: false
+      #dashboards:
+      #enabled: true
+      #label: grafana_dashboard
+      #labelValue: "1"
+      #datasources:
+      #enabled: true
+      #label: "grafana_datasource" # This is the default label the sidecar looks for
+      #labelvalue: "1"
+  # additionalDataSources:
+  #   - name: Loki-test
+  #     type: loki
+  #     access: proxy
+  #     url: http://loki:3100
+  #     jsonData:
+  #       tlsSkipVerify: true
+  #   - name: Tempo-test
+  #     type: tempo
+  #     url: http://tempo:3100
+prometheus:
+  prometheusSpec:
+    ruleSelectorNilUsesHelmValues: false
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    probeSelectorNilUsesHelmValues: false
+    enableRemoteWriteReceiver: true
+    enableFeatures:
+      - remote-write-receiver
+      - otlp-write-receiver
+
