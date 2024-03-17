@@ -30,4 +30,3 @@ spec:
     - Validate=true # disables resource validation (equivalent to 'kubectl apply --validate=true')
     - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
     # The retry feature is available since v1.7
-    - ServerSideApply=true
