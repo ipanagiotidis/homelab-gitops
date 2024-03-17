@@ -7,4 +7,4 @@ data:
   server.insecure: "true"
   #dexserver.disable.tls: "true"
   #server.dex.server.plaintext: "true"
-  otlp.address: "otel-collector-opentelemetry-collector:4317"
+  otlp.address: "http://otel-collector-opentelemetry-collector:4317"
