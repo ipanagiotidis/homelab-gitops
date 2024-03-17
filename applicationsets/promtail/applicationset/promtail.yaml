@@ -5,9 +5,9 @@ metadata:
   namespace: argocd
 spec:
   generators:
-    - list:
-      elements:
-        - namespace: argocd
+  - list:
+    elements:
+    - namespace: argocd
   template:
     metadata:
       name: 'promtail-{{namespace}}'
