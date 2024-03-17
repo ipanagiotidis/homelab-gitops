@@ -13,4 +13,4 @@ resources:
   - apps/cert-manager/applications/cert-manager.yaml
   - apps/kube-prometheus-stack/applications/kube-prometheus-stack.yaml
   - apps/tempo/applications/tempo.yaml
-  #- apps/loki-stack/applications/loki-stack.yaml
+  - apps/loki-stack/applications/loki-stack.yaml
