@@ -27,7 +27,7 @@ spec:
         helm:
           releaseName: 'promtail-{{namespace}}'
           valueFiles:
-            - $values/apps/promtail/values/values.yaml
+            - $values/applicationsets/promtail/values/values.yaml
           parameters:
           - name: "config.snippets.scrapeConfigs[0].kubernetes_sd_configs[0].namespaces.names"
             value: '{{namespace}}'
