@@ -26,14 +26,56 @@ spec:
         targetRevision: 6.15.5
         helm:
           releaseName: 'promtail-{{namespace}}'
-          valueFiles:
-            - $values/applicationsets/promtail/values/values.yaml
-          parameters:
-            - name: 'config.snippets.scrapeConfigs[0].kubernetes_sd_configs[0].namespaces.names'
-              value: '{{namespace}}'
-      - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
-        targetRevision: dev
-        ref: values
+          # valueFiles:
+          #   - $values/applicationsets/promtail/values/values.yaml
+          # parameters:
+          #   - name: 'config.snippets.scrapeConfigs[0].kubernetes_sd_configs[0].namespaces.names'
+          #     value: '{{namespace}}'
+          values: |
+            daemonset:
+              enabled: false
+            deployment:
+              enabled: true
+            config:
+              lokiAddress: http://loki.logging.svc.cluster.local:3100/loki/api/v1/push
+              snippets:
+                pipelineStages:
+                  - docker: {}
+                scrapeConfigs:
+                  - job_name: namespace-specific-logs
+                    kubernetes_sd_configs:
+                      - role: pod
+                        namespaces:
+                          names: 
+                            - {{namespace}}
+                    relabel_configs:
+                      - action: replace
+                        source_labels:
+                          - __meta_kubernetes_pod_node_name
+                        target_label: node_name
+                      - action: replace
+                        source_labels:
+                          - __meta_kubernetes_namespace
+                        target_label: namespace
+                      - action: replace
+                        source_labels:
+                          - __meta_kubernetes_pod_name
+                        target_label: pod_name
+                      - action: labelmap
+                        regex: __meta_kubernetes_pod_label_(.+)
+                      - action: labelmap
+                        regex: __meta_kubernetes_pod_annotation_(.+)
+                      - action: replace
+                        source_labels:
+                          - __meta_kubernetes_pod_container_name
+                        target_label: container_name
+                      - action: replace
+                        source_labels:
+                          - __meta_kubernetes_pod_phase
+                        target_label: pod_status
+      # - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+      #   targetRevision: dev
+      #   ref: values
       # Sync policy
       syncPolicy:
         automated: # automated sync by default retries failed attempts 5 times with following delays between attempts ( 5s, 10s, 20s, 40s, 80s ); retry controlled using `retry` field.
