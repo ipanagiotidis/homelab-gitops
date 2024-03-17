@@ -72,4 +72,6 @@ prometheus:
             requests:
               storage: 10Gi  # Specify the desired storage size
           storageClassName: "local-path"  # Specify your storage class
+    retention: "14d"  # Retain metrics for 14 days
+    retentionSize: "5GB"  # Optional: Retain no more than 20GB of metrics
 
