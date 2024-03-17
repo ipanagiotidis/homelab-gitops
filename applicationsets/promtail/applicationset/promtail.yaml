@@ -12,13 +12,13 @@ spec:
         - namespace: argocd
   template:
     metadata:
-      name: promtail-{{namespace}}
+      name: 'promtail-{{namespace}}'
       namespace: argocd
       labels:
-        app: promtail-{{namespace}}
+        app: 'promtail-{{namespace}}'
     spec:
       destination:
-        namespace: "{{namespace}}"
+        namespace: '{{namespace}}'
         server: https://kubernetes.default.svc
       project: default
       sources:
@@ -26,12 +26,12 @@ spec:
         repoURL: https://grafana.github.io/helm-charts
         targetRevision: 6.15.5
         helm:
-          releaseName: promtail-{{namespace}}
+          releaseName: 'promtail-{{namespace}}'
           valueFiles:
             - $values/apps/promtail/values/values.yaml
           parameters:
           - name: "config.snippets.scrapeConfigs[0].kubernetes_sd_configs[0].namespaces.names"
-            value: "{{namespace}}"
+            value: '{{namespace}}'
       - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
         targetRevision: dev
         ref: values
