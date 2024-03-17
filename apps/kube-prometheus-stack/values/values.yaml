@@ -25,6 +25,15 @@ grafana:
     enabled: true
     hosts:
       - gfn.yiannis.io
+  persistence:
+    enabled: true
+    type: pvc
+    size: 10Gi  # Adjust the size according to your needs
+    storageClassName: "local-path"  # Specify your storage class
+    accessModes:
+      - ReadWriteOnce
+    finalizers:
+      - kubernetes.io/pvc-protection
   # sidecar:
   #   enabled: false
       #dashboards:
