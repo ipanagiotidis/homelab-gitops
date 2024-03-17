@@ -44,16 +44,16 @@ grafana:
       #enabled: true
       #label: "grafana_datasource" # This is the default label the sidecar looks for
       #labelvalue: "1"
-  # additionalDataSources:
-  #   - name: Loki-test
-  #     type: loki
-  #     access: proxy
-  #     url: http://loki:3100
-  #     jsonData:
-  #       tlsSkipVerify: true
-  #   - name: Tempo-test
-  #     type: tempo
-  #     url: http://tempo:3100
+  additionalDataSources:
+    - name: Loki-test
+      type: loki
+      access: proxy
+      url: http://loki:3100
+      jsonData:
+        tlsSkipVerify: true
+    - name: Tempo-test
+      type: tempo
+      url: http://tempo:3100
 prometheus:
   prometheusSpec:
     ruleSelectorNilUsesHelmValues: false
