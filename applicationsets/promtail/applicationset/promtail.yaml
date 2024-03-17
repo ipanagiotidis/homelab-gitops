@@ -16,9 +16,6 @@ spec:
       labels:
         app: 'promtail-{{namespace}}'
     spec:
-      nodePlacement:
-        nodeSelector:
-          key1: value1
       destination:
         namespace: '{{namespace}}'
         server: https://kubernetes.default.svc
