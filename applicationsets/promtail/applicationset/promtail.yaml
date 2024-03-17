@@ -38,7 +38,7 @@ spec:
             deployment:
               enabled: true
             config:
-              lokiAddress: http://loki.logging.svc.cluster.local:3100/loki/api/v1/push
+              lokiAddress: http://loki.mnitoring.svc.cluster.local:3100/loki/api/v1/push
               snippets:
                 pipelineStages:
                   - docker: {}
