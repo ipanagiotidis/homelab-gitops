@@ -17,9 +17,9 @@ kubeScheduler:
 kubeProxy:
   enabled: false
 kubeStateMetrics:
-  enabled: false
+  enabled: true
 nodeExporter:
-  enabled: false
+  enabled: true
 grafana:
   ingress:
     enabled: true
