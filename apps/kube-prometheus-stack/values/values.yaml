@@ -55,4 +55,12 @@ prometheus:
     enableFeatures:
       - remote-write-receiver
       - otlp-write-receiver
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 10Gi  # Specify the desired storage size
+          storageClassName: "local-path"  # Specify your storage class
 
