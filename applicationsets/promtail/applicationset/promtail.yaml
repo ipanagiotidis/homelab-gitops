@@ -46,9 +46,6 @@ spec:
                   - job_name: namespace-specific-logs
                     kubernetes_sd_configs:
                       - role: pod
-                        namespaces:
-                          names: 
-                            - {{namespace}}
                     relabel_configs:
                       - action: replace
                         source_labels:
