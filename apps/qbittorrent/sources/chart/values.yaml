@@ -20,7 +20,7 @@ controllers:
           repository: ghcr.io/onedr0p/qbittorrent
           # -- image tag
           # this example is not automatically updated, so be sure to use the latest image
-          tag: 4.3.9
+          tag: 4.6.4
         # Configure the container-specific securityContext
         securityContext:
           runAsUser: 1001
