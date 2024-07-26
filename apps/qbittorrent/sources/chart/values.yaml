@@ -54,7 +54,7 @@ persistence:
   config:
     enabled: true
     type: nfs
-    server: 192.168.1.10
+    server: 192.168.88.10
     path: /media/jellyfin
     advancedMounts:
       main:
