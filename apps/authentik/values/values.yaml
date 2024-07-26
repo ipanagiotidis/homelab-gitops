@@ -1,6 +1,6 @@
 global:  
   hostAliases:
-    - ip: 192.168.1.7
+    - ip: 192.668.88.7
       hostnames:
       - "argocd.yiannis.io"
       - "authentik.yiannis.io"
