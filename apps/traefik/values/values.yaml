@@ -20,7 +20,7 @@ service:
   annotations: 
     metallb.universe.tf/ip-allocated-from-pool: single-lb-pool
   spec:
-    loadBalancerIP: "192.168.1.7"
+    loadBalancerIP: "192.168.88.7"
 
 securityContext:
   capabilities:
