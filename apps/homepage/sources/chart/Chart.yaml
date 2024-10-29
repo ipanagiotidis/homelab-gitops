@@ -1,0 +1,11 @@
+# Chart.yaml
+dependencies:
+  - name: common
+    version: 2.6.0
+    repository: https://bjw-s.github.io/helm-charts/
+apiVersion: v2
+name: homepage
+description: Test
+type: application
+version: 0.0.1
+appVersion: 0.0.1
