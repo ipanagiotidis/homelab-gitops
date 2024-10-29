@@ -23,8 +23,8 @@ controllers:
           tag: latest
         # Configure the container-specific securityContext
         securityContext:
-          runAsUser: 1001
-          runAsGroup: 1001
+          runAsUser: 1000
+          runAsGroup: 1000
         # -- Configure the resource requests and/or limits for the Pod
         resources:
           requests:
@@ -37,7 +37,7 @@ controllers:
           #   # Hardware acceleration using an Intel iGPU w/ QuickSync and
           #   # using intel-gpu-plugin (https://github.com/intel/intel-device-plugins-for-kubernetes)
           #  gpu.intel.com/i915: 1
-            memory: 4096Mi
+            memory: 2024Mi
 
 
 service:
