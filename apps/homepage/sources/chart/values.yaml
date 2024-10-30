@@ -32,7 +32,7 @@ controllers:
           #   # using intel-gpu-plugin (https://github.com/intel/intel-device-plugins-for-kubernetes)
           #   gpu.intel.com/i915: 1
             cpu: 100m
-            memory: 256i
+            memory: 256Mi
           limits:
           #   # Hardware acceleration using an Intel iGPU w/ QuickSync and
           #   # using intel-gpu-plugin (https://github.com/intel/intel-device-plugins-for-kubernetes)
