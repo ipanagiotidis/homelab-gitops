@@ -13,7 +13,7 @@ resources:
   - apps/cert-manager/applications/cert-manager.yaml
   - apps/kube-prometheus-stack/applications/kube-prometheus-stack.yaml
   - apps/tempo/applications/tempo.yaml
-  - apps/homepage/applications/homepage.yaml
+  #- apps/homepage/applications/homepage.yaml
   #- apps/loki-stack/applications/loki-stack.yaml
   - apps/loki/applications/loki.yaml
   #- applicationsets/promtail/applicationset/promtail.yaml

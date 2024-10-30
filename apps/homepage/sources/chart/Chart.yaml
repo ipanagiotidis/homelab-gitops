@@ -5,7 +5,7 @@ dependencies:
     repository: https://bjw-s.github.io/helm-charts/
 apiVersion: v2
 name: homepage
-description: Test1
+description: Test
 type: application
 version: 0.0.1
 appVersion: 0.0.1
