@@ -61,15 +61,3 @@ ingress:
             service:
               name: main
               port: http
-
-# persistence:
-#   # Configure the main configuration storage location
-#   config:
-#     enabled: true
-#     type: nfs
-#     server: 192.168.88.10
-#     path: /media/jellyfin/jellyfin/config
-#     advancedMounts:
-#       main:
-#         main:
-#           - path: /config

@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: jellyfin
+  name: homepage
   namespace: argocd
   labels:
-    app: jellyfin
+    app: homepage
 spec:
   destination:
-    namespace: jellyfin
+    namespace: homepage
     server: https://kubernetes.default.svc
   project: default
   sources:
-  - path: apps/jellyfin/sources/chart
+  - path: apps/homepage/sources/chart
     repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
     targetRevision: dev
   # Sync policy
