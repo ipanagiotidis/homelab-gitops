@@ -36,10 +36,10 @@ postgresql:
   primary:
     nodeSelector:
       extraDiskNode: "true"
-      kubernetes.io/hostname: k8s-node-4
+      kubernetes.io/hostname: k8s-node-1
 redis:
   enabled: true
   master:
     nodeSelector:
       extraDiskNode: "true"
-      kubernetes.io/hostname: k8s-node-4
+      kubernetes.io/hostname: k8s-node-3
