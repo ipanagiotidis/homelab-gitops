@@ -31,6 +31,8 @@ server:
 
 postgresql:
   enabled: true
+  volumePermissions:
+    enabled: true
   auth:
     password: "ThisIsNotASecurePassword"
   primary:
@@ -39,6 +41,8 @@ postgresql:
       kubernetes.io/hostname: k8s-node-1
 redis:
   enabled: true
+  volumePermissions:
+    enabled: true
   master:
     nodeSelector:
       #extraDiskNode: "true"
