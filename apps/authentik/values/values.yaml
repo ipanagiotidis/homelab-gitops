@@ -33,11 +33,13 @@ postgresql:
   enabled: true
   auth:
     password: "ThisIsNotASecurePassword"
-  nodeSelector:
-    extraDiskNode: "true"
-    kubernetes.io/hostname: k8s-node-4
+  primary:
+    nodeSelector:
+      extraDiskNode: "true"
+      kubernetes.io/hostname: k8s-node-4
 redis:
   enabled: true
-  nodeSelector:
-    extraDiskNode: "true"
-    kubernetes.io/hostname: k8s-node-4
+  master:
+    nodeSelector:
+      extraDiskNode: "true"
+      kubernetes.io/hostname: k8s-node-4
