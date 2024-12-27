@@ -46,7 +46,7 @@ postgresql:
     existingSecret: authentik-postgres-credentials
     secretKeys:
       adminPasswordKey: AUTHENTIK_POSTGRES_ADMIN_PASSWORD
-      userPasswordKey: userPasswordKey
+      userPasswordKey: AUTHENTIK_POSTGRES_PASSWORD
   primary:
     nodeSelector:
       extraDiskNode: "true"
