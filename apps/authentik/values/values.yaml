@@ -17,7 +17,6 @@ authentik:
   error_reporting:
     enabled: false
   postgresql:
-    user: file:///postgres-creds/AUTHENTIK_POSTGRES_USERNAME
     password: file:///postgres-creds/AUTHENTIK_POSTGRES_PASSWORD
   log_level: "info"
 
