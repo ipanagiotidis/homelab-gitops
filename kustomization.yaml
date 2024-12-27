@@ -5,6 +5,7 @@ resources:
   - apps/argocd/applications/argocd-self.yaml
   - apps/metallb/applications/metallb.yaml
   - apps/authentik/applications/authentik.yaml
+  - apps/external-secrets/applications/external-secrets.yaml
   - apps/local-storage-provisioner/applications/local-storage-provisioner.yaml
   - apps/qbittorrent/applications/qbittorrent.yaml
   - apps/jellyfin/applications/jellyfin.yaml
@@ -16,4 +17,3 @@ resources:
   - apps/homepage/applications/homepage.yaml
   #- apps/loki-stack/applications/loki-stack.yaml
   - apps/loki/applications/loki.yaml
-  #- applicationsets/promtail/applicationset/promtail.yaml
