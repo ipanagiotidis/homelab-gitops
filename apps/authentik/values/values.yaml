@@ -17,7 +17,8 @@ authentik:
   error_reporting:
     enabled: false
   postgresql:
-    password: "ThisIsNotASecurePassword"
+    user: file:///postgres-creds/AUTHENTIK_POSTGRES_USERNAME
+    password: file:///postgres-creds/AUTHENTIK_POSTGRES_PASSWORD
   log_level: "info"
 
 server:
@@ -28,22 +29,42 @@ server:
     hosts:
       # Specify external host name
       - authentik.yiannis.io
+  volumes:
+    - name: postgres-creds
+      secret:
+        secretName: authentik-postgres-credentials
+  volumeMounts:
+    - name: postgres-creds
+      mountPath: /postgres-creds
+      readOnly: true
 
 postgresql:
   enabled: true
   volumePermissions:
     enabled: true
   auth:
-    password: "ThisIsNotASecurePassword"
+    existingSecret: authentik-postgres-credentials
+    secretKeys:
+      adminPasswordKey: AUTHENTIK_POSTGRES_ADMIN_PASSWORD
+      userPasswordKey: userPasswordKey
   primary:
     nodeSelector:
-      #extraDiskNode: "true"
-      kubernetes.io/hostname: k8s-node-1
+      extraDiskNode: "true"
+
 redis:
   enabled: true
   volumePermissions:
     enabled: true
   master:
     nodeSelector:
-      #extraDiskNode: "true"
-      kubernetes.io/hostname: k8s-node-3
+      extraDiskNode: "true"
+
+worker:
+  volumes:
+    - name: postgres-creds
+      secret:
+        secretName: authentik-postgres-credentials
+  volumeMounts:
+    - name: postgres-creds
+      mountPath: /postgres-creds
+      readOnly: true
