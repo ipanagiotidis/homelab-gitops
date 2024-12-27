@@ -11,4 +11,4 @@ spec:
   data:
     - secretKey: TEST
       remoteRef:
-        key: TEST
+        key: /TEST
