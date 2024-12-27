@@ -9,6 +9,6 @@ spec:
   target:
     name: test
   data:
-    - secretKey: test
+    - secretKey: TEST
       remoteRef:
         key: TEST
