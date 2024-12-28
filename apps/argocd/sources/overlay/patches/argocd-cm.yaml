@@ -5,11 +5,12 @@ metadata:
   name: argocd-cm
 data:
   url: https://argocd.yiannis.io
+  admin.enabled: "false"
   dex.config: |
     connectors:
     - config:
         issuer: http://authentik.yiannis.io/application/o/argocd/
-        clientID: 4RrCJ2nUrF7t8yxGdKDBe2s9Dxh64jsYFeMEs5Am
+        clientID: qXAitOkMZQKx4rpAxHcHroIX3Wdn4phUjO6sj9if
         clientSecret: $dex.authentik.clientSecret
         insecureEnableGroups: true
         scopes:
