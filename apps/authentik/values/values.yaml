@@ -37,8 +37,8 @@ server:
       mountPath: /postgres-creds
       readOnly: true
   envFrom:
-    - secretRef:
-      name: authentik-secret-key
+  - secretRef:
+    name: authentik-secret-key
 
 postgresql:
   enabled: true
@@ -71,5 +71,5 @@ worker:
       mountPath: /postgres-creds
       readOnly: true
   envFrom:
-    - secretRef:
-      name: authentik-secret-key
+  - secretRef:
+    name: authentik-secret-key
