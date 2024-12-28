@@ -38,7 +38,7 @@ server:
       readOnly: true
   envFrom:
   - secretRef:
-    name: authentik-secret-key
+      name: authentik-secret-key
 
 postgresql:
   enabled: true
@@ -72,4 +72,4 @@ worker:
       readOnly: true
   envFrom:
   - secretRef:
-    name: authentik-secret-key
+      name: authentik-secret-key
