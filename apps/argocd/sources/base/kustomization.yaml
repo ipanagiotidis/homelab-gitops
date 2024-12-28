@@ -6,3 +6,4 @@ resources:
   - ingressroute-http.yaml
   - ingressroute-https.yaml
   - middleware.yaml
+  - client-secret.yaml
