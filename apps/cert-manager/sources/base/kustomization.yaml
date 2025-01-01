@@ -6,3 +6,4 @@ resources:
   - ./resources/clusterissuer.yaml
   - ./resources/certificate.yaml
   - ./resources/tlsstore.yaml
+  - ./resources/external-secret.yaml
