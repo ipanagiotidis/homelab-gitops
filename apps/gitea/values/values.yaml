@@ -50,7 +50,7 @@ gitea:
 deployment:
   env:
     - name: ENABLE_BASIC_AUTHENTICATION
-      value: false
+      value: "false"
 
 ingress:
   enabled: true
