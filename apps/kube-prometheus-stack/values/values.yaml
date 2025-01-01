@@ -33,14 +33,20 @@ grafana:
     auth.generic_oauth:
       name: authentik
       enabled: true
-      client_id: $__file{/etc/secrets/auth_generic_oauth/client_id}
-      client_secret: $__file{/etc/secrets/auth_generic_oauth/client_secret}
+      client_id: $__file{/etc/secrets/auth_generic_oauth/GRAFANA_CLIENT_ID}
+      client_secret: $__file{/etc/secrets/auth_generic_oauth/GRAFANA_CLIENT_SECRET}
       scopes: "openid profile email"
       auth_url: "https://authentik.yiannis.io/application/o/authorize/"
       token_url: "https://authentik.yiannis.io/application/o/token/"
       api_url: "https://authentik.yiannis.io/application/o/userinfo/"
       # Optionally map user groups to Grafana roles
       role_attribute_path: contains(groups, 'Grafana Admins') && 'Admin' || contains(groups, 'Grafana Editors') && 'Editor' || 'Viewer'
+  extraSecretMounts:
+    - name: auth-generic-oauth-secret-mount
+      secretName: grafana-client
+      defaultMode: 0440
+      mountPath: /etc/secrets/auth_generic_oauth
+    readOnly: true
   persistence:
     enabled: true
     type: pvc
