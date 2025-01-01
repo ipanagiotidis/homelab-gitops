@@ -46,7 +46,7 @@ grafana:
       secretName: grafana-client
       defaultMode: 0440
       mountPath: /etc/secrets/auth_generic_oauth
-    readOnly: true
+      readOnly: true
   persistence:
     enabled: true
     type: pvc
