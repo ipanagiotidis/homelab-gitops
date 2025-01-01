@@ -26,7 +26,7 @@ grafana:
     enabled: true
     hosts:
       - gfn.yiannis.io
-  grafana.ini: -|
+  grafana.ini: |-
     [auth]
       signout_redirect_url = "https://authentik.yiannis.io/application/o/grafana/end-session/"
       oauth_auto_login = true
