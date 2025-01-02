@@ -1,20 +1,7 @@
-updateStrategy:
-  # -- Customize updateStrategy: RollingUpdate or OnDelete
-  type: RollingUpdate
-  rollingUpdate:
-    maxUnavailable: 0
-    maxSurge: 1
-
 service:
   enabled: true
   type: LoadBalancer
   annotations: 
     metallb.universe.tf/ip-allocated-from-pool: single-lb-pool
-  #loadBalancerIP: "192.168.88.6"
-  #externalTrafficPolicy: "Local"
-
-securityContext:
-  capabilities:
-    drop: [ALL]
-  readOnlyRootFilesystem: true
-  allowPrivilegeEscalation: false
+  loadBalancerIP: "192.168.88.6"
+  externalTrafficPolicy: "Local"
