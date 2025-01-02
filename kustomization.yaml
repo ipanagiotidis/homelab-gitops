@@ -10,7 +10,6 @@ resources:
   - apps/qbittorrent/applications/qbittorrent.yaml
   - apps/jellyfin/applications/jellyfin.yaml
   - apps/gitea/applications/gitea.yaml
-  - apps/ingress-nginx/applications/ingress-nginx.yaml
   - apps/traefik/applications/traefik.yaml
   - apps/cert-manager/applications/cert-manager.yaml
   - apps/kube-prometheus-stack/applications/kube-prometheus-stack.yaml
