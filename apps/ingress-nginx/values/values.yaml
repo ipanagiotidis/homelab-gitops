@@ -1,8 +1,0 @@
-controller:
-  service:
-    enabled: true
-    type: LoadBalancer
-    annotations: 
-      metallb.universe.tf/ip-allocated-from-pool: single-lb-pool
-    #loadBalancerIP: "192.168.88.11"
-    externalTrafficPolicy: "Local"
