@@ -16,17 +16,9 @@ spec:
   - single-lb-pool
 ---
 apiVersion: metallb.io/v1beta1
-kind: IPAddressPool
-metadata:
-  name: second-lb-pool
-spec:
-  addresses:
-  - 192.168.88.11-192.168.88.12
----
-apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
 metadata:
   name: second-lb-l2ad
 spec:
   ipAddressPools:
-  - second-lb-pool
+  - single-lb-pool
