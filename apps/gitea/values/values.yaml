@@ -53,6 +53,14 @@ deployment:
       value: "false"
     - name: ENABLE_BASIC_AUTHENTICATION
       value: "false"
+    - name: DISABLE_REGISTRATION
+      value: "true"
+    - name: REQUIRE_EXTERNAL_REGISTRATION_PASSWORD
+      value: "true"
+    - name: ENABLE_CAPTCHA
+      value: "true"
+    - name: REQUIRE_EXTERNAL_REGISTRATION_CAPTCHA
+      value: "true"
 
 ingress:
   enabled: true
