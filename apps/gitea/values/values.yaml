@@ -61,6 +61,8 @@ deployment:
       value: "true"
     - name: REQUIRE_EXTERNAL_REGISTRATION_CAPTCHA
       value: "true"
+    - name: SHOW_REGISTRATION_BUTTON
+      value: 'false'
 
 ingress:
   enabled: true
