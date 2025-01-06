@@ -47,7 +47,7 @@ gitea:
       iconUrl: "https://goauthentik.io/img/icon.png"
       scopes: "email profile"
 
-deployment:
+statefulset:
   env:
     - name: ENABLE_PASSWORD_SIGNIN_FORM
       value: "false"
