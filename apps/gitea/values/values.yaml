@@ -39,6 +39,12 @@ gitea:
       REPO_INDEXER_ENABLED: true
     server:
       ROOT_URL: https://gitea.yiannis.io/
+    service:
+      DISABLE_REGISTRATION: "true"
+      ENABLE_BASIC_AUTHENTICATION: "false"
+      ENABLE_PASSWORD_SIGNIN_FORM: "false"
+      ENABLE_CAPTCHA: "true"
+      REQUIRE_EXTERNAL_REGISTRATION_CAPTCHA: "true"
   oauth:
     - name: "authentik"
       provider: "openidConnect"
@@ -46,23 +52,6 @@ gitea:
       autoDiscoverUrl: "http://authentik.yiannis.io/application/o/gitea-slug/.well-known/openid-configuration"
       iconUrl: "https://goauthentik.io/img/icon.png"
       scopes: "email profile"
-
-deployment:
-  env:
-    - name: ENABLE_PASSWORD_SIGNIN_FORM
-      value: false
-    - name: ENABLE_BASIC_AUTHENTICATION
-      value: false
-    - name: DISABLE_REGISTRATION
-      value: true
-    - name: REQUIRE_EXTERNAL_REGISTRATION_PASSWORD
-      value: true
-    - name: ENABLE_CAPTCHA
-      value: true
-    - name: REQUIRE_EXTERNAL_REGISTRATION_CAPTCHA
-      value: true
-    - name: SHOW_REGISTRATION_BUTTON
-      value: false
 
 ingress:
   enabled: true
