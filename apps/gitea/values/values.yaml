@@ -45,6 +45,7 @@ gitea:
       ENABLE_PASSWORD_SIGNIN_FORM: "false"
       ENABLE_CAPTCHA: "true"
       REQUIRE_EXTERNAL_REGISTRATION_CAPTCHA: "true"
+      REQUIRE_CAPTCHA_FOR_LOGIN: "true"
     oauth2_client:
       ENABLE_AUTO_REGISTRATION: "true"
   oauth:
