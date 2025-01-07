@@ -50,19 +50,19 @@ gitea:
 deployment:
   env:
     - name: ENABLE_PASSWORD_SIGNIN_FORM
-      value: "false"
+      value: false
     - name: ENABLE_BASIC_AUTHENTICATION
-      value: "false"
+      value: false
     - name: DISABLE_REGISTRATION
-      value: "true"
+      value: true
     - name: REQUIRE_EXTERNAL_REGISTRATION_PASSWORD
-      value: "true"
+      value: true
     - name: ENABLE_CAPTCHA
-      value: "true"
+      value: true
     - name: REQUIRE_EXTERNAL_REGISTRATION_CAPTCHA
-      value: "true"
+      value: true
     - name: SHOW_REGISTRATION_BUTTON
-      value: 'false'
+      value: false
 
 ingress:
   enabled: true
