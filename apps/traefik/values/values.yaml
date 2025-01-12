@@ -37,3 +37,9 @@ env:
     value: websecure
   - name: TRAEFIK_ENTRYPOINTS_WEB_HTTP_REDIRECTIONS_ENTRYPOINT_SCHEME
     value: https
+
+logs:
+  general:
+    format: "json"
+  access:
+    format: "json"
