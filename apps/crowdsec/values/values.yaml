@@ -1,3 +1,5 @@
+tls:
+  enabled: true
 # for raw logs format: json or cri (docker|containerd)
 container_runtime: containerd
 agent:
@@ -26,6 +28,8 @@ lapi:
       value: "homelab-k8s-cluster"
     - name: ENROLL_TAGS
       value: "homelab crowdsec kubernetes"
+    - name: DISABLE_ONLINE_API
+      value: "false"
   nodeSelector:
     extraDiskNode: "true"
     kubernetes.io/hostname: k8s-node-5
