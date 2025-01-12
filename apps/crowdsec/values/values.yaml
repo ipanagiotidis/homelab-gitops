@@ -12,6 +12,10 @@ agent:
   env:
     - name: COLLECTIONS
       value: "crowdsecurity/traefik"
+    - name: DISABLE_ONLINE_API
+      value: "false"
+    - name: DISABLE_PARSERS
+      value: "crowdsecurity/whitelists"
 lapi:
   env:
     # To enroll the Security Engine to the console
