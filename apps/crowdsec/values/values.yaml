@@ -1,5 +1,3 @@
-tls:
-  enabled: true
 # for raw logs format: json or cri (docker|containerd)
 container_runtime: containerd
 agent:
