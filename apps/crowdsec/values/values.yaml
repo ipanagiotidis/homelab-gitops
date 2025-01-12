@@ -12,14 +12,20 @@ agent:
   env:
     - name: COLLECTIONS
       value: "crowdsecurity/traefik"
+  nodeSelector:
+    extraDiskNode: "true"
+    kubernetes.io/hostname: k8s-node-5
 lapi:
   env:
     # To enroll the Security Engine to the console
     - name: ENROLL_KEY
-      value: "<enroll-key>"
+      value: ""
     - name: ENROLL_INSTANCE_NAME
       value: "homelab-k8s-cluster"
     - name: ENROLL_TAGS
       value: "homelab crowdsec kubernetes"
+  nodeSelector:
+    extraDiskNode: "true"
+    kubernetes.io/hostname: k8s-node-5
 
 
