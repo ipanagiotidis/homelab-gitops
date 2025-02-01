@@ -5,7 +5,7 @@ resources:
   - apps/argocd/applications/argocd-self.yaml
   - apps/metallb/applications/metallb.yaml
   - apps/authentik/applications/authentik.yaml
-  #- apps/crowdsec/applications/crowdsec.yaml
+  - apps/crowdsec/applications/crowdsec.yaml
   - apps/external-secrets/applications/external-secrets.yaml
   - apps/local-storage-provisioner/applications/local-storage-provisioner.yaml
   - apps/qbittorrent/applications/qbittorrent.yaml
