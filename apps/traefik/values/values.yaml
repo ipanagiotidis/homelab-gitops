@@ -48,5 +48,5 @@ ingressRoute:
   dashboard:
     enabled: true
     matchRule: Host(`tf.yiannis.io`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
-    entrypoints:
+    entryPoints:
       - websecure
