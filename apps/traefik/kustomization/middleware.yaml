@@ -1,0 +1,14 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: external-secret-crowdsec-enroll-secret
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: infisical
+  target:
+    name: crowdsec-enroll-secret
+  data:
+    - secretKey: key
+      remoteRef:
+        key: CROWDSEC_ENROLL_KEY
