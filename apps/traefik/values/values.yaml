@@ -43,3 +43,7 @@ logs:
     format: "json"
   access:
     format: "json"
+
+ingressRoute:
+  dashboard:
+    enabled: true
