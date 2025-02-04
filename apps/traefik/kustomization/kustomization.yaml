@@ -3,6 +3,6 @@ kind: Kustomization
 
 resources:
   #- ./middleware.yaml
-  - ./dashboard.yaml
+  #- ./dashboard.yaml
   - ./external-secret.yaml
   - ./bouncer.yaml
