@@ -37,11 +37,13 @@ env:
     value: websecure
   - name: TRAEFIK_ENTRYPOINTS_WEB_HTTP_REDIRECTIONS_ENTRYPOINT_SCHEME
     value: https
-  - name: TRAEFIK_ENTRYPOINTS_WEB_HTTP_MIDDLEWARES
-    value: traefik-bouncer
-  - name: TRAEFIK_ENTRYPOINTS_WEBSECURE_HTTP_MIDDLEWARES
-    value: traefik-bouncer
 
+additionalArguments:
+  - "--experimental.plugins.bouncer.moduleName=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
+  - "--experimental.plugins.bouncer.version=v1.4.0"
+  - "--entrypoints.web.http.middlewares=traefik-bouncer@kubernetescrd"
+  - "--entrypoints.websecure.http.middlewares=traefik-bouncer@kubernetescrd"
+  - "--providers.kubernetescrd"
 
 logs:
   general:
