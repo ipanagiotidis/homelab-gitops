@@ -23,5 +23,5 @@ spec:
       name: argocd-server
       port: http
       scheme: h2c
-  tls:
-    secretName: argocd-certificate
+  # tls:
+  #   secretName: argocd-certificate

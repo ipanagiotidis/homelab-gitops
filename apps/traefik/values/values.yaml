@@ -42,10 +42,21 @@ logs:
   general:
     format: "json"
   access:
+    enabled: true
     format: "json"
+    fields:
+      headers: 
+        defaultmode: keep
 
 ingressRoute:
   dashboard:
     enabled: true
     matchRule: Host(`tf.yiannis.io`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
     entryPoints: ["websecure"]
+
+
+experimental:
+  plugins:
+    bouncer:
+      moduleName: "github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
+      version: "v1.4.0"
