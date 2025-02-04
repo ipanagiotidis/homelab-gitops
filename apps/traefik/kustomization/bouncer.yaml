@@ -1,0 +1,14 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: bouncer
+spec:
+  plugin:
+      bouncer:
+        CrowdsecLapiKey:
+          existingSecret: crowdsec-enroll-secret
+        Enabled: "true"
+        logLevel: DEBUG
+        crowdsecMode: live
+        crowdsecLapiHost: crowdsec-service.crowdsec.svc.cluster.local:8080
+        crowdsecLapiScheme: http
