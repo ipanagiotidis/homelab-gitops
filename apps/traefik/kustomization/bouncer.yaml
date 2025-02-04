@@ -5,9 +5,9 @@ metadata:
 spec:
   plugin:
       bouncer:
-        CrowdsecLapiKey:
+        crowdsecLapiKey:
           existingSecret: crowdsec-enroll-secret
-        Enabled: "true"
+        enabled: true
         logLevel: DEBUG
         crowdsecMode: live
         crowdsecLapiHost: crowdsec-service.crowdsec.svc.cluster.local:8080
