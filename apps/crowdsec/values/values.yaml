@@ -1,5 +1,7 @@
 # for raw logs format: json or cri (docker|containerd)
 container_runtime: containerd
+tls:
+  enabled: true
 agent:
   lapiURL: "https://crowdsec-service.crowdsec.svc.cluster.local:8080"
   lapiHost: "crowdsec-service.crowdsec.svc.cluster.local"
