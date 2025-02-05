@@ -2,10 +2,10 @@
 container_runtime: containerd
 tls:
   enabled: true
-  certManager:
-    issuerRef:
-      name: "cloudflare-issuer"
-      kind: "ClusterIssuer"
+  # certManager:
+  #   issuerRef:
+  #     name: "cloudflare-issuer"
+  #     kind: "ClusterIssuer"
 agent:
   lapiURL: "https://crowdsec-service.crowdsec.svc.cluster.local:8080"
   lapiHost: "crowdsec-service.crowdsec.svc.cluster.local"
