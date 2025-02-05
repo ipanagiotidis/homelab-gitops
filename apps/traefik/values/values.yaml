@@ -41,9 +41,8 @@ env:
 additionalArguments:
   - "--experimental.plugins.bouncer.moduleName=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
   - "--experimental.plugins.bouncer.version=v1.4.0"
-  - "--entrypoints.web.http.middlewares=traefik-bouncer@kubernetescrd"
-  - "--entrypoints.websecure.http.middlewares=traefik-bouncer@kubernetescrd"
-  - "--providers.kubernetescrd"
+  - "--entrypoints.web.http.middlewares=traefik-bouncer"
+  - "--entrypoints.websecure.http.middlewares=traefik-bouncer"
 
 logs:
   general:
