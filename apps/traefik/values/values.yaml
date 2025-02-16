@@ -54,6 +54,10 @@ ingressRoute:
     matchRule: Host(`tf.yiannis.io`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
     entryPoints: ["websecure"]
 
+volumes:
+  - name: crowdsec-bouncer-tls
+    mountPath: /etc/traefik/crowdsec-certs/
+    type: secret
 
 experimental:
   plugins:

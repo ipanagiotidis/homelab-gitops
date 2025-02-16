@@ -4,6 +4,9 @@ tls:
   enabled: true
   agent:
     tlsClientAuth: true
+  bouncer:
+    reflector:
+      namespaces: ["traefik"]
   # certManager:
   #   issuerRef:
   #     name: "cloudflare-issuer"
