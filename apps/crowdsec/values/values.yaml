@@ -8,6 +8,15 @@ tls:
   #   issuerRef:
   #     name: "cloudflare-issuer"
   #     kind: "ClusterIssuer"
+config:
+  config.yaml.local: |
+    api:
+      server:
+        tls:
+          bouncers_allowed_ou: #OU allowed for bouncers
+            - bouncer-ou
+          agents_allowed_ou: #OU allowed for agents
+            - agent-ou
 agent:
   lapiURL: "https://crowdsec-service.crowdsec.svc.cluster.local:8080"
   lapiHost: "crowdsec-service.crowdsec.svc.cluster.local"
