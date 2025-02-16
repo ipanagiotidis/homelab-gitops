@@ -44,8 +44,8 @@ agent:
       value: "crowdsecurity/traefik LePresidente/jellyfin firix/authentik"
     - name: DISABLE_ONLINE_API
       value: "false"
-    - name: DISABLE_PARSERS
-      value: "crowdsecurity/whitelists"
+    # - name: DISABLE_PARSERS
+    #   value: "crowdsecurity/whitelists"
 lapi:
   env:
     # To enroll the Security Engine to the console
