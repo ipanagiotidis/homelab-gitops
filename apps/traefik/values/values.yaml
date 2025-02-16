@@ -69,17 +69,17 @@ experimental:
     bouncer:
       moduleName: "github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
       version: "v1.4.1"
-    real-ip:
-      moduleName: github.com/Paxxs/traefik-get-real-ip
-      version: "v1.0.3"
+    # real-ip:
+    #   moduleName: github.com/Paxxs/traefik-get-real-ip
+    #   version: "v1.0.3"
 
 additionalArguments:
   - "--experimental.plugins.bouncer.moduleName=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
   - "--experimental.plugins.bouncer.version=v1.4.1"
-  - "--experimental.plugins.real-ip.moduleName=github.com/Paxxs/traefik-get-real-ip"
-  - "--experimental.plugins.real-ip.version=v1.0.3"
-  - "--entrypoints.web.http.middlewares=traefik-bouncer@kubernetescrd, traefik-real-ip@kubernetescrd"
-  - "--entrypoints.websecure.http.middlewares=traefik-bouncer@kubernetescrd, traefik-real-ip@kubernetescrd"
+  # - "--experimental.plugins.real-ip.moduleName=github.com/Paxxs/traefik-get-real-ip"
+  # - "--experimental.plugins.real-ip.version=v1.0.3"
+  - "--entrypoints.web.http.middlewares=traefik-bouncer@kubernetescrd" # traefik-real-ip@kubernetescrd"
+  - "--entrypoints.websecure.http.middlewares=traefik-bouncer@kubernetescrd" # traefik-real-ip@kubernetescrd"
   - "--providers.kubernetescrd"
 
 # http:

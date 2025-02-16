@@ -17,3 +17,4 @@ spec:
         - 10.244.0.50/32
         - 10.244.2.101/32
         - 10.244.4.0/32
+      ForwardedHeadersCustomName: CF-Connecting-IP
