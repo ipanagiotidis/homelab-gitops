@@ -11,5 +11,3 @@ spec:
           proxyHeadervalue: cf-foo
           realIP: Cf-Connecting-Ip
           OverwriteXFF: true # default: false, v1.0.2 or above
-        - proxyHeadername: "*"
-          realIP: RemoteAddr

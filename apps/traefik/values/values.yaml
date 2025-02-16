@@ -99,8 +99,8 @@ entryPoints:
   web:
     forwardedHeaders:
       trustedIPs: &trustedIps
-        - 10.244.0.50
-        - 10.244.2.101
+        - 10.244.0.50/32
+        - 10.244.2.101/32
         # Start of Cloudlare's public IP list
         - 173.245.48.0/20
         - 103.21.244.0/22
