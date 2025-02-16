@@ -7,6 +7,7 @@ resources:
   - apps/authentik/applications/authentik.yaml
   - apps/crowdsec/applications/crowdsec.yaml
   - apps/reflector/applications/reflector.yaml
+  - apps/cloudflare/applications/cloudflare.yaml
   - apps/external-secrets/applications/external-secrets.yaml
   - apps/local-storage-provisioner/applications/local-storage-provisioner.yaml
   - apps/qbittorrent/applications/qbittorrent.yaml
