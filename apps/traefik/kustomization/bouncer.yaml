@@ -14,6 +14,8 @@ spec:
       crowdsecLapiTLSCertificateBouncerFile: /etc/traefik/crowdsec-certs/tls.crt
       crowdsecLapiTLSCertificateBouncerKeyFile: /etc/traefik/crowdsec-certs/tls.key
       forwardedHeadersTrustedIPs:
+        - 10.244.0.50
+        - 10.244.2.101
         - 173.245.48.0/20
         - 103.21.244.0/22
         - 103.22.200.0/22
