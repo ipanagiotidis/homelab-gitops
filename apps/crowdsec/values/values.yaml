@@ -2,6 +2,8 @@
 container_runtime: containerd
 tls:
   enabled: true
+  agent:
+    tlsClientAuth: true
   # certManager:
   #   issuerRef:
   #     name: "cloudflare-issuer"
