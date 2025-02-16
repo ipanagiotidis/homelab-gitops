@@ -41,7 +41,7 @@ agent:
       program: jellyfin
   env:
     - name: COLLECTIONS
-      value: "crowdsecurity/traefik,LePresidente/jellyfin,firix/authentik"
+      value: "crowdsecurity/traefik LePresidente/jellyfin firix/authentik"
     - name: DISABLE_ONLINE_API
       value: "false"
     - name: DISABLE_PARSERS
