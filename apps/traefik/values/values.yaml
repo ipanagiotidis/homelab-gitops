@@ -37,6 +37,10 @@ env:
     value: websecure
   - name: TRAEFIK_ENTRYPOINTS_WEB_HTTP_REDIRECTIONS_ENTRYPOINT_SCHEME
     value: https
+  - name: TRAEFIK_ENTRYPOINTS_WEB_HTTP_MIDDLEWARES
+    value: traefik-bouncer@kubernetescrd
+  - name: TRAEFIK_ENTRYPOINTS_WEBSECURE_HTTP_MIDDLEWARES
+    value: traefik-bouncer@kubernetescrd
 
 logs:
   general:
