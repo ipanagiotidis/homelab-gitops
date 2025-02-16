@@ -96,7 +96,7 @@ additionalArguments:
 #               realIP: RemoteAddr
 
 entryPoints:
-  http:
+  web:
     forwardedHeaders:
       trustedIPs: &trustedIps
         - 10.244.0.50
@@ -126,7 +126,7 @@ entryPoints:
         - 2c0f:f248::/32
         # End of Cloudlare's public IP list
   # HTTPS endpoint, with domain wildcard
-  https:
+  websecure:
     forwardedHeaders:
       # Reuse the list of Cloudflare's public IPs from above
       trustedIPs: *trustedIps
