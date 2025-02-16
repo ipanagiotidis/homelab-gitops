@@ -76,8 +76,8 @@ experimental:
 additionalArguments:
   - "--experimental.plugins.bouncer.moduleName=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
   - "--experimental.plugins.bouncer.version=v1.4.1"
-  - "--entrypoints.web.http.middlewares=traefik-bouncer@kubernetescrd, cloudflarewarp@file"
-  - "--entrypoints.websecure.http.middlewares=traefik-bouncer@kubernetescrd, cloudflarewarp@file"
+  - "--entrypoints.web.http.middlewares=traefik-bouncer@kubernetescrd"
+  - "--entrypoints.websecure.http.middlewares=traefik-bouncer@kubernetescrd"
   - "--providers.kubernetescrd"
 
 

@@ -9,6 +9,8 @@ spec:
   - kind: Rule
     match: Host(`argocd.yiannis.io`)
     priority: 10
+    middlewares:
+      - name: cloudflarewarp
     services:
     - kind: Service
       name: argocd-server
@@ -18,6 +20,8 @@ spec:
       Host(`argocd.yiannis.io`) &&
       Headers(`Content-Type`, `application/grpc`)
     priority: 11
+    middlewares:
+      - name: cloudflarewarp
     services:
     - kind: Service
       name: argocd-server
