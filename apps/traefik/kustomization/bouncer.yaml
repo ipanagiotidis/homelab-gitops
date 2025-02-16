@@ -13,7 +13,7 @@ spec:
       crowdsecLapiTLSCertificateAuthorityFile: /etc/traefik/crowdsec-certs/ca.crt
       crowdsecLapiTLSCertificateBouncerFile: /etc/traefik/crowdsec-certs/tls.crt
       crowdsecLapiTLSCertificateBouncerKeyFile: /etc/traefik/crowdsec-certs/tls.key
-      forwardedHeadersCustomName: CF-Connecting-Ip
+      forwardedHeadersCustomName: Cf-Connecting-Ip
       # forwardedHeadersTrustedIPs:
       #   - 10.244.0.50
       #   - 10.244.2.101
