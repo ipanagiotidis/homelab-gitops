@@ -1,7 +1,7 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-  name: bouncer
+  name: bouncer-cf
   namespace: traefik
 spec:
   plugin:
@@ -13,6 +13,7 @@ spec:
       crowdsecLapiTLSCertificateAuthorityFile: /etc/traefik/crowdsec-certs/ca.crt
       crowdsecLapiTLSCertificateBouncerFile: /etc/traefik/crowdsec-certs/tls.crt
       crowdsecLapiTLSCertificateBouncerKeyFile: /etc/traefik/crowdsec-certs/tls.key
+      request_Cf-Connecting-Ip: request_Cf-Connecting-Ip
       forwardedHeadersTrustedIPs:
         - 173.245.48.0/20
         - 103.21.244.0/22
