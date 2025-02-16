@@ -97,6 +97,11 @@ additionalArguments:
 
 entryPoints:
   web:
+    proxyProtocol:
+      trustedIPs:
+        - 10.244.0.50/32
+        - 10.244.2.101/32
+        - 10.244.4.0/32
     forwardedHeaders:
       trustedIPs: &trustedIps
         - 10.244.0.50/32
