@@ -5,4 +5,4 @@ resources:
   #- ./middleware.yaml
   #- ./dashboard.yaml
   - ./external-secret.yaml
-  - ./bouncer.yaml
+  #- ./bouncer.yaml
