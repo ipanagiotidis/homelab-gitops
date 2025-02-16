@@ -78,8 +78,8 @@ additionalArguments:
   - "--experimental.plugins.bouncer.version=v1.4.1"
   - "--experimental.plugins.real-ip.moduleName=github.com/Paxxs/traefik-get-real-ip"
   - "--experimental.plugins.real-ip.version=v1.0.3"
-  - "--entrypoints.web.http.middlewares=traefik-bouncer@kubernetescrd"
-  - "--entrypoints.websecure.http.middlewares=traefik-bouncer@kubernetescrd"
+  - "--entrypoints.web.http.middlewares=traefik-bouncer@kubernetescrd, traefik-real-ip@kubernetescrd"
+  - "--entrypoints.websecure.http.middlewares=traefik-bouncer@kubernetescrd, traefik-real-ip@kubernetescrd"
   - "--providers.kubernetescrd"
 
 # http:
