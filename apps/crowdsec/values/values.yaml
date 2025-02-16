@@ -33,9 +33,15 @@ agent:
       podName: traefik-*
       # as in crowdsec configuration, we need to specify the program name to find a matching parser
       program: traefik
+    - namespace: authentik
+      podName: authentik-*
+      program: authentik
+    - namespace: jellyfin
+      podName: jellyfin-*
+      program: jellyfin
   env:
     - name: COLLECTIONS
-      value: "crowdsecurity/traefik"
+      value: "crowdsecurity/traefik,LePresidente/jellyfin,firix/authentik"
     - name: DISABLE_ONLINE_API
       value: "false"
     - name: DISABLE_PARSERS
