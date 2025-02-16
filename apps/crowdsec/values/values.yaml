@@ -12,6 +12,8 @@ config:
   config.yaml.local: |
     api:
       server:
+        auto_registration: # Activate if not using TLS for authentication
+          enabled: false
         tls:
           bouncers_allowed_ou: #OU allowed for bouncers
             - bouncer-ou
