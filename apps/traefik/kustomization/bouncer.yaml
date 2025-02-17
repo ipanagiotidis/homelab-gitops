@@ -16,4 +16,4 @@ spec:
       # ForwardedHeadersTrustedIPs:
       #   - 10.244.0.50/32
       #   - 10.244.2.101/32
-      # ForwardedHeadersCustomName: Cf-Connecting-Ip
+      ForwardedHeadersCustomName: Cf-Connecting-Ip
