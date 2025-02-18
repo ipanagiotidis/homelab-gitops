@@ -16,4 +16,8 @@ spec:
       forwardedHeadersTrustedIPs:
         - 10.244.0.50/32
         - 10.244.2.101/32
-      forwardedHeadersCustomName: Cf-Connecting-Ip
+      # forwardedHeadersCustomName: Cf-Connecting-Ip
+      clientTrustedIPs:
+        - 10.0.0.0/8
+        - 172.16.0.0/12
+        - 192.168.0.0/16
