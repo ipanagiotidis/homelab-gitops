@@ -6,7 +6,7 @@ metadata:
 spec:
   plugin:
     bouncer:
-      enabled: true
+      enabled: none
       logLevel: DEBUG
       crowdsecMode: live
       crowdsecLapiHost: crowdsec-service.crowdsec.svc.cluster.local:8080
