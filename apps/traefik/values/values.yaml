@@ -95,12 +95,12 @@ additionalArguments:
 #             - proxyHeadername: "*"
 #               realIP: RemoteAddr
 
-# entryPoints:
-#   web:
-#     forwardedHeaders:
-#       trustedIPs:
-#         - 10.244.0.50/32
-#         - 10.244.2.101/32
+entryPoints:
+  web:
+    forwardedHeaders:
+      trustedIPs:
+        - 10.244.0.0/16
+        # - 10.244.2.101/32
         # Start of Cloudlare's public IP list
         # - 173.245.48.0/20
         # - 103.21.244.0/22
@@ -126,9 +126,9 @@ additionalArguments:
         # - 2c0f:f248::/32
         # End of Cloudlare's public IP list
   # HTTPS endpoint, with domain wildcard
-  # websecure:
-  #   forwardedHeaders:
-  #     # Reuse the list of Cloudflare's public IPs from above
-  #     trustedIPs:
-  #       - 10.244.0.50/32
-  #       - 10.244.2.101/32
+  websecure:
+    forwardedHeaders:
+      # Reuse the list of Cloudflare's public IPs from above
+      trustedIPs:
+        - 10.244.0.0/16
+        # - 10.244.2.101/32
