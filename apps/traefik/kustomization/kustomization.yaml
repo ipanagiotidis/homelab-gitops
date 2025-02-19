@@ -3,4 +3,6 @@ kind: Kustomization
 
 resources:
   - ./bouncer.yaml
+  - ./certificate.yaml
+  - ./tlsstore.yaml
   #- ./middleware.yaml
