@@ -27,6 +27,11 @@ tlsStore:
     defaultCertificate:
       secretName: traefik-wildcard-tls
 
+ingressClass:
+  enabled: true
+  isDefaultClass: true
+  name: "traefik"
+
 securityContext:
   capabilities:
     drop: [ALL]
