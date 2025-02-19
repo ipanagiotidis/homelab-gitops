@@ -15,6 +15,7 @@ config:
   config.yaml.local: |
     api:
       server:
+        use_forwarded_for_headers: "true"
         auto_registration: # Activate if not using TLS for authentication
           enabled: false
         tls:
