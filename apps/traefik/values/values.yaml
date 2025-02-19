@@ -80,6 +80,8 @@ additionalArguments:
   # - "--experimental.plugins.real-ip.version=v1.0.3"
   - "--entrypoints.web.http.middlewares=traefik-bouncer@kubernetescrd" # traefik-real-ip@kubernetescrd"
   - "--entrypoints.websecure.http.middlewares=traefik-bouncer@kubernetescrd" # traefik-real-ip@kubernetescrd"
+  - "--entrypoints.web.forwardedHeaders.trustedIPs=10.244.0.50/32,10.244.2.101/32"
+  - "--entrypoints.websecure.forwardedHeaders.trustedIPs=10.244.0.50/32,10.244.2.101/32"
   - "--providers.kubernetescrd"
 
 # http:
@@ -94,6 +96,19 @@ additionalArguments:
 #               OverwriteXFF: true # default: false, v1.0.2 or above
 #             - proxyHeadername: "*"
 #               realIP: RemoteAddr
+
+entryPoints:
+  web:
+    forwardedHeaders:
+      trustedIPs:
+        - 10.244.0.50/32
+        - 10.244.2.101/32
+  websecure:
+    forwardedHeaders:
+      trustedIPs:
+        - 10.244.0.50/32
+        - 10.244.2.101/32
+
 
 # entryPoints:
 #   web:
