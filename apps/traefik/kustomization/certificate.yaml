@@ -1,9 +1,9 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: my-service-certificate
+  name: traefik-wildcard-tls-certificate
 spec:
-  secretName: my-service-tls
+  secretName: traefik-wildcard-tls
   issuerRef:
     name: cloudflare-issuer
     kind: ClusterIssuer

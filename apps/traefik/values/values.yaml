@@ -22,6 +22,11 @@ service:
   spec:
     loadBalancerIP: "192.168.88.7"
 
+tlsStore:
+  default:
+    defaultCertificate:
+      secretName: traefik-wildcard-tls
+
 securityContext:
   capabilities:
     drop: [ALL]
@@ -68,33 +73,15 @@ experimental:
     bouncer:
       moduleName: "github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
       version: "v1.3.5"
-    # real-ip:
-    #   moduleName: github.com/Paxxs/traefik-get-real-ip
-    #   version: "v1.0.3"
 
 additionalArguments:
   - "--experimental.plugins.bouncer.moduleName=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
   - "--experimental.plugins.bouncer.version=v1.3.5"
-  # - "--experimental.plugins.real-ip.moduleName=github.com/Paxxs/traefik-get-real-ip"
-  # - "--experimental.plugins.real-ip.version=v1.0.3"
-  - "--entrypoints.web.http.middlewares=traefik-bouncer@kubernetescrd" # traefik-real-ip@kubernetescrd"
-  - "--entrypoints.websecure.http.middlewares=traefik-bouncer@kubernetescrd" # traefik-real-ip@kubernetescrd"
+  - "--entrypoints.web.http.middlewares=traefik-bouncer@kubernetescrd"
+  - "--entrypoints.websecure.http.middlewares=traefik-bouncer@kubernetescrd"
   - "--entrypoints.web.forwardedHeaders.trustedIPs=10.244.0.50/32,10.244.2.101/32"
   - "--entrypoints.websecure.forwardedHeaders.trustedIPs=10.244.0.50/32,10.244.2.101/32"
   - "--providers.kubernetescrd"
-
-# http:
-#   middlewares:
-#     real-ip-cf:
-#       plugin:
-#         real-ip:
-#           Proxy:
-#             - proxyHeadername: X-From-Cdn
-#               proxyHeadervalue: cf-foo
-#               realIP: Cf-Connecting-Ip
-#               OverwriteXFF: true # default: false, v1.0.2 or above
-#             - proxyHeadername: "*"
-#               realIP: RemoteAddr
 
 entryPoints:
   web:
@@ -107,42 +94,3 @@ entryPoints:
       trustedIPs:
         - 10.244.0.50/32
         - 10.244.2.101/32
-
-
-# entryPoints:
-#   web:
-#     forwardedHeaders:
-#       trustedIPs:
-#         - 10.244.0.50/32
-#         - 10.244.2.101/32
-        # Start of Cloudlare's public IP list
-        # - 173.245.48.0/20
-        # - 103.21.244.0/22
-        # - 103.22.200.0/22
-        # - 103.31.4.0/22
-        # - 141.101.64.0/18
-        # - 108.162.192.0/18
-        # - 190.93.240.0/20
-        # - 188.114.96.0/20
-        # - 197.234.240.0/22
-        # - 198.41.128.0/17
-        # - 162.158.0.0/15
-        # - 104.16.0.0/13
-        # - 104.24.0.0/14
-        # - 172.64.0.0/13
-        # - 131.0.72.0/22
-        # - 2400:cb00::/32
-        # - 2606:4700::/32
-        # - 2803:f800::/32
-        # - 2405:b500::/32
-        # - 2405:8100::/32
-        # - 2a06:98c0::/29
-        # - 2c0f:f248::/32
-        # End of Cloudlare's public IP list
-  # HTTPS endpoint, with domain wildcard
-  # websecure:
-  #   forwardedHeaders:
-  #     # Reuse the list of Cloudflare's public IPs from above
-  #     trustedIPs:
-  #       - 10.244.0.50/32
-  #       - 10.244.2.101/32

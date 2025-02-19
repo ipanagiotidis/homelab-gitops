@@ -4,4 +4,4 @@ metadata:
   name: default
 spec:
   defaultCertificate:
-    secretName: my-service-tls
+    secretName: traefik-wildcard-tls
