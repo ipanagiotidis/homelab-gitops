@@ -4,6 +4,4 @@ kind: Kustomization
 resources:
   - https://github.com/cert-manager/cert-manager/releases/download/v1.14.3/cert-manager.crds.yaml
   - ./resources/clusterissuer.yaml
-  - ./resources/certificate.yaml
-  - ./resources/tlsstore.yaml
   - ./resources/external-secret.yaml
