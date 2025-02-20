@@ -1,10 +1,5 @@
-global:  
-  hostAliases:
-    - ip: 192.168.88.7
-      hostnames:
-      - "argocd.yiannis.io"
-      - "authentik.yiannis.io"
-      - "gitea.yiannis.io"
+image:
+  tag: 1.23.4
 
 redis-cluster:
   enabled: false
