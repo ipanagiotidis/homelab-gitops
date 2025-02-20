@@ -30,8 +30,15 @@ grafana:
     auth:
       signout_redirect_url: "https://authentik.yiannis.io/application/o/grafana/end-session/"
       oauth_auto_login: true
+      login_cookie_name: __Host-grafana_session
     server:
       root_url: https://gfn.yiannis.io/
+      enforce_domain: true
+    security:
+      cookie_secure: true
+      cookie_samesite: strict
+      login_cookie_name: __Host-grafana_session
+      strict_transport_security: true
     auth.generic_oauth:
       name: authentik
       enabled: true
