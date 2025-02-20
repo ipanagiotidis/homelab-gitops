@@ -28,7 +28,7 @@ grafana:
       - gfn.yiannis.io
   grafana.ini:
     auth:
-      signout_redirect_url: "https://authentik.yiannis.io/application/o/grafana/end-session/"
+      signout_redirect_url: "https://authz.yiannis.io/application/o/grafana/end-session/"
       oauth_auto_login: true
       login_cookie_name: __Host-grafana_session
     server:
@@ -45,9 +45,9 @@ grafana:
       client_id: $__file{/etc/secrets/auth_generic_oauth/GRAFANA_CLIENT_ID}
       client_secret: $__file{/etc/secrets/auth_generic_oauth/GRAFANA_CLIENT_SECRET}
       scopes: "openid profile email"
-      auth_url: "https://authentik.yiannis.io/application/o/authorize/"
-      token_url: "https://authentik.yiannis.io/application/o/token/"
-      api_url: "https://authentik.yiannis.io/application/o/userinfo/"
+      auth_url: "https://authz.yiannis.io/application/o/authorize/"
+      token_url: "https://authz.yiannis.io/application/o/token/"
+      api_url: "https://authz.yiannis.io/application/o/userinfo/"
       # Optionally map user groups to Grafana roles
       role_attribute_path: contains(groups, 'Grafana Admins') && 'Admin' || contains(groups, 'Grafana Editors') && 'Editor' || 'Viewer'
   extraSecretMounts:

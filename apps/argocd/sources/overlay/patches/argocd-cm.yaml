@@ -9,7 +9,7 @@ data:
   dex.config: |
     connectors:
     - config:
-        issuer: http://authentik.yiannis.io/application/o/argocd/
+        issuer: http://authz.yiannis.io/application/o/argocd/
         clientID: qXAitOkMZQKx4rpAxHcHroIX3Wdn4phUjO6sj9if
         clientSecret: $dex.authentik.clientSecret
         insecureEnableGroups: true
