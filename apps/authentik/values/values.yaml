@@ -20,7 +20,7 @@ server:
     enabled: true
     hosts:
       # Specify external host name
-      - authz.yiannis.io
+      - authentik.yiannis.io
   volumes:
     - name: postgres-creds
       secret:
