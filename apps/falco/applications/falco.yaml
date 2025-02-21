@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: falco
+  namespace: argocd
+  labels:
+    app: falco
+spec:
+  destination:
+    namespace: falco
+    server: https://kubernetes.default.svc
+  project: default
+  sources:
+  - chart: falco
+    repoURL: https://falcosecurity.github.io/charts
+    targetRevision: 4.20.1
+    helm:
+      releaseName: falco
+      valueFiles:
+        - $values/apps/falco/values/values.yaml
+  - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+    targetRevision: dev
+    ref: values
+  - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+    path: apps/falco/kustomization
+    targetRevision: dev
+  # Sync policy
+  syncPolicy:
+    automated: # automated sync by default retries failed attempts 5 times with following delays between attempts ( 5s, 10s, 20s, 40s, 80s ); retry controlled using `retry` field.
+      prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
+      selfHeal: true # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cluster and no git change detected ( false by default ).
+    syncOptions:     # Sync options which modifies sync behavior
+    - Validate=true # disables resource validation (equivalent to 'kubectl apply --validate=true')
+    - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
+    # The retry feature is available since v1.7
