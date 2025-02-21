@@ -21,6 +21,13 @@ spec:
   - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
     targetRevision: dev
     ref: values
+  - chart: fluent-bit
+    repoURL: https://fluent.github.io/helm-charts
+    targetRevision: 0.48.6
+    helm:
+      releaseName: fluent-bit
+      valueFiles:
+        - $values/apps/falco/values/values-fluent.yaml
   # - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
   #   path: apps/falco/kustomization
   #   targetRevision: dev
