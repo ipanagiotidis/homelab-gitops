@@ -5,4 +5,4 @@ resources:
   - ./bouncer.yaml
   - ./certificate.yaml
   - ./tlsstore.yaml
-  #- ./middleware.yaml
+  - ./middleware.yaml
