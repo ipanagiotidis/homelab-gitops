@@ -5,6 +5,6 @@ metadata:
   name: argocd-cmd-params-cm
 data:
   server.insecure: "true"
-  #dexserver.disable.tls: "true"
-  #server.dex.server.plaintext: "true"
+  dexserver.disable.tls: "true"
+  server.dex.server.plaintext: "true"
   #otlp.address: "http://otel-collector-opentelemetry-collector.argocd.svc.cluster.local:4317"
