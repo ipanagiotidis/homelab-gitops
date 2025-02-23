@@ -16,7 +16,7 @@ spec:
   - kind: Rule
     match: >-
       Host(`argocd.yiannis.io`) &&
-      Headers(`Content-Type`, `application/grpc`)
+      Header(`Content-Type`, `application/grpc`)
     priority: 11
     services:
     - kind: Service
