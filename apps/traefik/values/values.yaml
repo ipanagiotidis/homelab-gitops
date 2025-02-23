@@ -99,3 +99,13 @@ entryPoints:
       trustedIPs:
         - 10.244.0.50/32
         - 10.244.2.101/32
+
+metrics:
+  otlp:
+    http:
+      endpoint: http://prometheus:9090/api/v1/otlp/v1/metrics
+
+tracing:
+  otlp:
+    http:
+      endpoint: http://jaeger:4318/v1/traces
