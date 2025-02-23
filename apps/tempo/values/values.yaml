@@ -4,3 +4,6 @@ persistence:
   accessModes:
     - ReadWriteOnce
   size: 10Gi
+
+tempo:
+  reportingEnabled: false
