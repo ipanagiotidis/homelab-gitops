@@ -103,9 +103,9 @@ entryPoints:
 metrics:
   otlp:
     http:
-      endpoint: http://prometheus:9090/api/v1/otlp/v1/metrics
+      endpoint: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/api/v1/otlp/v1/metrics
 
 tracing:
   otlp:
     http:
-      endpoint: http://jaeger:4318/v1/traces
+      endpoint: http://tempo.monitoring.svc.cluster.local:4318/v1/traces
