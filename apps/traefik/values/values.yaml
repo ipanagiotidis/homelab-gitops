@@ -50,7 +50,7 @@ env:
   - name: TRAEFIK_ENTRYPOINTS_WEB_HTTP_MIDDLEWARES
     value: traefik-bouncer,traefik-redirect-http-https
   - name: TRAEFIK_ENTRYPOINTS_WEBSECURE_HTTP_MIDDLEWARES
-    value: traefik-bouncer
+    value: traefik-bouncer,traefik-redirect-http-https
 
 logs:
   general:
@@ -83,7 +83,7 @@ additionalArguments:
   - "--experimental.plugins.bouncer.moduleName=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
   - "--experimental.plugins.bouncer.version=v1.3.5"
   - "--entrypoints.web.http.middlewares=traefik-redirect-http-https@kubernetescrd,traefik-bouncer@kubernetescrd"
-  - "--entrypoints.websecure.http.middlewares=traefik-bouncer@kubernetescrd"
+  - "--entrypoints.websecure.http.middlewares=traefik-redirect-http-https@kubernetescrd,traefik-bouncer@kubernetescrd"
   - "--entrypoints.web.forwardedHeaders.trustedIPs=10.244.0.50/32,10.244.2.101/32"
   - "--entrypoints.websecure.forwardedHeaders.trustedIPs=10.244.0.50/32,10.244.2.101/32"
   - "--providers.kubernetescrd"
