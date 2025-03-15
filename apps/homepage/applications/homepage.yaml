@@ -11,9 +11,19 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   sources:
-  - path: apps/homepage/sources/chart
-    repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+  - chart: homepage
+    repoURL: https://jameswynn.github.io/helm-charts
+    targetRevision: 2.0.1
+    helm:
+      releaseName: homepage
+      valueFiles:
+        - $values/apps/homepage/values/values.yaml
+  - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
     targetRevision: dev
+    ref: values
+  # - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+  #   path: apps/homepage/kustomization
+  #   targetRevision: dev
   # Sync policy
   syncPolicy:
     automated: # automated sync by default retries failed attempts 5 times with following delays between attempts ( 5s, 10s, 20s, 40s, 80s ); retry controlled using `retry` field.
