@@ -108,7 +108,9 @@ config:
     ingress: true
     traefik: true
   # docker:
-  # settings:
+  settings:
+    ingress: true
+    traefik: true
 
 # -- Main environment variables. Template enabled.
 # Syntax options:
