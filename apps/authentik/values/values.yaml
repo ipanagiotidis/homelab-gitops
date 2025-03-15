@@ -21,6 +21,17 @@ server:
     hosts:
       # Specify external host name
       - authentik.yiannis.io
+    annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/description: Authentik
+      gethomepage.dev/group: SSO
+      gethomepage.dev/icon: authentik.png
+      gethomepage.dev/name: Authentik
+      gethomepage.dev/widget.type: "authentik"
+      gethomepage.dev/widget.url: "https://authentik.yiannis.io"
+      gethomepage.dev/pod-selector: ""
+      gethomepage.dev/weight: 10 # optional
+      gethomepage.dev/instance: "public" # optional
   volumes:
     - name: postgres-creds
       secret:
