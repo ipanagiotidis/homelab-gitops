@@ -47,7 +47,7 @@ ingress:
       gethomepage.dev/icon: "homepage.png"
     ingressClassName: "traefik"
     hosts:
-      - host: &host "homepage.yiannis.io"
+      - host: &host "home.yiannis.io"
         paths:
           - path: /
             pathType: Prefix
