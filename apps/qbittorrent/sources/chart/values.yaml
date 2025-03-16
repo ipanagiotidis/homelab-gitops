@@ -41,10 +41,10 @@ ingress:
     enabled: true
     annotations:
       gethomepage.dev/enabled: "true"
-      gethomepage.dev/description: Qbittorrent
+      gethomepage.dev/description: QBittorrent
       gethomepage.dev/href: "https://qb.yiannis.io"
       gethomepage.dev/group: Media
-      gethomepage.dev/icon: qbittorrent
+      gethomepage.dev/icon: qbittorrent.png
       gethomepage.dev/name: qbittorrent
       #gethomepage.dev/widget.type: "jellyfin"
       #gethomepage.dev/widget.url: "https://jf.yiannis.io"
