@@ -65,20 +65,7 @@ config:
             - abbr: GH
               href: https://github.com/
   services:
-    - My First Group:
-        - My First Service:
-            href: http://localhost/
-            description: Homepage is awesome
-
-    - My Second Group:
-        - My Second Service:
-            href: http://localhost/
-            description: Homepage is the best
-
-    - My Third Group:
-        - My Third Service:
-            href: http://localhost/
-            description: Homepage is 😎
+    - Media
   widgets:
     - resources:
         # change backend to 'kubernetes' to use Kubernetes integration. Requires RBAC.
