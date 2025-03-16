@@ -64,6 +64,7 @@ ingress:
       gethomepage.dev/pod-selector: ""
       #gethomepage.dev/weight: "10" # optional
       #gethomepage.dev/instance: "public" # optional
+      gethomepage.dev/instance: "internal"
     ingressClassName: "traefik"
     hosts:
       - host: "jf.yiannis.io"

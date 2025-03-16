@@ -39,6 +39,19 @@ ingress:
   # Configure an Ingress for the main application
   main:
     enabled: true
+    annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/description: Qbittorrent
+      gethomepage.dev/href: "https://qb.yiannis.io"
+      gethomepage.dev/group: Media
+      gethomepage.dev/icon: qbittorrent
+      gethomepage.dev/name: qbittorrent
+      #gethomepage.dev/widget.type: "jellyfin"
+      #gethomepage.dev/widget.url: "https://jf.yiannis.io"
+      gethomepage.dev/pod-selector: ""
+      #gethomepage.dev/weight: "10" # optional
+      #gethomepage.dev/instance: "public" # optional
+      gethomepage.dev/instance: "internal"
     ingressClassName: "traefik"
     hosts:
       - host: "qb.yiannis.io"
