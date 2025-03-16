@@ -52,6 +52,17 @@ ingress:
   # Configure an Ingress for the main application
   main:
     enabled: true
+    annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/description: Jellyfin
+      gethomepage.dev/group: Media
+      #gethomepage.dev/icon: authentik.png
+      gethomepage.dev/name: Jellyfin
+      #gethomepage.dev/widget.type: "authentik"
+      gethomepage.dev/widget.url: "https://jf.yiannis.io"
+      gethomepage.dev/pod-selector: ""
+      #gethomepage.dev/weight: "10" # optional
+      #gethomepage.dev/instance: "public" # optional
     ingressClassName: "traefik"
     hosts:
       - host: "jf.yiannis.io"
