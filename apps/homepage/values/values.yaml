@@ -59,11 +59,7 @@ ingress:
 config:
   # To use an existing ConfigMap uncomment this line and specify the name
   # useExistingConfigMap: existing-homepage-configmap
-  bookmarks:
-    - Developer:
-        - Github:
-            - abbr: GH
-              href: https://github.com/
+  bookmarks: []
   services:
     - Media
   widgets:
@@ -74,7 +70,7 @@ config:
         cpu: true
         memory: true
     - search:
-        provider: duckduckgo
+        provider: brave
         target: _blank
     # Uncomment to enable Kubernetes integration
     - kubernetes:
