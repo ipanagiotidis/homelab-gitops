@@ -57,14 +57,13 @@ ingress:
       gethomepage.dev/description: Jellyfin
       gethomepage.dev/href: "https://jf.yiannis.io"
       gethomepage.dev/group: Media
-      gethomepage.dev/icon: jellyfin.png
+      gethomepage.dev/icon: jellyfin
       gethomepage.dev/name: Jellyfin
       #gethomepage.dev/widget.type: "jellyfin"
       #gethomepage.dev/widget.url: "https://jf.yiannis.io"
       gethomepage.dev/pod-selector: ""
       #gethomepage.dev/weight: "10" # optional
       #gethomepage.dev/instance: "public" # optional
-      gethomepage.dev/instance: "public"
     ingressClassName: "traefik"
     hosts:
       - host: "jf.yiannis.io"
