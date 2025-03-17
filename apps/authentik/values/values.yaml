@@ -29,6 +29,9 @@ server:
       gethomepage.dev/icon: authentik.png
       gethomepage.dev/name: authentik
       gethomepage.dev/pod-selector: ""
+      gethomepage.dev/widget.type: "authentik"
+    gethomepage.dev/widget.url: "https://authentik.yiannis.io"
+    gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_AUTHENTIK}}"
   volumes:
     - name: postgres-creds
       secret:
