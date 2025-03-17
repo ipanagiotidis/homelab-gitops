@@ -61,15 +61,15 @@ config:
   # useExistingConfigMap: existing-homepage-configmap
   bookmarks: []
   services:
-    - crowdsec:
-        description: Crowdsec
-        href: "https://crowdsec-service.crowdsec.svc.cluster.local:8080"
-        group: Security
-        icon: crowdsec.png
-        name: crowdsec
-        widgets:
-          - type: crowdsec
-            url: https://crowdsec-service.crowdsec.svc.cluster.local:8080
+    - Security:
+      - crowdsec:
+          description: Crowdsec
+          href: "https://crowdsec-service.crowdsec.svc.cluster.local:8080"
+          icon: crowdsec.png
+          name: crowdsec
+          widgets:
+            - type: crowdsec
+              url: https://crowdsec-service.crowdsec.svc.cluster.local:8080
   widgets:
     - search:
         provider: brave
