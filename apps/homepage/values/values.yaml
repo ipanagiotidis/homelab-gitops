@@ -154,7 +154,6 @@ securityContext:
   runAsUser: 1001
   runAsGroup: 1001
   allowPrivilegeEscalation: false
-  readOnlyRootFilesystem: true
   capabilities:
     drop:
       - ALL
