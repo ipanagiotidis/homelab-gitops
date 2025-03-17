@@ -90,10 +90,12 @@ config:
   kubernetes:
     # change mode to 'cluster' to use RBAC service account
     mode: cluster
-  # docker:
-  settings:
     ingress: true
     traefik: true
+  # docker:
+  # settings:
+  #   ingress: true
+  #   traefik: true
 
 # -- Main environment variables. Template enabled.
 # Syntax options:
