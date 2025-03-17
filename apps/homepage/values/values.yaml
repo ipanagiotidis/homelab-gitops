@@ -60,16 +60,16 @@ config:
   # To use an existing ConfigMap uncomment this line and specify the name
   # useExistingConfigMap: existing-homepage-configmap
   bookmarks: []
-  services:
-    - Security:
-      - crowdsec:
-          description: Crowdsec
-          href: "https://crowdsec-service.crowdsec.svc.cluster.local:8080"
-          icon: crowdsec.png
-          name: crowdsec
-          widgets:
-            - type: crowdsec
-              url: https://crowdsec-service.crowdsec.svc.cluster.local:8080
+  services: []
+    # - Security:
+    #   - crowdsec:
+    #       description: Crowdsec
+    #       href: "https://crowdsec-service.crowdsec.svc.cluster.local:8080"
+    #       icon: crowdsec.png
+    #       name: crowdsec
+    #       widgets:
+    #         - type: crowdsec
+    #           url: https://crowdsec-service.crowdsec.svc.cluster.local:8080
   widgets:
     - search:
         provider: brave
