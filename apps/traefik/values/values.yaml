@@ -76,7 +76,7 @@ ingressRoute:
       gethomepage.dev/name: traefik
       gethomepage.dev/pod-selector: ""
       gethomepage.dev/widget.type: "traefik"
-      gethomepage.dev/widget.url: "https://tf.yiannis.io/dashboard/"
+      gethomepage.dev/widget.url: "https://tf.yiannis.io"
 
 volumes:
   - name: crowdsec-bouncer-tls
