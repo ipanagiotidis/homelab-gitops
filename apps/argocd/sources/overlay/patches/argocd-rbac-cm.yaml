@@ -7,3 +7,4 @@ data:
   policy.csv: |
     g, ArgoCD Admins, role:admin
     g, authentik Admins, role:admin
+    g, homepage, role:readonly

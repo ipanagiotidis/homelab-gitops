@@ -6,6 +6,7 @@ metadata:
 data:
   url: https://argocd.yiannis.io
   admin.enabled: "false"
+  accounts.homepage: apiKey
   dex.config: |
     connectors:
     - config:
