@@ -117,6 +117,11 @@ config:
 #      value: '{{ .Release.Name }}'
 env:
   HOMEPAGE_ALLOWED_HOSTS: home.yiannis.io
+  HOMEPAGE_VAR_ARGOCD_READONLY:
+    valueFrom:
+      secretKeyRef:
+        name: homepage-var-argocd-readonly
+        key: key
 
 # To include environment variables from other configs or other secrets for use in
 # Homepage's variable substitutions. Refer to them here.
