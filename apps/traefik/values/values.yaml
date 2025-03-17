@@ -67,6 +67,16 @@ ingressRoute:
     enabled: true
     matchRule: Host(`tf.yiannis.io`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
     entryPoints: ["websecure"]
+    annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/description: Traefik
+      gethomepage.dev/href: "https://tf.yiannis.io/dashboard/"
+      gethomepage.dev/group: Traefik
+      gethomepage.dev/icon: traefik.png
+      gethomepage.dev/name: traefik
+      gethomepage.dev/pod-selector: ""
+      gethomepage.dev/widget.type: "traefik"
+      gethomepage.dev/widget.url: "https://tf.yiannis.io/dashboard/"
 
 volumes:
   - name: crowdsec-bouncer-tls

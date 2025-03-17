@@ -62,8 +62,8 @@ ingress:
   annotations:
     gethomepage.dev/enabled: "true"
     gethomepage.dev/description: Gitea
-    gethomepage.dev/href: "https://gitea.yiannis.io"
-    gethomepage.dev/group: Git
+    gethomepage.dev/href: "https://gitea.yiannis.io/explore/repos"
+    gethomepage.dev/group: Platform
     gethomepage.dev/icon: gitea.png
     gethomepage.dev/name: gitea
     gethomepage.dev/pod-selector: ""

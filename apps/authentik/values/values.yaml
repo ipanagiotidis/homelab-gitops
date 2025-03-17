@@ -25,7 +25,7 @@ server:
       gethomepage.dev/enabled: "true"
       gethomepage.dev/description: Authentik
       gethomepage.dev/href: "https://authentik.yiannis.io"
-      gethomepage.dev/group: Infrastructure
+      gethomepage.dev/group: Platform
       gethomepage.dev/icon: authentik.png
       gethomepage.dev/name: authentik
       gethomepage.dev/pod-selector: ""

@@ -72,6 +72,9 @@ config:
     - search:
         provider: brave
         target: _blank
+    - traefik:
+        type: traefik
+        url: http://tf.yiannis.io/dashboard/
     # Uncomment to enable Kubernetes integration
     - kubernetes:
       cluster:
