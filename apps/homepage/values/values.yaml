@@ -154,7 +154,10 @@ securityContext:
   runAsUser: 1000
   runAsGroup: 1000
   allowPrivilegeEscalation: false
-  fsGroupChangePolicy: "OnRootMismatch"
   capabilities:
     drop:
       - ALL
+
+podSecurityContext:
+  fsGroupChangePolicy: "OnRootMismatch"
+  runAsUser: 1000
