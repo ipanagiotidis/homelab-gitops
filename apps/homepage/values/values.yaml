@@ -151,8 +151,8 @@ resources:
     cpu: 500m
 
 securityContext:
-  runAsUser: 1001
-  runAsGroup: 1001
+  runAsUser: 1000
+  runAsGroup: 1000
   allowPrivilegeEscalation: false
   capabilities:
     drop:
