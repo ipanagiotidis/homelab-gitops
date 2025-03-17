@@ -74,7 +74,7 @@ config:
         target: _blank
     - traefik:
         type: traefik
-        url: http://tf.yiannis.io/dashboard/
+        url: http://tf.yiannis.io
     # Uncomment to enable Kubernetes integration
     - kubernetes:
       cluster:
