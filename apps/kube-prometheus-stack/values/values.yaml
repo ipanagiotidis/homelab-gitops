@@ -24,6 +24,14 @@ grafana:
   assertNoLeakedSecrets: false
   ingress:
     enabled: true
+    annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/description: Grafana
+      gethomepage.dev/href: "https://gfn.yiannis.io"
+      gethomepage.dev/group: Monitoring
+      gethomepage.dev/icon: grafana.png
+      gethomepage.dev/name: grafana
+      gethomepage.dev/pod-selector: ""
     hosts:
       - gfn.yiannis.io
   grafana.ini:
