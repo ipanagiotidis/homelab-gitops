@@ -4,10 +4,10 @@ metadata:
   name: argocd-https
   annotations:
     gethomepage.dev/enabled: "true"
-    gethomepage.dev/description: Argocd
+    gethomepage.dev/description: ArgoCD
     gethomepage.dev/href: "https://argocd.yiannis.io"
     gethomepage.dev/group: Platform
-    gethomepage.dev/icon: argocd.png
+    gethomepage.dev/icon: argo-cd.png
     gethomepage.dev/name: argocd
     gethomepage.dev/pod-selector: ""
 spec:
