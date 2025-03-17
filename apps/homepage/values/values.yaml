@@ -62,15 +62,14 @@ config:
   bookmarks: []
   services:
     - crowdsec:
-        enabled: "true"
         description: Crowdsec
         href: "https://crowdsec-service.crowdsec.svc.cluster.local:8080"
         group: Security
         icon: crowdsec.png
         name: crowdsec
         widgets:
-          type: crowdsec
-          url: https://crowdsec-service.crowdsec.svc.cluster.local:8080
+          - type: crowdsec
+            url: https://crowdsec-service.crowdsec.svc.cluster.local:8080
   widgets:
     - search:
         provider: brave
