@@ -71,7 +71,7 @@ ingressRoute:
       gethomepage.dev/enabled: "true"
       gethomepage.dev/description: Traefik
       gethomepage.dev/href: "https://tf.yiannis.io/dashboard/"
-      gethomepage.dev/group: Traefik
+      gethomepage.dev/group: Ingress
       gethomepage.dev/icon: traefik.png
       gethomepage.dev/name: traefik
       gethomepage.dev/pod-selector: ""
