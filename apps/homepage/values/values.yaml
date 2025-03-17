@@ -60,8 +60,7 @@ config:
   # To use an existing ConfigMap uncomment this line and specify the name
   # useExistingConfigMap: existing-homepage-configmap
   bookmarks: []
-  services:
-    - Media
+  services: []
   widgets:
     - resources:
         # change backend to 'kubernetes' to use Kubernetes integration. Requires RBAC.
