@@ -143,7 +143,7 @@ persistence:
     mountPath: /app/config/logs
   baseConfigVolumeCSS:
     enabled: true
-    type: "custom"
+    type: emptyDir
     volumeSpec:
       emptyDir: {}
     subPath:
