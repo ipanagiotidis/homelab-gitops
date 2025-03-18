@@ -34,7 +34,8 @@ grafana:
       gethomepage.dev/pod-selector: ""
       gethomepage.dev/widget.type: "grafana"
       gethomepage.dev/widget.url: "https://gfn.yiannis.io"
-      gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_GRAFANA}}"
+      gethomepage.dev/widget.username: "sa-1-homepage-sa-74036047-3f5a-48f2-807f-c21eeb74b3bf"
+      gethomepage.dev/widget.password: '{{HOMEPAGE_VAR_GRAFANA}}'
     hosts:
       - gfn.yiannis.io
   grafana.ini:
