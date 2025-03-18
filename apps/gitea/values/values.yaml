@@ -67,3 +67,6 @@ ingress:
     gethomepage.dev/icon: gitea.png
     gethomepage.dev/name: gitea
     gethomepage.dev/pod-selector: ""
+    gethomepage.dev/widget.type: "gitea"
+    gethomepage.dev/widget.url: "https://gitea.yiannis.io"
+    gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_GITEA}}"

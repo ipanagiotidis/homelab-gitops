@@ -124,6 +124,11 @@ env:
       secretKeyRef:
         name: homepage-secrets
         key: authentik-key
+  HOMEPAGE_VAR_GITEA:
+    valueFrom:
+      secretKeyRef:
+        name: homepage-secrets
+        key: gitea-key
 
 # To include environment variables from other configs or other secrets for use in
 # Homepage's variable substitutions. Refer to them here.
