@@ -70,10 +70,7 @@ config:
     #       widgets:
     #         - type: crowdsec
     #           url: https://crowdsec-service.crowdsec.svc.cluster.local:8080
-  widgets:
-    - search:
-        provider: brave
-        target: _blank
+  widgets: []
     # Uncomment to enable Kubernetes integration
     - kubernetes:
         cluster:
