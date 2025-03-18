@@ -50,7 +50,7 @@ ingress:
       - host: &host "home.yiannis.io"
         paths:
           - path: /
-            pathType: Prefix
+            pathType: Exact
     tls:
       - hosts:
           - *host
