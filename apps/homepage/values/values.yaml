@@ -63,15 +63,15 @@ config:
   services:
     - Monitoring:
       - grafana:
-        description: Grafana
-        href: "https://gfn.yiannis.io"
-        icon: grafana.png
-        name: grafana
-        widgets:
-          - type: "grafana"
-            url: "https://gfn.yiannis.io"
-            username: "sa-1-homepage-sa-74036047-3f5a-48f2-807f-c21eeb74b3bf"
-            password: "{{HOMEPAGE_VAR_GRAFANA}}"
+          description: Grafana
+          href: "https://gfn.yiannis.io"
+          icon: grafana.png
+          name: grafana
+          widgets:
+            - type: "grafana"
+              url: "https://gfn.yiannis.io"
+              username: "sa-1-homepage-sa-74036047-3f5a-48f2-807f-c21eeb74b3bf"
+              password: "{{HOMEPAGE_VAR_GRAFANA}}"
     # - Security:
     #   - crowdsec:
     #       description: Crowdsec
