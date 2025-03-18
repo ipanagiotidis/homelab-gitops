@@ -32,6 +32,9 @@ grafana:
       gethomepage.dev/icon: grafana.png
       gethomepage.dev/name: grafana
       gethomepage.dev/pod-selector: ""
+      gethomepage.dev/widget.type: "grafana"
+      gethomepage.dev/widget.url: "https://gfn.yiannis.io"
+      gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_GRAFANA}}"
     hosts:
       - gfn.yiannis.io
   grafana.ini:
