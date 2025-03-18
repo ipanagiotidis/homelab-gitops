@@ -141,12 +141,6 @@ persistence:
     enabled: true
     type: emptyDir
     mountPath: /app/config/logs
-  baseConfigVolumeCss:
-    enabled: true
-    type: emptyDir
-    subPath:
-      - path: custom.css
-        mountPath: /app/config/custom.css
 
 
 resources:
@@ -170,3 +164,4 @@ podSecurityContext:
   runAsNonRoot: true
   fsGroupChangePolicy: "OnRootMismatch"
   runAsUser: 1000
+  fsGroup: 1000
