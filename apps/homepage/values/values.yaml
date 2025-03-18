@@ -141,6 +141,8 @@ persistence:
     enabled: true
     type: emptyDir
     mountPath: /app/config/logs
+  baseConfigVolume:
+    enabled: true
 
 resources:
   requests:
@@ -153,11 +155,13 @@ resources:
 securityContext:
   runAsUser: 1000
   runAsGroup: 1000
+  runAsNonRoot: true
   allowPrivilegeEscalation: false
   capabilities:
     drop:
       - ALL
 
 podSecurityContext:
-  fsGroupChangePolicy: "Always"
+  runAsNonRoot: true
+  fsGroupChangePolicy: "OnRootMismatch"
   runAsUser: 1000
