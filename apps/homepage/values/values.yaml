@@ -70,7 +70,7 @@ config:
           widgets:
             - type: "grafana"
               url: "https://gfn.yiannis.io"
-              username: sa-1-homepage-sa-ba09bf3c-d8e1-4e3e-90a6-f21f7b9513bf	
+              username: homepage-sa
               password: "{{HOMEPAGE_VAR_GRAFANA}}"
     # - Security:
     #   - crowdsec:
