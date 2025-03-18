@@ -141,7 +141,7 @@ persistence:
     enabled: true
     type: emptyDir
     mountPath: /app/config/logs
-  baseConfigVolumeCSS:
+  baseConfigVolumeCss:
     enabled: true
     type: emptyDir
     subPath:
