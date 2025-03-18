@@ -162,6 +162,6 @@ securityContext:
 
 podSecurityContext:
   runAsNonRoot: true
-  fsGroupChangePolicy: "Always"
+  fsGroupChangePolicy: "OnRootMismatch"
   runAsUser: 1000
   fsGroup: 1000
