@@ -144,8 +144,6 @@ persistence:
   baseConfigVolumeCSS:
     enabled: true
     type: emptyDir
-    volumeSpec:
-      emptyDir: {}
     subPath:
       - path: custom.css
         mountPath: /app/config/custom.css
