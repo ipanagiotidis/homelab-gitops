@@ -60,7 +60,18 @@ config:
   # To use an existing ConfigMap uncomment this line and specify the name
   # useExistingConfigMap: existing-homepage-configmap
   bookmarks: []
-  services: []
+  services:
+    - Infrastructure:
+      - adguard:
+          description: Adguard
+          href: "{{HOMEPAGE_VAR_ADGUARD_SERVER}}"
+          icon: adguard.png
+          name: adguard
+          widgets:
+            - type: "adguard"
+              url: https://gfn.yiannis.io
+              username: "{{HOMEPAGE_VAR_ADGUARD_USER}}"
+              password: "{{HOMEPAGE_VAR_ADGUARD}}"
     # - Monitoring:
     #   - grafana:
     #       description: Grafana
@@ -145,6 +156,21 @@ env:
       secretKeyRef:
         name: homepage-secrets
         key: grafana-key
+  HOMEPAGE_VAR_ADGUARD:
+    valueFrom:
+      secretKeyRef:
+        name: homepage-secrets
+        key: adguard-key
+  HOMEPAGE_VAR_ADGUARD_SERVER:
+    valueFrom:
+      secretKeyRef:
+        name: homepage-secrets
+        key: adguard-server
+  HOMEPAGE_VAR_ADGUARD_USER:
+    valueFrom:
+      secretKeyRef:
+        name: homepage-secrets
+        key: adguard-user
 
 # To include environment variables from other configs or other secrets for use in
 # Homepage's variable substitutions. Refer to them here.
