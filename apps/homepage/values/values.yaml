@@ -69,7 +69,7 @@ config:
           name: adguard
           widgets:
             - type: "adguard"
-              url: https://gfn.yiannis.io
+              url: "{{HOMEPAGE_VAR_ADGUARD_SERVER}}"
               username: "{{HOMEPAGE_VAR_ADGUARD_USER}}"
               password: "{{HOMEPAGE_VAR_ADGUARD}}"
     # - Monitoring:
