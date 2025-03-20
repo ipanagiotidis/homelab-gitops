@@ -65,7 +65,7 @@ config:
       - adguard:
           description: Adguard
           href: "{{HOMEPAGE_VAR_ADGUARD_SERVER}}"
-          icon: adguard.png
+          icon: adguard-home.png
           name: adguard
           widgets:
             - type: "adguard"
