@@ -60,18 +60,18 @@ config:
   # To use an existing ConfigMap uncomment this line and specify the name
   # useExistingConfigMap: existing-homepage-configmap
   bookmarks: []
-  services:
-    - Monitoring:
-      - grafana:
-          description: Grafana
-          href: "https://gfn.yiannis.io"
-          icon: grafana.png
-          name: grafana
-          widgets:
-            - type: "grafana"
-              url: https://gfn.yiannis.io
-              username: sa-1-homepage-sa-ba09bf3c-d8e1-4e3e-90a6-f21f7b9513bf
-              password: "{{HOMEPAGE_VAR_GRAFANA}}"
+  services: []
+    # - Monitoring:
+    #   - grafana:
+    #       description: Grafana
+    #       href: "https://gfn.yiannis.io"
+    #       icon: grafana.png
+    #       name: grafana
+    #       widgets:
+    #         - type: "grafana"
+    #           url: https://gfn.yiannis.io
+    #           username: sa-1-homepage-sa-ba09bf3c-d8e1-4e3e-90a6-f21f7b9513bf
+    #           password: "{{HOMEPAGE_VAR_GRAFANA}}"
     # - Security:
     #   - crowdsec:
     #       description: Crowdsec
