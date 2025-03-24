@@ -11,8 +11,8 @@ metadata:
     gethomepage.dev/name: argocd
     gethomepage.dev/pod-selector: ""
     gethomepage.dev/widget.type: "argocd"
-    gethomepage.dev/widget.url: "http://argocd-server.argocd.svc.cluster.local"
-    #gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_ARGOCD_READONLY}}"
+    gethomepage.dev/widget.url: "https://argocd.yiannis.io"
+    gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_ARGOCD_READONLY}}"
 spec:
   entryPoints:
     - websecure
