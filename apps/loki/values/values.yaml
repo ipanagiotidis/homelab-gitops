@@ -8,7 +8,7 @@ loki:
   analytics:
     reporting_enabled: false
     usage_stats_url: ""
-  schema_config:
+  schemaConfig:
     configs:
       - from: 2024-04-01
         object_store: filesystem
