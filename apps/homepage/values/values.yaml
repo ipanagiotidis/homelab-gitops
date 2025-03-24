@@ -67,11 +67,11 @@ config:
           href: "{{HOMEPAGE_VAR_ADGUARD_SERVER}}"
           icon: adguard-home.png
           name: adguard
-          widgets:
-            - type: "adguard"
-              url: "{{HOMEPAGE_VAR_ADGUARD_SERVER}}"
-              username: "{{HOMEPAGE_VAR_ADGUARD_USER}}"
-              password: "{{HOMEPAGE_VAR_ADGUARD}}"
+          widget:
+            type: "adguard"
+            url: "{{HOMEPAGE_VAR_ADGUARD_SERVER}}"
+            username: "{{HOMEPAGE_VAR_ADGUARD_USER}}"
+            password: "{{HOMEPAGE_VAR_ADGUARD}}"
     # - Monitoring:
     #   - grafana:
     #       description: Grafana
