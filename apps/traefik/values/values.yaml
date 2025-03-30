@@ -76,7 +76,7 @@ ingressRoute:
       gethomepage.dev/name: traefik
       gethomepage.dev/pod-selector: ""
       gethomepage.dev/widget.type: "traefik"
-      gethomepage.dev/widget.url: "http://traefik.traefik.svc.cluster.local"
+      gethomepage.dev/widget.url: "traefik.traefik.svc.cluster.local:80"
     middlewares:
       - name: authentik
         namespace: traefik
