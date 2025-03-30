@@ -77,9 +77,9 @@ ingressRoute:
       gethomepage.dev/pod-selector: ""
       gethomepage.dev/widget.type: "traefik"
       gethomepage.dev/widget.url: "https://traefik.traefik.svc.cluster.local"
-    middlewares:
-      - name: authentik
-        namespace: traefik
+    # middlewares:
+    #   - name: authentik
+    #     namespace: traefik
 volumes:
   - name: crowdsec-bouncer-tls
     mountPath: /etc/traefik/crowdsec-certs/

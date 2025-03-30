@@ -51,7 +51,7 @@ ingress:
       gethomepage.dev/pod-selector: ""
       #gethomepage.dev/weight: "10" # optional
       #gethomepage.dev/instance: "public" # optional
-      traefik.ingress.kubernetes.io/router.middlewares: traefik-authentik@kubernetescrd
+      #traefik.ingress.kubernetes.io/router.middlewares: traefik-authentik@kubernetescrd
     ingressClassName: "traefik"
     hosts:
       - host: "qb.yiannis.io"
