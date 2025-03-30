@@ -78,7 +78,7 @@ ingressRoute:
       gethomepage.dev/widget.type: "traefik"
       gethomepage.dev/widget.url: "https://tf.yiannis.io"
     middlewares:
-      - name: traefik-authentik
+      - name: authentik
         namespace: traefik
 volumes:
   - name: crowdsec-bouncer-tls
