@@ -13,7 +13,7 @@ spec:
   sources:
   - chart: reflector
     repoURL: https://emberstack.github.io/helm-charts
-    targetRevision: 4.2.4
+    targetRevision: 9.0.322
     helm:
       releaseName: reflector
   # Sync policy
