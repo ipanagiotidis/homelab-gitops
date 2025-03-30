@@ -45,7 +45,7 @@ ingress:
       gethomepage.dev/description: "A modern, secure, highly customizable application dashboard."
       gethomepage.dev/group: "A New Group"
       gethomepage.dev/icon: "homepage.png"
-      traefik.ingress.kubernetes.io/router.middlewares: traefik-authentik@kubernetescrd
+      #traefik.ingress.kubernetes.io/router.middlewares: traefik-authentik@kubernetescrd
     ingressClassName: "traefik"
     hosts:
       - host: &host "home.yiannis.io"
