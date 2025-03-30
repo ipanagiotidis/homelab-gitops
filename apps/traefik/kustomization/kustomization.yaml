@@ -6,3 +6,4 @@ resources:
   - ./certificate.yaml
   - ./tlsstore.yaml
   - ./middleware.yaml
+  - ./forwardauth.yaml
