@@ -96,8 +96,8 @@ additionalArguments:
   - "--experimental.plugins.bouncer.version=v1.4.2"
   - "--entrypoints.web.http.middlewares=traefik-redirect-http-https@kubernetescrd,traefik-bouncer@kubernetescrd"
   - "--entrypoints.websecure.http.middlewares=traefik-redirect-http-https@kubernetescrd,traefik-bouncer@kubernetescrd"
-  - "--entrypoints.web.forwardedHeaders.trustedIPs=10.244.2.163/32,10.244.1.226/32"
-  - "--entrypoints.websecure.forwardedHeaders.trustedIPs=10.244.2.163/32,10.244.1.226/32"
+  - "--entrypoints.web.forwardedHeaders.trustedIPs=10.244.2.163/32,10.244.1.226/32,10.244.4.0/32"
+  - "--entrypoints.websecure.forwardedHeaders.trustedIPs=10.244.2.163/32,10.244.1.226/32,10.244.4.0/32"
   - "--providers.kubernetescrd"
 
 entryPoints:
@@ -106,11 +106,13 @@ entryPoints:
       trustedIPs:
         - 10.244.2.163/32
         - 10.244.1.226/32
+        - 10.244.4.0/32
   websecure:
     forwardedHeaders:
       trustedIPs:
         - 10.244.2.163/32
         - 10.244.1.226/32
+        - 10.244.4.0/32
 
 metrics:
   otlp:
