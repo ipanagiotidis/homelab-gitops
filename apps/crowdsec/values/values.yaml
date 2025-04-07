@@ -63,7 +63,7 @@ lapi:
     # - name: DISABLE_PARSERS
     #   value: "crowdsecurity/whitelists"
     - name: COLLECTIONS
-      value: "crowdsecurity/traefik"
+      value: "crowdsecurity/traefik LePresidente/jellyfin firix/authentik"
   nodeSelector:
     extraDiskNode: "true"
     kubernetes.io/hostname: k8s-node-5
