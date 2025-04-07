@@ -7,8 +7,8 @@ spec:
   plugin:
     bouncer:
       enabled: true
-      logLevel: DEBUG
-      crowdsecMode: none
+      logLevel: INFO
+      crowdsecMode: stream
       crowdsecLapiHost: crowdsec-service.crowdsec.svc.cluster.local:8080
       crowdsecLapiScheme: https
       crowdsecLapiTLSCertificateAuthorityFile: /etc/traefik/crowdsec-certs/ca.crt
