@@ -1,0 +1,79 @@
+global:  
+  nodeSelector:
+    extraDiskNode: "true"
+    kubernetes.io/hostname: k8s-node-4
+
+authentik:
+  secret_key: "PleaseGenerateA50CharKey"
+  # This sends anonymous usage-data, stack traces on errors and
+  # performance data to sentry.io, and is fully opt-in
+  error_reporting:
+    enabled: false
+  postgresql:
+    password: file:///postgres-creds/AUTHENTIK_POSTGRES_PASSWORD
+  log_level: "info"
+
+server:
+  ingress:
+    # Specify kubernetes ingress controller class name
+    ingressClassName: traefik
+    enabled: true
+    hosts:
+      # Specify external host name
+      - authentik.yiannis.io
+    annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/description: Authentik
+      gethomepage.dev/href: "https://authentik.yiannis.io"
+      gethomepage.dev/group: Platform
+      gethomepage.dev/icon: authentik.png
+      gethomepage.dev/name: authentik
+      gethomepage.dev/pod-selector: ""
+      gethomepage.dev/widget.type: "authentik"
+      gethomepage.dev/widget.url: "http://authentik-server.authentik.svc.cluster.local"
+      gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_AUTHENTIK}}"
+  volumes:
+    - name: postgres-creds
+      secret:
+        secretName: authentik-postgres-credentials
+  volumeMounts:
+    - name: postgres-creds
+      mountPath: /postgres-creds
+      readOnly: true
+  envFrom:
+  - secretRef:
+      name: authentik-secret-key
+
+postgresql:
+  enabled: true
+  volumePermissions:
+    enabled: true
+  auth:
+    existingSecret: authentik-postgres-credentials
+    secretKeys:
+      adminPasswordKey: AUTHENTIK_POSTGRES_ADMIN_PASSWORD
+      userPasswordKey: AUTHENTIK_POSTGRES_PASSWORD
+  primary:
+    nodeSelector:
+      extraDiskNode: "true"
+
+redis:
+  enabled: true
+  volumePermissions:
+    enabled: true
+  master:
+    nodeSelector:
+      extraDiskNode: "true"
+
+worker:
+  volumes:
+    - name: postgres-creds
+      secret:
+        secretName: authentik-postgres-credentials
+  volumeMounts:
+    - name: postgres-creds
+      mountPath: /postgres-creds
+      readOnly: true
+  envFrom:
+  - secretRef:
+      name: authentik-secret-key

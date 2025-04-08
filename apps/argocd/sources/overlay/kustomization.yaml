@@ -8,5 +8,4 @@ patches:
 - path: ./patches/argocd-cmd-params-cm.yaml
 - path: ./patches/argocd-cm.yaml
 - path: ./patches/argocd-rbac-cm.yaml
-- path: ./patches/authentik-host-dex.yaml
-#- path: ./patches/argocd-dex-service.yaml
+- path: ./patches/argocd-dex-service.yaml

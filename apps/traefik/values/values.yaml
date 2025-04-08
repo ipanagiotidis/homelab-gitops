@@ -1,0 +1,125 @@
+updateStrategy:
+  # -- Customize updateStrategy: RollingUpdate or OnDelete
+  type: RollingUpdate
+  rollingUpdate:
+    maxUnavailable: 0
+    maxSurge: 1
+
+providers:
+  kubernetesIngress:
+    enabled: true
+    allowExternalNameServices: true
+    allowEmptyServices: false
+    publishedService:
+      enabled: true
+
+service:
+  enabled: true
+  type: LoadBalancer
+  # -- Additional annotations applied to both TCP and UDP services (e.g. for cloud provider specific config)
+  annotations: 
+    metallb.universe.tf/ip-allocated-from-pool: single-lb-pool
+  spec:
+    loadBalancerIP: "192.168.88.7"
+
+tlsStore:
+  default:
+    defaultCertificate:
+      secretName: traefik-wildcard-tls
+
+ingressClass:
+  enabled: true
+  isDefaultClass: true
+  name: "traefik"
+
+securityContext:
+  capabilities:
+    drop: [ALL]
+  readOnlyRootFilesystem: true
+  allowPrivilegeEscalation: false
+
+env:
+  - name: TRAEFIK_ENTRYPOINTS_WEB_ADDRESS
+    value: :80
+  - name: TRAEFIK_ENTRYPOINTS_WEBSECURE_ADDRESS
+    value: :443
+  - name: TRAEFIK_ENTRYPOINTS_WEB_HTTP_REDIRECTIONS_ENTRYPOINT_TO
+    value: websecure
+  - name: TRAEFIK_ENTRYPOINTS_WEB_HTTP_REDIRECTIONS_ENTRYPOINT_SCHEME
+    value: https
+  - name: TRAEFIK_ENTRYPOINTS_WEB_HTTP_MIDDLEWARES
+    value: traefik-bouncer,traefik-redirect-http-https
+  - name: TRAEFIK_ENTRYPOINTS_WEBSECURE_HTTP_MIDDLEWARES
+    value: traefik-bouncer,traefik-redirect-http-https
+
+logs:
+  general:
+    format: "json"
+  access:
+    enabled: true
+    format: "json"
+    fields:
+      headers: 
+        defaultmode: keep
+
+ingressRoute:
+  dashboard:
+    enabled: true
+    matchRule: Host(`tf.yiannis.io`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
+    entryPoints: ["websecure"]
+    annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/description: Traefik
+      gethomepage.dev/href: "https://tf.yiannis.io/dashboard/"
+      gethomepage.dev/group: Ingress
+      gethomepage.dev/icon: traefik.png
+      gethomepage.dev/name: traefik
+      gethomepage.dev/pod-selector: ""
+      gethomepage.dev/widget.type: "traefik"
+      gethomepage.dev/widget.url: "https://tf.yiannis.io"
+    # middlewares:
+    #   - name: authentik
+    #     namespace: traefik
+volumes:
+  - name: crowdsec-bouncer-tls
+    mountPath: /etc/traefik/crowdsec-certs/
+    type: secret
+
+experimental:
+  plugins:
+    bouncer:
+      moduleName: "github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
+      version: "v1.4.2"
+
+additionalArguments:
+  - "--experimental.plugins.bouncer.moduleName=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
+  - "--experimental.plugins.bouncer.version=v1.4.2"
+  - "--entrypoints.web.http.middlewares=traefik-redirect-http-https@kubernetescrd,traefik-bouncer@kubernetescrd"
+  - "--entrypoints.websecure.http.middlewares=traefik-redirect-http-https@kubernetescrd,traefik-bouncer@kubernetescrd"
+  - "--entrypoints.web.forwardedHeaders.trustedIPs=10.244.2.163/32,10.244.1.226/32,10.244.4.0/32"
+  - "--entrypoints.websecure.forwardedHeaders.trustedIPs=10.244.2.163/32,10.244.1.226/32,10.244.4.0/32"
+  - "--providers.kubernetescrd"
+
+entryPoints:
+  web:
+    forwardedHeaders:
+      trustedIPs:
+        - 10.244.2.163/32
+        - 10.244.1.226/32
+        - 10.244.4.0/32
+  websecure:
+    forwardedHeaders:
+      trustedIPs:
+        - 10.244.2.163/32
+        - 10.244.1.226/32
+        - 10.244.4.0/32
+
+metrics:
+  otlp:
+    http:
+      endpoint: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/api/v1/otlp/v1/metrics
+
+# tracing:
+#   otlp:
+#     http:
+#       endpoint: http://tempo.monitoring.svc.cluster.local:4318/v1/traces

@@ -1,0 +1,116 @@
+alertmanager:
+  enabled: false
+kubeApiServer:
+  enabled: true
+kubelet:
+  enabled: true
+kubeControllerManager:
+  enabled: false
+coreDns:
+  enabled: false
+kubeDns:
+  enabled: false
+# kubeEtcd:
+#   enabled: false
+# kubeScheduler:
+#   enabled: false
+# kubeProxy:
+#   enabled: false
+kubeStateMetrics:
+  enabled: true
+nodeExporter:
+  enabled: true
+grafana:
+  assertNoLeakedSecrets: false
+  ingress:
+    enabled: true
+    annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/description: Grafana
+      gethomepage.dev/href: "https://gfn.yiannis.io"
+      gethomepage.dev/group: Monitoring
+      gethomepage.dev/icon: grafana.png
+      gethomepage.dev/name: grafana
+      gethomepage.dev/pod-selector: ""
+    hosts:
+      - gfn.yiannis.io
+  grafana.ini:
+    auth:
+      signout_redirect_url: "https://authentik.yiannis.io/application/o/grafana/end-session/"
+      oauth_auto_login: true
+      login_cookie_name: __Host-grafana_session
+    server:
+      root_url: https://gfn.yiannis.io/
+      enforce_domain: true
+    security:
+      cookie_secure: true
+      cookie_samesite: strict
+      login_cookie_name: __Host-grafana_session
+      strict_transport_security: true
+    auth.generic_oauth:
+      name: authentik
+      enabled: true
+      client_id: $__file{/etc/secrets/auth_generic_oauth/GRAFANA_CLIENT_ID}
+      client_secret: $__file{/etc/secrets/auth_generic_oauth/GRAFANA_CLIENT_SECRET}
+      scopes: "openid profile email"
+      auth_url: "https://authentik.yiannis.io/application/o/authorize/"
+      token_url: "https://authentik.yiannis.io/application/o/token/"
+      api_url: "https://authentik.yiannis.io/application/o/userinfo/"
+      # Optionally map user groups to Grafana roles
+      role_attribute_path: contains(groups, 'Grafana Admins') && 'Admin' || contains(groups, 'Grafana Editors') && 'Editor' || contains(groups, 'Grafana Viewers') && 'Viewer'
+  extraSecretMounts:
+    - name: auth-generic-oauth-secret-mount
+      secretName: grafana-client
+      defaultMode: 0440
+      mountPath: /etc/secrets/auth_generic_oauth
+      readOnly: true
+  persistence:
+    enabled: true
+    type: pvc
+    size: 10Gi  # Adjust the size according to your needs
+    storageClassName: "local-path"  # Specify your storage class
+    accessModes:
+      - ReadWriteOnce
+    finalizers:
+      - kubernetes.io/pvc-protection
+  # sidecar:
+  #   enabled: false
+      #dashboards:
+      #enabled: true
+      #label: grafana_dashboard
+      #labelValue: "1"
+      #datasources:
+      #enabled: true
+      #label: "grafana_datasource" # This is the default label the sidecar looks for
+      #labelvalue: "1"
+  additionalDataSources:
+    - name: Loki-test
+      type: loki
+      access: proxy
+      url: http://loki:3100
+      jsonData:
+        tlsSkipVerify: true
+    - name: Tempo-test
+      type: tempo
+      url: http://tempo:3100
+prometheus:
+  prometheusSpec:
+    ruleSelectorNilUsesHelmValues: false
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    probeSelectorNilUsesHelmValues: false
+    enableRemoteWriteReceiver: true
+    enableFeatures:
+      - remote-write-receiver
+      - otlp-write-receiver
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 10Gi  # Specify the desired storage size
+          storageClassName: "local-path"  # Specify your storage class
+    retention: "14d"  # Retain metrics for 14 days
+    retentionSize: "5GB"  # Optional: Retain no more than 20GB of metrics
+

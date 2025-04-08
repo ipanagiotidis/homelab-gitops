@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-prometheus-stack
+  namespace: argocd
+  labels:
+    app: kube-prometheus-stack
+spec:
+  destination:
+    namespace: monitoring
+    server: https://kubernetes.default.svc
+  project: default
+  sources:
+  - chart: kube-prometheus-stack
+    repoURL: https://prometheus-community.github.io/helm-charts 
+    targetRevision: 70.3.0
+    helm:
+      releaseName: kube-prometheus-stack
+      valueFiles:
+        - $values/apps/kube-prometheus-stack/values/values.yaml
+  - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+    targetRevision: dev
+    ref: values
+  - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+    path: apps/kube-prometheus-stack/kustomization
+    targetRevision: dev
+  # Sync policy
+  syncPolicy:
+    automated: # automated sync by default retries failed attempts 5 times with following delays between attempts ( 5s, 10s, 20s, 40s, 80s ); retry controlled using `retry` field.
+      prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
+      selfHeal: true # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cluster and no git change detected ( false by default ).
+    syncOptions:     # Sync options which modifies sync behavior
+    - Validate=true # disables resource validation (equivalent to 'kubectl apply --validate=true')
+    - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
+    # The retry feature is available since v1.7
+    - ServerSideApply=true

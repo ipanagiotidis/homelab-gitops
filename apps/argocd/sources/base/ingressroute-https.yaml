@@ -1,7 +1,18 @@
-apiVersion: traefik.containo.us/v1alpha1
+apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: argocd-https
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: ArgoCD
+    gethomepage.dev/href: "https://argocd.yiannis.io"
+    gethomepage.dev/group: Platform
+    gethomepage.dev/icon: argo-cd.png
+    gethomepage.dev/name: argocd
+    gethomepage.dev/pod-selector: ""
+    gethomepage.dev/widget.type: "argocd"
+    gethomepage.dev/widget.url: "http://argocd-server.argocd.svc.cluster.local"
+    gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_ARGOCD_READONLY}}"
 spec:
   entryPoints:
     - websecure
@@ -16,12 +27,10 @@ spec:
   - kind: Rule
     match: >-
       Host(`argocd.yiannis.io`) &&
-      Headers(`Content-Type`, `application/grpc`)
+      Header(`Content-Type`, `application/grpc`)
     priority: 11
     services:
     - kind: Service
       name: argocd-server
       port: http
       scheme: h2c
-  tls:
-    secretName: argocd-certificate

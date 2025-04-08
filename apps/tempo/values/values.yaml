@@ -1,0 +1,9 @@
+persistence:
+  enabled: true
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+  size: 10Gi
+
+tempo:
+  reportingEnabled: false

@@ -1,0 +1,72 @@
+# for raw logs format: json or cri (docker|containerd)
+container_runtime: containerd
+tls:
+  enabled: true
+  agent:
+    tlsClientAuth: true
+  bouncer:
+    reflector:
+      namespaces: ["traefik"]
+  # certManager:
+  #   issuerRef:
+  #     name: "cloudflare-issuer"
+  #     kind: "ClusterIssuer"
+config:
+  config.yaml.local: |
+    api:
+      server:
+        auto_registration: # Activate if not using TLS for authentication
+          enabled: false
+        tls:
+          bouncers_allowed_ou: #OU allowed for bouncers
+            - bouncer-ou
+          agents_allowed_ou: #OU allowed for agents
+            - agent-ou
+agent:
+  lapiURL: "https://crowdsec-service.crowdsec.svc.cluster.local:8080"
+  lapiHost: "crowdsec-service.crowdsec.svc.cluster.local"
+  # Specify each pod whose logs you want to process
+  acquisition:
+    # The namespace where the pod is located
+    - namespace: traefik
+      # The pod name
+      podName: traefik-*
+      # as in crowdsec configuration, we need to specify the program name to find a matching parser
+      program: traefik
+      poll_without_inotify: true
+    - namespace: authentik
+      podName: authentik-server-*
+      program: authentik
+      poll_without_inotify: true
+    - namespace: jellyfin
+      podName: jellyfin-*
+      program: jellyfin
+      poll_without_inotify: true
+  env:
+    - name: COLLECTIONS
+      value: "crowdsecurity/traefik LePresidente/jellyfin firix/authentik"
+    - name: DISABLE_ONLINE_API
+      value: "false"
+    # - name: DISABLE_PARSERS
+    #   value: "crowdsecurity/whitelists"
+lapi:
+  env:
+    # To enroll the Security Engine to the console
+    - name: ENROLL_KEY
+      valueFrom:
+        secretKeyRef:
+          name: crowdsec-enroll-secret
+          key: key
+    - name: ENROLL_INSTANCE_NAME
+      value: "homelab-k8s-cluster"
+    - name: ENROLL_TAGS
+      value: "homelab crowdsec kubernetes"
+    - name: DISABLE_ONLINE_API
+      value: "false"
+    # - name: DISABLE_PARSERS
+    #   value: "crowdsecurity/whitelists"
+    - name: COLLECTIONS
+      value: "crowdsecurity/traefik LePresidente/jellyfin firix/authentik"
+  nodeSelector:
+    extraDiskNode: "true"
+    kubernetes.io/hostname: k8s-node-5
