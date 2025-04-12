@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - ./external-secret.yaml
   - ./tailscale-rbac.yaml
-  - ./tailscale-proxy.yaml
+  - ./qbittorrent/tailscale-proxy.yaml

@@ -1,18 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: qbittorrent
+  name: tailscale
   namespace: argocd
   labels:
-    app: qbittorrent
+    app: tailscale
 spec:
   destination:
-    namespace: qbittorrent
+    namespace: tailscale
     server: https://kubernetes.default.svc
   project: default
   sources:
-  - path: apps/qbittorrent/sources/chart
+  - path: apps/tailscale/sources/chart
     repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+    targetRevision: dev
+  - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+    path: apps/tailscale/kustomization
     targetRevision: dev
   # Sync policy
   syncPolicy:
