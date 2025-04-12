@@ -28,7 +28,17 @@ spec:
           value: "false"
         - name: TS_DEST_IP
           value: 10.108.56.35
+      resources:
+        limits:
+          squat.ai/tun: "1"
       securityContext:
+        allowPrivilegeEscalation: false
         capabilities:
-           add:
+          drop:
+            - ALL
+          add:
             - NET_ADMIN
+  volumes:
+  - name: dev-video0
+    hostPath:
+      path: /dev/video0
