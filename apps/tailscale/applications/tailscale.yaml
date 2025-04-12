@@ -11,9 +11,6 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   sources:
-  - path: apps/tailscale/sources/chart
-    repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
-    targetRevision: dev
   - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
     path: apps/tailscale/kustomization
     targetRevision: dev
