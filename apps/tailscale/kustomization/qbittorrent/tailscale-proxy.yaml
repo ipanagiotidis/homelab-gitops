@@ -34,11 +34,7 @@ spec:
       securityContext:
         allowPrivilegeEscalation: false
         capabilities:
-          drop:
-            - ALL
-          add:
-            - NET_ADMIN
-  volumes:
-  - name: dev-video0
-    hostPath:
-      path: /dev/video0
+           drop:
+             - ALL
+           add:
+             - NET_ADMIN
