@@ -33,5 +33,5 @@ spec:
           squat.ai/tun: "1"
       securityContext:
         capabilities:
-           add:
-             - NET_ADMIN
+          add:
+            - NET_ADMIN
