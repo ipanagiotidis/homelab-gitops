@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: tailscale-proxy
+  name: tailscale-proxy-home
 spec:
   serviceAccountName: tailscale
   initContainers:
@@ -27,7 +27,7 @@ spec:
         - name: TS_USERSPACE
           value: "false"
         - name: TS_DEST_IP
-          value: 10.102.143.73
+          value: 10.111.188.40
       resources:
         limits:
           squat.ai/tun: "1"
