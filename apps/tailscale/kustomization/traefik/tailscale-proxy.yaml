@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tailscale-proxy
+spec:
+  serviceAccountName: tailscale
+  initContainers:
+    - name: sysctler
+      image: busybox:latest
+      securityContext:
+        privileged: true
+      command: ["/bin/sh"]
+      args:
+        - -c
+        - sysctl -w net.ipv4.ip_forward=1 net.ipv6.conf.all.forwarding=1
+  containers:
+    - name: tailscale
+      image: ghcr.io/tailscale/tailscale:latest
+      env:
+        - name: TS_KUBE_SECRET
+          value: tailscale-auth
+        - name: TS_AUTHKEY
+          valueFrom:
+            secretKeyRef:
+              name: tailscale-auth
+              key: TS_AUTHKEY
+        - name: TS_USERSPACE
+          value: "false"
+        - name: TS_DEST_IP
+          value: 10.102.143.73:443
+      resources:
+        limits:
+          squat.ai/tun: "1"
+      securityContext:
+        capabilities:
+          add:
+            - NET_ADMIN

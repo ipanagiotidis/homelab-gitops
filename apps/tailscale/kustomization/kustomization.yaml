@@ -5,3 +5,4 @@ resources:
   - ./external-secret.yaml
   - ./tailscale-rbac.yaml
   - ./qbittorrent/tailscale-proxy.yaml
+  - ./traefik/tailscale-proxy.yaml
