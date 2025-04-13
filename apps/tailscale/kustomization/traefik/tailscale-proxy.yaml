@@ -27,7 +27,7 @@ spec:
         - name: TS_USERSPACE
           value: "false"
         - name: TS_DEST_IP
-          value: 10.102.143.73:443
+          value: 10.102.143.73
       resources:
         limits:
           squat.ai/tun: "1"
