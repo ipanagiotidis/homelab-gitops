@@ -1,7 +1,7 @@
 # Chart.yaml
 dependencies:
   - name: common
-    version: 4.2.0
+    version: 2.6.0
     repository: https://bjw-s-labs.github.io/helm-charts/
 apiVersion: v2
 name: jellyfin
