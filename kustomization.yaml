@@ -20,6 +20,6 @@ resources:
   #- apps/tempo/applications/tempo.yaml
   - apps/homepage/applications/homepage.yaml
   - apps/tailscale/applications/tailscale.yaml
-  - apps/firefly-iii/applications/firefly-iii.yaml
+  #- apps/firefly-iii/applications/firefly-iii.yaml
   #- apps/loki-stack/applications/loki-stack.yaml
   #- apps/loki/applications/loki.yaml
