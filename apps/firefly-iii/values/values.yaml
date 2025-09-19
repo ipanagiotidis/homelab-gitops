@@ -2,4 +2,6 @@ firefly-db:
   storage:
     accessModes: ReadWriteOnce
     class: local-path
+  nodeSelector:
+    extraDiskNode: "true"
 
