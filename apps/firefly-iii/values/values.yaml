@@ -12,3 +12,4 @@ firefly-iii:
 importer:
   fireflyiii:
     url: "http://localhost:8081"
+    vanityUrl: "http://localhost:8081"
