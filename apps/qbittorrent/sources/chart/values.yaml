@@ -64,12 +64,35 @@ ingress:
 
 persistence:
   # Configure the main configuration storage location
+  # config:
+  #   enabled: true
+  #   type: persistentVolumeClaim
+  #   storageClass: truenas-video
+  #   accessMode: ReadWriteMany
+  #   server: 192.168.88.10
+  #   path: /media/jellyfin
+  #   advancedMounts:
+  #     main:
+  #       main:
+  #         - path: /config
   config:
     enabled: true
-    type: nfs
-    server: 192.168.88.10
-    path: /media/jellyfin
+    type: persistentVolumeClaim
+    storageClass: truenas-apps
+    accessMode: ReadWriteOnce
+    size: 1Gi
     advancedMounts:
       main:
         main:
           - path: /config
+
+  downloads:
+    enabled: true
+    type: persistentVolumeClaim
+    storageClass: truenas-video
+    accessMode: ReadWriteMany
+    size: 100Gi
+    advancedMounts:
+      main:
+        main:
+          - path: /downloads
