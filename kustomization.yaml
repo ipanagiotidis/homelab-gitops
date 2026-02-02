@@ -5,6 +5,7 @@ resources:
   - apps/argocd/applications/argocd-self.yaml
   - apps/metallb/applications/metallb.yaml
   - apps/authentik/applications/authentik.yaml
+  - apps/csi-driver-nfs/applications/csi-driver-nfs.yaml
   - apps/crowdsec/applications/crowdsec.yaml
   - apps/reflector/applications/reflector.yaml
   - apps/cloudflare/applications/cloudflare.yaml
