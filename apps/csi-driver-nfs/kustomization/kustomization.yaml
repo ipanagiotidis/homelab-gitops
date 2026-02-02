@@ -3,4 +3,6 @@ kind: Kustomization
 
 resources: 
   - ./storageclass-truenas-backup.yaml
-  - ./storageclass-truenas-data.yaml
+  - ./storageclass-truenas-apps.yaml
+  - ./storageclass-truenas-photos.yaml
+  - ./storageclass-truenas-video.yaml

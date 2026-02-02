@@ -1,11 +1,11 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: truenas-data
+  name: truenas-photos
 provisioner: nfs.csi.k8s.io
 parameters:
   server: 192.168.88.110
-  share: /mnt/pool-data/k8s
+  share: /mnt/DataPool/k8s/media/photos
 reclaimPolicy: Retain
 volumeBindingMode: Immediate
 mountOptions:
