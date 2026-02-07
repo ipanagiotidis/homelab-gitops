@@ -82,19 +82,12 @@ persistence:
     storageClass: truenas-apps
     accessMode: ReadWriteOnce
     size: 1Gi
-    advancedMounts:
-      qbittorrent:
-        qbittorrent:
-          - path: /config
+    globalMounts:
+      - path: /config
 
   downloads:
     enabled: true
     type: persistentVolumeClaim
-    storageClass: truenas-video
-    accessMode: ReadWriteMany
-    size: 100Gi
-    advancedMounts:
-      qbittorrent:
-        qbittorrent:
-          - path: /downloads
-            subPath: shared
+    existingClaim: media-video
+    globalMounts:
+      - path: /downloads

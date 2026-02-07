@@ -76,11 +76,6 @@ persistence:
   media:
     enabled: true
     type: persistentVolumeClaim
-    storageClass: truenas-video
-    accessMode: ReadWriteMany
-    size: 100Gi
-    advancedMounts:
-      sonarr:
-        sonarr:
-          - path: /data
-            subPath: shared
+    existingClaim: media-video
+    globalMounts:
+      - path: /data
