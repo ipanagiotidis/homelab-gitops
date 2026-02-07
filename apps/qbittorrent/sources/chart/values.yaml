@@ -4,7 +4,7 @@ defaultPodOptions:
 
 controllers:
   # Configure the main controller
-  main:
+  qbittorrent:
 
     # Configure the pod-specific securityContext
     pod:
@@ -14,13 +14,13 @@ controllers:
 
     containers:
       # Configure the main application container
-      main:
+      qbittorrent:
         image:
           # -- image repository
-          repository: ghcr.io/onedr0p/qbittorrent
+          repository: linuxserver/qbittorrent
           # -- image tag
           # this example is not automatically updated, so be sure to use the latest image
-          tag: 5.0.4
+          tag: latest
         # Configure the container-specific securityContext
         securityContext:
           runAsUser: 1001
@@ -29,7 +29,8 @@ controllers:
 
 service:
   # Configure a service for the main application
-  main:
+  controller: qbittorrent
+  qbittorrent:
     type: ClusterIP
     ports:
       http:
@@ -37,7 +38,7 @@ service:
 
 ingress:
   # Configure an Ingress for the main application
-  main:
+  qbittorrent:
     enabled: true
     annotations:
       gethomepage.dev/enabled: "true"
@@ -59,7 +60,7 @@ ingress:
           - path: /
             pathType: Prefix
             service:
-              name: main
+              identifier: qbittorrent
               port: http
 
 persistence:
@@ -96,3 +97,4 @@ persistence:
       main:
         main:
           - path: /downloads
+            subPath: shared
