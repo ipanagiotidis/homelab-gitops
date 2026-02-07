@@ -3,4 +3,4 @@ kind: Kustomization
 
 resources:
   - ./network-policy.yaml
-  - ./media-video.yaml
+  - ./pvc-media-video.yaml
