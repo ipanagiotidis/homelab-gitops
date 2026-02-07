@@ -47,7 +47,7 @@ service:
     type: ClusterIP
     ports:
       http:
-        port: 9696
+        port: 8989
 
 ingress:
   # Configure an Ingress for the main application
