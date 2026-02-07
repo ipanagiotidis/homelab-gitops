@@ -1,0 +1,11 @@
+# Chart.yaml
+dependencies:
+  - name: common
+    version: 4.6.2
+    repository: https://bjw-s-labs.github.io/helm-charts/
+apiVersion: v2
+name: sonarr
+description: Test
+type: application
+version: 0.0.1
+appVersion: 0.0.1
