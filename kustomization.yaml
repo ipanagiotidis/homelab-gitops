@@ -8,7 +8,7 @@ resources:
   - apps/csi-driver-nfs/applications/csi-driver-nfs.yaml
   - apps/crowdsec/applications/crowdsec.yaml
   - apps/reflector/applications/reflector.yaml
-  - apps/cloudflare/applications/cloudflare.yaml
+  #- apps/cloudflare/applications/cloudflare.yaml
   #- apps/falco/applications/falco.yaml
   - apps/external-secrets/applications/external-secrets.yaml
   - apps/local-storage-provisioner/applications/local-storage-provisioner.yaml
@@ -17,10 +17,10 @@ resources:
   - apps/gitea/applications/gitea.yaml
   - apps/traefik/applications/traefik.yaml
   - apps/cert-manager/applications/cert-manager.yaml
-  - apps/kube-prometheus-stack/applications/kube-prometheus-stack.yaml
+  #- apps/kube-prometheus-stack/applications/kube-prometheus-stack.yaml
   #- apps/tempo/applications/tempo.yaml
   - apps/homepage/applications/homepage.yaml
   - apps/tailscale/applications/tailscale.yaml
-  - apps/firefly-iii/applications/firefly-iii.yaml
+  #- apps/firefly-iii/applications/firefly-iii.yaml
   #- apps/loki-stack/applications/loki-stack.yaml
   #- apps/loki/applications/loki.yaml
