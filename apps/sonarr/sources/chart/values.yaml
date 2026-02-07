@@ -79,6 +79,8 @@ persistence:
     storageClass: truenas-video
     accessMode: ReadWriteMany
     size: 100Gi
-    globalMounts:
-      - path: /data
-        subPath: shared
+    advancedMounts:
+      sonarr:
+        sonarr:
+          - path: /data
+            subPath: shared
