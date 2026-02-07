@@ -89,8 +89,8 @@ persistence:
     server: 192.168.88.10
     path: /media/jellyfin/jellyfin/config
     advancedMounts:
-      main:
-        main:
+      jellyfin:
+        jellyfin:
           - path: /config
   cache:
     enabled: true
@@ -98,8 +98,8 @@ persistence:
     server: 192.168.88.10
     path: /media/jellyfin/jellyfin/cache
     advancedMounts:
-      main:
-        main:
+      jellyfin:
+        jellyfin:
           - path: /cache
   media:
     enabled: true
@@ -107,6 +107,6 @@ persistence:
     server: 192.168.88.10
     path: /media/jellyfin/jellyfin/downloads
     advancedMounts:
-      main:
-        main:
+      jellyfin:
+        jellyfin:
           - path: /media

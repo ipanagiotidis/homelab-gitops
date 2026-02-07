@@ -83,8 +83,8 @@ persistence:
     accessMode: ReadWriteOnce
     size: 1Gi
     advancedMounts:
-      main:
-        main:
+      qbittorrent:
+        qbittorrent:
           - path: /config
 
   downloads:
@@ -94,7 +94,7 @@ persistence:
     accessMode: ReadWriteMany
     size: 100Gi
     advancedMounts:
-      main:
-        main:
+      qbittorrent:
+        qbittorrent:
           - path: /downloads
             subPath: shared
