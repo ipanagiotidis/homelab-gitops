@@ -15,6 +15,7 @@ resources:
   - apps/qbittorrent/applications/qbittorrent.yaml
   - apps/jellyfin/applications/jellyfin.yaml
   - apps/prowlarr/applications/prowlarr.yaml
+  - apps/flaresolverr/applications/flaresolverr.yaml
   - apps/gitea/applications/gitea.yaml
   - apps/traefik/applications/traefik.yaml
   - apps/cert-manager/applications/cert-manager.yaml

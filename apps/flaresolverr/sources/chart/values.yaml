@@ -1,0 +1,50 @@
+# Configure options applied to all pods
+defaultPodOptions:
+  automountServiceAccountToken: false
+
+controllers:
+  # Configure the main controller
+  flaresolverr:
+
+    # Configure the pod-specific securityContext
+    pod:
+      securityContext:
+        fsGroup: 1001
+        fsGroupChangePolicy: "OnRootMismatch"
+
+    containers:
+      # Configure the main application container
+      flaresolverr:
+        image:
+          # -- image repository
+          repository: linuxserver/flaresolverr
+          # -- image tag
+          # this example is not automatically updated, so be sure to use the latest image
+          tag: latest
+        # Configure the container-specific securityContext
+        securityContext:
+          runAsUser: 1001
+          runAsGroup: 1001
+        # -- Configure the resource requests and/or limits for the Pod
+        resources:
+          requests:
+          #   # Hardware acceleration using an Intel iGPU w/ QuickSync and
+          #   # using intel-gpu-plugin (https://github.com/intel/intel-device-plugins-for-kubernetes)
+          #   gpu.intel.com/i915: 1
+            cpu: 10m
+            memory: 64Mi
+          limits:
+          #   # Hardware acceleration using an Intel iGPU w/ QuickSync and
+          #   # using intel-gpu-plugin (https://github.com/intel/intel-device-plugins-for-kubernetes)
+          #  gpu.intel.com/i915: 1
+            memory: 4096Mi
+
+
+service:
+  # Configure a service for the main application
+  controller: flaresolverr
+  flaresolverr:
+    type: ClusterIP
+    ports:
+      http:
+        port: 8191
