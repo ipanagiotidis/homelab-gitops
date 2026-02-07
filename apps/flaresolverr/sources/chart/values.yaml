@@ -17,7 +17,7 @@ controllers:
       flaresolverr:
         image:
           # -- image repository
-          repository: linuxserver/flaresolverr
+          repository: flaresolverr/flaresolverr
           # -- image tag
           # this example is not automatically updated, so be sure to use the latest image
           tag: latest
