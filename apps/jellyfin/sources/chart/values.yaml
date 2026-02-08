@@ -83,30 +83,54 @@ ingress:
 
 persistence:
   # Configure the main configuration storage location
+  # config:
+  #   enabled: true
+  #   type: nfs
+  #   server: 192.168.88.10
+  #   path: /media/jellyfin/jellyfin/config
+  #   advancedMounts:
+  #     jellyfin:
+  #       jellyfin:
+  #         - path: /config
+  # cache:
+  #   enabled: true
+  #   type: nfs
+  #   server: 192.168.88.10
+  #   path: /media/jellyfin/jellyfin/cache
+  #   advancedMounts:
+  #     jellyfin:
+  #       jellyfin:
+  #         - path: /cache
+  # media:
+  #   enabled: true
+  #   type: nfs
+  #   server: 192.168.88.10
+  #   path: /media/jellyfin/jellyfin/downloads
+  #   advancedMounts:
+  #     jellyfin:
+  #       jellyfin:
+  #         - path: /media
   config:
     enabled: true
-    type: nfs
-    server: 192.168.88.10
-    path: /media/jellyfin/jellyfin/config
-    advancedMounts:
-      jellyfin:
-        jellyfin:
-          - path: /config
-  cache:
-    enabled: true
-    type: nfs
-    server: 192.168.88.10
-    path: /media/jellyfin/jellyfin/cache
-    advancedMounts:
-      jellyfin:
-        jellyfin:
-          - path: /cache
+    type: persistentVolumeClaim
+    storageClass: truenas-apps
+    accessMode: ReadWriteOnce
+    size: 5Gi
+    globalMounts:
+      - path: /config
+
   media:
     enabled: true
-    type: nfs
-    server: 192.168.88.10
-    path: /media/jellyfin/jellyfin/downloads
-    advancedMounts:
-      jellyfin:
-        jellyfin:
-          - path: /media
+    type: persistentVolumeClaim
+    existingClaim: media-video
+    globalMounts:
+      - path: /media
+
+  cache:
+    enabled: true
+    type: persistentVolumeClaim
+    storageClass: local-path   # or whatever your local SC is called
+    accessMode: ReadWriteOnce
+    size: 20Gi
+    globalMounts:
+      - path: /cache
