@@ -8,4 +8,4 @@ spec:
   storageClassName: truenas-video
   resources:
     requests:
-      storage: 100Gi
+      storage: 1000Gi

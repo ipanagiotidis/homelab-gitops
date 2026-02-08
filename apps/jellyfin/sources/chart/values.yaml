@@ -54,6 +54,7 @@ ingress:
   jellyfin:
     enabled: true
     annotations:
+      traefik.ingress.kubernetes.io/router.middlewares: traefik-jellyfin-forwarded-headers@kubernetescrd
       gethomepage.dev/enabled: "true"
       gethomepage.dev/description: Jellyfin
       gethomepage.dev/href: "https://jf.yiannis.io"
