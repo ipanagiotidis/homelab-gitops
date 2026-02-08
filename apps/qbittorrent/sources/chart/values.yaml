@@ -11,6 +11,7 @@ controllers:
       securityContext:
         fsGroup: 1001
         fsGroupChangePolicy: "OnRootMismatch"
+      terminationGracePeriodSeconds: 30
 
     containers:
       # Configure the main application container
