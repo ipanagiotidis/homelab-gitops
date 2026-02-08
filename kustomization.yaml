@@ -16,6 +16,7 @@ resources:
   - apps/jellyfin/applications/jellyfin.yaml
   - apps/prowlarr/applications/prowlarr.yaml
   - apps/sonarr/applications/sonarr.yaml
+  - apps/radarr/applications/radarr.yaml
   - apps/flaresolverr/applications/flaresolverr.yaml
   - apps/gitea/applications/gitea.yaml
   - apps/traefik/applications/traefik.yaml
