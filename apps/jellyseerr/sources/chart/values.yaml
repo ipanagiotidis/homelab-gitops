@@ -17,7 +17,7 @@ controllers:
       jellyseerr:
         image:
           # -- image repository
-          repository: linuxserver/jellyseerr
+          repository: fallenbagel/jellyseerr
           # -- image tag
           # this example is not automatically updated, so be sure to use the latest image
           tag: latest
