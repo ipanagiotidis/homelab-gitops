@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prowlarr
+  name: jellyseerr
   namespace: argocd
   labels:
-    app: prowlarr
+    app: jellyseerr
 spec:
   destination:
     namespace: media-video
     server: https://kubernetes.default.svc
   project: default
   sources:
-  - path: apps/prowlarr/sources/chart
+  - path: apps/jellyseerr/sources/chart
     repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
     targetRevision: dev
   # Sync policy
