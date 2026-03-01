@@ -42,5 +42,4 @@ spec:
     - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
     - SkipDryRunOnMissingResource=true # Allow first sync before CNPG CRDs are fully registered.
     - ServerSideApply=true
-    - Replace=true # Avoid oversized last-applied annotations on large CRDs.
     # The retry feature is available since v1.7
