@@ -18,6 +18,7 @@ resources:
   - apps/sonarr/applications/sonarr.yaml
   - apps/radarr/applications/radarr.yaml
   - apps/jellyseerr/applications/jellyseerr.yaml
+  - apps/immich/applications/immich.yaml
   - apps/flaresolverr/applications/flaresolverr.yaml
   - apps/gitea/applications/gitea.yaml
   - apps/traefik/applications/traefik.yaml
