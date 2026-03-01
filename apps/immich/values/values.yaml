@@ -38,29 +38,33 @@ immich:
     library:
       existingClaim: immich-library
 
-  server:
-    ingress:
-      main:
-        enabled: true
-        ingressClassName: traefik
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/description: Immich
-          gethomepage.dev/href: "https://photos.yiannis.io"
-          gethomepage.dev/group: Media
-          gethomepage.dev/icon: immich.png
-          gethomepage.dev/name: Immich
-          gethomepage.dev/pod-selector: ""
-        hosts:
-          - host: photos.yiannis.io
-            paths:
-              - path: /
-                pathType: Prefix
+server:
+  ingress:
+    main:
+      enabled: true
+      ingressClassName: traefik
+      annotations:
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/description: Immich
+        gethomepage.dev/href: "https://photos.yiannis.io"
+        gethomepage.dev/group: Media
+        gethomepage.dev/icon: immich.png
+        gethomepage.dev/name: Immich
+        gethomepage.dev/pod-selector: ""
+      hosts:
+        - host: photos.yiannis.io
+          paths:
+            - path: /
+              service:
+                identifier: main
+      tls: []
 
 valkey:
   enabled: true
-  primary:
-    persistence:
+  persistence:
+    data:
       enabled: true
+      type: persistentVolumeClaim
       storageClass: truenas-apps
+      accessMode: ReadWriteOnce
       size: 2Gi
