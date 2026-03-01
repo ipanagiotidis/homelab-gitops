@@ -1,6 +1,25 @@
 image:
   tag: v2.4.1
 
+env:
+  DB_HOSTNAME: immich-database-rw
+  DB_PORT: "5432"
+  DB_USERNAME:
+    valueFrom:
+      secretKeyRef:
+        name: immich-database-app
+        key: username
+  DB_DATABASE_NAME:
+    valueFrom:
+      secretKeyRef:
+        name: immich-database-app
+        key: dbname
+  DB_PASSWORD:
+    valueFrom:
+      secretKeyRef:
+        name: immich-database-app
+        key: password
+
 immich:
   metrics:
     enabled: true
@@ -27,18 +46,6 @@ immich:
             paths:
               - path: /
                 pathType: Prefix
-
-externalDatabase:
-  enabled: true
-  type: postgresql
-  host: immich-database-rw
-  port: 5432
-  username: immich
-  database: immich
-  existingSecret:
-    enabled: true
-    secretName: immich-database-app
-    key: password
 
 valkey:
   enabled: true
