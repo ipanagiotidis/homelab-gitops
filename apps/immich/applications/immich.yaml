@@ -13,9 +13,9 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   sources:
-  - repoURL: https://github.com/immich-app/immich-charts.git
-    path: charts/immich
-    targetRevision: main
+  - chart: immich
+    repoURL: oci://ghcr.io/immich-app/immich-charts
+    targetRevision: 0.10.3
     helm:
       releaseName: immich
       valueFiles:

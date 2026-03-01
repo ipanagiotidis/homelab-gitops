@@ -1,24 +1,27 @@
-image:
-  tag: v2.4.1
-
-env:
-  DB_HOSTNAME: immich-database-rw
-  DB_PORT: "5432"
-  DB_USERNAME:
-    valueFrom:
-      secretKeyRef:
-        name: immich-database-app
-        key: username
-  DB_DATABASE_NAME:
-    valueFrom:
-      secretKeyRef:
-        name: immich-database-app
-        key: dbname
-  DB_PASSWORD:
-    valueFrom:
-      secretKeyRef:
-        name: immich-database-app
-        key: password
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          tag: v2.4.1
+        env:
+          DB_HOSTNAME: immich-database-rw
+          DB_PORT: "5432"
+          DB_USERNAME:
+            valueFrom:
+              secretKeyRef:
+                name: immich-database-app
+                key: username
+          DB_DATABASE_NAME:
+            valueFrom:
+              secretKeyRef:
+                name: immich-database-app
+                key: dbname
+          DB_PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: immich-database-app
+                key: password
 
 defaultPodOptions:
   securityContext:
