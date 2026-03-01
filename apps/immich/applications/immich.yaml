@@ -13,9 +13,12 @@ spec:
   sources:
   - chart: cloudnative-pg
     repoURL: https://cloudnative-pg.github.io/charts
-    targetRevision: ">=0.27.0 <0.28.0"
+    targetRevision: 0.27.0
     helm:
       releaseName: cnpg
+      values: |
+        crds:
+          create: true
   - repoURL: https://github.com/immich-app/immich-charts.git
     path: charts/immich
     targetRevision: main
@@ -38,4 +41,5 @@ spec:
     - Validate=true # disables resource validation (equivalent to 'kubectl apply --validate=true')
     - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
     - SkipDryRunOnMissingResource=true # Allow first sync before CNPG CRDs are fully registered.
+    - ServerSideApply=true
     # The retry feature is available since v1.7
