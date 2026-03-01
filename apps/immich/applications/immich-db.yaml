@@ -1,28 +1,29 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: immich
+  name: immich-db
   namespace: argocd
   labels:
-    app: immich
+    app: immich-db
   annotations:
-    argocd.argoproj.io/sync-wave: "30"
+    argocd.argoproj.io/sync-wave: "20"
 spec:
   destination:
     namespace: immich
     server: https://kubernetes.default.svc
   project: default
   sources:
-  - repoURL: https://github.com/immich-app/immich-charts.git
-    path: charts/immich
-    targetRevision: main
+  - chart: cloudnative-pg
+    repoURL: https://cloudnative-pg.github.io/charts
+    targetRevision: 0.27.0
     helm:
-      releaseName: immich
-      valueFiles:
-        - $values/apps/immich/values/values.yaml
+      releaseName: cnpg
+      values: |
+        crds:
+          create: true
   - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+    path: apps/immich/kustomization
     targetRevision: dev
-    ref: values
   # Sync policy
   syncPolicy:
     automated: # automated sync by default retries failed attempts 5 times with following delays between attempts ( 5s, 10s, 20s, 40s, 80s ); retry controlled using `retry` field.
@@ -31,4 +32,6 @@ spec:
     syncOptions:     # Sync options which modifies sync behavior
     - Validate=true # disables resource validation (equivalent to 'kubectl apply --validate=true')
     - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
+    - SkipDryRunOnMissingResource=true # Allow first sync before CNPG CRDs are fully registered.
+    - ServerSideApply=true
     # The retry feature is available since v1.7
