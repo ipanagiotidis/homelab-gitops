@@ -12,7 +12,11 @@ spec:
 
   storage:
     size: 10Gi
-    storageClass: truenas-apps
+    storageClass: truenas-cnpg
+
+  nodeMaintenanceWindow:
+    inProgress: false
+    reusePVC: true
 
   postgresql:
     shared_preload_libraries:

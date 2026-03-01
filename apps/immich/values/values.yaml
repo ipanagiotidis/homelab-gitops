@@ -20,6 +20,13 @@ env:
         name: immich-database-app
         key: password
 
+defaultPodOptions:
+  securityContext:
+    runAsUser: 1001
+    runAsGroup: 1001
+    fsGroup: 1001
+    fsGroupChangePolicy: OnRootMismatch
+
 immich:
   metrics:
     enabled: true
