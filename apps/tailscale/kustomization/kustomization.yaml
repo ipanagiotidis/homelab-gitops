@@ -6,3 +6,4 @@ resources:
   - ./tailscale-rbac.yaml
   - ./qbittorrent/tailscale-proxy.yaml
   - ./jellyfin/tailscale-proxy.yaml
+  - ./immich/tailscale-proxy.yaml
