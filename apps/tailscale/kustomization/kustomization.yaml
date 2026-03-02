@@ -4,6 +4,5 @@ kind: Kustomization
 resources:
   - ./external-secret.yaml
   - ./tailscale-rbac.yaml
-  - ./qbittorrent/tailscale-proxy.yaml
-  - ./jellyfin/tailscale-proxy.yaml
-  - ./immich/tailscale-proxy.yaml
+  - ./tailscale-router.yaml
+  - ./network-policy.yaml
