@@ -7,6 +7,23 @@ data:
   url: https://argocd.yiannis.io
   admin.enabled: "false"
   accounts.homepage: apiKey
+  resource.customizations.health.postgresql.cnpg.io_Cluster: |
+    hs = {}
+    if obj.status ~= nil then
+      if obj.status.phase ~= nil then
+        if obj.status.phase == "Cluster in healthy state" then
+          hs.status = "Healthy"
+          hs.message = obj.status.phase
+          return hs
+        end
+        hs.status = "Progressing"
+        hs.message = obj.status.phase
+        return hs
+      end
+    end
+    hs.status = "Progressing"
+    hs.message = "Waiting for CloudNativePG status"
+    return hs
   dex.config: |
     connectors:
     - config:
