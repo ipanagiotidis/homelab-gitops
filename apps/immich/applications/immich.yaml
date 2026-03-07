@@ -15,7 +15,7 @@ spec:
   sources:
   - repoURL: https://github.com/immich-app/immich-charts.git
     path: charts/immich
-    targetRevision: immich-0.10.3
+    targetRevision: immich-0.10.4
     helm:
       releaseName: immich
       valueFiles:
