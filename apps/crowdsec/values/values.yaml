@@ -22,6 +22,11 @@ config:
             - bouncer-ou
           agents_allowed_ou: #OU allowed for agents
             - agent-ou
+secrets:
+  externalSecret:
+    name: crowdsec-lapi-secrets
+    csLapiSecretKey: csLapiSecret
+    registrationTokenKey: registrationToken
 agent:
   lapiURL: "https://crowdsec-service.crowdsec.svc.cluster.local:8080"
   lapiHost: "crowdsec-service.crowdsec.svc.cluster.local"
