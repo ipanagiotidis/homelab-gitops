@@ -19,7 +19,7 @@ spec:
       valueFiles:
         - $values/apps/firefly-iii/values/values.yaml
   - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
-    targetRevision: dev
+    targetRevision: master
     ref: values
   # Sync policy
   syncPolicy:
