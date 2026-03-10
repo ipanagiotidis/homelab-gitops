@@ -4,7 +4,7 @@ defaultPodOptions:
 
 controllers:
   # Configure the main controller
-  main:
+  jellyfin:
 
     # Configure the pod-specific securityContext
     pod:
@@ -14,7 +14,7 @@ controllers:
 
     containers:
       # Configure the main application container
-      main:
+      jellyfin:
         image:
           # -- image repository
           repository: jellyfin/jellyfin
@@ -42,7 +42,8 @@ controllers:
 
 service:
   # Configure a service for the main application
-  main:
+  controller: jellyfin
+  jellyfin:
     type: ClusterIP
     ports:
       http:
@@ -50,9 +51,10 @@ service:
 
 ingress:
   # Configure an Ingress for the main application
-  main:
+  jellyfin:
     enabled: true
     annotations:
+      traefik.ingress.kubernetes.io/router.middlewares: traefik-jellyfin-forwarded-headers@kubernetescrd
       gethomepage.dev/enabled: "true"
       gethomepage.dev/description: Jellyfin
       gethomepage.dev/href: "https://jf.yiannis.io"
@@ -64,7 +66,7 @@ ingress:
       gethomepage.dev/pod-selector: ""
       gethomepage.dev/widget.type: "jellyfin"
       gethomepage.dev/widget.url: "http://jellyfin.jellyfin.svc.cluster.local:8096"
-      gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_JF}}"
+      gethomepage.dev/widget.key: '"{{ `{{` }}"HOMEPAGE_VAR_JF"{{ `}}` }}"'
       gethomepage.dev/enableBlocks: "true" # optional, defaults to false
       gethomepage.dev/enableNowPlaying: "true" # optional, defaults to true
       gethomepage.dev/enableUser: "true" # optional, defaults to false
@@ -77,35 +79,59 @@ ingress:
           - path: /
             pathType: Prefix
             service:
-              name: main
+              identifier: jellyfin
               port: http
 
 persistence:
   # Configure the main configuration storage location
+  # config:
+  #   enabled: true
+  #   type: nfs
+  #   server: 192.168.88.10
+  #   path: /media/jellyfin/jellyfin/config
+  #   advancedMounts:
+  #     jellyfin:
+  #       jellyfin:
+  #         - path: /config
+  # cache:
+  #   enabled: true
+  #   type: nfs
+  #   server: 192.168.88.10
+  #   path: /media/jellyfin/jellyfin/cache
+  #   advancedMounts:
+  #     jellyfin:
+  #       jellyfin:
+  #         - path: /cache
+  # media:
+  #   enabled: true
+  #   type: nfs
+  #   server: 192.168.88.10
+  #   path: /media/jellyfin/jellyfin/downloads
+  #   advancedMounts:
+  #     jellyfin:
+  #       jellyfin:
+  #         - path: /media
   config:
     enabled: true
-    type: nfs
-    server: 192.168.88.10
-    path: /media/jellyfin/jellyfin/config
-    advancedMounts:
-      main:
-        main:
-          - path: /config
-  cache:
-    enabled: true
-    type: nfs
-    server: 192.168.88.10
-    path: /media/jellyfin/jellyfin/cache
-    advancedMounts:
-      main:
-        main:
-          - path: /cache
+    type: persistentVolumeClaim
+    storageClass: truenas-apps
+    accessMode: ReadWriteOnce
+    size: 5Gi
+    globalMounts:
+      - path: /config
+
   media:
     enabled: true
-    type: nfs
-    server: 192.168.88.10
-    path: /media/jellyfin/jellyfin/downloads
-    advancedMounts:
-      main:
-        main:
-          - path: /media
+    type: persistentVolumeClaim
+    existingClaim: media-video
+    globalMounts:
+      - path: /media
+
+  cache:
+    enabled: true
+    type: persistentVolumeClaim
+    storageClass: local-path   # or whatever your local SC is called
+    accessMode: ReadWriteOnce
+    size: 20Gi
+    globalMounts:
+      - path: /cache

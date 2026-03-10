@@ -1,0 +1,15 @@
+firefly-db:
+  storage:
+    accessModes: ReadWriteOnce
+    class: local-path
+  nodeSelector:
+    extraDiskNode: "true"
+
+firefly-iii:
+  nodeSelector:
+    extraDiskNode: "true"
+
+importer:
+  fireflyiii:
+    url: "http://localhost:8081"
+    vanityUrl: "http://localhost:8081"

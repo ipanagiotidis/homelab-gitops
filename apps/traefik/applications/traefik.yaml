@@ -13,7 +13,7 @@ spec:
   sources:
   - chart: traefik
     repoURL: https://traefik.github.io/charts
-    targetRevision: 35.0.0
+    targetRevision: 39.0.1
     helm:
       releaseName: traefik
       valueFiles:
@@ -33,3 +33,4 @@ spec:
     - Validate=true # disables resource validation (equivalent to 'kubectl apply --validate=true')
     - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
     # The retry feature is available since v1.7
+    - ServerSideApply=true

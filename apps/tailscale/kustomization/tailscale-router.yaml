@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tailscale-router
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tailscale-router
+  template:
+    metadata:
+      labels:
+        app: tailscale-router
+    spec:
+      serviceAccountName: tailscale
+      containers:
+        - name: tailscale
+          image: ghcr.io/tailscale/tailscale:stable
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_UID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.uid
+            - name: TS_KUBE_SECRET
+              value: tailscale-router-state
+            - name: TS_AUTHKEY
+              valueFrom:
+                secretKeyRef:
+                  name: tailscale-auth
+                  key: TS_AUTHKEY
+            - name: TS_USERSPACE
+              value: "false"
+            - name: TS_HOSTNAME
+              value: homelab-k8s-router
+            - name: TS_EXTRA_ARGS
+              value: --advertise-routes=192.168.88.7/32,192.168.88.246/32 --advertise-tags=tag:k8s-router --accept-routes=false --accept-dns=false --reset
+            - name: TS_DEBUG_FIREWALL_MODE
+              value: nftables
+          resources:
+            limits:
+              squat.ai/tun: "1"
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN

@@ -46,8 +46,15 @@ server:
 
 postgresql:
   enabled: true
+  image:
+    tag: 15
   volumePermissions:
     enabled: true
+    image:
+      registry: docker.io
+      repository: bitnamilegacy/os-shell
+      tag: 12-debian-12-r50
+      pullPolicy: IfNotPresent
   auth:
     existingSecret: authentik-postgres-credentials
     secretKeys:
@@ -61,6 +68,11 @@ redis:
   enabled: true
   volumePermissions:
     enabled: true
+    image:
+      registry: docker.io
+      repository: bitnamilegacy/os-shell
+      tag: 12-debian-12-r50
+      pullPolicy: IfNotPresent
   master:
     nodeSelector:
       extraDiskNode: "true"

@@ -4,32 +4,46 @@ defaultPodOptions:
 
 controllers:
   # Configure the main controller
-  main:
+  qbittorrent:
 
     # Configure the pod-specific securityContext
     pod:
       securityContext:
         fsGroup: 1001
         fsGroupChangePolicy: "OnRootMismatch"
+      terminationGracePeriodSeconds: 30
 
     containers:
       # Configure the main application container
-      main:
+      qbittorrent:
         image:
           # -- image repository
-          repository: ghcr.io/onedr0p/qbittorrent
+          repository: linuxserver/qbittorrent
           # -- image tag
           # this example is not automatically updated, so be sure to use the latest image
-          tag: 5.0.4
+          tag: latest
         # Configure the container-specific securityContext
         securityContext:
           runAsUser: 1001
           runAsGroup: 1001
+        resources:
+          requests:
+          #   # Hardware acceleration using an Intel iGPU w/ QuickSync and
+          #   # using intel-gpu-plugin (https://github.com/intel/intel-device-plugins-for-kubernetes)
+          #   gpu.intel.com/i915: 1
+            cpu: 200m
+            memory: 2048Mi
+          limits:
+          #   # Hardware acceleration using an Intel iGPU w/ QuickSync and
+          #   # using intel-gpu-plugin (https://github.com/intel/intel-device-plugins-for-kubernetes)
+          #  gpu.intel.com/i915: 1
+            memory: 2048Mi
 
 
 service:
   # Configure a service for the main application
-  main:
+  controller: qbittorrent
+  qbittorrent:
     type: ClusterIP
     ports:
       http:
@@ -37,7 +51,7 @@ service:
 
 ingress:
   # Configure an Ingress for the main application
-  main:
+  qbittorrent:
     enabled: true
     annotations:
       gethomepage.dev/enabled: "true"
@@ -59,17 +73,34 @@ ingress:
           - path: /
             pathType: Prefix
             service:
-              name: main
+              identifier: qbittorrent
               port: http
 
 persistence:
   # Configure the main configuration storage location
+  # config:
+  #   enabled: true
+  #   type: persistentVolumeClaim
+  #   storageClass: truenas-video
+  #   accessMode: ReadWriteMany
+  #   server: 192.168.88.10
+  #   path: /media/jellyfin
+  #   advancedMounts:
+  #     main:
+  #       main:
+  #         - path: /config
   config:
     enabled: true
-    type: nfs
-    server: 192.168.88.10
-    path: /media/jellyfin
-    advancedMounts:
-      main:
-        main:
-          - path: /config
+    type: persistentVolumeClaim
+    storageClass: truenas-apps
+    accessMode: ReadWriteOnce
+    size: 1Gi
+    globalMounts:
+      - path: /config
+
+  downloads:
+    enabled: true
+    type: persistentVolumeClaim
+    existingClaim: media-video
+    globalMounts:
+      - path: /downloads

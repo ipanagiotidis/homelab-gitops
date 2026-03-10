@@ -1,0 +1,70 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          tag: v2.5.6
+        env:
+          DB_HOSTNAME: immich-database-rw
+          DB_PORT: "5432"
+          DB_USERNAME:
+            valueFrom:
+              secretKeyRef:
+                name: immich-database-app
+                key: username
+          DB_DATABASE_NAME:
+            valueFrom:
+              secretKeyRef:
+                name: immich-database-app
+                key: dbname
+          DB_PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: immich-database-app
+                key: password
+
+defaultPodOptions:
+  securityContext:
+    runAsUser: 1001
+    runAsGroup: 1001
+    fsGroup: 1001
+    fsGroupChangePolicy: OnRootMismatch
+
+immich:
+  metrics:
+    enabled: true
+
+  persistence:
+    library:
+      existingClaim: immich-library
+
+server:
+  ingress:
+    main:
+      enabled: true
+      ingressClassName: traefik
+      annotations:
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/description: Immich
+        gethomepage.dev/href: "https://photos.yiannis.io"
+        gethomepage.dev/group: Media
+        gethomepage.dev/icon: immich.png
+        gethomepage.dev/name: Immich
+        gethomepage.dev/pod-selector: ""
+      hosts:
+        - host: photos.yiannis.io
+          paths:
+            - path: /
+              service:
+                identifier: main
+      tls: []
+
+valkey:
+  enabled: true
+  persistence:
+    data:
+      enabled: true
+      type: persistentVolumeClaim
+      storageClass: truenas-apps
+      accessMode: ReadWriteOnce
+      size: 2Gi

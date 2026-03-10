@@ -7,7 +7,7 @@ spec:
   plugin:
     bouncer:
       enabled: true
-      logLevel: INFO
+      logLevel: DEBUG
       crowdsecMode: stream
       crowdsecLapiHost: crowdsec-service.crowdsec.svc.cluster.local:8080
       crowdsecLapiScheme: https

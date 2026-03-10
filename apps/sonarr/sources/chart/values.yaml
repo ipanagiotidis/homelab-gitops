@@ -1,0 +1,81 @@
+# Configure options applied to all pods
+defaultPodOptions:
+  automountServiceAccountToken: false
+
+controllers:
+  # Configure the main controller
+  sonarr:
+
+    # Configure the pod-specific securityContext
+    pod:
+      securityContext:
+        fsGroup: 1001
+        fsGroupChangePolicy: "OnRootMismatch"
+
+    containers:
+      # Configure the main application container
+      sonarr:
+        image:
+          # -- image repository
+          repository: linuxserver/sonarr
+          # -- image tag
+          # this example is not automatically updated, so be sure to use the latest image
+          tag: latest
+        # Configure the container-specific securityContext
+        securityContext:
+          runAsUser: 1001
+          runAsGroup: 1001
+        # -- Configure the resource requests and/or limits for the Pod
+        resources:
+          requests:
+          #   # Hardware acceleration using an Intel iGPU w/ QuickSync and
+          #   # using intel-gpu-plugin (https://github.com/intel/intel-device-plugins-for-kubernetes)
+          #   gpu.intel.com/i915: 1
+            cpu: 10m
+            memory: 128Mi
+          limits:
+          #   # Hardware acceleration using an Intel iGPU w/ QuickSync and
+          #   # using intel-gpu-plugin (https://github.com/intel/intel-device-plugins-for-kubernetes)
+          #  gpu.intel.com/i915: 1
+            memory: 4096Mi
+
+
+service:
+  # Configure a service for the main application
+  controller: sonarr
+  sonarr:
+    type: ClusterIP
+    ports:
+      http:
+        port: 8989
+
+ingress:
+  # Configure an Ingress for the main application
+  sonarr:
+    enabled: true
+    ingressClassName: "traefik"
+    hosts:
+      - host: "snr.yiannis.io"
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: sonarr
+              port: http
+
+persistence:
+  config:
+    enabled: true
+    type: persistentVolumeClaim
+    storageClass: truenas-apps
+    accessMode: ReadWriteOnce
+    size: 2Gi
+    globalMounts:
+      - path: /config
+
+  media:
+    enabled: true
+    type: persistentVolumeClaim
+    existingClaim: media-video
+    globalMounts:
+      - path: /data

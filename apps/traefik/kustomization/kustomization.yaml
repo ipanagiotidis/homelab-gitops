@@ -6,4 +6,5 @@ resources:
   - ./certificate.yaml
   - ./tlsstore.yaml
   - ./middleware.yaml
+  - ./jellyfin-tls.yaml
   #- ./forwardauth.yaml

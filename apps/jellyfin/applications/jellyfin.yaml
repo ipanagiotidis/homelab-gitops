@@ -7,12 +7,15 @@ metadata:
     app: jellyfin
 spec:
   destination:
-    namespace: jellyfin
+    namespace: media-video
     server: https://kubernetes.default.svc
   project: default
   sources:
   - path: apps/jellyfin/sources/chart
     repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+    targetRevision: dev
+  - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+    path: apps/jellyfin/kustomization
     targetRevision: dev
   # Sync policy
   syncPolicy:
