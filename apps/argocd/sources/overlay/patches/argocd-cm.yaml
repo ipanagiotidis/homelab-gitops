@@ -7,6 +7,15 @@ data:
   url: https://argocd.yiannis.io
   admin.enabled: "false"
   accounts.homepage: apiKey
+  resource.customizations.ignoreDifferences.external-secrets.io_ExternalSecret: |
+    jqPathExpressions:
+    - .spec.data[]?.remoteRef.conversionStrategy
+    - .spec.data[]?.remoteRef.decodingStrategy
+    - .spec.data[]?.remoteRef.metadataPolicy
+    - .spec.dataFrom[]?.extract.conversionStrategy
+    - .spec.dataFrom[]?.extract.decodingStrategy
+    - .spec.dataFrom[]?.find.conversionStrategy
+    - .spec.dataFrom[]?.find.decodingStrategy
   resource.customizations.health.postgresql.cnpg.io_Cluster: |
     hs = {}
     if obj.status ~= nil then

@@ -13,7 +13,7 @@ spec:
   sources:
   - path: apps/flaresolverr/sources/chart
     repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
-    targetRevision: dev
+    targetRevision: master
   # - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
   #   path: apps/flaresolverr/kustomization
   #   targetRevision: dev

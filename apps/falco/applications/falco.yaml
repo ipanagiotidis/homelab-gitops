@@ -19,7 +19,7 @@ spec:
       valueFiles:
         - $values/apps/falco/values/values.yaml
   - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
-    targetRevision: dev
+    targetRevision: master
     ref: values
   - chart: fluent-bit
     repoURL: https://fluent.github.io/helm-charts
