@@ -5,6 +5,11 @@ redis-cluster:
   enabled: false
 postgresql:
   enabled: true
+  auth:
+    existingSecret: gitea-postgresql
+    secretKeys:
+      adminPasswordKey: postgres-password
+      userPasswordKey: password
   primary:
     nodeSelector:
       extraDiskNode: "true"
