@@ -31,3 +31,5 @@ resources:
   #- apps/firefly-iii/applications/firefly-iii.yaml
   #- apps/loki-stack/applications/loki-stack.yaml
   #- apps/loki/applications/loki.yaml
+  - apps/paperless-ngx/applications/paperless-ngx-db.yaml
+  - apps/paperless-ngx/applications/paperless-ngx.yaml
