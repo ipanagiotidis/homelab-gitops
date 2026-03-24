@@ -9,7 +9,7 @@ common:
         app:
           image:
             repository: ghcr.io/paperless-ngx/paperless-ngx
-            tag: "2.16.3"
+            tag: "2.20.4"
           env:
             PAPERLESS_URL: "https://docs.yiannis.io"
             PAPERLESS_PORT: "8000"
@@ -36,7 +36,7 @@ common:
               valueFrom:
                 secretKeyRef:
                   name: paperless-ngx-database-app
-                  key: user
+                  key: username
             PAPERLESS_DBPASS:
               valueFrom:
                 secretKeyRef:
@@ -66,6 +66,7 @@ common:
           securityContext:
             runAsUser: 1000
             runAsGroup: 1000
+            allowPrivilegeEscalation: false
           probes:
             liveness:
               enabled: true
@@ -135,7 +136,6 @@ common:
         gethomepage.dev/pod-selector: ""
         gethomepage.dev/widget.type: "paperlessngx"
         gethomepage.dev/widget.url: "http://paperless-ngx.paperless-ngx.svc.cluster.local:8000"
-        gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_PAPERLESS}}"
       ingressClassName: "traefik"
       hosts:
         - host: "docs.yiannis.io"
@@ -152,7 +152,7 @@ common:
       type: persistentVolumeClaim
       storageClass: truenas-apps
       accessMode: ReadWriteOnce
-      size: 10Gi
+      size: 5Gi
       advancedMounts:
         paperless-ngx:
           app:
@@ -162,7 +162,7 @@ common:
       type: persistentVolumeClaim
       storageClass: truenas-apps
       accessMode: ReadWriteOnce
-      size: 50Gi
+      size: 20Gi
       advancedMounts:
         paperless-ngx:
           app:
@@ -172,7 +172,7 @@ common:
       type: persistentVolumeClaim
       storageClass: truenas-apps
       accessMode: ReadWriteOnce
-      size: 5Gi
+      size: 1Gi
       advancedMounts:
         paperless-ngx:
           app:
@@ -182,7 +182,7 @@ common:
       type: persistentVolumeClaim
       storageClass: truenas-apps
       accessMode: ReadWriteOnce
-      size: 10Gi
+      size: 2Gi
       advancedMounts:
         paperless-ngx:
           app:
