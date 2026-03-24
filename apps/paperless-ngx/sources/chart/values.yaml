@@ -136,7 +136,7 @@ common:
         gethomepage.dev/pod-selector: ""
         gethomepage.dev/widget.type: "paperlessngx"
         gethomepage.dev/widget.url: "http://paperless-ngx.paperless-ngx.svc.cluster.local:8000"
-      ingressClassName: "traefik"
+      className: "traefik"
       hosts:
         - host: "docs.yiannis.io"
           paths:
