@@ -3,7 +3,7 @@ common:
     paperless-ngx:
       pod:
         securityContext:
-          fsGroup: 1000
+          fsGroup: 1001
           fsGroupChangePolicy: OnRootMismatch
       containers:
         app:
@@ -64,8 +64,8 @@ common:
             limits:
               memory: 2048Mi
           securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
+            runAsUser: 1001
+            runAsGroup: 1001
             allowPrivilegeEscalation: false
           probes:
             liveness:
