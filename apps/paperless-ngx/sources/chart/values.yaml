@@ -23,7 +23,7 @@ common:
                   key: oidc_logout_redirect_url
             PAPERLESS_SOCIAL_AUTO_SIGNUP: "true"
             PAPERLESS_SOCIALACCOUNT_ALLOW_SIGNUPS: "true"
-            PAPERLESS_SOCIALACCOUNT_SYNC_GROUPS: "true"
+            PAPERLESS_SOCIAL_ACCOUNT_SYNC_GROUPS: "true"
             USERMAP_UID: "1001"
             USERMAP_GID: "1001"
             PAPERLESS_REDIS: "redis://paperless-ngx-redis:6379"
