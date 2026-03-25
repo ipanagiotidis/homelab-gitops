@@ -16,13 +16,14 @@ common:
             PAPERLESS_TIME_ZONE: "Europe/Athens"
             PAPERLESS_OCR_LANGUAGE: "eng"
             PAPERLESS_APPS: "allauth.socialaccount.providers.openid_connect"
+            PAPERLESS_DISABLE_REGULAR_LOGIN: "true"
             PAPERLESS_LOGOUT_REDIRECT_URL:
               valueFrom:
                 secretKeyRef:
                   name: paperless-ngx-secret
                   key: oidc_logout_redirect_url
-            PAPERLESS_SOCIAL_AUTO_SIGNUP: "true"
-            PAPERLESS_SOCIALACCOUNT_ALLOW_SIGNUPS: "true"
+            PAPERLESS_REDIRECT_LOGIN_TO_SSO: "true"
+            PAPERLESS_SOCIALACCOUNT_ALLOW_SIGNUPS: "false"
             PAPERLESS_SOCIAL_ACCOUNT_SYNC_GROUPS: "true"
             USERMAP_UID: "1001"
             USERMAP_GID: "1001"
