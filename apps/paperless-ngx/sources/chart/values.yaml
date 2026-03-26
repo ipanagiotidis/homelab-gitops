@@ -185,9 +185,7 @@ common:
     consume:
       enabled: true
       type: persistentVolumeClaim
-      storageClass: truenas-paperless-consume
-      accessMode: ReadWriteOnce
-      size: 1Gi
+      existingClaim: paperless-consume
       advancedMounts:
         paperless-ngx:
           app:
