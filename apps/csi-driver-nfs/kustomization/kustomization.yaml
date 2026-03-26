@@ -5,5 +5,6 @@ resources:
   - ./storageclass-truenas-backup.yaml
   - ./storageclass-truenas-apps.yaml
   - ./storageclass-truenas-cnpg.yaml
+  - ./storageclass-truenas-paperless-consume.yaml
   - ./storageclass-truenas-photos.yaml
   - ./storageclass-truenas-video.yaml
