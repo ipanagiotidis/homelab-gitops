@@ -3,8 +3,10 @@ common:
     paperless-ngx:
       pod:
         securityContext:
-          fsGroup: 1001
+          fsGroup: 3000
           fsGroupChangePolicy: OnRootMismatch
+          supplementalGroups:
+            - 3000
       containers:
         app:
           image:
@@ -26,7 +28,7 @@ common:
             PAPERLESS_SOCIALACCOUNT_ALLOW_SIGNUPS: "false"
             PAPERLESS_SOCIAL_ACCOUNT_SYNC_GROUPS: "true"
             USERMAP_UID: "1001"
-            USERMAP_GID: "1001"
+            USERMAP_GID: "3000"
             PAPERLESS_REDIS: "redis://paperless-ngx-redis:6379"
             PAPERLESS_DBENGINE: "postgresql"
             PAPERLESS_DBHOST:
