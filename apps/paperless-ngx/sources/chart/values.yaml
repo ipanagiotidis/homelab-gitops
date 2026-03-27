@@ -30,6 +30,9 @@ common:
             USERMAP_UID: "1001"
             USERMAP_GID: "3000"
             PAPERLESS_REDIS: "redis://paperless-ngx-redis:6379"
+            PAPERLESS_CONSUMER_POLLING: "5"
+            PAPERLESS_CONSUMER_POLLING_RETRY_COUNT: "5"
+            PAPERLESS_CONSUMER_POLLING_DELAY: "5"
             PAPERLESS_DBENGINE: "postgresql"
             PAPERLESS_DBHOST:
               valueFrom:
