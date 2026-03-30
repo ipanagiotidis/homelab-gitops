@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - ./external-secret.yaml
   - ./external-secret-postgresql.yaml
+  - ./pvc-shared-storage-nas.yaml
