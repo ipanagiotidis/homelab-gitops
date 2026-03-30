@@ -21,6 +21,7 @@ resources:
   - apps/immich/applications/immich-db.yaml
   - apps/immich/applications/immich.yaml
   - apps/flaresolverr/applications/flaresolverr.yaml
+  - apps/gitea/applications/gitea-db.yaml
   - apps/gitea/applications/gitea.yaml
   - apps/traefik/applications/traefik.yaml
   - apps/cert-manager/applications/cert-manager.yaml
