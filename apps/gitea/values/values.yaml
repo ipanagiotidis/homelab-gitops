@@ -4,7 +4,7 @@ image:
 redis-cluster:
   enabled: false
 postgresql:
-  enabled: true
+  enabled: false
   auth:
     existingSecret: gitea-postgresql
     secretKeys:
@@ -28,6 +28,9 @@ gitea:
   config:
     database:
       DB_TYPE: postgres
+      HOST: gitea-database-rw.gitea.svc.cluster.local:5432
+      NAME: gitea
+      USER: gitea
     session:
       PROVIDER: db
     cache:
@@ -55,6 +58,12 @@ gitea:
       autoDiscoverUrl: "https://authentik.yiannis.io/application/o/gitea-slug/.well-known/openid-configuration"
       iconUrl: "https://goauthentik.io/img/icon.png"
       scopes: "email profile"
+  additionalConfigFromEnvs:
+    - name: GITEA__DATABASE__PASSWD
+      valueFrom:
+        secretKeyRef:
+          name: gitea-cnpg-app
+          key: password
 
 ingress:
   enabled: true
