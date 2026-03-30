@@ -18,3 +18,5 @@ spec:
     initdb:
       database: gitea
       owner: gitea
+      secret:
+        name: gitea-cnpg-app
