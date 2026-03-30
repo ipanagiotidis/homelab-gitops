@@ -10,6 +10,9 @@ authentik:
   error_reporting:
     enabled: false
   postgresql:
+    host: authentik-database-rw.authentik.svc.cluster.local
+    name: authentik
+    user: authentik
     password: file:///postgres-creds/AUTHENTIK_POSTGRES_PASSWORD
   log_level: "info"
 
@@ -45,7 +48,7 @@ server:
       name: authentik-secret-key
 
 postgresql:
-  enabled: true
+  enabled: false
   image:
     tag: 15
   volumePermissions:
