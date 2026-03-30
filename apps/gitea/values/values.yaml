@@ -19,7 +19,9 @@ postgresql-ha:
 
 persistence:
   enabled: true
-  storageClass: local-path
+  create: false
+  mount: true
+  claimName: gitea-shared-storage-nas
 
 nodeSelector: 
   extraDiskNode: "true" 
