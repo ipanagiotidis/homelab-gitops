@@ -12,6 +12,7 @@ resources:
   #- apps/falco/applications/falco.yaml
   - apps/external-secrets/applications/external-secrets.yaml
   - apps/local-storage-provisioner/applications/local-storage-provisioner.yaml
+  - apps/cloudnative-pg/applications/cloudnative-pg.yaml
   - apps/qbittorrent/applications/qbittorrent.yaml
   - apps/jellyfin/applications/jellyfin.yaml
   - apps/prowlarr/applications/prowlarr.yaml
