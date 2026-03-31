@@ -6,6 +6,15 @@ metadata:
   labels:
     app: kube-prometheus-stack
 spec:
+  ignoreDifferences:
+  - group: ""
+    kind: Secret
+    name: kube-prometheus-stack-grafana
+    namespace: monitoring
+    jsonPointers:
+    - /data/admin-password
+    - /data/admin-user
+    - /data/ldap-toml
   destination:
     namespace: monitoring
     server: https://kubernetes.default.svc
