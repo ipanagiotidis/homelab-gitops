@@ -14,6 +14,9 @@ spec:
     inProgress: false
     reusePVC: true
 
+  monitoring:
+    enablePodMonitor: true
+
   bootstrap:
     initdb:
       database: paperless

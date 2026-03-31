@@ -18,6 +18,9 @@ spec:
     inProgress: false
     reusePVC: true
 
+  monitoring:
+    enablePodMonitor: true
+
   postgresql:
     shared_preload_libraries:
       - vchord.so
