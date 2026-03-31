@@ -15,8 +15,9 @@ spec:
       interval: 30s
       path: /metrics
       relabelings:
-        - targetLabel: job
+        - action: replace
           replacement: argocd-metrics
+          targetLabel: job
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -35,8 +36,9 @@ spec:
       interval: 30s
       path: /metrics
       relabelings:
-        - targetLabel: job
+        - action: replace
           replacement: argocd-server-metrics
+          targetLabel: job
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -55,8 +57,9 @@ spec:
       interval: 30s
       path: /metrics
       relabelings:
-        - targetLabel: job
+        - action: replace
           replacement: argocd-repo-server-metrics
+          targetLabel: job
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -75,5 +78,6 @@ spec:
       interval: 30s
       path: /metrics
       relabelings:
-        - targetLabel: job
+        - action: replace
           replacement: argocd-applicationset-controller-metrics
+          targetLabel: job
