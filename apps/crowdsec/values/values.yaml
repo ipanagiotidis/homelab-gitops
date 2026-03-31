@@ -30,6 +30,10 @@ secrets:
 agent:
   lapiURL: "https://crowdsec-service.crowdsec.svc.cluster.local:8080"
   lapiHost: "crowdsec-service.crowdsec.svc.cluster.local"
+  metrics:
+    enabled: true
+    podMonitor:
+      enabled: true
   # Specify each pod whose logs you want to process
   acquisition:
     # The namespace where the pod is located
@@ -63,6 +67,10 @@ agent:
     # - name: DISABLE_PARSERS
     #   value: "crowdsecurity/whitelists"
 lapi:
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
   env:
     # To enroll the Security Engine to the console
     - name: ENROLL_KEY
