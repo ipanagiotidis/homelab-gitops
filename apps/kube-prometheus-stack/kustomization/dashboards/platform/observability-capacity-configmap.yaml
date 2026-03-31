@@ -192,7 +192,7 @@ data:
               },
               "mappings": [],
               "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}]},
-              "unit": "percentunit"
+              "unit": "decbytes"
             },
             "overrides": []
           },
@@ -205,12 +205,12 @@ data:
           "targets": [
             {
               "datasource": {"type": "prometheus", "uid": "$datasource"},
-              "expr": "kubelet_volume_stats_used_bytes{namespace=\"monitoring\",persistentvolumeclaim=~\"prometheus-.*|storage-loki-0|kube-prometheus-stack-grafana\"} / kubelet_volume_stats_capacity_bytes{namespace=\"monitoring\",persistentvolumeclaim=~\"prometheus-.*|storage-loki-0|kube-prometheus-stack-grafana\"}",
-              "legendFormat": "{{persistentvolumeclaim}}",
+              "expr": "kube_persistentvolumeclaim_resource_requests_storage_bytes{namespace=\"monitoring\",persistentvolumeclaim=~\"prometheus-.*|storage-loki-0|kube-prometheus-stack-grafana\"}",
+              "legendFormat": "{{persistentvolumeclaim}} requested",
               "refId": "A"
             }
           ],
-          "title": "Monitoring PVC Usage %",
+          "title": "Monitoring PVC Requested Capacity",
           "type": "timeseries"
         },
         {
@@ -247,18 +247,18 @@ data:
           "targets": [
             {
               "datasource": {"type": "prometheus", "uid": "$datasource"},
-              "expr": "kubelet_volume_stats_used_bytes{namespace=\"monitoring\",persistentvolumeclaim=~\"prometheus-.*|storage-loki-0|kube-prometheus-stack-grafana\"}",
-              "legendFormat": "{{persistentvolumeclaim}} used",
+              "expr": "prometheus_tsdb_storage_blocks_bytes",
+              "legendFormat": "prometheus actual",
               "refId": "A"
             },
             {
               "datasource": {"type": "prometheus", "uid": "$datasource"},
-              "expr": "kubelet_volume_stats_capacity_bytes{namespace=\"monitoring\",persistentvolumeclaim=~\"prometheus-.*|storage-loki-0|kube-prometheus-stack-grafana\"}",
-              "legendFormat": "{{persistentvolumeclaim}} capacity",
+              "expr": "kube_persistentvolumeclaim_resource_requests_storage_bytes{namespace=\"monitoring\",persistentvolumeclaim=~\"prometheus-.*|storage-loki-0|kube-prometheus-stack-grafana\"}",
+              "legendFormat": "{{persistentvolumeclaim}} requested",
               "refId": "B"
             }
           ],
-          "title": "Monitoring PVC Used vs Capacity",
+          "title": "Known Data Size vs Requested Capacity",
           "type": "timeseries"
         }
       ],
