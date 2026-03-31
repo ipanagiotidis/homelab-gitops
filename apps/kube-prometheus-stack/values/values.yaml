@@ -22,6 +22,10 @@ nodeExporter:
   enabled: true
 grafana:
   assertNoLeakedSecrets: false
+  initChownData:
+    enabled: false
+  image:
+    tag: 12.2.1
   ingress:
     enabled: true
     annotations:
@@ -84,15 +88,10 @@ grafana:
       #label: "grafana_datasource" # This is the default label the sidecar looks for
       #labelvalue: "1"
   additionalDataSources:
-    - name: Loki-test
+    - name: Loki
       type: loki
       access: proxy
-      url: http://loki:3100
-      jsonData:
-        tlsSkipVerify: true
-    - name: Tempo-test
-      type: tempo
-      url: http://tempo:3100
+      url: http://loki.monitoring.svc.cluster.local:3100
 prometheus:
   prometheusSpec:
     ruleSelectorNilUsesHelmValues: false
@@ -113,4 +112,3 @@ prometheus:
           storageClassName: "local-path"  # Specify your storage class
     retention: "14d"  # Retain metrics for 14 days
     retentionSize: "5GB"  # Optional: Retain no more than 20GB of metrics
-
