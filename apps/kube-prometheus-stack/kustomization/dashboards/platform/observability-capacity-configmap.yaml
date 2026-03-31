@@ -1,13 +1,14 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-dashboard-platform-observability-capacity
+  name: grafana-dashboard-observability-capacity
+  namespace: monitoring
   labels:
     grafana_dashboard: "1"
   annotations:
     k8s-sidecar-target-directory: /tmp/dashboards/Platform
 data:
-  observability-capacity.json: |-
+  observability-capacity.json: |
     {
       "annotations": {
         "list": [
@@ -33,36 +34,68 @@ data:
       "panels": [
         {
           "collapsed": false,
-          "gridPos": {"h": 1, "w": 24, "x": 0, "y": 0},
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 0
+          },
           "id": 1,
           "panels": [],
           "title": "Daily Volume",
           "type": "row"
         },
         {
-          "datasource": {"type": "prometheus", "uid": "$datasource"},
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "fieldConfig": {
             "defaults": {
-              "color": {"mode": "thresholds"},
+              "color": {
+                "mode": "thresholds"
+              },
               "decimals": 2,
-              "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}]},
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
               "unit": "decbytes"
             },
             "overrides": []
           },
-          "gridPos": {"h": 5, "w": 6, "x": 0, "y": 1},
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 0,
+            "y": 1
+          },
           "id": 2,
           "options": {
             "colorMode": "value",
             "graphMode": "area",
             "justifyMode": "auto",
             "orientation": "auto",
-            "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false},
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
             "textMode": "auto"
           },
           "targets": [
             {
-              "datasource": {"type": "prometheus", "uid": "$datasource"},
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
               "expr": "sum(rate(prometheus_tsdb_compaction_chunk_size_bytes_sum[2h])) * 86400",
               "refId": "A"
             }
@@ -71,29 +104,56 @@ data:
           "type": "stat"
         },
         {
-          "datasource": {"type": "prometheus", "uid": "$datasource"},
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "fieldConfig": {
             "defaults": {
-              "color": {"mode": "thresholds"},
+              "color": {
+                "mode": "thresholds"
+              },
               "decimals": 2,
-              "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}]},
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
               "unit": "decbytes"
             },
             "overrides": []
           },
-          "gridPos": {"h": 5, "w": 6, "x": 6, "y": 1},
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 6,
+            "y": 1
+          },
           "id": 3,
           "options": {
             "colorMode": "value",
             "graphMode": "area",
             "justifyMode": "auto",
             "orientation": "auto",
-            "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false},
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
             "textMode": "auto"
           },
           "targets": [
             {
-              "datasource": {"type": "prometheus", "uid": "$datasource"},
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
               "expr": "sum(rate(loki_distributor_bytes_received_total[2h])) * 86400",
               "refId": "A"
             }
@@ -102,29 +162,56 @@ data:
           "type": "stat"
         },
         {
-          "datasource": {"type": "prometheus", "uid": "$datasource"},
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "fieldConfig": {
             "defaults": {
-              "color": {"mode": "thresholds"},
+              "color": {
+                "mode": "thresholds"
+              },
               "decimals": 0,
-              "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}]},
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
               "unit": "short"
             },
             "overrides": []
           },
-          "gridPos": {"h": 5, "w": 6, "x": 12, "y": 1},
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 12,
+            "y": 1
+          },
           "id": 4,
           "options": {
             "colorMode": "value",
             "graphMode": "area",
             "justifyMode": "auto",
             "orientation": "auto",
-            "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false},
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
             "textMode": "auto"
           },
           "targets": [
             {
-              "datasource": {"type": "prometheus", "uid": "$datasource"},
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
               "expr": "sum(rate(loki_distributor_lines_received_total[2h])) * 86400",
               "refId": "A"
             }
@@ -133,29 +220,56 @@ data:
           "type": "stat"
         },
         {
-          "datasource": {"type": "prometheus", "uid": "$datasource"},
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "fieldConfig": {
             "defaults": {
-              "color": {"mode": "thresholds"},
+              "color": {
+                "mode": "thresholds"
+              },
               "decimals": 2,
-              "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}]},
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
               "unit": "decbytes"
             },
             "overrides": []
           },
-          "gridPos": {"h": 5, "w": 6, "x": 18, "y": 1},
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 18,
+            "y": 1
+          },
           "id": 5,
           "options": {
             "colorMode": "value",
             "graphMode": "area",
             "justifyMode": "auto",
             "orientation": "auto",
-            "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false},
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
             "textMode": "auto"
           },
           "targets": [
             {
-              "datasource": {"type": "prometheus", "uid": "$datasource"},
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
               "expr": "prometheus_tsdb_storage_blocks_bytes",
               "refId": "A"
             }
@@ -165,101 +279,396 @@ data:
         },
         {
           "collapsed": false,
-          "gridPos": {"h": 1, "w": 24, "x": 0, "y": 6},
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 6
+          },
           "id": 6,
           "panels": [],
-          "title": "Storage Pressure",
+          "title": "Retention Budget",
           "type": "row"
         },
         {
-          "datasource": {"type": "prometheus", "uid": "$datasource"},
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "fieldConfig": {
             "defaults": {
-              "color": {"mode": "palette-classic"},
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisPlacement": "auto",
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {"group": "A", "mode": "none"},
-                "thresholdsStyle": {"mode": "off"}
+              "color": {
+                "mode": "thresholds"
               },
-              "mappings": [],
-              "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}]},
+              "decimals": 2,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
               "unit": "decbytes"
             },
             "overrides": []
           },
-          "gridPos": {"h": 8, "w": 12, "x": 0, "y": 7},
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 0,
+            "y": 7
+          },
           "id": 7,
           "options": {
-            "legend": {"calcs": ["lastNotNull"], "displayMode": "table", "placement": "bottom", "showLegend": true},
-            "tooltip": {"mode": "single", "sort": "none"}
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
           },
           "targets": [
             {
-              "datasource": {"type": "prometheus", "uid": "$datasource"},
-              "expr": "kube_persistentvolumeclaim_resource_requests_storage_bytes{namespace=\"monitoring\",persistentvolumeclaim=~\"prometheus-.*|storage-loki-0|kube-prometheus-stack-grafana\"}",
-              "legendFormat": "{{persistentvolumeclaim}} requested",
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
+              "expr": "kube_persistentvolumeclaim_resource_requests_storage_bytes{namespace=\"monitoring\",persistentvolumeclaim=\"prometheus-kube-prometheus-stack-prometheus-db-prometheus-kube-prometheus-stack-prometheus-0\"}",
               "refId": "A"
             }
           ],
-          "title": "Monitoring PVC Requested Capacity",
-          "type": "timeseries"
+          "title": "Prometheus Requested Capacity",
+          "type": "stat"
         },
         {
-          "datasource": {"type": "prometheus", "uid": "$datasource"},
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
           "fieldConfig": {
             "defaults": {
-              "color": {"mode": "palette-classic"},
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisPlacement": "auto",
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {"group": "A", "mode": "none"},
-                "thresholdsStyle": {"mode": "off"}
+              "color": {
+                "mode": "thresholds"
               },
-              "mappings": [],
-              "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}]},
-              "unit": "bytes"
+              "decimals": 2,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "decbytes"
             },
             "overrides": []
           },
-          "gridPos": {"h": 8, "w": 12, "x": 12, "y": 7},
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 6,
+            "y": 7
+          },
           "id": 8,
           "options": {
-            "legend": {"calcs": ["lastNotNull"], "displayMode": "table", "placement": "bottom", "showLegend": true},
-            "tooltip": {"mode": "single", "sort": "none"}
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
           },
           "targets": [
             {
-              "datasource": {"type": "prometheus", "uid": "$datasource"},
-              "expr": "prometheus_tsdb_storage_blocks_bytes",
-              "legendFormat": "prometheus actual",
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
+              "expr": "kube_persistentvolumeclaim_resource_requests_storage_bytes{namespace=\"monitoring\",persistentvolumeclaim=\"storage-loki-0\"}",
               "refId": "A"
-            },
-            {
-              "datasource": {"type": "prometheus", "uid": "$datasource"},
-              "expr": "kube_persistentvolumeclaim_resource_requests_storage_bytes{namespace=\"monitoring\",persistentvolumeclaim=~\"prometheus-.*|storage-loki-0|kube-prometheus-stack-grafana\"}",
-              "legendFormat": "{{persistentvolumeclaim}} requested",
-              "refId": "B"
             }
           ],
-          "title": "Known Data Size vs Requested Capacity",
-          "type": "timeseries"
+          "title": "Loki Requested Capacity",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 1,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 7
+                  },
+                  {
+                    "color": "green",
+                    "value": 14
+                  }
+                ]
+              },
+              "unit": "d"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 12,
+            "y": 7
+          },
+          "id": 9,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
+              "expr": "clamp_min((kube_persistentvolumeclaim_resource_requests_storage_bytes{namespace=\"monitoring\",persistentvolumeclaim=\"prometheus-kube-prometheus-stack-prometheus-db-prometheus-kube-prometheus-stack-prometheus-0\"} - prometheus_tsdb_storage_blocks_bytes) / (sum(rate(prometheus_tsdb_compaction_chunk_size_bytes_sum[2h])) * 86400), 0)",
+              "refId": "A"
+            }
+          ],
+          "title": "Prometheus Est. Days to Fill",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 1,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 14
+                  },
+                  {
+                    "color": "green",
+                    "value": 30
+                  }
+                ]
+              },
+              "unit": "d"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 18,
+            "y": 7
+          },
+          "id": 10,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
+              "expr": "kube_persistentvolumeclaim_resource_requests_storage_bytes{namespace=\"monitoring\",persistentvolumeclaim=\"storage-loki-0\"} / (sum(rate(loki_distributor_bytes_received_total[2h])) * 86400)",
+              "refId": "A"
+            }
+          ],
+          "title": "Loki Est. Days to Fill",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 2,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 2147483648
+                  },
+                  {
+                    "color": "green",
+                    "value": 5368709120
+                  }
+                ]
+              },
+              "unit": "decbytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 0,
+            "y": 12
+          },
+          "id": 11,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
+              "expr": "clamp_min(kube_persistentvolumeclaim_resource_requests_storage_bytes{namespace=\"monitoring\",persistentvolumeclaim=\"prometheus-kube-prometheus-stack-prometheus-db-prometheus-kube-prometheus-stack-prometheus-0\"} - prometheus_tsdb_storage_blocks_bytes, 0)",
+              "refId": "A"
+            }
+          ],
+          "title": "Prometheus Free Space Left",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 2,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 5368709120
+                  },
+                  {
+                    "color": "green",
+                    "value": 10737418240
+                  }
+                ]
+              },
+              "unit": "decbytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 6,
+            "y": 12
+          },
+          "id": 12,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
+              "expr": "clamp_min(kube_persistentvolumeclaim_resource_requests_storage_bytes{namespace=\"monitoring\",persistentvolumeclaim=\"storage-loki-0\"} - (sum(rate(loki_distributor_bytes_received_total[2h])) * 86400 * 14), 0)",
+              "refId": "A"
+            }
+          ],
+          "title": "Loki Free Space Left (14d est.)",
+          "type": "stat"
         }
       ],
       "refresh": "30s",
@@ -268,7 +677,11 @@ data:
       "templating": {
         "list": [
           {
-            "current": {"selected": false, "text": "Prometheus", "value": "Prometheus"},
+            "current": {
+              "selected": false,
+              "text": "Prometheus",
+              "value": "Prometheus"
+            },
             "hide": 0,
             "includeAll": false,
             "label": "datasource",
@@ -283,7 +696,10 @@ data:
           }
         ]
       },
-      "time": {"from": "now-24h", "to": "now"},
+      "time": {
+        "from": "now-24h",
+        "to": "now"
+      },
       "timepicker": {},
       "timezone": "",
       "title": "Observability Capacity",
