@@ -148,7 +148,7 @@ data:
               "datasource": "Prometheus",
               "editorMode": "code",
               "exemplar": false,
-              "expr": "loki_build_info{job=\"$jobs\",instance=\"$host:$instance\"}",
+              "expr": "loki_build_info{job=~\"$jobs\"}",
               "format": "table",
               "instant": false,
               "interval": "$interval",
@@ -242,7 +242,7 @@ data:
             {
               "datasource": "Prometheus",
               "editorMode": "code",
-              "expr": "sum(loki_internal_log_messages_total{job=\"$jobs\",instance=\"$host:$instance\"})",
+              "expr": "sum(loki_internal_log_messages_total{job=~\"$jobs\"})",
               "instant": false,
               "interval": "$interval",
               "legendFormat": "",
@@ -308,7 +308,7 @@ data:
             {
               "datasource": "Prometheus",
               "editorMode": "code",
-              "expr": "deprecated_flags_inuse_total{job=\"$jobs\",instance=\"$host:$instance\"}",
+              "expr": "deprecated_flags_inuse_total{job=~\"$jobs\"}",
               "instant": false,
               "interval": "$interval",
               "legendFormat": "Deprecated",
@@ -317,7 +317,7 @@ data:
             {
               "datasource": "Prometheus",
               "editorMode": "code",
-              "expr": "loki_experimental_features_in_use_total{job=\"$jobs\",instance=\"$host:$instance\"}",
+              "expr": "loki_experimental_features_in_use_total{job=~\"$jobs\"}",
               "hide": false,
               "instant": false,
               "interval": "$interval",
@@ -388,7 +388,7 @@ data:
             {
               "datasource": "Prometheus",
               "editorMode": "code",
-              "expr": "loki_panic_total{job=\"$jobs\",instance=\"$host:$instance\"}",
+              "expr": "loki_panic_total{job=~\"$jobs\"}",
               "instant": false,
               "interval": "$interval",
               "legendFormat": "The total number of panics triggered",
@@ -462,7 +462,7 @@ data:
             {
               "datasource": "Prometheus",
               "editorMode": "code",
-              "expr": "loki_distributor_replication_factor{job=\"$jobs\",instance=\"$host:$instance\"}",
+              "expr": "loki_distributor_replication_factor{job=~\"$jobs\"}",
               "instant": false,
               "interval": "$interval",
               "legendFormat": "The configured replication factor",
@@ -533,7 +533,7 @@ data:
               "datasource": "Prometheus",
               "editorMode": "code",
               "exemplar": false,
-              "expr": "go_info{job=\"$jobs\",instance=\"$host:$instance\"}",
+              "expr": "go_info{job=~\"$jobs\"}",
               "format": "table",
               "instant": false,
               "interval": "$interval",
@@ -644,7 +644,7 @@ data:
               "datasource": "Prometheus",
               "editorMode": "code",
               "exemplar": false,
-              "expr": "sum(go_goroutines{job=\"$jobs\",instance=\"$host:$instance\"})",
+              "expr": "sum(go_goroutines{job=~\"$jobs\"})",
               "format": "table",
               "instant": false,
               "interval": "$interval",
@@ -721,7 +721,7 @@ data:
               "datasource": "Prometheus",
               "editorMode": "code",
               "exemplar": false,
-              "expr": "sum(go_threads{job=\"$jobs\",instance=\"$host:$instance\"})",
+              "expr": "sum(go_threads{job=~\"$jobs\"})",
               "format": "table",
               "instant": false,
               "interval": "$interval",
@@ -790,7 +790,7 @@ data:
             {
               "datasource": "Prometheus",
               "editorMode": "code",
-              "expr": "sum(rate(loki_distributor_lines_received_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by(tenant)",
+              "expr": "sum(rate(loki_distributor_lines_received_total{job=~\"$jobs\"}[$__rate_interval])) by(tenant)",
               "hide": false,
               "instant": false,
               "interval": "$interval",
@@ -873,7 +873,7 @@ data:
             {
               "datasource": "Prometheus",
               "editorMode": "code",
-              "expr": "sum(rate(loki_distributor_bytes_received_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by(tenant)",
+              "expr": "sum(rate(loki_distributor_bytes_received_total{job=~\"$jobs\"}[$__rate_interval])) by(tenant)",
               "hide": false,
               "instant": false,
               "interval": "$interval",
@@ -963,7 +963,7 @@ data:
             {
               "datasource": "Prometheus",
               "editorMode": "code",
-              "expr": "rate(loki_ingester_chunks_created_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+              "expr": "rate(loki_ingester_chunks_created_total{job=~\"$jobs\"}[$__rate_interval])",
               "hide": false,
               "instant": false,
               "interval": "$interval",
@@ -973,7 +973,7 @@ data:
             {
               "datasource": "Prometheus",
               "editorMode": "code",
-              "expr": "sum(rate(loki_ingester_chunks_stored_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (tenant) ",
+              "expr": "sum(rate(loki_ingester_chunks_stored_total{job=~\"$jobs\"}[$__rate_interval])) by (tenant) ",
               "hide": false,
               "instant": false,
               "interval": "$interval",
@@ -1056,7 +1056,7 @@ data:
             {
               "datasource": "Prometheus",
               "editorMode": "code",
-              "expr": "sum(rate(loki_ingester_chunk_stored_bytes_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (tenant)",
+              "expr": "sum(rate(loki_ingester_chunk_stored_bytes_total{job=~\"$jobs\"}[$__rate_interval])) by (tenant)",
               "instant": false,
               "interval": "$interval",
               "legendFormat": "{{ tenant }}",
@@ -1138,7 +1138,7 @@ data:
             {
               "datasource": "Prometheus",
               "editorMode": "code",
-              "expr": "sum(loki_store_series_total{job=\"$jobs\",instance=\"$host:$instance\"}) by(status)",
+              "expr": "sum(loki_store_series_total{job=~\"$jobs\"}) by(status)",
               "instant": false,
               "interval": "$interval",
               "legendFormat": "{{ status }}",
@@ -1221,7 +1221,7 @@ data:
             {
               "datasource": "Prometheus",
               "editorMode": "code",
-              "expr": "sum(loki_store_chunks_downloaded_total{job=\"$jobs\",instance=\"$host:$instance\"}) by(status)",
+              "expr": "sum(loki_store_chunks_downloaded_total{job=~\"$jobs\"}) by(status)",
               "instant": false,
               "interval": "$interval",
               "legendFormat": "{{ status }}",
@@ -1304,7 +1304,7 @@ data:
             {
               "datasource": "Prometheus",
               "editorMode": "code",
-              "expr": "sum(loki_index_chunk_refs_total{job=\"$jobs\",instance=\"$host:$instance\"}) by(status)",
+              "expr": "sum(loki_index_chunk_refs_total{job=~\"$jobs\"}) by(status)",
               "instant": false,
               "interval": "$interval",
               "legendFormat": "{{ status }}",
@@ -1387,7 +1387,7 @@ data:
             {
               "datasource": "Prometheus",
               "editorMode": "code",
-              "expr": "loki_ingester_memory_chunks{job=\"$jobs\",instance=\"$host:$instance\"}",
+              "expr": "loki_ingester_memory_chunks{job=~\"$jobs\"}",
               "hide": false,
               "instant": false,
               "interval": "$interval",
@@ -1455,7 +1455,7 @@ data:
             {
               "datasource": "Prometheus",
               "editorMode": "code",
-              "expr": "sum(loki_ingester_memory_streams{job=\"$jobs\",instance=\"$host:$instance\"}) by(tenant)",
+              "expr": "sum(loki_ingester_memory_streams{job=~\"$jobs\"}) by(tenant)",
               "instant": false,
               "interval": "$interval",
               "legendFormat": "{{ tenant }}",
@@ -1543,7 +1543,7 @@ data:
             {
               "datasource": "Prometheus",
               "editorMode": "code",
-              "expr": "sum(rate(loki_ingester_streams_created_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (tenant)",
+              "expr": "sum(rate(loki_ingester_streams_created_total{job=~\"$jobs\"}[$__rate_interval])) by (tenant)",
               "hide": false,
               "instant": false,
               "interval": "$interval",
@@ -1553,7 +1553,7 @@ data:
             {
               "datasource": "Prometheus",
               "editorMode": "code",
-              "expr": "sum(rate(loki_ingester_streams_removed_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (tenant)",
+              "expr": "sum(rate(loki_ingester_streams_removed_total{job=~\"$jobs\"}[$__rate_interval])) by (tenant)",
               "hide": false,
               "instant": false,
               "interval": "$interval",
@@ -1638,7 +1638,7 @@ data:
             {
               "datasource": "Prometheus",
               "editorMode": "code",
-              "expr": "sum(rate(loki_chunk_store_fetched_chunks_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (user)",
+              "expr": "sum(rate(loki_chunk_store_fetched_chunks_total{job=~\"$jobs\"}[$__rate_interval])) by (user)",
               "hide": false,
               "instant": false,
               "interval": "$interval",
@@ -1725,7 +1725,7 @@ data:
             {
               "datasource": "Prometheus",
               "editorMode": "code",
-              "expr": "sum(rate(loki_chunk_store_stored_chunks_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (user)",
+              "expr": "sum(rate(loki_chunk_store_stored_chunks_total{job=~\"$jobs\"}[$__rate_interval])) by (user)",
               "hide": false,
               "instant": false,
               "interval": "$interval",
@@ -1812,7 +1812,7 @@ data:
             {
               "datasource": "Prometheus",
               "editorMode": "code",
-              "expr": "histogram_quantile(0.95, sum(rate(loki_ingester_chunk_size_bytes_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le))",
+              "expr": "histogram_quantile(0.95, sum(rate(loki_ingester_chunk_size_bytes_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le))",
               "hide": false,
               "instant": false,
               "interval": "$interval",
@@ -1880,7 +1880,7 @@ data:
             {
               "datasource": "Prometheus",
               "editorMode": "code",
-              "expr": "histogram_quantile(0.95, sum(rate(loki_ingester_chunk_compression_ratio_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le))",
+              "expr": "histogram_quantile(0.95, sum(rate(loki_ingester_chunk_compression_ratio_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le))",
               "hide": false,
               "instant": false,
               "interval": "$interval",
@@ -1948,7 +1948,7 @@ data:
             {
               "datasource": "Prometheus",
               "editorMode": "code",
-              "expr": "rate(loki_chunk_store_fetched_chunk_bytes_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+              "expr": "rate(loki_chunk_store_fetched_chunk_bytes_total{job=~\"$jobs\"}[$__rate_interval])",
               "hide": false,
               "instant": false,
               "interval": "$interval",
@@ -2035,7 +2035,7 @@ data:
             {
               "datasource": "Prometheus",
               "editorMode": "code",
-              "expr": "rate(loki_chunk_store_stored_chunk_bytes_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+              "expr": "rate(loki_chunk_store_stored_chunk_bytes_total{job=~\"$jobs\"}[$__rate_interval])",
               "hide": false,
               "instant": false,
               "interval": "$interval",
@@ -2156,7 +2156,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_request_duration_seconds_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le,method,route,status_code))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_request_duration_seconds_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,method,route,status_code))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ method }} / {{ route }} / {{ status_code }}",
@@ -2248,7 +2248,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(loki_inflight_requests{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (method, route)",
+                  "expr": "sum(rate(loki_inflight_requests{job=~\"$jobs\"}[$__rate_interval])) by (method, route)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ method }} / {{ route }}",
@@ -2340,7 +2340,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_response_message_bytes_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le,method,route))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_response_message_bytes_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,method,route))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ method }} / {{ route }}",
@@ -2432,7 +2432,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_request_message_bytes_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le,method,route))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_request_message_bytes_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,method,route))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ method }} / {{ route }}",
@@ -2524,7 +2524,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "loki_tcp_connections{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "loki_tcp_connections{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ protocol }}",
@@ -2660,7 +2660,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(loki_cache_hits{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by(name)",
+                  "expr": "sum(rate(loki_cache_hits{job=~\"$jobs\"}[$__rate_interval])) by(name)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "__auto",
@@ -2752,7 +2752,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(loki_cache_fetched_keys{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by(name)",
+                  "expr": "sum(rate(loki_cache_fetched_keys{job=~\"$jobs\"}[$__rate_interval])) by(name)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "__auto",
@@ -2844,7 +2844,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_cache_request_duration_seconds_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le,name,method))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_cache_request_duration_seconds_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,name,method))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ name }} / {{ method }}",
@@ -2944,7 +2944,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_cache_value_size_bytes_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le,name,method))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_cache_value_size_bytes_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,name,method))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ name }} / {{ method }}",
@@ -3050,7 +3050,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(loki_distributor_bytes_received_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by(tenant)",
+                  "expr": "sum(rate(loki_distributor_bytes_received_total{job=~\"$jobs\"}[$__rate_interval])) by(tenant)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "__auto",
@@ -3153,7 +3153,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(loki_distributor_lines_received_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by(tenant)",
+                  "expr": "sum(rate(loki_distributor_lines_received_total{job=~\"$jobs\"}[$__rate_interval])) by(tenant)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "__auto",
@@ -3256,7 +3256,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(loki_distributor_ingester_appends_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by(ingester)",
+                  "expr": "sum(rate(loki_distributor_ingester_appends_total{job=~\"$jobs\"}[$__rate_interval])) by(ingester)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "__auto",
@@ -3373,7 +3373,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_index_request_duration_seconds_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le,component,operation,status_code))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_index_request_duration_seconds_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,component,operation,status_code))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ component }} / {{ operation }} / {{ status_code }}",
@@ -3473,7 +3473,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(loki_index_chunk_refs_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (status)",
+                  "expr": "sum(rate(loki_index_chunk_refs_total{job=~\"$jobs\"}[$__rate_interval])) by (status)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ status }}",
@@ -3603,7 +3603,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_kv_request_duration_seconds_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le,kv_name,operation,role,status_code,type))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_kv_request_duration_seconds_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,kv_name,operation,role,status_code,type))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ kv_name }} / {{ type }} / {{ operation }} / {{ status_code }}",
@@ -3695,7 +3695,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(cortex_kv_request_duration_seconds_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le,kv_name,operation,role,status_code,type))",
+                  "expr": "histogram_quantile(0.95, sum(rate(cortex_kv_request_duration_seconds_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,kv_name,operation,role,status_code,type))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ kv_name }} / {{ type }} / {{ operation }} / {{ status_code }}",
@@ -3787,7 +3787,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(cortex_consul_request_duration_seconds_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le,kv_name,operation,status_code))",
+                  "expr": "histogram_quantile(0.95, sum(rate(cortex_consul_request_duration_seconds_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,kv_name,operation,status_code))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ kv_name }} / {{ operation }} / {{ status_code }}",
@@ -3893,7 +3893,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_ingester_client_request_duration_seconds_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le,operation,status_code))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_ingester_client_request_duration_seconds_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,operation,status_code))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ operation }} / {{ status_code }}",
@@ -3985,7 +3985,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(loki_ingester_chunks_created_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(loki_ingester_chunks_created_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Chunk creations ",
@@ -3995,7 +3995,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(loki_ingester_chunks_flushed_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (reason)",
+                  "expr": "sum(rate(loki_ingester_chunks_flushed_total{job=~\"$jobs\"}[$__rate_interval])) by (reason)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Chunk flushes / {{ reason }}",
@@ -4005,7 +4005,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(loki_ingester_chunks_stored_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (tenant) ",
+                  "expr": "sum(rate(loki_ingester_chunks_stored_total{job=~\"$jobs\"}[$__rate_interval])) by (tenant) ",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Chunks stored / {{ tenant }}",
@@ -4105,7 +4105,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(loki_ingester_checkpoint_creations_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(loki_ingester_checkpoint_creations_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Checkpoint creations ",
@@ -4115,7 +4115,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(loki_ingester_checkpoint_creations_failed_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(loki_ingester_checkpoint_creations_failed_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Checkpoint creation failures",
@@ -4125,7 +4125,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(loki_ingester_checkpoint_deletions_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(loki_ingester_checkpoint_deletions_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Checkpoint deletions",
@@ -4135,7 +4135,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(loki_ingester_checkpoint_deletions_failed_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(loki_ingester_checkpoint_deletions_failed_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Checkpoint deletion failures",
@@ -4235,7 +4235,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(loki_ingester_checkpoint_logged_bytes_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(loki_ingester_checkpoint_logged_bytes_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Bytes written to disk for checkpointing",
@@ -4447,7 +4447,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_ingester_blocks_per_chunk_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_ingester_blocks_per_chunk_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Blocks per Chunk",
@@ -4539,7 +4539,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_ingester_chunk_compression_ratio_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_ingester_chunk_compression_ratio_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Compression ratio of chunks (when stored)",
@@ -4631,7 +4631,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "loki_ingester_memory_chunks{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "loki_ingester_memory_chunks{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Chunks in memory",
@@ -4723,7 +4723,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_ingester_chunk_size_bytes_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_ingester_chunk_size_bytes_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Distribution of stored chunk sizes (when stored)",
@@ -4815,7 +4815,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_ingester_chunk_age_seconds_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_ingester_chunk_age_seconds_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Distribution of chunk ages (when stored)",
@@ -4907,7 +4907,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_ingester_chunk_utilization_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_ingester_chunk_utilization_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Distribution of stored chunk utilization (when stored)",
@@ -4999,7 +4999,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(loki_ingester_chunk_stored_bytes_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (tenant)",
+                  "expr": "sum(rate(loki_ingester_chunk_stored_bytes_total{job=~\"$jobs\"}[$__rate_interval])) by (tenant)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Bytes stored in chunks / {{ tenant }}",
@@ -5099,7 +5099,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_ingester_samples_per_chunk_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_ingester_samples_per_chunk_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Samples per chunk",
@@ -5191,7 +5191,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_ingester_chunk_bounds_hours_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_ingester_chunk_bounds_hours_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Distribution of chunk end-start durations",
@@ -5283,7 +5283,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_ingester_chunk_encode_time_seconds_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_ingester_chunk_encode_time_seconds_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Distribution of chunk encode times",
@@ -5375,7 +5375,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_ingester_chunk_entries_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_ingester_chunk_entries_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Distribution of stored lines per chunk (when stored)",
@@ -5467,7 +5467,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(loki_ingester_streams_created_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (tenant)",
+                  "expr": "sum(rate(loki_ingester_streams_created_total{job=~\"$jobs\"}[$__rate_interval])) by (tenant)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Stream creations / {{ tenant }}",
@@ -5477,7 +5477,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(loki_ingester_streams_removed_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (tenant)",
+                  "expr": "sum(rate(loki_ingester_streams_removed_total{job=~\"$jobs\"}[$__rate_interval])) by (tenant)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Stream deletetions / {{ tenant }}",
@@ -5577,7 +5577,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(loki_ingester_memory_streams{job=\"$jobs\",instance=\"$host:$instance\"}) by (tenant)",
+                  "expr": "sum(loki_ingester_memory_streams{job=~\"$jobs\"}) by (tenant)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Streams in memory / {{ tenant }}",
@@ -5677,7 +5677,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(loki_ingester_wal_records_logged_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(loki_ingester_wal_records_logged_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "WAL records logged",
@@ -5687,7 +5687,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(loki_ingester_wal_duplicate_entries_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(loki_ingester_wal_duplicate_entries_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Discarded entries during WAL replay due to existing in checkpoints",
@@ -5697,7 +5697,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(loki_ingester_wal_disk_full_failures_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(loki_ingester_wal_disk_full_failures_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "WAL write failures due to full disk",
@@ -5707,7 +5707,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(loki_ingester_wal_discarded_samples_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (reason)",
+                  "expr": "sum(rate(loki_ingester_wal_discarded_samples_total{job=~\"$jobs\"}[$__rate_interval])) by (reason)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "WAL segment entries discarded during replay / {{ reason }}",
@@ -5807,7 +5807,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "loki_ingester_wal_bytes_in_use{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "loki_ingester_wal_bytes_in_use{job=~\"$jobs\"}",
                   "hide": false,
                   "legendFormat": "Currently in use by the WAL recovery process",
                   "range": true,
@@ -5816,7 +5816,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(loki_ingester_wal_logged_bytes_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(loki_ingester_wal_logged_bytes_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Written to disk for WAL records",
@@ -5826,7 +5826,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(loki_ingester_wal_discarded_bytes_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (reason)",
+                  "expr": "sum(rate(loki_ingester_wal_discarded_bytes_total{job=~\"$jobs\"}[$__rate_interval])) by (reason)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "WAL segment bytes discarded during replay / {{ reason }}",
@@ -5836,7 +5836,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(loki_ingester_wal_discarded_bytes_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (reason)",
+                  "expr": "sum(rate(loki_ingester_wal_discarded_bytes_total{job=~\"$jobs\"}[$__rate_interval])) by (reason)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Recovered from the WAL",
@@ -5936,7 +5936,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(loki_ingester_wal_recovered_entries_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(loki_ingester_wal_recovered_entries_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Entries recovered from the WAL",
@@ -5946,7 +5946,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(loki_ingester_wal_recovered_chunks_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(loki_ingester_wal_recovered_chunks_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Chunks recovered from the WAL checkpoints",
@@ -5956,7 +5956,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(loki_ingester_wal_recovered_streams_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(loki_ingester_wal_recovered_streams_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Streams recovered from the WAL",
@@ -6056,7 +6056,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "loki_ingester_wal_replay_active{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "loki_ingester_wal_replay_active{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "WAL is replaying",
@@ -6066,7 +6066,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "loki_ingester_wal_replay_flushing{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "loki_ingester_wal_replay_flushing{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "WAL replay in flushing phase due to backpressure",
@@ -6166,7 +6166,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "cortex_ingester_flush_queue_length{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "cortex_ingester_flush_queue_length{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Series pending in the flush queue",
@@ -6258,7 +6258,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "cortex_distributor_ingester_clients{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "cortex_distributor_ingester_clients{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Ingester clients",
@@ -6364,7 +6364,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(loki_internal_log_messages_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (level)",
+                  "expr": "sum(rate(loki_internal_log_messages_total{job=~\"$jobs\"}[$__rate_interval])) by (level)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ protocol }}",
@@ -6492,7 +6492,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_log_flushes_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_log_flushes_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Log flushes - line-buffered logger",
@@ -6550,7 +6550,7 @@ data:
                   "color": "rgba(255,0,255,0.7)"
                 },
                 "filterValues": {
-                  "le": 1E-9
+                  "le": 1e-09
                 },
                 "legend": {
                   "show": true
@@ -6688,7 +6688,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_bytes_per_line_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_bytes_per_line_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Number of bytes per line",
@@ -6802,7 +6802,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(loki_logql_querystats_ingester_sent_lines_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(loki_logql_querystats_ingester_sent_lines_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Lines",
@@ -6894,7 +6894,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(loki_logql_querystats_duplicates_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(loki_logql_querystats_duplicates_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Lines",
@@ -6986,7 +6986,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(logql_query_duration_seconds_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le,query_type))",
+                  "expr": "histogram_quantile(0.95, sum(rate(logql_query_duration_seconds_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,query_type))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ query_type }}",
@@ -7078,7 +7078,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_logql_querystats_latency_seconds_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le,type,status_code))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_logql_querystats_latency_seconds_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,type,status_code))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ type }} / {{ status_code }}",
@@ -7170,7 +7170,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_logql_querystats_bytes_processed_per_seconds_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le,type,status_code))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_logql_querystats_bytes_processed_per_seconds_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,type,status_code))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ type }} / {{ status_code }}",
@@ -7262,7 +7262,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(loki_logql_querystats_downloaded_chunk_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by(type,status_code)",
+                  "expr": "sum(rate(loki_logql_querystats_downloaded_chunk_total{job=~\"$jobs\"}[$__rate_interval])) by(type,status_code)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ type }} / {{ status_code }}",
@@ -7354,7 +7354,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_logql_querystats_chunk_download_latency_seconds_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le,type,status_code))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_logql_querystats_chunk_download_latency_seconds_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,type,status_code))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ type }} / {{ status_code }}",
@@ -7460,7 +7460,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_querier_query_frontend_request_duration_seconds_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le,operation,status_code))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_querier_query_frontend_request_duration_seconds_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,operation,status_code))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ operation }} / {{ status_code }}",
@@ -7552,7 +7552,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(loki_query_frontend_log_result_cache_hit_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(loki_query_frontend_log_result_cache_hit_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Cache hits for the frontend cache",
@@ -7562,7 +7562,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(loki_query_frontend_log_result_cache_miss_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(loki_query_frontend_log_result_cache_miss_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Cache misses for the frontend cache",
@@ -7654,7 +7654,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_query_frontend_partitions_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_query_frontend_partitions_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Time-based partitions (sub-requests) per request",
@@ -7746,7 +7746,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_query_frontend_shard_factor_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le,mapper))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_query_frontend_shard_factor_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,mapper))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Downstream queries per request / {{ mapper }}",
@@ -7838,7 +7838,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(loki_query_frontend_sharding_parsed_queries_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le,mapper,type)",
+                  "expr": "sum(rate(loki_query_frontend_sharding_parsed_queries_total{job=~\"$jobs\"}[$__rate_interval])) by (le,mapper,type)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Parsed queries by evaluation type / {{ mapper }} / {{ type }}",
@@ -7848,7 +7848,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_query_frontend_shards_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le,mapper,type))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_query_frontend_shards_total{job=~\"$jobs\"}[$__rate_interval])) by (le,mapper,type))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Downstream queries by expression type / {{ mapper }} / {{ type }}",
@@ -7940,7 +7940,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "loki_querier_query_frontend_clients{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "loki_querier_query_frontend_clients{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Clients connected to query-frontend",
@@ -7950,7 +7950,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "loki_querier_tail_active{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "loki_querier_tail_active{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Active tailers",
@@ -7960,7 +7960,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "loki_querier_tail_active_streams{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "loki_querier_tail_active_streams{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Active streams being tailed",
@@ -7970,7 +7970,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "loki_querier_worker_concurrency{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "loki_querier_worker_concurrency{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Concurrent querier workers",
@@ -7980,7 +7980,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "loki_querier_worker_inflight_queries{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "loki_querier_worker_inflight_queries{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Queries being processed by the querier workers",
@@ -8072,7 +8072,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(loki_querier_index_cache_gets_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(loki_querier_index_cache_gets_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Gets for the index cache",
@@ -8082,7 +8082,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(loki_querier_index_cache_puts_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(loki_querier_index_cache_puts_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Puts for the index cache",
@@ -8092,7 +8092,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(loki_querier_index_cache_hits_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(loki_querier_index_cache_hits_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Cache hits for the index cache",
@@ -8102,7 +8102,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(loki_querier_index_cache_corruptions_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(loki_querier_index_cache_corruptions_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Cache corruptions for the index cache",
@@ -8112,7 +8112,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(loki_querier_index_cache_encode_errors_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(loki_querier_index_cache_encode_errors_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Errors for the index cache while encoding the body",
@@ -8204,7 +8204,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "cortex_query_frontend_connected_schedulers{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "cortex_query_frontend_connected_schedulers{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Schedulers this frontend is connected to",
@@ -8214,7 +8214,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "cortex_query_scheduler_connected_frontend_clients{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "cortex_query_scheduler_connected_frontend_clients{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Query-frontend worker clients",
@@ -8224,7 +8224,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "cortex_query_scheduler_connected_querier_clients{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "cortex_query_scheduler_connected_querier_clients{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Querier worker clients",
@@ -8316,7 +8316,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(querier_cache_added_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (cache)",
+                  "expr": "sum(rate(querier_cache_added_total{job=~\"$jobs\"}[$__rate_interval])) by (cache)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Entries added to the cache / {{ cache }}",
@@ -8326,7 +8326,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(querier_cache_added_new_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (cache)",
+                  "expr": "sum(rate(querier_cache_added_new_total{job=~\"$jobs\"}[$__rate_interval])) by (cache)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "New entries added to the cache / {{ cache }}",
@@ -8336,7 +8336,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(querier_cache_evicted_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (cache,reason)",
+                  "expr": "sum(rate(querier_cache_evicted_total{job=~\"$jobs\"}[$__rate_interval])) by (cache,reason)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Entries evicted from the cache / {{ cache }} / {{ reason }}",
@@ -8346,7 +8346,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(querier_cache_gets_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (cache)",
+                  "expr": "sum(rate(querier_cache_gets_total{job=~\"$jobs\"}[$__rate_interval])) by (cache)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Get calls to the cache / {{ cache }}",
@@ -8356,7 +8356,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(querier_cache_misses_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (cache)",
+                  "expr": "sum(rate(querier_cache_misses_total{job=~\"$jobs\"}[$__rate_interval])) by (cache)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Missed calls to the cache / {{ cache }}",
@@ -8448,7 +8448,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(querier_cache_entries{job=\"$jobs\",instance=\"$host:$instance\"}) by (cache)",
+                  "expr": "sum(querier_cache_entries{job=~\"$jobs\"}) by (cache)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Cache Entries / {{ cache }}",
@@ -8540,7 +8540,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(querier_cache_memory_bytes{job=\"$jobs\",instance=\"$host:$instance\"}) by (cache)",
+                  "expr": "sum(querier_cache_memory_bytes{job=~\"$jobs\"}) by (cache)",
                   "hide": false,
                   "legendFormat": "Current cache size / {{ cache }}",
                   "range": true,
@@ -8639,7 +8639,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(cortex_query_frontend_retries_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le))",
+                  "expr": "histogram_quantile(0.95, sum(rate(cortex_query_frontend_retries_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Request retries",
@@ -8731,7 +8731,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(cortex_frontend_query_range_duration_seconds_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le,method,status_code))",
+                  "expr": "histogram_quantile(0.95, sum(rate(cortex_frontend_query_range_duration_seconds_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,method,status_code))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ method }} / {{ status_code }}",
@@ -8823,7 +8823,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "cortex_query_frontend_queries_in_progress{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "cortex_query_frontend_queries_in_progress{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Queries in progress",
@@ -9057,7 +9057,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(cortex_query_scheduler_queue_duration_seconds_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le))",
+                  "expr": "histogram_quantile(0.95, sum(rate(cortex_query_scheduler_queue_duration_seconds_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Time spend by requests in queue before getting picked up by a querier",
@@ -9163,7 +9163,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(ring_member_heartbeats_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (name)",
+                  "expr": "sum(rate(ring_member_heartbeats_total{job=~\"$jobs\"}[$__rate_interval])) by (name)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Heartbeats sent / {{ name }}",
@@ -9255,7 +9255,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(ring_member_tokens_owned{job=\"$jobs\",instance=\"$host:$instance\"}) by (name)",
+                  "expr": "sum(ring_member_tokens_owned{job=~\"$jobs\"}) by (name)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Tokens owned / {{ name }}",
@@ -9265,7 +9265,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(ring_member_tokens_to_own{job=\"$jobs\",instance=\"$host:$instance\"}) by (name)",
+                  "expr": "sum(ring_member_tokens_to_own{job=~\"$jobs\"}) by (name)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Tokens to be owned / {{ name }}",
@@ -9357,7 +9357,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(cortex_member_consul_heartbeats_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (name)",
+                  "expr": "sum(rate(cortex_member_consul_heartbeats_total{job=~\"$jobs\"}[$__rate_interval])) by (name)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Heartbeats sent / {{ name }}",
@@ -9463,7 +9463,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(loki_store_series_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (status)",
+                  "expr": "sum(rate(loki_store_series_total{job=~\"$jobs\"}[$__rate_interval])) by (status)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ status }}",
@@ -9593,7 +9593,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(loki_store_chunks_downloaded_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (status)",
+                  "expr": "sum(rate(loki_store_chunks_downloaded_total{job=~\"$jobs\"}[$__rate_interval])) by (status)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ status }}",
@@ -9723,7 +9723,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_store_chunks_per_batch_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le,status))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_store_chunks_per_batch_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,status))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ status }}",
@@ -9815,7 +9815,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(loki_chunk_fetcher_cache_dequeued_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(loki_chunk_fetcher_cache_dequeued_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Dequeue from buffer",
@@ -9825,7 +9825,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(loki_chunk_fetcher_cache_enqueued_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(loki_chunk_fetcher_cache_enqueued_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Enqueue to buffer",
@@ -9835,7 +9835,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(loki_chunk_fetcher_cache_skipped_buffer_full_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(loki_chunk_fetcher_cache_skipped_buffer_full_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Skipped due to buffer full",
@@ -9927,7 +9927,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(loki_chunk_store_fetched_chunks_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (user)",
+                  "expr": "sum(rate(loki_chunk_store_fetched_chunks_total{job=~\"$jobs\"}[$__rate_interval])) by (user)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Fetched / {{ user }}",
@@ -9937,7 +9937,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "sum(rate(loki_chunk_store_stored_chunks_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (user)",
+                  "expr": "sum(rate(loki_chunk_store_stored_chunks_total{job=~\"$jobs\"}[$__rate_interval])) by (user)",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Stored / {{ user }}",
@@ -10037,7 +10037,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(loki_chunk_store_fetched_chunk_bytes_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(loki_chunk_store_fetched_chunk_bytes_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Fetched / {{ user }}",
@@ -10047,7 +10047,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(loki_chunk_store_stored_chunk_bytes_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(loki_chunk_store_stored_chunk_bytes_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Stored / {{ user }}",
@@ -10262,7 +10262,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_chunk_store_chunks_per_query_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_chunk_store_chunks_per_query_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ le }}",
@@ -10469,7 +10469,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_chunk_store_index_entries_per_chunk_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_chunk_store_index_entries_per_chunk_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ le }}",
@@ -10676,7 +10676,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_chunk_store_index_lookups_per_query_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_chunk_store_index_lookups_per_query_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ le }}",
@@ -10883,7 +10883,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_chunk_store_series_pre_intersection_per_query_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_chunk_store_series_pre_intersection_per_query_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ le }}",
@@ -11090,7 +11090,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_chunk_store_series_post_intersection_per_query_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_chunk_store_series_post_intersection_per_query_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ le }}",
@@ -11196,7 +11196,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "loki_table_manager_create_failures{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "loki_table_manager_create_failures{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Table create failures",
@@ -11206,7 +11206,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "loki_table_manager_delete_failures{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "loki_table_manager_delete_failures{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Table delete failures",
@@ -11306,7 +11306,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "histogram_quantile(0.95, sum(rate(loki_table_manager_sync_duration_seconds_bucket{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])) by (le,operation,status_code))",
+                  "expr": "histogram_quantile(0.95, sum(rate(loki_table_manager_sync_duration_seconds_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,operation,status_code))",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "{{ operation }} / {{ status_code }}",
@@ -11420,7 +11420,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "go_goroutines{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "go_goroutines{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Goroutines",
@@ -11430,7 +11430,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "go_threads{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "go_threads{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Threads",
@@ -11531,7 +11531,7 @@ data:
                   "datasource": "Prometheus",
                   "editorMode": "code",
                   "exemplar": false,
-                  "expr": "rate(go_sched_latencies_seconds_sum{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])/rate(go_sched_latencies_seconds_count{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(go_sched_latencies_seconds_sum{job=~\"$jobs\"}[$__rate_interval])/rate(go_sched_latencies_seconds_count{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Average Goroutine latency",
@@ -11588,7 +11588,7 @@ data:
                   "color": "rgba(255,0,255,0.7)"
                 },
                 "filterValues": {
-                  "le": 1E-9
+                  "le": 1e-09
                 },
                 "legend": {
                   "show": true
@@ -11755,7 +11755,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "go_memory_classes_heap_free_bytes{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "go_memory_classes_heap_free_bytes{job=~\"$jobs\"}",
                   "interval": "$interval",
                   "legendFormat": "Free memory",
                   "range": true,
@@ -11764,7 +11764,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "go_memory_classes_heap_objects_bytes{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "go_memory_classes_heap_objects_bytes{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Allocated objects memory",
@@ -11774,7 +11774,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "go_memory_classes_heap_released_bytes{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "go_memory_classes_heap_released_bytes{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Released memory",
@@ -11784,7 +11784,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "go_memory_classes_heap_stacks_bytes{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "go_memory_classes_heap_stacks_bytes{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Stack reserved memory",
@@ -11794,7 +11794,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "go_memory_classes_heap_unused_bytes{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "go_memory_classes_heap_unused_bytes{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Reserved unused memory",
@@ -11889,7 +11889,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "go_memory_classes_metadata_mcache_free_bytes{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "go_memory_classes_metadata_mcache_free_bytes{job=~\"$jobs\"}",
                   "interval": "$interval",
                   "legendFormat": "Free mcache memory",
                   "range": true,
@@ -11898,7 +11898,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "go_memory_classes_metadata_mcache_inuse_bytes{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "go_memory_classes_metadata_mcache_inuse_bytes{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Used mcache memory",
@@ -11908,7 +11908,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "go_memory_classes_metadata_mspan_free_bytes{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "go_memory_classes_metadata_mspan_free_bytes{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Free mspan memory",
@@ -11918,7 +11918,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "go_memory_classes_metadata_mspan_inuse_bytes{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "go_memory_classes_metadata_mspan_inuse_bytes{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Used mspan memory",
@@ -11928,7 +11928,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "go_memory_classes_metadata_other_bytes{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "go_memory_classes_metadata_other_bytes{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Used other metadata memory",
@@ -11938,7 +11938,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "go_memory_classes_other_bytes{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "go_memory_classes_other_bytes{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Used other memory",
@@ -11948,7 +11948,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "go_memory_classes_profiling_buckets_bytes{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "go_memory_classes_profiling_buckets_bytes{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Used profiling bucket memory",
@@ -11958,7 +11958,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "go_memory_classes_total_bytes{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "go_memory_classes_total_bytes{job=~\"$jobs\"}",
                   "hide": true,
                   "interval": "$interval",
                   "legendFormat": "Used total memory",
@@ -12050,7 +12050,7 @@ data:
                   "datasource": "Prometheus",
                   "editorMode": "code",
                   "exemplar": false,
-                  "expr": "rate(go_gc_heap_allocs_bytes_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])/rate(go_gc_heap_allocs_objects_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(go_gc_heap_allocs_bytes_total{job=~\"$jobs\"}[$__rate_interval])/rate(go_gc_heap_allocs_objects_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Average object size allocated to the heap by the application",
@@ -12061,7 +12061,7 @@ data:
                   "datasource": "Prometheus",
                   "editorMode": "code",
                   "exemplar": false,
-                  "expr": "rate(go_gc_heap_frees_bytes_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])/rate(go_gc_heap_frees_objects_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(go_gc_heap_frees_bytes_total{job=~\"$jobs\"}[$__rate_interval])/rate(go_gc_heap_frees_objects_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "instant": false,
                   "interval": "$interval",
@@ -12119,7 +12119,7 @@ data:
                   "color": "rgba(255,0,255,0.7)"
                 },
                 "filterValues": {
-                  "le": 1E-9
+                  "le": 1e-09
                 },
                 "legend": {
                   "show": true
@@ -12225,7 +12225,7 @@ data:
                   "color": "rgba(255,0,255,0.7)"
                 },
                 "filterValues": {
-                  "le": 1E-9
+                  "le": 1e-09
                 },
                 "legend": {
                   "show": true
@@ -12379,7 +12379,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(go_gc_cycles_total_gc_cycles_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(go_gc_cycles_total_gc_cycles_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Count of all completed GC cycles",
@@ -12389,7 +12389,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(go_gc_cycles_automatic_gc_cycles_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(go_gc_cycles_automatic_gc_cycles_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Count of completed GC cycles generated by the Go runtime",
@@ -12399,7 +12399,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(go_gc_cycles_forced_gc_cycles_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(go_gc_cycles_forced_gc_cycles_total{job=~\"$jobs\"}[$__rate_interval])",
                   "interval": "$interval",
                   "legendFormat": "Count of completed GC cycles forced by the application.",
                   "range": true,
@@ -12489,7 +12489,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(go_gc_duration_seconds_sum{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])/rate(go_gc_duration_seconds_count{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(go_gc_duration_seconds_sum{job=~\"$jobs\"}[$__rate_interval])/rate(go_gc_duration_seconds_count{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Average GC cycle pause duration",
@@ -12499,7 +12499,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(go_gc_pauses_seconds_sum{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])/rate(go_gc_pauses_seconds_count{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(go_gc_pauses_seconds_sum{job=~\"$jobs\"}[$__rate_interval])/rate(go_gc_pauses_seconds_count{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Average GC cycle halt duration",
@@ -12556,7 +12556,7 @@ data:
                   "color": "rgba(255,0,255,0.7)"
                 },
                 "filterValues": {
-                  "le": 1E-9
+                  "le": 1e-09
                 },
                 "legend": {
                   "show": true
@@ -12712,7 +12712,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "rate(process_cpu_seconds_total{job=\"$jobs\",instance=\"$host:$instance\"}[$__rate_interval])",
+                  "expr": "rate(process_cpu_seconds_total{job=~\"$jobs\"}[$__rate_interval])",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Total user and system CPU time spent in seconds",
@@ -12807,7 +12807,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "process_virtual_memory_bytes{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "process_virtual_memory_bytes{job=~\"$jobs\"}",
                   "interval": "$interval",
                   "legendFormat": "Virtual memory size",
                   "range": true,
@@ -12816,7 +12816,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "process_resident_memory_bytes{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "process_resident_memory_bytes{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Resident memory size",
@@ -12911,7 +12911,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "process_max_fds{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "process_max_fds{job=~\"$jobs\"}",
                   "hide": false,
                   "interval": "$interval",
                   "legendFormat": "Maximum number of open file descriptors",
@@ -12921,7 +12921,7 @@ data:
                 {
                   "datasource": "Prometheus",
                   "editorMode": "code",
-                  "expr": "process_open_fds{job=\"$jobs\",instance=\"$host:$instance\"}",
+                  "expr": "process_open_fds{job=~\"$jobs\"}",
                   "interval": "$interval",
                   "legendFormat": "Number of open file descriptors",
                   "range": true,
@@ -12963,11 +12963,15 @@ data:
             "type": "datasource"
           },
           {
-            "current": {},
+            "current": {
+              "selected": true,
+              "text": "All",
+              "value": "$__all"
+            },
             "datasource": "Prometheus",
             "definition": "label_values(loki_build_info,job)",
             "hide": 0,
-            "includeAll": false,
+            "includeAll": true,
             "label": "Job",
             "multi": false,
             "name": "jobs",
@@ -12987,7 +12991,7 @@ data:
             "current": {},
             "datasource": "Prometheus",
             "definition": "up{job=~\"$jobs\"}",
-            "hide": 0,
+            "hide": 2,
             "includeAll": false,
             "label": "Host",
             "multi": false,
@@ -13007,7 +13011,7 @@ data:
             "current": {},
             "datasource": "Prometheus",
             "definition": "up{job=~\"$jobs\"}",
-            "hide": 0,
+            "hide": 2,
             "includeAll": false,
             "label": "Instance",
             "multi": false,
