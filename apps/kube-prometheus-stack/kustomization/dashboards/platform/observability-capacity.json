@@ -259,7 +259,7 @@
             "type": "prometheus",
             "uid": "$datasource"
           },
-          "expr": "prometheus_tsdb_storage_blocks_bytes",
+          "expr": "sum(prometheus_tsdb_storage_blocks_bytes)",
           "refId": "A"
         }
       ],
@@ -454,7 +454,7 @@
             "type": "prometheus",
             "uid": "$datasource"
           },
-          "expr": "clamp_min((kube_persistentvolumeclaim_resource_requests_storage_bytes{namespace=\"monitoring\",persistentvolumeclaim=\"prometheus-kube-prometheus-stack-prometheus-db-prometheus-kube-prometheus-stack-prometheus-0\"} - prometheus_tsdb_storage_blocks_bytes) / (sum(rate(prometheus_tsdb_compaction_chunk_size_bytes_sum[2h])) * 86400), 0)",
+          "expr": "clamp_min((sum(kube_persistentvolumeclaim_resource_requests_storage_bytes{namespace=\"monitoring\",persistentvolumeclaim=\"prometheus-kube-prometheus-stack-prometheus-db-prometheus-kube-prometheus-stack-prometheus-0\"}) - sum(prometheus_tsdb_storage_blocks_bytes)) / (sum(rate(prometheus_tsdb_compaction_chunk_size_bytes_sum[2h])) * 86400), 0)",
           "refId": "A"
         }
       ],
@@ -520,7 +520,7 @@
             "type": "prometheus",
             "uid": "$datasource"
           },
-          "expr": "kube_persistentvolumeclaim_resource_requests_storage_bytes{namespace=\"monitoring\",persistentvolumeclaim=\"storage-loki-0\"} / (sum(rate(loki_distributor_bytes_received_total[2h])) * 86400)",
+          "expr": "sum(kube_persistentvolumeclaim_resource_requests_storage_bytes{namespace=\"monitoring\",persistentvolumeclaim=\"storage-loki-0\"}) / (sum(rate(loki_distributor_bytes_received_total[2h])) * 86400)",
           "refId": "A"
         }
       ],
@@ -586,7 +586,7 @@
             "type": "prometheus",
             "uid": "$datasource"
           },
-          "expr": "clamp_min(kube_persistentvolumeclaim_resource_requests_storage_bytes{namespace=\"monitoring\",persistentvolumeclaim=\"prometheus-kube-prometheus-stack-prometheus-db-prometheus-kube-prometheus-stack-prometheus-0\"} - prometheus_tsdb_storage_blocks_bytes, 0)",
+          "expr": "clamp_min(sum(kube_persistentvolumeclaim_resource_requests_storage_bytes{namespace=\"monitoring\",persistentvolumeclaim=\"prometheus-kube-prometheus-stack-prometheus-db-prometheus-kube-prometheus-stack-prometheus-0\"}) - sum(prometheus_tsdb_storage_blocks_bytes), 0)",
           "refId": "A"
         }
       ],
@@ -652,7 +652,7 @@
             "type": "prometheus",
             "uid": "$datasource"
           },
-          "expr": "clamp_min(kube_persistentvolumeclaim_resource_requests_storage_bytes{namespace=\"monitoring\",persistentvolumeclaim=\"storage-loki-0\"} - (sum(rate(loki_distributor_bytes_received_total[2h])) * 86400 * 14), 0)",
+          "expr": "clamp_min(sum(kube_persistentvolumeclaim_resource_requests_storage_bytes{namespace=\"monitoring\",persistentvolumeclaim=\"storage-loki-0\"}) - (sum(rate(loki_distributor_bytes_received_total[2h])) * 86400 * 14), 0)",
           "refId": "A"
         }
       ],
