@@ -16,6 +16,11 @@ data:
     - .spec.dataFrom[]?.extract.decodingStrategy
     - .spec.dataFrom[]?.find.conversionStrategy
     - .spec.dataFrom[]?.find.decodingStrategy
+  resource.customizations.ignoreDifferences.v1_Secret: |
+    jqPathExpressions:
+    - 'select(.metadata.name == "kube-prometheus-stack-grafana") | .data["admin-password"]'
+    - 'select(.metadata.name == "kube-prometheus-stack-grafana") | .data["admin-user"]'
+    - 'select(.metadata.name == "kube-prometheus-stack-grafana") | .data["ldap-toml"]'
   resource.customizations.health.postgresql.cnpg.io_Cluster: |
     hs = {}
     if obj.status ~= nil then
