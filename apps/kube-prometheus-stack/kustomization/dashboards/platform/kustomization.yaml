@@ -3,4 +3,5 @@ kind: Kustomization
 resources:
   - ./argocd-configmap.yaml
   - ./grafana-overview-configmap.yaml
+  - ./observability-capacity-configmap.yaml
   - ./prometheus-overview-configmap.yaml

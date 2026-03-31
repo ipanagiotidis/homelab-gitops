@@ -9,7 +9,7 @@ loki:
     retention_enabled: true
     delete_request_store: filesystem
   limits_config:
-    retention_period: 168h
+    retention_period: 336h
   analytics:
     reporting_enabled: false
     usage_stats_url: ""
