@@ -15,6 +15,14 @@ spec:
     - /data/admin-password
     - /data/admin-user
     - /data/ldap-toml
+  - group: apps
+    kind: Deployment
+    name: kube-prometheus-stack-grafana
+    namespace: monitoring
+    jqPathExpressions:
+    - '.spec.template.metadata.annotations["checksum/secret"]'
+    - '.spec.template.metadata.annotations["checksum/config"]'
+    - '.spec.template.metadata.annotations["checksum/sc-dashboard-provider-config"]'
   destination:
     namespace: monitoring
     server: https://kubernetes.default.svc
