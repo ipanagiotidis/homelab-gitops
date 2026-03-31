@@ -5,6 +5,11 @@ loki:
     replication_factor: 1
   storage:
     type: 'filesystem'
+  compactor:
+    retention_enabled: true
+    delete_request_store: filesystem
+  limits_config:
+    retention_period: 168h
   analytics:
     reporting_enabled: false
     usage_stats_url: ""
@@ -22,9 +27,15 @@ analytics:
   usage_stats_url: ""
 singleBinary:
   replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 1Gi
   persistence:
     enabled: true
-    size: 10Gi  # Adjust based on expected log volume
+    size: 20Gi
     storageClassName: "local-path"
     accessModes:
     - ReadWriteOnce

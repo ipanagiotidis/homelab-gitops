@@ -14,6 +14,7 @@ resources:
   - apps/external-secrets/applications/external-secrets.yaml
   - apps/local-storage-provisioner/applications/local-storage-provisioner.yaml
   - apps/cloudnative-pg/applications/cloudnative-pg.yaml
+  - apps/alloy/applications/alloy.yaml
   - apps/qbittorrent/applications/qbittorrent.yaml
   - apps/jellyfin/applications/jellyfin.yaml
   - apps/prowlarr/applications/prowlarr.yaml
@@ -28,11 +29,11 @@ resources:
   - apps/traefik/applications/traefik.yaml
   - apps/cert-manager/applications/cert-manager.yaml
   - apps/kube-prometheus-stack/applications/kube-prometheus-stack.yaml
+  - apps/loki/applications/loki.yaml
   #- apps/tempo/applications/tempo.yaml
   - apps/homepage/applications/homepage.yaml
   - apps/tailscale/applications/tailscale.yaml
   #- apps/firefly-iii/applications/firefly-iii.yaml
   #- apps/loki-stack/applications/loki-stack.yaml
-  #- apps/loki/applications/loki.yaml
   - apps/paperless-ngx/applications/paperless-ngx-db.yaml
   - apps/paperless-ngx/applications/paperless-ngx.yaml
