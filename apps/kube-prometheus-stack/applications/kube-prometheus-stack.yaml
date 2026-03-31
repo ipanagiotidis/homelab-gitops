@@ -15,6 +15,11 @@ spec:
     - /data/admin-password
     - /data/admin-user
     - /data/ldap-toml
+  - group: ""
+    kind: ServiceMonitor
+    namespace: monitoring
+    jqPathExpressions:
+    - '.spec.endpoints[].relabelings[] | select(.targetLabel == "job" and .replacement != null) | .action'
   - group: apps
     kind: Deployment
     name: kube-prometheus-stack-grafana
