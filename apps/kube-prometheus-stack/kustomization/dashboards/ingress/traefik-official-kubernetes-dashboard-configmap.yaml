@@ -12,33 +12,33 @@ data:
       "__elements": {},
       "__requires": [
         {
+          "type": "grafana",
           "id": "grafana",
           "name": "Grafana",
-          "type": "grafana",
           "version": "9.3.1"
         },
         {
+          "type": "panel",
           "id": "piechart",
           "name": "Pie chart",
-          "type": "panel",
           "version": ""
         },
         {
+          "type": "datasource",
           "id": "prometheus",
           "name": "Prometheus",
-          "type": "datasource",
           "version": "1.0.0"
         },
         {
+          "type": "panel",
           "id": "stat",
           "name": "Stat",
-          "type": "panel",
           "version": ""
         },
         {
+          "type": "panel",
           "id": "timeseries",
           "name": "Time series",
-          "type": "panel",
           "version": ""
         }
       ],
@@ -87,7 +87,10 @@ data:
           "type": "row"
         },
         {
-          "datasource": "Prometheus",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "description": "",
           "fieldConfig": {
             "defaults": {
@@ -135,7 +138,10 @@ data:
           "pluginVersion": "9.3.1",
           "targets": [
             {
-              "datasource": "Prometheus",
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
               "editorMode": "code",
               "expr": "count(traefik_config_reloads_total)",
               "legendFormat": "__auto",
@@ -147,7 +153,10 @@ data:
           "type": "stat"
         },
         {
-          "datasource": "Prometheus",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "description": "",
           "fieldConfig": {
             "defaults": {
@@ -228,7 +237,10 @@ data:
           },
           "targets": [
             {
-              "datasource": "Prometheus",
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
               "editorMode": "code",
               "expr": "sum(rate(traefik_entrypoint_requests_total{entrypoint=~\"$entrypoint\"}[$interval])) by (entrypoint)",
               "legendFormat": "{{entrypoint}}",
@@ -240,7 +252,10 @@ data:
           "type": "timeseries"
         },
         {
-          "datasource": "Prometheus",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "description": "https://medium.com/@tristan_96324/prometheus-apdex-alerting-d17a065e39d0",
           "fieldConfig": {
             "defaults": {
@@ -320,7 +335,10 @@ data:
           },
           "targets": [
             {
-              "datasource": "Prometheus",
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
               "editorMode": "code",
               "expr": "(sum(rate(traefik_entrypoint_request_duration_seconds_bucket{le=\"0.3\",code=\"200\",entrypoint=~\"$entrypoint\"}[$interval])) by (method) + \n sum(rate(traefik_entrypoint_request_duration_seconds_bucket{le=\"1.2\",code=\"200\",entrypoint=~\"$entrypoint\"}[$interval])) by (method)) / 2 / \n sum(rate(traefik_entrypoint_request_duration_seconds_count{code=\"200\",entrypoint=~\"$entrypoint\"}[$interval])) by (method)\n",
               "legendFormat": "{{method}}",
@@ -332,7 +350,10 @@ data:
           "type": "timeseries"
         },
         {
-          "datasource": "Prometheus",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "description": "Mean Distribution",
           "fieldConfig": {
             "defaults": {
@@ -382,7 +403,10 @@ data:
           },
           "targets": [
             {
-              "datasource": "Prometheus",
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
               "editorMode": "code",
               "expr": "sum(rate(traefik_service_requests_total{service=~\"$service.*\",protocol=\"http\"}[$interval])) by (method, code)",
               "legendFormat": "{{method}}[{{code}}]",
@@ -394,7 +418,10 @@ data:
           "type": "piechart"
         },
         {
-          "datasource": "Prometheus",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "description": "",
           "fieldConfig": {
             "defaults": {
@@ -475,7 +502,10 @@ data:
           },
           "targets": [
             {
-              "datasource": "Prometheus",
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
               "editorMode": "code",
               "expr": "topk(15,\n    label_replace(\n        traefik_service_request_duration_seconds_sum{service=~\"$service.*\",protocol=\"http\"} / \n          traefik_service_request_duration_seconds_count{service=~\"$service.*\",protocol=\"http\"},\n        \"service\", \"$1\", \"service\", \"([^@]+)@.*\")\n)\n\n",
               "legendFormat": "{{method}}[{{code}}] on {{service}}",
@@ -487,7 +517,10 @@ data:
           "type": "timeseries"
         },
         {
-          "datasource": "Prometheus",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "description": "",
           "fieldConfig": {
             "defaults": {
@@ -568,9 +601,12 @@ data:
           },
           "targets": [
             {
-              "datasource": "Prometheus",
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
               "editorMode": "code",
-              "expr": "topk(15,\n    label_replace(\n        sum by (exported_service,code) \n          (rate(traefik_service_requests_total{service=~\"$service.*\",protocol=\"http\"}[$interval])) > 0,\n        \"service\", \"$1\", \"service\", \"([^@]+)@.*\")\n)",
+              "expr": "topk(15,\n    label_replace(\n        sum by (service,code) \n          (rate(traefik_service_requests_total{service=~\"$service.*\",protocol=\"http\"}[$interval])) > 0,\n        \"service\", \"$1\", \"service\", \"([^@]+)@.*\")\n)",
               "legendFormat": "[{{code}}] on {{service}}",
               "range": true,
               "refId": "A"
@@ -590,7 +626,10 @@ data:
           "id": 11,
           "panels": [
             {
-              "datasource": "Prometheus",
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
               "description": "",
               "fieldConfig": {
                 "defaults": {
@@ -667,9 +706,12 @@ data:
               },
               "targets": [
                 {
-                  "datasource": "Prometheus",
+                  "datasource": {
+                    "type": "prometheus",
+                    "uid": "${DS_PROMETHEUS}"
+                  },
                   "editorMode": "code",
-                  "expr": "label_replace(\n  1 - (sum by (exported_service)\n    (rate(traefik_service_request_duration_seconds_bucket{le=\"1.2\",service=~\"$service.*\"}[$interval])) / sum by (exported_service) \n    (rate(traefik_service_request_duration_seconds_count{service=~\"$service.*\"}[$interval]))\n  ) > 0,\n  \"service\", \"$1\", \"service\", \"([^@]+)@.*\"\n)",
+                  "expr": "label_replace(\n  1 - (sum by (service)\n    (rate(traefik_service_request_duration_seconds_bucket{le=\"1.2\",service=~\"$service.*\"}[$interval])) / sum by (service) \n    (rate(traefik_service_request_duration_seconds_count{service=~\"$service.*\"}[$interval]))\n  ) > 0,\n  \"service\", \"$1\", \"service\", \"([^@]+)@.*\"\n)",
                   "legendFormat": "{{service}}",
                   "range": true,
                   "refId": "A"
@@ -679,7 +721,10 @@ data:
               "type": "timeseries"
             },
             {
-              "datasource": "Prometheus",
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
               "description": "",
               "fieldConfig": {
                 "defaults": {
@@ -756,9 +801,12 @@ data:
               },
               "targets": [
                 {
-                  "datasource": "Prometheus",
+                  "datasource": {
+                    "type": "prometheus",
+                    "uid": "${DS_PROMETHEUS}"
+                  },
                   "editorMode": "code",
-                  "expr": "label_replace(\n  1 - (sum by (exported_service)\n    (rate(traefik_service_request_duration_seconds_bucket{le=\"0.3\",service=~\"$service.*\"}[$interval])) / sum by (exported_service) \n    (rate(traefik_service_request_duration_seconds_count{service=~\"$service.*\"}[$interval]))\n  ) > 0,\n  \"service\", \"$1\", \"service\", \"([^@]+)@.*\"\n)",
+                  "expr": "label_replace(\n  1 - (sum by (service)\n    (rate(traefik_service_request_duration_seconds_bucket{le=\"0.3\",service=~\"$service.*\"}[$interval])) / sum by (service) \n    (rate(traefik_service_request_duration_seconds_count{service=~\"$service.*\"}[$interval]))\n  ) > 0,\n  \"service\", \"$1\", \"service\", \"([^@]+)@.*\"\n)",
                   "legendFormat": "{{service}}",
                   "range": true,
                   "refId": "A"
@@ -785,7 +833,10 @@ data:
           "type": "row"
         },
         {
-          "datasource": "Prometheus",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "description": "",
           "fieldConfig": {
             "defaults": {
@@ -866,9 +917,12 @@ data:
           },
           "targets": [
             {
-              "datasource": "Prometheus",
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
               "editorMode": "code",
-              "expr": "topk(15,\n    label_replace(\n        sum by (exported_service,method,code) \n          (rate(traefik_service_requests_total{service=~\"$service.*\",code=~\"2..\",protocol=\"http\"}[$interval])) > 0,\n        \"service\", \"$1\", \"service\", \"([^@]+)@.*\")\n)",
+              "expr": "topk(15,\n    label_replace(\n        sum by (service,method,code) \n          (rate(traefik_service_requests_total{service=~\"$service.*\",code=~\"2..\",protocol=\"http\"}[$interval])) > 0,\n        \"service\", \"$1\", \"service\", \"([^@]+)@.*\")\n)",
               "legendFormat": "{{method}}[{{code}}] on {{service}}",
               "range": true,
               "refId": "A"
@@ -878,7 +932,10 @@ data:
           "type": "timeseries"
         },
         {
-          "datasource": "Prometheus",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "description": "",
           "fieldConfig": {
             "defaults": {
@@ -960,9 +1017,12 @@ data:
           },
           "targets": [
             {
-              "datasource": "Prometheus",
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
               "editorMode": "code",
-              "expr": "topk(15,\n    label_replace(\n        sum by (exported_service,method,code) \n          (rate(traefik_service_requests_total{service=~\"$service.*\",code=~\"5..\",protocol=\"http\"}[$interval])) > 0,\n        \"service\", \"$1\", \"service\", \"([^@]+)@.*\")\n)",
+              "expr": "topk(15,\n    label_replace(\n        sum by (service,method,code) \n          (rate(traefik_service_requests_total{service=~\"$service.*\",code=~\"5..\",protocol=\"http\"}[$interval])) > 0,\n        \"service\", \"$1\", \"service\", \"([^@]+)@.*\")\n)",
               "legendFormat": "{{method}}[{{code}}] on {{service}}",
               "range": true,
               "refId": "A"
@@ -972,7 +1032,10 @@ data:
           "type": "timeseries"
         },
         {
-          "datasource": "Prometheus",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "description": "",
           "fieldConfig": {
             "defaults": {
@@ -1054,9 +1117,12 @@ data:
           },
           "targets": [
             {
-              "datasource": "Prometheus",
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
               "editorMode": "code",
-              "expr": "topk(15,\n    label_replace(\n        sum by (exported_service,method,code) \n          (rate(traefik_service_requests_total{service=~\"$service.*\",code!~\"2..|5..\",protocol=\"http\"}[$interval])) > 0,\n        \"service\", \"$1\", \"service\", \"([^@]+)@.*\")\n)",
+              "expr": "topk(15,\n    label_replace(\n        sum by (service,method,code) \n          (rate(traefik_service_requests_total{service=~\"$service.*\",code!~\"2..|5..\",protocol=\"http\"}[$interval])) > 0,\n        \"service\", \"$1\", \"service\", \"([^@]+)@.*\")\n)",
               "legendFormat": "{{method}}[{{code}}] on {{service}}",
               "range": true,
               "refId": "A"
@@ -1066,7 +1132,10 @@ data:
           "type": "timeseries"
         },
         {
-          "datasource": "Prometheus",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "description": "",
           "fieldConfig": {
             "defaults": {
@@ -1148,9 +1217,12 @@ data:
           },
           "targets": [
             {
-              "datasource": "Prometheus",
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
               "editorMode": "code",
-              "expr": "topk(15,\n    label_replace(\n        sum by (exported_service,method) \n          (rate(traefik_service_requests_bytes_total{service=~\"$service.*\",protocol=\"http\"}[$interval])) > 0,\n        \"service\", \"$1\", \"service\", \"([^@]+)@.*\")\n)",
+              "expr": "topk(15,\n    label_replace(\n        sum by (service,method) \n          (rate(traefik_service_requests_bytes_total{service=~\"$service.*\",protocol=\"http\"}[$interval])) > 0,\n        \"service\", \"$1\", \"service\", \"([^@]+)@.*\")\n)",
               "legendFormat": "{{method}} on {{service}}",
               "range": true,
               "refId": "A"
@@ -1160,7 +1232,10 @@ data:
           "type": "timeseries"
         },
         {
-          "datasource": "Prometheus",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "description": "",
           "fieldConfig": {
             "defaults": {
@@ -1242,9 +1317,12 @@ data:
           },
           "targets": [
             {
-              "datasource": "Prometheus",
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
               "editorMode": "code",
-              "expr": "topk(15,\n    label_replace(\n        sum by (exported_service,method) \n          (rate(traefik_service_responses_bytes_total{service=~\"$service.*\",protocol=\"http\"}[$interval])) > 0,\n        \"service\", \"$1\", \"service\", \"([^@]+)@.*\")\n)",
+              "expr": "topk(15,\n    label_replace(\n        sum by (service,method) \n          (rate(traefik_service_responses_bytes_total{service=~\"$service.*\",protocol=\"http\"}[$interval])) > 0,\n        \"service\", \"$1\", \"service\", \"([^@]+)@.*\")\n)",
               "legendFormat": "{{method}} on {{service}}",
               "range": true,
               "refId": "A"
@@ -1254,7 +1332,10 @@ data:
           "type": "timeseries"
         },
         {
-          "datasource": "Prometheus",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "description": "",
           "fieldConfig": {
             "defaults": {
@@ -1335,7 +1416,10 @@ data:
           },
           "targets": [
             {
-              "datasource": "Prometheus",
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
               "editorMode": "code",
               "expr": "sum(traefik_open_connections{entrypoint=~\"$entrypoint\"}) by (entrypoint)\n",
               "legendFormat": "{{entrypoint}}",
@@ -1361,9 +1445,9 @@ data:
             },
             "hide": 0,
             "includeAll": false,
-            "label": "datasource",
             "multi": false,
             "name": "DS_PROMETHEUS",
+            "label": "datasource",
             "options": [],
             "query": "prometheus",
             "refresh": 1,
@@ -1373,7 +1457,10 @@ data:
           },
           {
             "current": {},
-            "datasource": "Prometheus",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_PROMETHEUS}"
+            },
             "definition": "label_values(traefik_open_connections, entrypoint)",
             "hide": 0,
             "includeAll": true,
@@ -1455,15 +1542,18 @@ data:
           },
           {
             "current": {},
-            "datasource": "Prometheus",
-            "definition": "label_values(traefik_service_requests_total, exported_service)",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_PROMETHEUS}"
+            },
+            "definition": "label_values(traefik_service_requests_total, service)",
             "hide": 0,
             "includeAll": true,
             "multi": false,
             "name": "service",
             "options": [],
             "query": {
-              "query": "label_values(traefik_service_requests_total, exported_service)",
+              "query": "label_values(traefik_service_requests_total, service)",
               "refId": "StandardVariableQuery"
             },
             "refresh": 2,
