@@ -22,6 +22,7 @@ nodeExporter:
   enabled: true
 grafana:
   assertNoLeakedSecrets: false
+  defaultDashboardsEnabled: false
   initChownData:
     enabled: false
   image:

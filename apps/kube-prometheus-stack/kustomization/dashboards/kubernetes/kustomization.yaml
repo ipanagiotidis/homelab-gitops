@@ -1,7 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./etcd-configmap.yaml
   - ./kubernetes-api-server-configmap.yaml
   - ./kubernetes-compute-resources-cluster-configmap.yaml
   - ./kubernetes-compute-resources-multi-cluster-configmap.yaml
@@ -17,5 +16,3 @@ resources:
   - ./kubernetes-networking-pod-configmap.yaml
   - ./kubernetes-networking-workload-configmap.yaml
   - ./kubernetes-persistent-volumes-configmap.yaml
-  - ./kubernetes-proxy-configmap.yaml
-  - ./kubernetes-scheduler-configmap.yaml
