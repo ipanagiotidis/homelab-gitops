@@ -77,16 +77,18 @@ grafana:
       - ReadWriteOnce
     finalizers:
       - kubernetes.io/pvc-protection
-  # sidecar:
-  #   enabled: false
-      #dashboards:
-      #enabled: true
-      #label: grafana_dashboard
-      #labelValue: "1"
-      #datasources:
-      #enabled: true
-      #label: "grafana_datasource" # This is the default label the sidecar looks for
-      #labelvalue: "1"
+  sidecar:
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+      labelValue: "1"
+      folderAnnotation: k8s-sidecar-target-directory
+      provider:
+        foldersFromFilesStructure: true
+    datasources:
+      enabled: true
+      label: grafana_datasource
+      labelValue: "1"
   additionalDataSources:
     - name: Loki
       type: loki
