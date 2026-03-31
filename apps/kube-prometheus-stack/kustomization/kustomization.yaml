@@ -3,4 +3,6 @@ kind: Kustomization
 
 resources:
   - ./external-secret.yaml
+  - ./adguard-external-secret.yaml
+  - ./adguard-exporter.yaml
   - ./dashboards

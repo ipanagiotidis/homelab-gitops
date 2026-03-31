@@ -4,6 +4,7 @@ resources:
   - ./platform
   - ./kubernetes
   - ./nodes
+  - ./network
   - ./ingress
   - ./databases
   - ./logs
