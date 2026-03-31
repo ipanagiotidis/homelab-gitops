@@ -8,3 +8,4 @@ resources:
   - ./ingress
   - ./databases
   - ./logs
+  - ./security
