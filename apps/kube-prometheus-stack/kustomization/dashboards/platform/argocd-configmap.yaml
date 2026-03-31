@@ -7,7 +7,7 @@ metadata:
   annotations:
     k8s-sidecar-target-directory: /tmp/dashboards/Platform
 data:
-  argocd.json: |
+  argocd.json: |-
     {
       "annotations": {
         "list": [
@@ -2684,7 +2684,7 @@ data:
                   "color": "rgba(255,0,255,0.7)"
                 },
                 "filterValues": {
-                  "le": 1E-9
+                  "le": 1e-09
                 },
                 "legend": {
                   "show": false
@@ -2794,7 +2794,7 @@ data:
                   "color": "rgba(255,0,255,0.7)"
                 },
                 "filterValues": {
-                  "le": 1E-9
+                  "le": 1e-09
                 },
                 "legend": {
                   "show": false

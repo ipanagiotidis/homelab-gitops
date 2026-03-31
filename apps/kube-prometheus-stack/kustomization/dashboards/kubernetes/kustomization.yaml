@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./etcd-configmap.yaml
+  - ./kubernetes-api-server-configmap.yaml
+  - ./kubernetes-compute-resources-cluster-configmap.yaml
+  - ./kubernetes-compute-resources-multi-cluster-configmap.yaml
+  - ./kubernetes-compute-resources-namespace-pods-configmap.yaml
+  - ./kubernetes-compute-resources-namespace-workloads-configmap.yaml
+  - ./kubernetes-compute-resources-node-pods-configmap.yaml
+  - ./kubernetes-compute-resources-pod-configmap.yaml
+  - ./kubernetes-compute-resources-workload-configmap.yaml
+  - ./kubernetes-kubelet-configmap.yaml
+  - ./kubernetes-networking-cluster-configmap.yaml
+  - ./kubernetes-networking-namespace-pods-configmap.yaml
+  - ./kubernetes-networking-namespace-workload-configmap.yaml
+  - ./kubernetes-networking-pod-configmap.yaml
+  - ./kubernetes-networking-workload-configmap.yaml
+  - ./kubernetes-persistent-volumes-configmap.yaml
+  - ./kubernetes-proxy-configmap.yaml
+  - ./kubernetes-scheduler-configmap.yaml
