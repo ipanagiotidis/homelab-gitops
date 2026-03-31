@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - ./external-secret.yaml
+  - ./argocd-servicemonitors.yaml
   - ./adguard-external-secret.yaml
   - ./adguard-exporter.yaml
   - ./dashboards
