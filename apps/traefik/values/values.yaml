@@ -115,9 +115,15 @@ additionalArguments:
 #         - 10.244.4.0/32
 
 metrics:
-  otlp:
-    http:
-      endpoint: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/api/v1/otlp/v1/metrics
+  prometheus:
+    enabled: true
+    addEntryPointsLabels: true
+    addRoutersLabels: true
+    addServicesLabels: true
+    service:
+      enabled: true
+    serviceMonitor:
+      enabled: true
 
 # tracing:
 #   otlp:

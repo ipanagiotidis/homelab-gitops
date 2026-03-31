@@ -40,6 +40,8 @@ singleBinary:
     accessModes:
     - ReadWriteOnce
 monitoring:
+  serviceMonitor:
+    enabled: true
   selfMonitoring:
     enabled: false
     grafanaAgent:
