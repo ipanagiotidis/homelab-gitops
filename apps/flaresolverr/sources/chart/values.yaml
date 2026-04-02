@@ -18,9 +18,8 @@ controllers:
         image:
           # -- image repository
           repository: flaresolverr/flaresolverr
-          # -- image tag
-          # this example is not automatically updated, so be sure to use the latest image
-          tag: latest
+          # -- pinned to latest stable release tag: v3.4.6
+          digest: sha256:7962759d99d7e125e108e0f5e7f3cdbcd36161776d058d1d9b7153b92ef1af9e
         # Configure the container-specific securityContext
         securityContext:
           runAsUser: 1000

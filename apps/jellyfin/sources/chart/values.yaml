@@ -18,9 +18,8 @@ controllers:
         image:
           # -- image repository
           repository: jellyfin/jellyfin
-          # -- image tag
-          # this example is not automatically updated, so be sure to use the latest image
-          tag: latest
+          # -- pinned to latest stable release tag: 10.11.7
+          digest: sha256:17285f9cce63b3519ccad82b84497fc22482c20f8b8bbe0580d51fec5deaa6fd
         # Configure the container-specific securityContext
         securityContext:
           runAsUser: 1001
