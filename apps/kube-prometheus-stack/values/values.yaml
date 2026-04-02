@@ -102,9 +102,7 @@ prometheus:
     podMonitorSelectorNilUsesHelmValues: false
     probeSelectorNilUsesHelmValues: false
     enableRemoteWriteReceiver: true
-    enableFeatures:
-      - remote-write-receiver
-      - otlp-write-receiver
+    enableOTLPReceiver: true
     storageSpec:
       volumeClaimTemplate:
         spec:
