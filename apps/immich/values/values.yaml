@@ -1,34 +1,3 @@
-controllers:
-  main:
-    containers:
-      main:
-        image:
-          # pinned to latest stable release tag: v2.6.3
-          tag: v2.6.3
-          digest: sha256:0cc1f82953d9598eb9e9dd11cbde1f50fe54f9c46c4506b089e8ad7bfc9d1f0c
-        resources:
-          requests:
-            cpu: 2000m
-            memory: 6Gi
-        env:
-          DB_HOSTNAME: immich-database-rw
-          DB_PORT: "5432"
-          DB_USERNAME:
-            valueFrom:
-              secretKeyRef:
-                name: immich-database-app
-                key: username
-          DB_DATABASE_NAME:
-            valueFrom:
-              secretKeyRef:
-                name: immich-database-app
-                key: dbname
-          DB_PASSWORD:
-            valueFrom:
-              secretKeyRef:
-                name: immich-database-app
-                key: password
-
 defaultPodOptions:
   securityContext:
     runAsUser: 1001
@@ -45,6 +14,36 @@ immich:
       existingClaim: immich-library
 
 server:
+  controllers:
+    main:
+      containers:
+        main:
+          image:
+            # pinned to latest stable release tag: v2.6.3
+            tag: v2.6.3
+            digest: sha256:0cc1f82953d9598eb9e9dd11cbde1f50fe54f9c46c4506b089e8ad7bfc9d1f0c
+          resources:
+            requests:
+              cpu: 2000m
+              memory: 6Gi
+          env:
+            DB_HOSTNAME: immich-database-rw
+            DB_PORT: "5432"
+            DB_USERNAME:
+              valueFrom:
+                secretKeyRef:
+                  name: immich-database-app
+                  key: username
+            DB_DATABASE_NAME:
+              valueFrom:
+                secretKeyRef:
+                  name: immich-database-app
+                  key: dbname
+            DB_PASSWORD:
+              valueFrom:
+                secretKeyRef:
+                  name: immich-database-app
+                  key: password
   ingress:
     main:
       enabled: true
