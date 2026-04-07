@@ -11,7 +11,8 @@ metadata:
     policies.kyverno.io/description: >-
       Application workloads should set CPU and memory requests, and at least memory limits,
       to improve scheduling predictability and cluster safety. This audit-only policy checks
-      the first targeted namespaces.
+      the first targeted namespaces. Init and ephemeral containers are intentionally excluded
+      from the first audit pass to avoid low-value noise from chart-managed bootstrap helpers.
 spec:
   validationFailureAction: Audit
   background: true
@@ -29,24 +30,10 @@ spec:
           - monitoring
           - paperless-ngx
     validate:
-      message: CPU and memory requests and memory limits are required for containers.
+      message: CPU and memory requests and memory limits are required for workload containers.
       pattern:
         spec:
           containers:
-          - resources:
-              requests:
-                memory: '?*'
-                cpu: '?*'
-              limits:
-                memory: '?*'
-          =(initContainers):
-          - resources:
-              requests:
-                memory: '?*'
-                cpu: '?*'
-              limits:
-                memory: '?*'
-          =(ephemeralContainers):
           - resources:
               requests:
                 memory: '?*'

@@ -10,8 +10,9 @@ metadata:
     policies.kyverno.io/subject: Pod, Label
     policies.kyverno.io/description: >-
       Define and use labels that identify application workloads in a consistent way.
-      This audit-only policy checks for a small set of standard Kubernetes app labels
-      in the first targeted namespaces.
+      This audit-only policy checks for the core standard Kubernetes app labels
+      in the first targeted namespaces. The broader `app.kubernetes.io/part-of`
+      label is useful too, but is intentionally not required in the first audit pass.
 spec:
   validationFailureAction: Audit
   background: true
@@ -29,10 +30,9 @@ spec:
           - monitoring
           - paperless-ngx
     validate:
-      message: app.kubernetes.io/name, app.kubernetes.io/instance, and app.kubernetes.io/part-of are required.
+      message: app.kubernetes.io/name and app.kubernetes.io/instance are required.
       pattern:
         metadata:
           labels:
             app.kubernetes.io/name: '?*'
             app.kubernetes.io/instance: '?*'
-            app.kubernetes.io/part-of: '?*'
