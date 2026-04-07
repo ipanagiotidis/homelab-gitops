@@ -17,6 +17,15 @@ authentik:
   log_level: "info"
 
 server:
+  securityContext:
+    seccompProfile:
+      type: RuntimeDefault
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+    runAsNonRoot: true
   ingress:
     # Specify kubernetes ingress controller class name
     ingressClassName: traefik
@@ -81,6 +90,15 @@ redis:
       extraDiskNode: "true"
 
 worker:
+  securityContext:
+    seccompProfile:
+      type: RuntimeDefault
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+    runAsNonRoot: true
   volumes:
     - name: postgres-creds
       secret:

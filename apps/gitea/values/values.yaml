@@ -23,6 +23,18 @@ persistence:
 nodeSelector: 
   extraDiskNode: "true" 
 
+podSecurityContext:
+  fsGroup: 1000
+  seccompProfile:
+    type: RuntimeDefault
+
+containerSecurityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  runAsNonRoot: true
+
 gitea:
   config:
     database:
