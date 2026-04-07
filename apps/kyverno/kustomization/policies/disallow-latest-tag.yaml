@@ -13,8 +13,10 @@ metadata:
       This audit-only policy checks that Pods in the first targeted namespaces use explicit,
       non-latest image tags.
 spec:
+  admission: true
   validationFailureAction: Audit
   background: true
+  emitWarning: false
   rules:
   - name: require-image-tag
     match:
@@ -28,7 +30,9 @@ spec:
           - homepage
           - monitoring
           - paperless-ngx
+    skipBackgroundRequests: true
     validate:
+      allowExistingViolations: true
       message: An image tag is required.
       foreach:
       - list: request.object.spec.containers
@@ -52,7 +56,9 @@ spec:
           - homepage
           - monitoring
           - paperless-ngx
+    skipBackgroundRequests: true
     validate:
+      allowExistingViolations: true
       message: Using a mutable image tag like latest is not allowed.
       foreach:
       - list: request.object.spec.containers

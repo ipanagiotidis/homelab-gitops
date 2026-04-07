@@ -14,8 +14,10 @@ metadata:
       the first targeted namespaces. Init and ephemeral containers are intentionally excluded
       from the first audit pass to avoid low-value noise from chart-managed bootstrap helpers.
 spec:
+  admission: true
   validationFailureAction: Audit
   background: true
+  emitWarning: false
   rules:
   - name: validate-resources
     match:
@@ -29,7 +31,9 @@ spec:
           - homepage
           - monitoring
           - paperless-ngx
+    skipBackgroundRequests: true
     validate:
+      allowExistingViolations: true
       message: CPU and memory requests and memory limits are required for workload containers.
       pattern:
         spec:

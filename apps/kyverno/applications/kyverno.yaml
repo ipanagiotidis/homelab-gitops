@@ -11,6 +11,12 @@ spec:
   destination:
     namespace: kyverno
     server: https://kubernetes.default.svc
+  ignoreDifferences:
+  - group: apiextensions.k8s.io
+    kind: CustomResourceDefinition
+    jsonPointers:
+    - /metadata/annotations
+    - /metadata/labels
   project: default
   sources:
   - chart: kyverno

@@ -11,6 +11,11 @@ spec:
   destination:
     namespace: kyverno
     server: https://kubernetes.default.svc
+  ignoreDifferences:
+  - group: kyverno.io
+    kind: ClusterPolicy
+    jsonPointers:
+    - /status
   project: default
   sources:
   - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
