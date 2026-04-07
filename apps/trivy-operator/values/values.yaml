@@ -1,0 +1,35 @@
+excludeNamespaces: kube-system,kyverno,trivy-system
+
+automountServiceAccountToken: true
+
+image:
+  registry: docker.io
+  repository: aquasec/trivy-operator
+  tag: 0.30.1@sha256:448484ece65e26f1c7237c8d20dab997f5a8319968286a09e188140b863cf1f9 # 0.30.1
+
+operator:
+  vulnerabilityScannerEnabled: true
+  configAuditScannerEnabled: true
+  rbacAssessmentScannerEnabled: false
+  infraAssessmentScannerEnabled: false
+  clusterComplianceEnabled: false
+  exposedSecretScannerEnabled: false
+  metricsFindingsEnabled: true
+
+serviceMonitor:
+  enabled: true
+  namespace: monitoring
+
+policiesBundle:
+  registry: docker.io
+  repository: aquasec/trivy-checks
+  tag: 1@sha256:0491169789b867ae5a7353381220c1d4d97b3a0d6d9dfd84a25d06f0ba68aa93 # 1
+
+trivy:
+  severity: HIGH,CRITICAL
+  ignoreUnfixed: true
+  slow: true
+  image:
+    registry: docker.io
+    repository: aquasec/trivy
+    tag: 0.69.3@sha256:bcc376de8d77cfe086a917230e818dc9f8528e3c852f7b1aff648949b6258d1c # 0.69.3

@@ -1,0 +1,38 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-standard-app-labels
+  annotations:
+    policies.kyverno.io/title: Require Standard App Labels
+    policies.kyverno.io/category: Best Practices
+    policies.kyverno.io/minversion: 1.6.0
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/subject: Pod, Label
+    policies.kyverno.io/description: >-
+      Define and use labels that identify application workloads in a consistent way.
+      This audit-only policy checks for a small set of standard Kubernetes app labels
+      in the first targeted namespaces.
+spec:
+  validationFailureAction: Audit
+  background: true
+  rules:
+  - name: check-for-standard-labels
+    match:
+      any:
+      - resources:
+          kinds:
+          - Pod
+          namespaces:
+          - authentik
+          - gitea
+          - homepage
+          - monitoring
+          - paperless-ngx
+    validate:
+      message: app.kubernetes.io/name, app.kubernetes.io/instance, and app.kubernetes.io/part-of are required.
+      pattern:
+        metadata:
+          labels:
+            app.kubernetes.io/name: '?*'
+            app.kubernetes.io/instance: '?*'
+            app.kubernetes.io/part-of: '?*'

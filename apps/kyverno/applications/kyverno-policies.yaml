@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kyverno-policies
+  namespace: argocd
+  labels:
+    app: kyverno-policies
+  annotations:
+    argocd.argoproj.io/sync-wave: "41"
+spec:
+  destination:
+    namespace: kyverno
+    server: https://kubernetes.default.svc
+  project: default
+  sources:
+  - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+    path: apps/kyverno/kustomization
+    targetRevision: master
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - Validate=true
+    - CreateNamespace=true
+    - SkipDryRunOnMissingResource=true
+    - ServerSideApply=true
