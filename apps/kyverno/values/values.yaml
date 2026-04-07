@@ -34,7 +34,7 @@ test:
   image:
     registry: ghcr.io
     repository: kyverno/readiness-checker
-    tag: v0.1.0@sha256:7eb66e1fead6a3791209e1a0869d0217f9c89886a6809e99d3094b750e2b731d # v0.1.0
+    tag: v0.1.0@sha256:c54c0aa24d536f7a31ed854db4f2b2d6863b41d7d85725e21f80cd318c4e815b # v0.1.0
 
 webhooksCleanup:
   image:
@@ -79,7 +79,7 @@ reportsController:
   image:
     registry: reg.kyverno.io
     repository: kyverno/reports-controller
-    tag: v1.17.1@sha256:c54c0aa24d536f7a31ed854db4f2b2d6863b41d7d85725e21f80cd318c4e815b # v1.17.1
+    tag: v1.17.1@sha256:7eb66e1fead6a3791209e1a0869d0217f9c89886a6809e99d3094b750e2b731d # v1.17.1
   serviceMonitor:
     enabled: true
     namespace: monitoring
