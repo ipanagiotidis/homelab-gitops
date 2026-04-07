@@ -207,23 +207,6 @@
       "targets": [
         {
           "datasource": {"type": "prometheus", "uid": "$datasource"},
-          "expr": "topk(10, sum(trivy_image_vulnerabilities{severity=~\"Critical|High\"}) by (namespace))",
-          "legendFormat": "{{namespace}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Top Namespaces by CVEs",
-      "type": "barchart"
-    },
-    {
-      "datasource": {"type": "prometheus", "uid": "$datasource"},
-      "fieldConfig": {"defaults": {"color": {"mode": "palette-classic"}}, "overrides": []},
-      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 15},
-      "id": 9,
-      "options": {"orientation": "auto", "showValue": "auto", "stacking": "none"},
-      "targets": [
-        {
-          "datasource": {"type": "prometheus", "uid": "$datasource"},
           "expr": "topk(10, sum(trivy_resource_configaudits{severity=~\"Critical|High\"}) by (namespace, resource_name))",
           "legendFormat": "{{namespace}}/{{resource_name}}",
           "refId": "A"

@@ -148,7 +148,7 @@
               {"color": "green", "value": null}
             ]
           },
-          "unit": "short"
+          "unit": "ops"
         },
         "overrides": []
       },
@@ -165,11 +165,11 @@
       "targets": [
         {
           "datasource": {"type": "prometheus", "uid": "$datasource"},
-          "expr": "sum(increase(kyverno_policy_results_total{rule_result=\"fail\"}[24h]))",
+          "expr": "sum(rate(kyverno_controller_reconcile_total[5m]))",
           "refId": "A"
         }
       ],
-      "title": "Policy Fails (24h)",
+      "title": "Controller Reconciles/s",
       "type": "stat"
     },
     {
@@ -183,25 +183,8 @@
     {
       "datasource": {"type": "prometheus", "uid": "$datasource"},
       "fieldConfig": {"defaults": {"color": {"mode": "palette-classic"}}, "overrides": []},
-      "gridPos": {"h": 8, "w": 24, "x": 0, "y": 7},
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 7},
       "id": 7,
-      "options": {"legend": {"displayMode": "table", "placement": "right"}, "tooltip": {"mode": "multi", "sort": "desc"}},
-      "targets": [
-        {
-          "datasource": {"type": "prometheus", "uid": "$datasource"},
-          "expr": "sum(increase(kyverno_policy_results_total{rule_result=\"fail\"}[24h])) by (policy_name)",
-          "legendFormat": "{{policy_name}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Top Failing Policies (24h)",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {"type": "prometheus", "uid": "$datasource"},
-      "fieldConfig": {"defaults": {"color": {"mode": "palette-classic"}}, "overrides": []},
-      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 15},
-      "id": 8,
       "options": {"orientation": "auto", "showValue": "auto", "stacking": "none"},
       "targets": [
         {
@@ -217,8 +200,8 @@
     {
       "datasource": {"type": "prometheus", "uid": "$datasource"},
       "fieldConfig": {"defaults": {"color": {"mode": "palette-classic"}}, "overrides": []},
-      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 15},
-      "id": 9,
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 7},
+      "id": 8,
       "options": {"orientation": "auto", "showValue": "auto", "stacking": "none"},
       "targets": [
         {
