@@ -1,30 +1,24 @@
----
-# Default deny all policy
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: default-deny-all
-spec:
-  podSelector: {}
-  policyTypes:
-  - Ingress
-  - Egress
----
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: allow-traefik-jf
+  name: flaresolverr-ingress
 spec:
   podSelector:
     matchLabels:
-      app.kubernetes.io/name: jellyfin
+      app.kubernetes.io/name: flaresolverr
   policyTypes:
   - Ingress
   ingress:
   - from:
     - podSelector:
         matchLabels:
-          app.kubernetes.io/name: traefik
+          app.kubernetes.io/name: prowlarr
     - podSelector:
         matchLabels:
-          app.kubernetes.io/name: homepage
+          app.kubernetes.io/name: radarr
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: sonarr
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: jellyseerr

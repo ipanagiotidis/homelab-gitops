@@ -1,11 +1,11 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: jellyfin-ingress
+  name: sonarr-ingress
 spec:
   podSelector:
     matchLabels:
-      app.kubernetes.io/name: jellyfin
+      app.kubernetes.io/name: sonarr
   policyTypes:
   - Ingress
   ingress:
@@ -15,7 +15,4 @@ spec:
           kubernetes.io/metadata.name: traefik
     - namespaceSelector:
         matchLabels:
-          kubernetes.io/metadata.name: homepage
-    - podSelector:
-        matchLabels:
-          app.kubernetes.io/name: jellyseerr
+          kubernetes.io/metadata.name: media-video

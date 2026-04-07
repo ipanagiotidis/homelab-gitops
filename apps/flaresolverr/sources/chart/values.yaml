@@ -11,6 +11,8 @@ controllers:
       securityContext:
         fsGroup: 1000
         fsGroupChangePolicy: "OnRootMismatch"
+        seccompProfile:
+          type: RuntimeDefault
 
     containers:
       # Configure the main application container
@@ -22,6 +24,11 @@ controllers:
           digest: sha256:7962759d99d7e125e108e0f5e7f3cdbcd36161776d058d1d9b7153b92ef1af9e
         # Configure the container-specific securityContext
         securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          runAsNonRoot: true
           runAsUser: 1000
           runAsGroup: 1000
         # -- Configure the resource requests and/or limits for the Pod
