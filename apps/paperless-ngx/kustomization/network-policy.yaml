@@ -1,12 +1,14 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: gitea-ingress
+  name: paperless-ngx-ingress
+  namespace: paperless-ngx
 spec:
   podSelector:
     matchLabels:
-      app.kubernetes.io/name: gitea
-      app.kubernetes.io/instance: gitea
+      app.kubernetes.io/instance: paperless-ngx
+      app.kubernetes.io/name: paperless-ngx
+      app.kubernetes.io/controller: paperless-ngx
   policyTypes:
   - Ingress
   ingress:
@@ -19,18 +21,20 @@ spec:
           kubernetes.io/metadata.name: homepage
     - namespaceSelector:
         matchLabels:
-          kubernetes.io/metadata.name: gitea
+          kubernetes.io/metadata.name: paperless-ngx
 
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: gitea-egress
+  name: paperless-ngx-egress
+  namespace: paperless-ngx
 spec:
   podSelector:
     matchLabels:
-      app.kubernetes.io/name: gitea
-      app.kubernetes.io/instance: gitea
+      app.kubernetes.io/instance: paperless-ngx
+      app.kubernetes.io/name: paperless-ngx
+      app.kubernetes.io/controller: paperless-ngx
   policyTypes:
   - Egress
   egress:
@@ -49,22 +53,23 @@ spec:
   - to:
     - namespaceSelector:
         matchLabels:
-          kubernetes.io/metadata.name: gitea
+          kubernetes.io/metadata.name: paperless-ngx
       podSelector:
         matchLabels:
           app.kubernetes.io/name: postgresql
-          cnpg.io/cluster: gitea-database
+          cnpg.io/cluster: paperless-ngx-database
     ports:
     - protocol: TCP
       port: 5432
   - to:
     - namespaceSelector:
         matchLabels:
-          kubernetes.io/metadata.name: gitea
+          kubernetes.io/metadata.name: paperless-ngx
       podSelector:
         matchLabels:
-          app.kubernetes.io/name: valkey-cluster
-          app.kubernetes.io/instance: gitea
+          app.kubernetes.io/instance: paperless-ngx
+          app.kubernetes.io/name: paperless-ngx
+          app.kubernetes.io/controller: redis
     ports:
     - protocol: TCP
       port: 6379
