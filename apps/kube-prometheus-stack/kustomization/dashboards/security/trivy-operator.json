@@ -103,7 +103,7 @@
       "gridPos": {"h": 8, "w": 8, "x": 16, "y": 7},
       "id": 9,
       "options": {"orientation": "auto", "showValue": "auto", "stacking": "none"},
-      "targets": [{"datasource": {"type": "prometheus", "uid": "$datasource"}, "expr": "topk(10, sum(trivy_image_vulnerabilities{severity=~\"Critical|High\"}) by (namespace, resource_name))", "legendFormat": "{{namespace}}/{{resource_name}}", "refId": "A"}],
+      "targets": [{"datasource": {"type": "prometheus", "uid": "$datasource"}, "expr": "topk(10, sum by (namespace, workload) (label_replace(trivy_image_vulnerabilities{severity=~\"Critical|High\",resource_kind=\"ReplicaSet\"}, \"workload\", \"$1\", \"resource_name\", \"(.*)-[a-z0-9]{9,10}\") or label_replace(trivy_image_vulnerabilities{severity=~\"Critical|High\",resource_kind!=\"ReplicaSet\"}, \"workload\", \"$1\", \"resource_name\", \"(.*)\")))", "legendFormat": "{{namespace}}/{{workload}}", "refId": "A"}],
       "title": "Top Workloads by CVEs",
       "type": "barchart"
     },
@@ -141,7 +141,7 @@
       "gridPos": {"h": 8, "w": 8, "x": 16, "y": 16},
       "id": 13,
       "options": {"orientation": "auto", "showValue": "auto", "stacking": "none"},
-      "targets": [{"datasource": {"type": "prometheus", "uid": "$datasource"}, "expr": "topk(10, sum(trivy_resource_configaudits{severity=~\"Critical|High\"}) by (namespace, resource_name))", "legendFormat": "{{namespace}}/{{resource_name}}", "refId": "A"}],
+      "targets": [{"datasource": {"type": "prometheus", "uid": "$datasource"}, "expr": "topk(10, sum by (namespace, workload) (label_replace(trivy_resource_configaudits{severity=~\"Critical|High\",resource_kind=\"ReplicaSet\"}, \"workload\", \"$1\", \"resource_name\", \"(.*)-[a-z0-9]{9,10}\") or label_replace(trivy_resource_configaudits{severity=~\"Critical|High\",resource_kind!=\"ReplicaSet\"}, \"workload\", \"$1\", \"resource_name\", \"(.*)\")))", "legendFormat": "{{namespace}}/{{workload}}", "refId": "A"}],
       "title": "Top Workloads by Config Findings",
       "type": "barchart"
     }
