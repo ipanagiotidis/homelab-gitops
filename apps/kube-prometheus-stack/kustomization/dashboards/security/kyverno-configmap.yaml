@@ -101,7 +101,7 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "sum(rate(kyverno_admission_requests_total[5m]))",
+              "expr": "sum(rate(kyverno_admission_requests_total[15m]))",
               "refId": "A",
               "instant": true
             }
@@ -165,7 +165,7 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "sum(rate(kyverno_admission_requests_total{request_allowed=\"false\"}[5m]))",
+              "expr": "sum(rate(kyverno_admission_requests_total{request_allowed=\"false\"}[15m]))",
               "refId": "A",
               "instant": true
             }
@@ -233,7 +233,7 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "histogram_quantile(0.95, sum(rate(kyverno_admission_review_duration_seconds_bucket[5m])) by (le))",
+              "expr": "histogram_quantile(0.95, sum(rate(kyverno_admission_review_duration_seconds_bucket[15m])) by (le))",
               "refId": "A",
               "instant": true
             }
@@ -298,7 +298,7 @@ data:
               "instant": true
             }
           ],
-          "title": "Policy Fails (1h)",
+          "title": "Policy Fails",
           "type": "stat"
         },
         {
@@ -358,7 +358,7 @@ data:
               "instant": true
             }
           ],
-          "title": "Policy Passes (1h)",
+          "title": "Policy Passes",
           "type": "stat"
         },
         {
@@ -413,7 +413,7 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "sum(rate(kyverno_controller_reconcile_total[5m]))",
+              "expr": "sum(rate(kyverno_controller_reconcile_total[15m]))",
               "refId": "A",
               "instant": true
             }
@@ -459,10 +459,18 @@ data:
           },
           "id": 9,
           "options": {
-            "orientation": "auto",
-            "showValue": "auto",
-            "stacking": "none",
-            "xField": "rule_result"
+            "displayMode": "basic",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showUnfilled": true,
+            "text": {
+            }
           },
           "targets": [
             {
@@ -476,8 +484,8 @@ data:
               "instant": true
             }
           ],
-          "title": "Policy Results (1h)",
-          "type": "barchart"
+          "title": "Policy Results",
+          "type": "bargauge"
         },
         {
           "datasource": {
@@ -502,9 +510,18 @@ data:
           },
           "id": 10,
           "options": {
-            "orientation": "auto",
-            "showValue": "auto",
-            "stacking": "none"
+            "displayMode": "basic",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showUnfilled": true,
+            "text": {
+            }
           },
           "targets": [
             {
@@ -518,8 +535,8 @@ data:
               "instant": true
             }
           ],
-          "title": "Top Failing Policies (1h)",
-          "type": "barchart"
+          "title": "Top Failing Policies",
+          "type": "bargauge"
         },
         {
           "datasource": {
@@ -544,9 +561,18 @@ data:
           },
           "id": 11,
           "options": {
-            "orientation": "auto",
-            "showValue": "auto",
-            "stacking": "none"
+            "displayMode": "basic",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showUnfilled": true,
+            "text": {
+            }
           },
           "targets": [
             {
@@ -560,8 +586,8 @@ data:
               "instant": true
             }
           ],
-          "title": "Top Failing Namespaces (1h)",
-          "type": "barchart"
+          "title": "Top Failing Namespaces",
+          "type": "bargauge"
         },
         {
           "collapsed": false,
@@ -647,9 +673,18 @@ data:
           },
           "id": 14,
           "options": {
-            "orientation": "auto",
-            "showValue": "auto",
-            "stacking": "none"
+            "displayMode": "basic",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showUnfilled": true,
+            "text": {
+            }
           },
           "targets": [
             {
@@ -657,14 +692,14 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "topk(10, sum(rate(kyverno_controller_reconcile_total[5m])) by (controller_name))",
+              "expr": "topk(10, sum(rate(kyverno_controller_reconcile_total[15m])) by (controller_name))",
               "legendFormat": "{{controller_name}}",
               "refId": "A",
               "instant": true
             }
           ],
           "title": "Top Controllers by Reconcile Rate",
-          "type": "barchart"
+          "type": "bargauge"
         }
       ],
       "refresh": "5m",
