@@ -59,9 +59,11 @@ ingress:
       gethomepage.dev/group: Media
       gethomepage.dev/icon: qbittorrent.png
       gethomepage.dev/name: qbittorrent
-      #gethomepage.dev/widget.type: "jellyfin"
-      #gethomepage.dev/widget.url: "https://jf.yiannis.io"
       gethomepage.dev/pod-selector: ""
+      gethomepage.dev/widget.type: "qbittorrent"
+      gethomepage.dev/widget.url: "http://qbittorrent.media-video.svc.cluster.local:8080"
+      gethomepage.dev/widget.username: '{{`{{HOMEPAGE_VAR_QBITTORRENT_USER}}`}}'
+      gethomepage.dev/widget.password: '{{`{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}`}}'
       #gethomepage.dev/weight: "10" # optional
       #gethomepage.dev/instance: "public" # optional
       #traefik.ingress.kubernetes.io/router.middlewares: traefik-authentik@kubernetescrd

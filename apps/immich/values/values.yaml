@@ -56,6 +56,10 @@ server:
         gethomepage.dev/icon: immich.png
         gethomepage.dev/name: Immich
         gethomepage.dev/pod-selector: ""
+        gethomepage.dev/widget.type: "immich"
+        gethomepage.dev/widget.url: "http://immich-server.immich.svc.cluster.local:2283"
+        gethomepage.dev/widget.key: '{{`{{HOMEPAGE_VAR_IMMICH}}`}}'
+        gethomepage.dev/widget.version: "2"
       hosts:
         - host: photos.yiannis.io
           paths:

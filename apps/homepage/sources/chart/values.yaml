@@ -59,6 +59,11 @@ controllers:
               secretKeyRef:
                 name: homepage-secrets
                 key: adguard-user
+          HOMEPAGE_VAR_TRUENAS:
+            valueFrom:
+              secretKeyRef:
+                name: homepage-secrets
+                key: truenas-key
           HOMEPAGE_VAR_JF:
             valueFrom:
               secretKeyRef:
@@ -84,6 +89,21 @@ controllers:
               secretKeyRef:
                 name: homepage-secrets
                 key: sonarr-key
+          HOMEPAGE_VAR_IMMICH:
+            valueFrom:
+              secretKeyRef:
+                name: homepage-secrets
+                key: immich-key
+          HOMEPAGE_VAR_QBITTORRENT_USER:
+            valueFrom:
+              secretKeyRef:
+                name: homepage-secrets
+                key: qbittorrent-user
+          HOMEPAGE_VAR_QBITTORRENT_PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: homepage-secrets
+                key: qbittorrent-password
           HOMEPAGE_VAR_PAPERLESS_USER:
             valueFrom:
               secretKeyRef:
@@ -219,6 +239,15 @@ configMaps:
         mode: cluster
         traefik: true
       services.yaml: |
+        - Monitoring:
+          - prometheus:
+              description: Metrics and targets
+              href: https://gfn.yiannis.io
+              icon: prometheus.png
+              name: prometheus
+              widget:
+                type: prometheus
+                url: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
         - Infrastructure:
           - adguard:
               description: Adguard
@@ -230,11 +259,21 @@ configMaps:
                 url: '{{`{{HOMEPAGE_VAR_ADGUARD_SERVER}}`}}'
                 username: '{{`{{HOMEPAGE_VAR_ADGUARD_USER}}`}}'
                 password: '{{`{{HOMEPAGE_VAR_ADGUARD}}`}}'
+          - truenas:
+              description: NAS and storage status
+              href: https://truenas.yiannis.io
+              icon: truenas.png
+              name: truenas
+              widget:
+                type: truenas
+                url: https://truenas.yiannis.io
+                key: '{{`{{HOMEPAGE_VAR_TRUENAS}}`}}'
       settings.yaml: |
         title: Homepage
         headerStyle: boxed
         layout:
           Platform:
+          Monitoring:
           Services:
           Infrastructure:
           Media:
@@ -264,12 +303,6 @@ ingress:
   homepage:
     enabled: true
     className: traefik
-    annotations:
-      gethomepage.dev/enabled: "true"
-      gethomepage.dev/name: "Homepage"
-      gethomepage.dev/description: "A modern, secure, highly customizable application dashboard."
-      gethomepage.dev/group: "Platform"
-      gethomepage.dev/icon: "homepage.png"
     hosts:
       - host: home.yiannis.io
         paths:
