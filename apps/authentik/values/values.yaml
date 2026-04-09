@@ -42,6 +42,7 @@ server:
       gethomepage.dev/name: authentik
       gethomepage.dev/pod-selector: ""
       gethomepage.dev/widget.type: "authentik"
+      gethomepage.dev/widget.version: "2"
       gethomepage.dev/widget.url: "http://authentik-server.authentik.svc.cluster.local"
       gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_AUTHENTIK}}"
   volumes:
