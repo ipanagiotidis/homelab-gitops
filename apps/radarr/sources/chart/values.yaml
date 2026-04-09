@@ -60,6 +60,9 @@ ingress:
       gethomepage.dev/icon: radarr.png
       gethomepage.dev/name: Radarr
       gethomepage.dev/pod-selector: ""
+      gethomepage.dev/widget.type: "radarr"
+      gethomepage.dev/widget.url: "http://radarr.media-video.svc.cluster.local:7878"
+      gethomepage.dev/widget.key: '{{`{{HOMEPAGE_VAR_RADARR}}`}}'
     ingressClassName: "traefik"
     hosts:
       - host: "rdr.yiannis.io"

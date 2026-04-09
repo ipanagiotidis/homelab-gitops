@@ -60,6 +60,9 @@ ingress:
       gethomepage.dev/icon: prowlarr.png
       gethomepage.dev/name: Prowlarr
       gethomepage.dev/pod-selector: ""
+      gethomepage.dev/widget.type: "prowlarr"
+      gethomepage.dev/widget.url: "http://prowlarr.media-video.svc.cluster.local:9696"
+      gethomepage.dev/widget.key: '{{`{{HOMEPAGE_VAR_PROWLARR}}`}}'
     ingressClassName: "traefik"
     hosts:
       - host: "prw.yiannis.io"

@@ -60,6 +60,9 @@ ingress:
       gethomepage.dev/icon: sonarr.png
       gethomepage.dev/name: Sonarr
       gethomepage.dev/pod-selector: ""
+      gethomepage.dev/widget.type: "sonarr"
+      gethomepage.dev/widget.url: "http://sonarr.media-video.svc.cluster.local:8989"
+      gethomepage.dev/widget.key: '{{`{{HOMEPAGE_VAR_SONARR}}`}}'
     ingressClassName: "traefik"
     hosts:
       - host: "snr.yiannis.io"

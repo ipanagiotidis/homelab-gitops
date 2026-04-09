@@ -64,6 +64,26 @@ controllers:
               secretKeyRef:
                 name: homepage-secrets
                 key: jf-key
+          HOMEPAGE_VAR_JELLYSEERR:
+            valueFrom:
+              secretKeyRef:
+                name: homepage-secrets
+                key: jellyseerr-key
+          HOMEPAGE_VAR_PROWLARR:
+            valueFrom:
+              secretKeyRef:
+                name: homepage-secrets
+                key: prowlarr-key
+          HOMEPAGE_VAR_RADARR:
+            valueFrom:
+              secretKeyRef:
+                name: homepage-secrets
+                key: radarr-key
+          HOMEPAGE_VAR_SONARR:
+            valueFrom:
+              secretKeyRef:
+                name: homepage-secrets
+                key: sonarr-key
           HOMEPAGE_VAR_PAPERLESS_USER:
             valueFrom:
               secretKeyRef:
