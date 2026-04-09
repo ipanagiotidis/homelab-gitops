@@ -11,16 +11,11 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   sources:
-  - chart: homepage
-    repoURL: https://jameswynn.github.io/helm-charts
-    targetRevision: 2.1.0
+  - path: apps/homepage/sources/chart
+    repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+    targetRevision: master
     helm:
       releaseName: homepage
-      valueFiles:
-        - $values/apps/homepage/values/values.yaml
-  - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
-    targetRevision: master
-    ref: values
   - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
     path: apps/homepage/kustomization
     targetRevision: master
