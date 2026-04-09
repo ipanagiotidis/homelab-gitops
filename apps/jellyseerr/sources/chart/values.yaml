@@ -52,6 +52,14 @@ ingress:
   # Configure an Ingress for the main application
   jellyseerr:
     enabled: true
+    annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/description: Request management
+      gethomepage.dev/href: "https://demandeur.yiannis.io"
+      gethomepage.dev/group: Media
+      gethomepage.dev/icon: jellyseerr.png
+      gethomepage.dev/name: Jellyseerr
+      gethomepage.dev/pod-selector: ""
     ingressClassName: "traefik"
     hosts:
       - host: "demandeur.yiannis.io"

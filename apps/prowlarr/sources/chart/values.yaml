@@ -52,6 +52,14 @@ ingress:
   # Configure an Ingress for the main application
   prowlarr:
     enabled: true
+    annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/description: Indexer manager
+      gethomepage.dev/href: "https://prw.yiannis.io"
+      gethomepage.dev/group: Media
+      gethomepage.dev/icon: prowlarr.png
+      gethomepage.dev/name: Prowlarr
+      gethomepage.dev/pod-selector: ""
     ingressClassName: "traefik"
     hosts:
       - host: "prw.yiannis.io"

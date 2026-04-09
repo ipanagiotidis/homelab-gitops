@@ -52,6 +52,14 @@ ingress:
   # Configure an Ingress for the main application
   sonarr:
     enabled: true
+    annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/description: Series management
+      gethomepage.dev/href: "https://snr.yiannis.io"
+      gethomepage.dev/group: Media
+      gethomepage.dev/icon: sonarr.png
+      gethomepage.dev/name: Sonarr
+      gethomepage.dev/pod-selector: ""
     ingressClassName: "traefik"
     hosts:
       - host: "snr.yiannis.io"

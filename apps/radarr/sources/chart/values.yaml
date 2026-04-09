@@ -52,6 +52,14 @@ ingress:
   # Configure an Ingress for the main application
   radarr:
     enabled: true
+    annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/description: Movie management
+      gethomepage.dev/href: "https://rdr.yiannis.io"
+      gethomepage.dev/group: Media
+      gethomepage.dev/icon: radarr.png
+      gethomepage.dev/name: Radarr
+      gethomepage.dev/pod-selector: ""
     ingressClassName: "traefik"
     hosts:
       - host: "rdr.yiannis.io"
