@@ -2,8 +2,19 @@ controller:
   type: deployment
   replicas: 1
 
+global:
+  podSecurityContext:
+    seccompProfile:
+      type: RuntimeDefault
+
 alloy:
   enableReporting: false
+  securityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+    runAsNonRoot: true
   configMap:
     create: true
     content: |

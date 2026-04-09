@@ -33,6 +33,7 @@ containerSecurityContext:
   capabilities:
     drop:
       - ALL
+  readOnlyRootFilesystem: true
   runAsNonRoot: true
 
 gitea:
