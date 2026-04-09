@@ -65,7 +65,7 @@ ingress:
       gethomepage.dev/pod-selector: ""
       gethomepage.dev/widget.type: "jellyfin"
       gethomepage.dev/widget.url: "http://jellyfin.media-video.svc.cluster.local:8096"
-      gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_JF}}"
+      gethomepage.dev/widget.key: '{{`{{HOMEPAGE_VAR_JF}}`}}'
       gethomepage.dev/enableBlocks: "true" # optional, defaults to false
       gethomepage.dev/enableNowPlaying: "true" # optional, defaults to true
       gethomepage.dev/enableUser: "true" # optional, defaults to false
