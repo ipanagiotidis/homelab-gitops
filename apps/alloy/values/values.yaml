@@ -4,6 +4,7 @@ controller:
 
 global:
   podSecurityContext:
+    fsGroup: 473
     seccompProfile:
       type: RuntimeDefault
 
@@ -14,7 +15,9 @@ alloy:
     capabilities:
       drop:
         - ALL
+    runAsGroup: 473
     runAsNonRoot: true
+    runAsUser: 473
   configMap:
     create: true
     content: |
