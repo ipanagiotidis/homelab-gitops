@@ -19,6 +19,7 @@ operator:
 serviceMonitor:
   enabled: true
   namespace: monitoring
+  interval: 5m
 
 policiesBundle:
   registry: docker.io

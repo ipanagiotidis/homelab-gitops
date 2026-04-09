@@ -1,13 +1,14 @@
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: grafana-dashboard-security-trivy-operator
   labels:
-    grafana_dashboard: "1"
+    grafana_dashboard: '1'
   annotations:
-    k8s-sidecar-target-directory: /tmp/dashboards/Security
+    k8s-sidecar-target-directory: "/tmp/dashboards/Security"
 data:
-  trivy-operator.json: |-
+  trivy-operator.json: |
     {
       "annotations": {
         "list": [
@@ -29,129 +30,560 @@ data:
       "fiscalYearStartMonth": 0,
       "graphTooltip": 1,
       "id": null,
-      "links": [],
+      "links": [
+
+      ],
       "panels": [
         {
           "collapsed": false,
-          "gridPos": {"h": 1, "w": 24, "x": 0, "y": 0},
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 0
+          },
           "id": 1,
-          "panels": [],
+          "panels": [
+
+          ],
           "title": "Overview",
           "type": "row"
         },
         {
-          "datasource": {"type": "prometheus", "uid": "$datasource"},
-          "fieldConfig": {"defaults": {"color": {"mode": "thresholds"}, "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}, {"color": "red", "value": 1}]}, "unit": "short"}, "overrides": []},
-          "gridPos": {"h": 5, "w": 6, "x": 0, "y": 1},
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 1
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": [
+
+            ]
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 0,
+            "y": 1
+          },
           "id": 2,
-          "options": {"colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "textMode": "auto"},
-          "targets": [{"datasource": {"type": "prometheus", "uid": "$datasource"}, "expr": "sum(trivy_image_vulnerabilities{severity=\"Critical\"})", "refId": "A"}],
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
+              "expr": "sum(trivy_image_vulnerabilities{severity=\"Critical\"})",
+              "refId": "A",
+              "instant": true
+            }
+          ],
           "title": "Critical CVEs",
           "type": "stat"
         },
         {
-          "datasource": {"type": "prometheus", "uid": "$datasource"},
-          "fieldConfig": {"defaults": {"color": {"mode": "thresholds"}, "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}, {"color": "orange", "value": 1}]}, "unit": "short"}, "overrides": []},
-          "gridPos": {"h": 5, "w": 6, "x": 6, "y": 1},
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 1
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": [
+
+            ]
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 6,
+            "y": 1
+          },
           "id": 3,
-          "options": {"colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "textMode": "auto"},
-          "targets": [{"datasource": {"type": "prometheus", "uid": "$datasource"}, "expr": "sum(trivy_image_vulnerabilities{severity=\"High\"})", "refId": "A"}],
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
+              "expr": "sum(trivy_image_vulnerabilities{severity=\"High\"})",
+              "refId": "A",
+              "instant": true
+            }
+          ],
           "title": "High CVEs",
           "type": "stat"
         },
         {
-          "datasource": {"type": "prometheus", "uid": "$datasource"},
-          "fieldConfig": {"defaults": {"color": {"mode": "thresholds"}, "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}, {"color": "red", "value": 1}]}, "unit": "short"}, "overrides": []},
-          "gridPos": {"h": 5, "w": 6, "x": 12, "y": 1},
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 1
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": [
+
+            ]
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 12,
+            "y": 1
+          },
           "id": 4,
-          "options": {"colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "textMode": "auto"},
-          "targets": [{"datasource": {"type": "prometheus", "uid": "$datasource"}, "expr": "sum(trivy_resource_configaudits{severity=\"Critical\"})", "refId": "A"}],
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
+              "expr": "sum(trivy_resource_configaudits{severity=\"Critical\"})",
+              "refId": "A",
+              "instant": true
+            }
+          ],
           "title": "Critical Config Findings",
           "type": "stat"
         },
         {
-          "datasource": {"type": "prometheus", "uid": "$datasource"},
-          "fieldConfig": {"defaults": {"color": {"mode": "thresholds"}, "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}, {"color": "orange", "value": 1}]}, "unit": "short"}, "overrides": []},
-          "gridPos": {"h": 5, "w": 6, "x": 18, "y": 1},
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 1
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": [
+
+            ]
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 18,
+            "y": 1
+          },
           "id": 5,
-          "options": {"colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "textMode": "auto"},
-          "targets": [{"datasource": {"type": "prometheus", "uid": "$datasource"}, "expr": "sum(trivy_resource_configaudits{severity=\"High\"})", "refId": "A"}],
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
+              "expr": "sum(trivy_resource_configaudits{severity=\"High\"})",
+              "refId": "A",
+              "instant": true
+            }
+          ],
           "title": "High Config Findings",
           "type": "stat"
         },
         {
           "collapsed": false,
-          "gridPos": {"h": 1, "w": 24, "x": 0, "y": 6},
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 6
+          },
           "id": 6,
-          "panels": [],
+          "panels": [
+
+          ],
           "title": "Vulnerabilities",
           "type": "row"
         },
         {
-          "datasource": {"type": "prometheus", "uid": "$datasource"},
-          "fieldConfig": {"defaults": {"color": {"mode": "palette-classic"}}, "overrides": []},
-          "gridPos": {"h": 8, "w": 8, "x": 0, "y": 7},
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              }
+            },
+            "overrides": [
+
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 0,
+            "y": 7
+          },
           "id": 7,
-          "options": {"orientation": "auto", "showValue": "auto", "stacking": "none"},
-          "targets": [{"datasource": {"type": "prometheus", "uid": "$datasource"}, "expr": "sum(trivy_image_vulnerabilities{severity=~\"Critical|High\"}) by (severity)", "legendFormat": "{{severity}}", "refId": "A"}],
+          "options": {
+            "orientation": "auto",
+            "showValue": "auto",
+            "stacking": "none"
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
+              "expr": "sum(trivy_image_vulnerabilities{severity=~\"Critical|High\"}) by (severity)",
+              "legendFormat": "{{severity}}",
+              "refId": "A",
+              "instant": true
+            }
+          ],
           "title": "CVEs by Severity",
           "type": "barchart"
         },
         {
-          "datasource": {"type": "prometheus", "uid": "$datasource"},
-          "fieldConfig": {"defaults": {"color": {"mode": "palette-classic"}}, "overrides": []},
-          "gridPos": {"h": 8, "w": 8, "x": 8, "y": 7},
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              }
+            },
+            "overrides": [
+
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 8,
+            "y": 7
+          },
           "id": 8,
-          "options": {"orientation": "auto", "showValue": "auto", "stacking": "none"},
-          "targets": [{"datasource": {"type": "prometheus", "uid": "$datasource"}, "expr": "topk(10, sum(trivy_image_vulnerabilities{severity=~\"Critical|High\"}) by (namespace))", "legendFormat": "{{namespace}}", "refId": "A"}],
+          "options": {
+            "orientation": "auto",
+            "showValue": "auto",
+            "stacking": "none"
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
+              "expr": "topk(10, sum(trivy_image_vulnerabilities{severity=~\"Critical|High\"}) by (namespace))",
+              "legendFormat": "{{namespace}}",
+              "refId": "A",
+              "instant": true
+            }
+          ],
           "title": "Top Namespaces by CVEs",
           "type": "barchart"
         },
         {
-          "datasource": {"type": "prometheus", "uid": "$datasource"},
-          "fieldConfig": {"defaults": {"color": {"mode": "palette-classic"}}, "overrides": []},
-          "gridPos": {"h": 8, "w": 8, "x": 16, "y": 7},
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              }
+            },
+            "overrides": [
+
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 16,
+            "y": 7
+          },
           "id": 9,
-          "options": {"orientation": "auto", "showValue": "auto", "stacking": "none"},
-          "targets": [{"datasource": {"type": "prometheus", "uid": "$datasource"}, "expr": "topk(10, sum by (namespace, workload) (label_replace(trivy_image_vulnerabilities{severity=~\"Critical|High\",resource_kind=\"ReplicaSet\"}, \"workload\", \"$1\", \"resource_name\", \"(.*)-[a-z0-9]{9,10}\") or label_replace(trivy_image_vulnerabilities{severity=~\"Critical|High\",resource_kind!=\"ReplicaSet\"}, \"workload\", \"$1\", \"resource_name\", \"(.*)\")))", "legendFormat": "{{namespace}}/{{workload}}", "refId": "A"}],
+          "options": {
+            "orientation": "auto",
+            "showValue": "auto",
+            "stacking": "none"
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
+              "expr": "topk(10, sum by (namespace, workload) (label_replace(trivy_image_vulnerabilities{severity=~\"Critical|High\",resource_kind=\"ReplicaSet\"}, \"workload\", \"$1\", \"resource_name\", \"(.*)-[a-z0-9]{9,10}\") or label_replace(trivy_image_vulnerabilities{severity=~\"Critical|High\",resource_kind!=\"ReplicaSet\"}, \"workload\", \"$1\", \"resource_name\", \"(.*)\")))",
+              "legendFormat": "{{namespace}}/{{workload}}",
+              "refId": "A",
+              "instant": true
+            }
+          ],
           "title": "Top Workloads by CVEs",
           "type": "barchart"
         },
         {
           "collapsed": false,
-          "gridPos": {"h": 1, "w": 24, "x": 0, "y": 15},
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 15
+          },
           "id": 10,
-          "panels": [],
+          "panels": [
+
+          ],
           "title": "Config Audit",
           "type": "row"
         },
         {
-          "datasource": {"type": "prometheus", "uid": "$datasource"},
-          "fieldConfig": {"defaults": {"color": {"mode": "palette-classic"}}, "overrides": []},
-          "gridPos": {"h": 8, "w": 8, "x": 0, "y": 16},
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              }
+            },
+            "overrides": [
+
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 0,
+            "y": 16
+          },
           "id": 11,
-          "options": {"orientation": "auto", "showValue": "auto", "stacking": "none"},
-          "targets": [{"datasource": {"type": "prometheus", "uid": "$datasource"}, "expr": "sum(trivy_resource_configaudits{severity=~\"Critical|High\"}) by (severity)", "legendFormat": "{{severity}}", "refId": "A"}],
+          "options": {
+            "orientation": "auto",
+            "showValue": "auto",
+            "stacking": "none"
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
+              "expr": "sum(trivy_resource_configaudits{severity=~\"Critical|High\"}) by (severity)",
+              "legendFormat": "{{severity}}",
+              "refId": "A",
+              "instant": true
+            }
+          ],
           "title": "Config Findings by Severity",
           "type": "barchart"
         },
         {
-          "datasource": {"type": "prometheus", "uid": "$datasource"},
-          "fieldConfig": {"defaults": {"color": {"mode": "palette-classic"}}, "overrides": []},
-          "gridPos": {"h": 8, "w": 8, "x": 8, "y": 16},
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              }
+            },
+            "overrides": [
+
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 8,
+            "y": 16
+          },
           "id": 12,
-          "options": {"orientation": "auto", "showValue": "auto", "stacking": "none"},
-          "targets": [{"datasource": {"type": "prometheus", "uid": "$datasource"}, "expr": "topk(10, sum(trivy_resource_configaudits{severity=~\"Critical|High\"}) by (namespace))", "legendFormat": "{{namespace}}", "refId": "A"}],
+          "options": {
+            "orientation": "auto",
+            "showValue": "auto",
+            "stacking": "none"
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
+              "expr": "topk(10, sum(trivy_resource_configaudits{severity=~\"Critical|High\"}) by (namespace))",
+              "legendFormat": "{{namespace}}",
+              "refId": "A",
+              "instant": true
+            }
+          ],
           "title": "Top Namespaces by Config Findings",
           "type": "barchart"
         },
         {
-          "datasource": {"type": "prometheus", "uid": "$datasource"},
-          "fieldConfig": {"defaults": {"color": {"mode": "palette-classic"}}, "overrides": []},
-          "gridPos": {"h": 8, "w": 8, "x": 16, "y": 16},
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              }
+            },
+            "overrides": [
+
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 16,
+            "y": 16
+          },
           "id": 13,
-          "options": {"orientation": "auto", "showValue": "auto", "stacking": "none"},
-          "targets": [{"datasource": {"type": "prometheus", "uid": "$datasource"}, "expr": "topk(10, sum by (namespace, workload) (label_replace(trivy_resource_configaudits{severity=~\"Critical|High\",resource_kind=\"ReplicaSet\"}, \"workload\", \"$1\", \"resource_name\", \"(.*)-[a-z0-9]{9,10}\") or label_replace(trivy_resource_configaudits{severity=~\"Critical|High\",resource_kind!=\"ReplicaSet\"}, \"workload\", \"$1\", \"resource_name\", \"(.*)\")))", "legendFormat": "{{namespace}}/{{workload}}", "refId": "A"}],
+          "options": {
+            "orientation": "auto",
+            "showValue": "auto",
+            "stacking": "none"
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
+              "expr": "topk(10, sum by (namespace, workload) (label_replace(trivy_resource_configaudits{severity=~\"Critical|High\",resource_kind=\"ReplicaSet\"}, \"workload\", \"$1\", \"resource_name\", \"(.*)-[a-z0-9]{9,10}\") or label_replace(trivy_resource_configaudits{severity=~\"Critical|High\",resource_kind!=\"ReplicaSet\"}, \"workload\", \"$1\", \"resource_name\", \"(.*)\")))",
+              "legendFormat": "{{namespace}}/{{workload}}",
+              "refId": "A",
+              "instant": true
+            }
+          ],
           "title": "Top Workloads by Config Findings",
           "type": "barchart"
         }
@@ -159,17 +591,27 @@ data:
       "refresh": "10m",
       "schemaVersion": 39,
       "style": "dark",
-      "tags": ["trivy", "security", "vulnerabilities"],
+      "tags": [
+        "trivy",
+        "security",
+        "vulnerabilities"
+      ],
       "templating": {
         "list": [
           {
-            "current": {"selected": true, "text": "Prometheus", "value": "prometheus"},
+            "current": {
+              "selected": true,
+              "text": "Prometheus",
+              "value": "prometheus"
+            },
             "hide": 0,
             "includeAll": false,
             "label": "datasource",
             "multi": false,
             "name": "datasource",
-            "options": [],
+            "options": [
+
+            ],
             "query": "prometheus",
             "refresh": 1,
             "regex": "",
@@ -178,8 +620,12 @@ data:
           }
         ]
       },
-      "time": {"from": "now-24h", "to": "now"},
-      "timepicker": {},
+      "time": {
+        "from": "now-24h",
+        "to": "now"
+      },
+      "timepicker": {
+      },
       "timezone": "",
       "title": "Trivy Operator",
       "uid": "trivy-operator-overview",
