@@ -300,6 +300,8 @@ ingress:
   homepage:
     enabled: true
     className: traefik
+    annotations:
+      traefik.ingress.kubernetes.io/router.middlewares: traefik-authentik@kubernetescrd
     hosts:
       - host: home.yiannis.io
         paths:

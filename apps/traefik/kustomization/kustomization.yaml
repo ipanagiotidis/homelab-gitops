@@ -7,4 +7,4 @@ resources:
   - ./tlsstore.yaml
   - ./middleware.yaml
   - ./jellyfin-tls.yaml
-  #- ./forwardauth.yaml
+  - ./forwardauth.yaml
