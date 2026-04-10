@@ -39,11 +39,6 @@ controllers:
               secretKeyRef:
                 name: homepage-secrets
                 key: gitea-key
-          HOMEPAGE_VAR_GRAFANA:
-            valueFrom:
-              secretKeyRef:
-                name: homepage-secrets
-                key: grafana-key
           HOMEPAGE_VAR_ADGUARD:
             valueFrom:
               secretKeyRef:
