@@ -17,7 +17,7 @@ spec:
     helm:
       releaseName: cilium
       valueFiles:
-        - $values/apps/cilium/values/values.yaml
+        - $values/apps/cilium/values/values-post-migration.yaml
   - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
     targetRevision: master
     ref: values
