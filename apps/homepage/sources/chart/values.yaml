@@ -104,16 +104,11 @@ controllers:
               secretKeyRef:
                 name: homepage-secrets
                 key: qbittorrent-password
-          HOMEPAGE_VAR_PAPERLESS_USER:
+          HOMEPAGE_VAR_PAPERLESS_TOKEN:
             valueFrom:
               secretKeyRef:
                 name: homepage-secrets
-                key: paperless-user
-          HOMEPAGE_VAR_PAPERLESS_PASSWORD:
-            valueFrom:
-              secretKeyRef:
-                name: homepage-secrets
-                key: paperless-password
+                key: paperless-token
         resources:
           requests:
             cpu: 10m

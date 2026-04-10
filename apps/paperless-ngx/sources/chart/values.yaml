@@ -161,8 +161,7 @@ common:
         gethomepage.dev/pod-selector: ""
         gethomepage.dev/widget.type: "paperlessngx"
         gethomepage.dev/widget.url: "http://paperless-ngx.paperless-ngx.svc.cluster.local:8000"
-        gethomepage.dev/widget.username: '{{`{{HOMEPAGE_VAR_PAPERLESS_USER}}`}}'
-        gethomepage.dev/widget.password: '{{`{{HOMEPAGE_VAR_PAPERLESS_PASSWORD}}`}}'
+        gethomepage.dev/widget.key: '{{`{{HOMEPAGE_VAR_PAPERLESS_TOKEN}}`}}'
       className: "traefik"
       hosts:
         - host: "docs.yiannis.io"
