@@ -269,6 +269,7 @@ configMaps:
                 type: truenas
                 url: https://truenas.yiannis.io
                 key: '{{`{{HOMEPAGE_VAR_TRUENAS}}`}}'
+                version: 2
       settings.yaml: |
         title: Homepage
         headerStyle: boxed
