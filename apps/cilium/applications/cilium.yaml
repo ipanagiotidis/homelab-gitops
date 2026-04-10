@@ -21,9 +21,6 @@ spec:
   - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
     targetRevision: master
     ref: values
-  - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
-    targetRevision: master
-    path: apps/cilium/kustomization
   syncPolicy:
     syncOptions:
     - Validate=true
