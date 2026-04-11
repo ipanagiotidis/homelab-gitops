@@ -44,7 +44,7 @@ spec:
     - kube-apiserver
     toPorts:
     - ports:
-      - port: "443"
+      - port: "6443"
         protocol: TCP
   - toEndpoints:
     - matchLabels:
@@ -52,9 +52,7 @@ spec:
         app.kubernetes.io/name: argocd-server
     toPorts:
     - ports:
-      - port: "80"
-        protocol: TCP
-      - port: "443"
+      - port: "8080"
         protocol: TCP
   - toEndpoints:
     - matchLabels:
