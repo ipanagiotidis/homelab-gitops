@@ -51,7 +51,7 @@ spec:
         cidr: 0.0.0.0/0
         except:
         - 10.96.0.0/12
-        - 10.244.0.0/16
+        - 10.245.0.0/16
     ports:
     - protocol: TCP
       port: 80

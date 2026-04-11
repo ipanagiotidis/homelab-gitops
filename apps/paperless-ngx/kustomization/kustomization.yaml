@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - ./cnpg-cluster.yaml
   - ./external-secret.yaml
-  - ./network-policy.yaml
+  # - ./network-policy.yaml
+  - ./cilium-network-policy.yaml
   - ./pv-consume.yaml
   - ./pvc-consume.yaml

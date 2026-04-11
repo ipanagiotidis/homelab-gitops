@@ -1,0 +1,164 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: homepage-ingress
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: homepage
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: traefik
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: homepage
+        app.kubernetes.io/name: homepage
+    toPorts:
+    - ports:
+      - port: "3000"
+        protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: homepage-egress
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: homepage
+  egress:
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: kube-system
+        k8s-app: kube-dns
+    toPorts:
+    - ports:
+      - port: "53"
+        protocol: UDP
+      - port: "53"
+        protocol: TCP
+      rules:
+        dns:
+        - matchPattern: "*"
+  - toEntities:
+    - kube-apiserver
+    toPorts:
+    - ports:
+      - port: "443"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: argocd
+        app.kubernetes.io/name: argocd-server
+    toPorts:
+    - ports:
+      - port: "80"
+        protocol: TCP
+      - port: "443"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: authentik
+        app.kubernetes.io/name: authentik
+        app.kubernetes.io/component: server
+    toPorts:
+    - ports:
+      - port: "80"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: gitea
+        app.kubernetes.io/name: gitea
+        app.kubernetes.io/instance: gitea
+    toPorts:
+    - ports:
+      - port: "3000"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: immich
+        app.kubernetes.io/name: server
+        app.kubernetes.io/instance: immich
+    toPorts:
+    - ports:
+      - port: "2283"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: media-video
+        app.kubernetes.io/name: jellyseerr
+    toPorts:
+    - ports:
+      - port: "5055"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: media-video
+        app.kubernetes.io/name: radarr
+    toPorts:
+    - ports:
+      - port: "7878"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: media-video
+        app.kubernetes.io/name: qbittorrent
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: media-video
+        app.kubernetes.io/name: jellyfin
+    toPorts:
+    - ports:
+      - port: "8096"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: media-video
+        app.kubernetes.io/name: sonarr
+    toPorts:
+    - ports:
+      - port: "8989"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: media-video
+        app.kubernetes.io/name: prowlarr
+    toPorts:
+    - ports:
+      - port: "9696"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: monitoring
+        app.kubernetes.io/name: prometheus
+        app.kubernetes.io/instance: kube-prometheus-stack-prometheus
+    toPorts:
+    - ports:
+      - port: "9090"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: paperless-ngx
+        app.kubernetes.io/name: paperless-ngx
+        app.kubernetes.io/controller: paperless-ngx
+        app.kubernetes.io/instance: paperless-ngx
+    toPorts:
+    - ports:
+      - port: "8000"
+        protocol: TCP
+  - toFQDNs:
+    - matchName: adguard.yiannis.io
+    toPorts:
+    - ports:
+      - port: "80"
+        protocol: TCP
+  - toFQDNs:
+    - matchName: truenas.yiannis.io
+    toPorts:
+    - ports:
+      - port: "443"
+        protocol: TCP

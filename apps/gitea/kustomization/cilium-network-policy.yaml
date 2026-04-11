@@ -1,0 +1,70 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: gitea-ingress
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: gitea
+      app.kubernetes.io/instance: gitea
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: traefik
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: homepage
+        app.kubernetes.io/name: homepage
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: gitea
+    toPorts:
+    - ports:
+      - port: "3000"
+        protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: gitea-egress
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: gitea
+      app.kubernetes.io/instance: gitea
+  egress:
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: kube-system
+        k8s-app: kube-dns
+    toPorts:
+    - ports:
+      - port: "53"
+        protocol: UDP
+      - port: "53"
+        protocol: TCP
+      rules:
+        dns:
+        - matchPattern: "*"
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: gitea
+        app.kubernetes.io/name: postgresql
+        cnpg.io/cluster: gitea-database
+    toPorts:
+    - ports:
+      - port: "5432"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: gitea
+        app.kubernetes.io/name: valkey-cluster
+        app.kubernetes.io/instance: gitea
+    toPorts:
+    - ports:
+      - port: "6379"
+        protocol: TCP
+  - toFQDNs:
+    - matchName: authentik.yiannis.io
+    toPorts:
+    - ports:
+      - port: "443"
+        protocol: TCP

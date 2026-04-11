@@ -5,4 +5,5 @@ resources:
   - ./external-secret.yaml
   - ./tailscale-rbac.yaml
   - ./tailscale-router.yaml
-  - ./network-policy.yaml
+  # - ./network-policy.yaml
+  - ./cilium-network-policy.yaml

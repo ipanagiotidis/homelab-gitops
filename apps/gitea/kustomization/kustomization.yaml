@@ -4,5 +4,6 @@ kind: Kustomization
 resources:
   - ./external-secret.yaml
   - ./external-secret-postgresql.yaml
-  - ./network-policy.yaml
+  # - ./network-policy.yaml
+  - ./cilium-network-policy.yaml
   - ./pvc-shared-storage-nas.yaml

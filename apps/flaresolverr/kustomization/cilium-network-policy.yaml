@@ -1,0 +1,57 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: flaresolverr-ingress
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: flaresolverr
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: media-video
+        app.kubernetes.io/name: prowlarr
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: media-video
+        app.kubernetes.io/name: radarr
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: media-video
+        app.kubernetes.io/name: sonarr
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: media-video
+        app.kubernetes.io/name: jellyseerr
+    toPorts:
+    - ports:
+      - port: "8191"
+        protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: flaresolverr-egress
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: flaresolverr
+  egress:
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: kube-system
+        k8s-app: kube-dns
+    toPorts:
+    - ports:
+      - port: "53"
+        protocol: UDP
+      - port: "53"
+        protocol: TCP
+      rules:
+        dns:
+        - matchPattern: "*"
+  - toEntities:
+    - world
+    toPorts:
+    - ports:
+      - port: "80"
+        protocol: TCP
+      - port: "443"
+        protocol: TCP
