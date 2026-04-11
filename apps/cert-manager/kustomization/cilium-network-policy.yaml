@@ -23,14 +23,14 @@ spec:
     - kube-apiserver
     toPorts:
     - ports:
-      - port: "443"
+      - port: "6443"
         protocol: TCP
   - toEndpoints:
     - matchLabels:
         k8s:io.kubernetes.pod.namespace: cert-manager
     toPorts:
     - ports:
-      - port: "443"
+      - port: "10250"
         protocol: TCP
       - port: "9402"
         protocol: TCP
