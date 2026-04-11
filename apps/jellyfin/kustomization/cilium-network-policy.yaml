@@ -51,3 +51,9 @@ spec:
         protocol: TCP
       - port: "443"
         protocol: TCP
+  - toCIDRSet:
+    - cidr: 192.168.88.7/32
+    toPorts:
+    - ports:
+      - port: "443"
+        protocol: TCP

@@ -56,6 +56,15 @@ spec:
         protocol: TCP
   - toEndpoints:
     - matchLabels:
+        k8s:io.kubernetes.pod.namespace: traefik
+        app.kubernetes.io/name: traefik
+        app.kubernetes.io/instance: traefik-traefik
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
         k8s:io.kubernetes.pod.namespace: authentik
         app.kubernetes.io/name: authentik
         app.kubernetes.io/component: server
