@@ -6,9 +6,6 @@ spec:
   endpointSelector:
     matchLabels:
       app: tailscale-router
-  ingressDeny:
-  - fromEntities:
-    - all
   egress:
   - toEndpoints:
     - matchLabels:
@@ -37,8 +34,8 @@ spec:
         protocol: UDP
       - port: "53"
         protocol: TCP
-  - toFQDNs:
-    - matchPattern: "*.tailscale.com"
+  - toEntities:
+    - world
     toPorts:
     - ports:
       - port: "443"
