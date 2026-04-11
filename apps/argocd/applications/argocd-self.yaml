@@ -10,8 +10,11 @@ spec:
     namespace: argocd
     server: https://kubernetes.default.svc
   project: default
-  source:
-    path: apps/argocd/sources/overlay
+  sources:
+  - path: apps/argocd/sources/overlay
+    repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+    targetRevision: master
+  - path: apps/argocd/kustomization-runtime
     repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
     targetRevision: master
   # Sync policy
