@@ -16,6 +16,9 @@ spec:
     targetRevision: 10.0.26
     helm:
       releaseName: reflector
+  - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+    path: apps/reflector/kustomization
+    targetRevision: master
   # Sync policy
   syncPolicy:
     automated: # automated sync by default retries failed attempts 5 times with following delays between attempts ( 5s, 10s, 20s, 40s, 80s ); retry controlled using `retry` field.

@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - ./bouncer.yaml
   - ./certificate.yaml
+  - ./cilium-network-policy.yaml
   - ./tlsstore.yaml
   - ./middleware.yaml
   - ./jellyfin-tls.yaml

@@ -1,0 +1,39 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: traefik-ingress
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/instance: traefik-traefik
+      app.kubernetes.io/name: traefik
+  ingress:
+  # Keep Traefik ingress open to cluster and world traffic on its serving ports.
+  # Do not tighten Traefik egress yet; it fronts many backends and should be
+  # narrowed later with Hubble-backed flow evidence.
+  - fromEntities:
+    - world
+    - cluster
+    - host
+    - remote-node
+    toPorts:
+    - ports:
+      - port: "8000"
+        protocol: TCP
+      - port: "8443"
+        protocol: TCP
+  - fromEntities:
+    - host
+    - remote-node
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+  - fromEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: monitoring
+        app.kubernetes.io/name: prometheus
+    toPorts:
+    - ports:
+      - port: "9100"
+        protocol: TCP
