@@ -13,6 +13,12 @@ spec:
     - matchLabels:
         k8s:io.kubernetes.pod.namespace: homepage
         app.kubernetes.io/name: homepage
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: media-video
+        app.kubernetes.io/name: radarr
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: media-video
+        app.kubernetes.io/name: sonarr
     toPorts:
     - ports:
       - port: "9696"
