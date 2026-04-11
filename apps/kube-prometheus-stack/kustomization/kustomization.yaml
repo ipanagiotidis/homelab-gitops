@@ -7,4 +7,5 @@ resources:
   - ./adguard-external-secret.yaml
   - ./adguard-exporter.yaml
   - ./adguard-exporter-cilium-network-policy.yaml
+  - ./cilium-network-policy.yaml
   - ./dashboards
