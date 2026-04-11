@@ -6,4 +6,5 @@ resources:
   - ./argocd-servicemonitors.yaml
   - ./adguard-external-secret.yaml
   - ./adguard-exporter.yaml
+  - ./adguard-exporter-cilium-network-policy.yaml
   - ./dashboards
