@@ -1,0 +1,167 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: immich-server
+  namespace: immich
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/controller: main
+      app.kubernetes.io/instance: immich
+      app.kubernetes.io/name: server
+  ingress:
+  - fromEntities:
+    - host
+    - remote-node
+    toPorts:
+    - ports:
+      - port: "2283"
+        protocol: TCP
+      - port: "8081"
+        protocol: TCP
+      - port: "8082"
+        protocol: TCP
+  - fromEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: traefik
+        app.kubernetes.io/name: traefik
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: homepage
+        app.kubernetes.io/name: homepage
+    toPorts:
+    - ports:
+      - port: "2283"
+        protocol: TCP
+  egress:
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: kube-system
+        k8s-app: kube-dns
+    toPorts:
+    - ports:
+      - port: "53"
+        protocol: UDP
+      - port: "53"
+        protocol: TCP
+      rules:
+        dns:
+        - matchPattern: "*"
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: immich
+        app.kubernetes.io/controller: main
+        app.kubernetes.io/instance: immich
+        app.kubernetes.io/name: machine-learning
+    toPorts:
+    - ports:
+      - port: "3003"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: immich
+        app.kubernetes.io/controller: main
+        app.kubernetes.io/instance: immich
+        app.kubernetes.io/name: valkey
+    toPorts:
+    - ports:
+      - port: "6379"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: immich
+        cnpg.io/cluster: immich-database
+        cnpg.io/instanceRole: primary
+    toPorts:
+    - ports:
+      - port: "5432"
+        protocol: TCP
+  - toEntities:
+    - world
+    toPorts:
+    - ports:
+      - port: "80"
+        protocol: TCP
+      - port: "443"
+        protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: immich-machine-learning
+  namespace: immich
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/controller: main
+      app.kubernetes.io/instance: immich
+      app.kubernetes.io/name: machine-learning
+  ingress:
+  - fromEntities:
+    - host
+    - remote-node
+    toPorts:
+    - ports:
+      - port: "3003"
+        protocol: TCP
+  - fromEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: immich
+        app.kubernetes.io/controller: main
+        app.kubernetes.io/instance: immich
+        app.kubernetes.io/name: server
+    toPorts:
+    - ports:
+      - port: "3003"
+        protocol: TCP
+  egress:
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: kube-system
+        k8s-app: kube-dns
+    toPorts:
+    - ports:
+      - port: "53"
+        protocol: UDP
+      - port: "53"
+        protocol: TCP
+      rules:
+        dns:
+        - matchPattern: "*"
+  - toEntities:
+    - world
+    toPorts:
+    - ports:
+      - port: "80"
+        protocol: TCP
+      - port: "443"
+        protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: immich-valkey
+  namespace: immich
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/controller: main
+      app.kubernetes.io/instance: immich
+      app.kubernetes.io/name: valkey
+  ingress:
+  - fromEntities:
+    - host
+    - remote-node
+    toPorts:
+    - ports:
+      - port: "6379"
+        protocol: TCP
+  - fromEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: immich
+        app.kubernetes.io/controller: main
+        app.kubernetes.io/instance: immich
+        app.kubernetes.io/name: server
+    toPorts:
+    - ports:
+      - port: "6379"
+        protocol: TCP
