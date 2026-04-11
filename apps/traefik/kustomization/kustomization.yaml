@@ -8,3 +8,4 @@ resources:
   - ./middleware.yaml
   - ./jellyfin-tls.yaml
   - ./forwardauth.yaml
+  - ./dashboard-service.yaml
