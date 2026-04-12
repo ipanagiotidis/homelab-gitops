@@ -114,4 +114,4 @@ prometheus:
               storage: 20Gi  # Sized for ~30d retention with headroom on current ingestion
           storageClassName: "local-path"  # Specify your storage class
     retention: "30d"
-    retentionSize: "12Gi"
+    retentionSize: "12GiB"
