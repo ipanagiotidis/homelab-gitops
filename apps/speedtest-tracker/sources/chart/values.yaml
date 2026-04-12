@@ -9,6 +9,22 @@ controllers:
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile:
           type: RuntimeDefault
+    initContainers:
+      fix-config-permissions:
+        image:
+          repository: docker.io/library/busybox
+          tag: "1.28@sha256:141c253bc4c3fd0a201d32dc1f493bcf3fff003b6df416dea4f41046e0f37d47"
+        command:
+          - /bin/sh
+          - -c
+          - |
+            mkdir -p /config/keys /config/log/php /config/log/nginx /config/www
+            chown -R 1000:1000 /config
+            chmod -R u+rwX,g+rwX /config
+        securityContext:
+          runAsUser: 0
+          runAsGroup: 0
+          allowPrivilegeEscalation: false
     containers:
       speedtest-tracker:
         image:
