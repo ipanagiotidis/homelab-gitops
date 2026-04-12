@@ -207,6 +207,9 @@ spec:
         k8s:io.kubernetes.pod.namespace: monitoring
         app.kubernetes.io/instance: kube-prometheus-stack
         app.kubernetes.io/name: grafana
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: homepage
+        app.kubernetes.io/name: homepage
     toPorts:
     - ports:
       - port: "9090"
