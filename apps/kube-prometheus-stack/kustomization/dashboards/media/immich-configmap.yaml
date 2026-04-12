@@ -78,7 +78,7 @@ data:
           },
           "gridPos": {
             "h": 5,
-            "w": 6,
+            "w": 4,
             "x": 0,
             "y": 1
           },
@@ -145,15 +145,14 @@ data:
                     "value": 1
                   }
                 ]
-              },
-              "unit": "none"
+              }
             },
             "overrides": []
           },
           "gridPos": {
             "h": 5,
-            "w": 6,
-            "x": 6,
+            "w": 4,
+            "x": 4,
             "y": 1
           },
           "id": 3,
@@ -181,7 +180,7 @@ data:
               "refId": "A"
             }
           ],
-          "title": "API Metrics Endpoint",
+          "title": "API Endpoint",
           "type": "stat"
         },
         {
@@ -219,15 +218,14 @@ data:
                     "value": 1
                   }
                 ]
-              },
-              "unit": "none"
+              }
             },
             "overrides": []
           },
           "gridPos": {
             "h": 5,
-            "w": 6,
-            "x": 12,
+            "w": 4,
+            "x": 8,
             "y": 1
           },
           "id": 4,
@@ -255,7 +253,7 @@ data:
               "refId": "A"
             }
           ],
-          "title": "Microservices Metrics Endpoint",
+          "title": "Microservices Endpoint",
           "type": "stat"
         },
         {
@@ -268,20 +266,29 @@ data:
               "color": {
                 "mode": "thresholds"
               },
-              "unit": "dateTimeAsIso"
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "short"
             },
             "overrides": []
           },
           "gridPos": {
             "h": 5,
-            "w": 6,
-            "x": 18,
+            "w": 4,
+            "x": 12,
             "y": 1
           },
           "id": 5,
           "options": {
-            "colorMode": "none",
-            "graphMode": "none",
+            "colorMode": "value",
+            "graphMode": "area",
             "justifyMode": "auto",
             "orientation": "auto",
             "reduceOptions": {
@@ -299,11 +306,125 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "max(timestamp(up{job=\"immich-server\"} > -1)) * 1000",
+              "expr": "sum(immich_event_repository_emit_duration_count{job=\"immich-server\"})",
               "refId": "A"
             }
           ],
-          "title": "Last Scrape Seen",
+          "title": "Event Emits Total",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 4,
+            "x": 16,
+            "y": 1
+          },
+          "id": 6,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
+              "expr": "sum(immich_asset_repository_get_for_thumbnail_duration_count{job=\"immich-server\"})",
+              "refId": "A"
+            }
+          ],
+          "title": "Thumbnail Lookups Total",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 4,
+            "x": 20,
+            "y": 1
+          },
+          "id": 7,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
+              "expr": "sum(immich_job_repository_run_duration_count{job=\"immich-server\"})",
+              "refId": "A"
+            }
+          ],
+          "title": "Job Runs Total",
           "type": "stat"
         },
         {
@@ -314,9 +435,9 @@ data:
             "x": 0,
             "y": 6
           },
-          "id": 6,
+          "id": 8,
           "panels": [],
-          "title": "Runtime",
+          "title": "Rates",
           "type": "row"
         },
         {
@@ -329,116 +450,14 @@ data:
               "color": {
                 "mode": "palette-classic"
               },
-              "unit": "percentunit"
+              "unit": "ops"
             },
             "overrides": []
           },
           "gridPos": {
-            "h": 8,
-            "w": 8,
+            "h": 9,
+            "w": 12,
             "x": 0,
-            "y": 7
-          },
-          "id": 7,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull",
-                "mean",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "multi",
-              "sort": "desc"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "$datasource"
-              },
-              "expr": "sum by (endpoint) (rate(process_cpu_seconds_total{job=\"immich-server\"}[5m]))",
-              "legendFormat": "{{endpoint}}",
-              "refId": "A"
-            }
-          ],
-          "title": "CPU Usage",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "$datasource"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "unit": "bytes"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 8,
-            "y": 7
-          },
-          "id": 8,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull",
-                "mean",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "multi",
-              "sort": "desc"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "$datasource"
-              },
-              "expr": "sum by (endpoint) (process_resident_memory_bytes{job=\"immich-server\"})",
-              "legendFormat": "{{endpoint}}",
-              "refId": "A"
-            }
-          ],
-          "title": "Resident Memory",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "$datasource"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "unit": "bytes"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 16,
             "y": 7
           },
           "id": 9,
@@ -464,26 +483,31 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "sum by (endpoint) (nodejs_heap_size_used_bytes{job=\"immich-server\"})",
-              "legendFormat": "{{endpoint}}",
+              "expr": "sum(rate(immich_event_repository_emit_duration_count{job=\"immich-server\"}[5m]))",
+              "legendFormat": "Event emits",
               "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
+              "expr": "sum(rate(immich_session_repository_get_by_token_duration_count{job=\"immich-server\"}[5m]))",
+              "legendFormat": "Session token lookups",
+              "refId": "B"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
+              "expr": "sum(rate(immich_crypto_repository_hash_sha_256_duration_count{job=\"immich-server\"}[5m]))",
+              "legendFormat": "SHA256 operations",
+              "refId": "C"
             }
           ],
-          "title": "Node.js Heap Used",
+          "title": "API / Auth Activity Rate",
           "type": "timeseries"
-        },
-        {
-          "collapsed": false,
-          "gridPos": {
-            "h": 1,
-            "w": 24,
-            "x": 0,
-            "y": 15
-          },
-          "id": 10,
-          "panels": [],
-          "title": "Immich Activity",
-          "type": "row"
         },
         {
           "datasource": {
@@ -500,216 +524,72 @@ data:
             "overrides": []
           },
           "gridPos": {
-            "h": 8,
+            "h": 9,
             "w": 12,
+            "x": 12,
+            "y": 7
+          },
+          "id": 10,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull",
+                "mean",
+                "max"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
+              "expr": "sum(rate(immich_asset_repository_get_for_thumbnail_duration_count{job=\"immich-server\"}[5m]))",
+              "legendFormat": "Thumbnail lookups",
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
+              "expr": "sum(rate(immich_job_repository_get_queue_duration_count{job=\"immich-server\"}[5m]))",
+              "legendFormat": "Queue lookups",
+              "refId": "B"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
+              "expr": "sum(rate(immich_job_repository_run_duration_count{job=\"immich-server\"}[5m]))",
+              "legendFormat": "Job runs",
+              "refId": "C"
+            }
+          ],
+          "title": "Media / Job Activity Rate",
+          "type": "timeseries"
+        },
+        {
+          "collapsed": false,
+          "gridPos": {
+            "h": 1,
+            "w": 24,
             "x": 0,
             "y": 16
           },
           "id": 11,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull",
-                "mean",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "multi",
-              "sort": "desc"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "$datasource"
-              },
-              "expr": "sum(rate({job=\"immich-server\",endpoint=\"metrics-api\",__name__=~\".*(http|api).*(request|requests).*(total|count)$\"}[5m]))",
-              "legendFormat": "API requests",
-              "refId": "A"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "$datasource"
-              },
-              "expr": "sum(rate({job=\"immich-server\",endpoint=\"metrics-ms\",__name__=~\".*(job|queue|bullmq).*(total|count)$\"}[5m]))",
-              "legendFormat": "Background jobs",
-              "refId": "B"
-            }
-          ],
-          "title": "Request / Job Activity",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "$datasource"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "unit": "ms"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 16
-          },
-          "id": 12,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull",
-                "mean",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "multi",
-              "sort": "desc"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "$datasource"
-              },
-              "expr": "histogram_quantile(0.95, sum by (le) (rate({job=\"immich-server\",endpoint=\"metrics-api\",__name__=~\".*(http|api).*(duration|latency|request).*(seconds_bucket|milliseconds_bucket|bucket)$\"}[5m]))) * 1000",
-              "legendFormat": "API p95",
-              "refId": "A"
-            }
-          ],
-          "title": "API Latency p95",
-          "type": "timeseries"
-        },
-        {
-          "collapsed": false,
-          "gridPos": {
-            "h": 1,
-            "w": 24,
-            "x": 0,
-            "y": 24
-          },
-          "id": 13,
           "panels": [],
-          "title": "Metric Families",
+          "title": "Totals",
           "type": "row"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "$datasource"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "unit": "ops"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 0,
-            "y": 25
-          },
-          "id": 14,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull",
-                "mean",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "multi",
-              "sort": "desc"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "$datasource"
-              },
-              "expr": "sum(rate({job=\"immich-server\",__name__=~\".*(repo|db|database|sql|postgres).*(total|count)$\"}[5m]))",
-              "legendFormat": "Repo / DB activity",
-              "refId": "A"
-            }
-          ],
-          "title": "Repository / DB Activity",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "$datasource"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "unit": "ops"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 8,
-            "y": 25
-          },
-          "id": 15,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull",
-                "mean",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "multi",
-              "sort": "desc"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "$datasource"
-              },
-              "expr": "sum(rate({job=\"immich-server\",__name__=~\".*(io|file|image|media|thumbnail|transcode).*(total|count)$\"}[5m]))",
-              "legendFormat": "IO / media activity",
-              "refId": "A"
-            }
-          ],
-          "title": "IO / Media Activity",
-          "type": "timeseries"
         },
         {
           "datasource": {
@@ -726,17 +606,16 @@ data:
             "overrides": []
           },
           "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 16,
-            "y": 25
+            "h": 9,
+            "w": 12,
+            "x": 0,
+            "y": 17
           },
-          "id": 16,
+          "id": 12,
           "options": {
             "legend": {
               "calcs": [
                 "lastNotNull",
-                "mean",
                 "max"
               ],
               "displayMode": "table",
@@ -754,13 +633,116 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "sum(nodejs_active_resources_total{job=\"immich-server\"})",
-              "legendFormat": "Node.js active resources",
+              "expr": "sum(immich_event_repository_emit_duration_count{job=\"immich-server\"})",
+              "legendFormat": "Event emits",
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
+              "expr": "sum(immich_asset_repository_get_for_thumbnail_duration_count{job=\"immich-server\"})",
+              "legendFormat": "Thumbnail lookups",
+              "refId": "B"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
+              "expr": "sum(immich_job_repository_run_duration_count{job=\"immich-server\"})",
+              "legendFormat": "Job runs",
+              "refId": "C"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
+              "expr": "sum(immich_session_repository_get_by_token_duration_count{job=\"immich-server\"})",
+              "legendFormat": "Session lookups",
+              "refId": "D"
+            }
+          ],
+          "title": "Core Counters",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "inspect": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 12,
+            "y": 17
+          },
+          "id": 13,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true
+          },
+          "pluginVersion": "12.4.2",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
+              "expr": "topk(10, sum by (__name__) ({job=\"immich-server\",__name__=~\"immich_.*_duration_count\"}))",
+              "format": "table",
+              "instant": true,
               "refId": "A"
             }
           ],
-          "title": "Node.js Runtime Activity",
-          "type": "timeseries"
+          "title": "Top Immich Counters",
+          "transformations": [
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "Time": true
+                },
+                "renameByName": {
+                  "__name__": "Metric",
+                  "Value": "Total"
+                }
+              }
+            }
+          ],
+          "type": "table"
         }
       ],
       "refresh": "30s",
@@ -800,6 +782,6 @@ data:
       "timezone": "",
       "title": "Immich",
       "uid": "immich-overview",
-      "version": 1,
+      "version": 2,
       "weekStart": ""
     }
