@@ -29,10 +29,44 @@ cgroup:
 
 hubble:
   enabled: true
+  metrics:
+    enabled:
+      - dns:query;ignoreAAAA
+      - drop
+      - tcp
+      - flow
+      - port-distribution
+      - icmp
+      - http
+    enableOpenMetrics: true
+    serviceMonitor:
+      enabled: true
+      trustCRDsExist: true
+    dashboards:
+      enabled: true
+      annotations:
+        k8s-sidecar-target-directory: /tmp/dashboards/Hubble
   relay:
     enabled: true
   ui:
     enabled: true
+
+prometheus:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+    trustCRDsExist: true
+  dashboards:
+    enabled: true
+    annotations:
+      k8s-sidecar-target-directory: /tmp/dashboards/Cilium
+
+operator:
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      trustCRDsExist: true
 
 securityContext:
   capabilities:
