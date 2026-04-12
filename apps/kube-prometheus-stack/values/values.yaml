@@ -12,8 +12,8 @@ kubeDns:
   enabled: false
 # kubeEtcd:
 #   enabled: false
-# kubeScheduler:
-#   enabled: false
+kubeScheduler:
+  enabled: false
 # kubeProxy:
 #   enabled: false
 kubeStateMetrics:
