@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - cilium-network-policy.yaml
+  - argocd-vpas.yaml
+  - authentik-vpas.yaml
+  - cert-manager-vpas.yaml
+  - external-secrets-vpas.yaml
+  - homepage-vpas.yaml
+  - monitoring-vpas.yaml
+  - traefik-vpas.yaml

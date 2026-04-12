@@ -1,0 +1,21 @@
+rbac:
+  create: true
+
+admissionController:
+  enabled: false
+
+recommender:
+  replicas: 1
+  image:
+    repository: registry.k8s.io/autoscaling/vpa-recommender
+    tag: "1.6.0@sha256:4af365370c187e4eb60302e937b18a188774698b049a1bfdd77d43e51b30abec"
+    pullPolicy: IfNotPresent
+  resources:
+    requests:
+      cpu: 10m
+      memory: 96Mi
+    limits:
+      memory: 256Mi
+
+updater:
+  enabled: false

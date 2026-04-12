@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vertical-pod-autoscaler
+  namespace: argocd
+  labels:
+    app: vertical-pod-autoscaler
+spec:
+  destination:
+    namespace: vpa-system
+    server: https://kubernetes.default.svc
+  project: default
+  sources:
+  - repoURL: https://github.com/kubernetes/autoscaler.git
+    targetRevision: vertical-pod-autoscaler-chart-0.8.1
+    path: vertical-pod-autoscaler/charts/vertical-pod-autoscaler
+    helm:
+      releaseName: vertical-pod-autoscaler
+      valueFiles:
+      - $values/apps/vertical-pod-autoscaler/values/values.yaml
+  - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+    targetRevision: master
+    ref: values
+  - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+    path: apps/vertical-pod-autoscaler/kustomization
+    targetRevision: master
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - Validate=true
+    - CreateNamespace=true
+    - ServerSideApply=true
+    - Replace=true

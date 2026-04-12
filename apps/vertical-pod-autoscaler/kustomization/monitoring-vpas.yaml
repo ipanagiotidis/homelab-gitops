@@ -1,0 +1,161 @@
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: adguard-exporter
+  namespace: monitoring
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: adguard-exporter
+  updatePolicy:
+    updateMode: "Off"
+  resourcePolicy:
+    containerPolicies:
+    - containerName: '*'
+      controlledResources: ["cpu", "memory"]
+      controlledValues: RequestsOnly
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: alloy
+  namespace: monitoring
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: alloy
+  updatePolicy:
+    updateMode: "Off"
+  resourcePolicy:
+    containerPolicies:
+    - containerName: '*'
+      controlledResources: ["cpu", "memory"]
+      controlledValues: RequestsOnly
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: kube-prometheus-stack-grafana
+  namespace: monitoring
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: kube-prometheus-stack-grafana
+  updatePolicy:
+    updateMode: "Off"
+  resourcePolicy:
+    containerPolicies:
+    - containerName: '*'
+      controlledResources: ["cpu", "memory"]
+      controlledValues: RequestsOnly
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: kube-prometheus-stack-kube-state-metrics
+  namespace: monitoring
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: kube-prometheus-stack-kube-state-metrics
+  updatePolicy:
+    updateMode: "Off"
+  resourcePolicy:
+    containerPolicies:
+    - containerName: '*'
+      controlledResources: ["cpu", "memory"]
+      controlledValues: RequestsOnly
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: kube-prometheus-stack-operator
+  namespace: monitoring
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: kube-prometheus-stack-operator
+  updatePolicy:
+    updateMode: "Off"
+  resourcePolicy:
+    containerPolicies:
+    - containerName: '*'
+      controlledResources: ["cpu", "memory"]
+      controlledValues: RequestsOnly
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: loki
+  namespace: monitoring
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: StatefulSet
+    name: loki
+  updatePolicy:
+    updateMode: "Off"
+  resourcePolicy:
+    containerPolicies:
+    - containerName: '*'
+      controlledResources: ["cpu", "memory"]
+      controlledValues: RequestsOnly
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: loki-gateway
+  namespace: monitoring
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: loki-gateway
+  updatePolicy:
+    updateMode: "Off"
+  resourcePolicy:
+    containerPolicies:
+    - containerName: '*'
+      controlledResources: ["cpu", "memory"]
+      controlledValues: RequestsOnly
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: loki-results-cache
+  namespace: monitoring
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: StatefulSet
+    name: loki-results-cache
+  updatePolicy:
+    updateMode: "Off"
+  resourcePolicy:
+    containerPolicies:
+    - containerName: '*'
+      controlledResources: ["cpu", "memory"]
+      controlledValues: RequestsOnly
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: prometheus-kube-prometheus-stack-prometheus
+  namespace: monitoring
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: StatefulSet
+    name: prometheus-kube-prometheus-stack-prometheus
+  updatePolicy:
+    updateMode: "Off"
+  resourcePolicy:
+    containerPolicies:
+    - containerName: '*'
+      controlledResources: ["cpu", "memory"]
+      controlledValues: RequestsOnly
