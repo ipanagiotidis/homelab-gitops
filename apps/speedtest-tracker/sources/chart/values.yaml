@@ -1,0 +1,121 @@
+defaultPodOptions:
+  automountServiceAccountToken: false
+
+controllers:
+  speedtest-tracker:
+    pod:
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile:
+          type: RuntimeDefault
+    containers:
+      speedtest-tracker:
+        image:
+          repository: lscr.io/linuxserver/speedtest-tracker
+          # pinned to latest stable release tag: v1.13.12-ls145
+          digest: sha256:eb3d249f16177964daa4fff7f6a90bbf6645f4e23158d92f5cddb133728d0804
+        env:
+          PUID: "1000"
+          PGID: "1000"
+          TZ: "Europe/Zurich"
+          APP_NAME: "Speedtest Tracker"
+          APP_URL: "https://speed.yiannis.io"
+          ASSET_URL: "https://speed.yiannis.io"
+          DISPLAY_TIMEZONE: "Europe/Zurich"
+          DB_CONNECTION: sqlite
+          SPEEDTEST_SCHEDULE: "17 */4 * * *"
+          PRUNE_RESULTS_OLDER_THAN: "90"
+          APP_KEY:
+            valueFrom:
+              secretKeyRef:
+                name: speedtest-tracker-secret
+                key: app-key
+        resources:
+          requests:
+            cpu: 10m
+            memory: 64Mi
+          limits:
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          runAsNonRoot: true
+          runAsUser: 1000
+          runAsGroup: 1000
+        probes:
+          liveness:
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                path: /api/healthcheck
+                port: 80
+              periodSeconds: 15
+              timeoutSeconds: 3
+              failureThreshold: 3
+          readiness:
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                path: /api/healthcheck
+                port: 80
+              periodSeconds: 10
+              timeoutSeconds: 3
+              failureThreshold: 3
+          startup:
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                path: /api/healthcheck
+                port: 80
+              periodSeconds: 10
+              timeoutSeconds: 3
+              failureThreshold: 30
+
+service:
+  controller: speedtest-tracker
+  speedtest-tracker:
+    type: ClusterIP
+    ports:
+      http:
+        port: 80
+
+ingress:
+  speedtest-tracker:
+    enabled: true
+    ingressClassName: traefik
+    annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/description: WAN speed tracking
+      gethomepage.dev/group: Monitoring
+      gethomepage.dev/href: "https://speed.yiannis.io"
+      gethomepage.dev/icon: mdi-speedometer
+      gethomepage.dev/name: Speedtest
+      gethomepage.dev/pod-selector: ""
+      gethomepage.dev/widget.type: "speedtest"
+      gethomepage.dev/widget.url: "http://speedtest-tracker.speedtest.svc.cluster.local"
+      gethomepage.dev/widget.version: "2"
+      gethomepage.dev/widget.key: '{{`{{HOMEPAGE_VAR_SPEEDTEST}}`}}'
+    hosts:
+      - host: speed.yiannis.io
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: speedtest-tracker
+              port: http
+
+persistence:
+  config:
+    enabled: true
+    type: persistentVolumeClaim
+    storageClass: local-path
+    accessMode: ReadWriteOnce
+    size: 1Gi
+    globalMounts:
+      - path: /config

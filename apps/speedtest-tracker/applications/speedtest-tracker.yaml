@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: speedtest-tracker
+  namespace: argocd
+  labels:
+    app: speedtest-tracker
+spec:
+  destination:
+    namespace: speedtest
+    server: https://kubernetes.default.svc
+  project: default
+  sources:
+  - path: apps/speedtest-tracker/sources/chart
+    repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+    targetRevision: master
+    helm:
+      releaseName: speedtest-tracker
+  - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+    path: apps/speedtest-tracker/kustomization
+    targetRevision: master
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - Validate=true
+    - CreateNamespace=true

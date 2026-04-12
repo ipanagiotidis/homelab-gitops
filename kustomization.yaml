@@ -35,6 +35,7 @@ resources:
   - apps/cert-manager/applications/cert-manager.yaml
   - apps/kube-prometheus-stack/applications/kube-prometheus-stack.yaml
   - apps/loki/applications/loki.yaml
+  - apps/speedtest-tracker/applications/speedtest-tracker.yaml
   #- apps/tempo/applications/tempo.yaml
   - apps/homepage/applications/homepage.yaml
   - apps/tailscale/applications/tailscale.yaml

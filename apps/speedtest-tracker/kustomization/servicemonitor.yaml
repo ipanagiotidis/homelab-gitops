@@ -1,0 +1,21 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: speedtest-tracker
+  namespace: monitoring
+spec:
+  namespaceSelector:
+    matchNames:
+      - speedtest
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: speedtest-tracker
+      app.kubernetes.io/name: speedtest-tracker
+  endpoints:
+    - port: http
+      interval: 30m
+      path: /prometheus
+      relabelings:
+        - action: replace
+          replacement: speedtest-tracker
+          targetLabel: job
