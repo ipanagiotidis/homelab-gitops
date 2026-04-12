@@ -454,7 +454,7 @@
             "type": "prometheus",
             "uid": "$datasource"
           },
-          "expr": "clamp_min((sum(kube_persistentvolumeclaim_resource_requests_storage_bytes{namespace=\"monitoring\",persistentvolumeclaim=\"prometheus-kube-prometheus-stack-prometheus-db-prometheus-kube-prometheus-stack-prometheus-0\"}) - sum(prometheus_tsdb_storage_blocks_bytes)) / (sum(rate(prometheus_tsdb_compaction_chunk_size_bytes_sum[2h])) * 86400), 0)",
+          "expr": "clamp_min((sum(kube_persistentvolumeclaim_resource_requests_storage_bytes{namespace=\"monitoring\",persistentvolumeclaim=\"prometheus-kube-prometheus-stack-prometheus-db-prometheus-kube-prometheus-stack-prometheus-0\"}) - sum(prometheus_tsdb_storage_blocks_bytes)) / clamp_min(sum(rate(prometheus_tsdb_compaction_chunk_size_bytes_sum[6h])) * 86400, 1), 0)",
           "refId": "A"
         }
       ],

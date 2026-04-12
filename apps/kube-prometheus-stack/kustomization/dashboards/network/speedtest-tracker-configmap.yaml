@@ -95,7 +95,7 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "last_over_time(download_bits{job=\"speedtest-tracker\"}[25h])",
+              "expr": "last_over_time(speedtest_tracker_download_bits{job=\"speedtest-tracker\"}[25h])",
               "legendFormat": "Download",
               "refId": "A"
             }
@@ -153,7 +153,7 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "last_over_time(upload_bits{job=\"speedtest-tracker\"}[25h])",
+              "expr": "last_over_time(speedtest_tracker_upload_bits{job=\"speedtest-tracker\"}[25h])",
               "legendFormat": "Upload",
               "refId": "A"
             }
@@ -219,7 +219,7 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "last_over_time(ping{job=\"speedtest-tracker\"}[25h])",
+              "expr": "last_over_time(speedtest_tracker_ping_ms{job=\"speedtest-tracker\"}[25h])",
               "legendFormat": "Ping",
               "refId": "A"
             }
@@ -285,7 +285,7 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "last_over_time(packet_loss{job=\"speedtest-tracker\"}[25h])",
+              "expr": "last_over_time(speedtest_tracker_packet_loss_percent{job=\"speedtest-tracker\"}[25h])",
               "legendFormat": "Packet Loss",
               "refId": "A"
             }
@@ -349,7 +349,7 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "download_bits{job=\"speedtest-tracker\"}",
+              "expr": "speedtest_tracker_download_bits{job=\"speedtest-tracker\"}",
               "legendFormat": "Download {{server_name}}",
               "refId": "A"
             },
@@ -358,7 +358,7 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "upload_bits{job=\"speedtest-tracker\"}",
+              "expr": "speedtest_tracker_upload_bits{job=\"speedtest-tracker\"}",
               "legendFormat": "Upload {{server_name}}",
               "refId": "B"
             }
@@ -409,7 +409,7 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "ping{job=\"speedtest-tracker\"}",
+              "expr": "speedtest_tracker_ping_ms{job=\"speedtest-tracker\"}",
               "legendFormat": "Ping {{server_name}}",
               "refId": "A"
             },
@@ -418,7 +418,7 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "ping_jitter{job=\"speedtest-tracker\"}",
+              "expr": "speedtest_tracker_ping_jitter_ms{job=\"speedtest-tracker\"}",
               "legendFormat": "Jitter {{server_name}}",
               "refId": "B"
             }
