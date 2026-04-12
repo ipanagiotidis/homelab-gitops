@@ -104,6 +104,11 @@ controllers:
               secretKeyRef:
                 name: homepage-secrets
                 key: paperless-token
+          HOMEPAGE_VAR_SPEEDTEST:
+            valueFrom:
+              secretKeyRef:
+                name: homepage-secrets
+                key: speedtest-key
         resources:
           requests:
             cpu: 10m

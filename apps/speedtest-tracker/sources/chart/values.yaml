@@ -42,6 +42,10 @@ controllers:
           capabilities:
             drop:
               - ALL
+            add:
+              - CHOWN
+              - SETGID
+              - SETUID
         probes:
           liveness:
             enabled: true
@@ -87,6 +91,7 @@ ingress:
     enabled: true
     ingressClassName: traefik
     annotations:
+      traefik.ingress.kubernetes.io/router.middlewares: traefik-authentik@kubernetescrd
       gethomepage.dev/enabled: "true"
       gethomepage.dev/description: WAN speed tracking
       gethomepage.dev/group: Monitoring

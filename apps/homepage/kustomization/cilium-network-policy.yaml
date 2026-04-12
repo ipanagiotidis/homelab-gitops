@@ -157,6 +157,15 @@ spec:
     - ports:
       - port: "8000"
         protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: speedtest
+        app.kubernetes.io/instance: speedtest-tracker
+        app.kubernetes.io/name: speedtest-tracker
+    toPorts:
+    - ports:
+      - port: "80"
+        protocol: TCP
   - toFQDNs:
     - matchName: adguard.yiannis.io
     toPorts:
