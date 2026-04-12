@@ -105,6 +105,8 @@ prometheus:
     probeSelectorNilUsesHelmValues: false
     enableRemoteWriteReceiver: true
     enableOTLPReceiver: true
+    nodeSelector:
+      extraDiskNode: "true"
     storageSpec:
       volumeClaimTemplate:
         spec:
