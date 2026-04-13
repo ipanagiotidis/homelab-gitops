@@ -70,6 +70,10 @@ spec:
     - matchLabels:
         k8s:io.kubernetes.pod.namespace: harbor
         app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: exporter
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
         app.kubernetes.io/component: jobservice
     - matchLabels:
         k8s:io.kubernetes.pod.namespace: harbor
@@ -242,7 +246,18 @@ spec:
         app.kubernetes.io/component: core
     toPorts:
     - ports:
+      - port: "80"
+        protocol: TCP
       - port: "8080"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: redis
+    toPorts:
+    - ports:
+      - port: "6379"
         protocol: TCP
 ---
 apiVersion: cilium.io/v2
@@ -446,6 +461,10 @@ spec:
         k8s:io.kubernetes.pod.namespace: harbor
         app.kubernetes.io/name: harbor
         app.kubernetes.io/component: registry
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: exporter
     - matchLabels:
         k8s:io.kubernetes.pod.namespace: harbor
         app.kubernetes.io/name: harbor
