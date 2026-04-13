@@ -18,9 +18,11 @@ spec:
     targetRevision: 0.28.0
     helm:
       releaseName: cnpg
-      values: |
-        crds:
-          create: true
+      valueFiles:
+      - $values/apps/cloudnative-pg/values/values.yaml
+  - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+    targetRevision: master
+    ref: values
   syncPolicy:
     automated:
       prune: true

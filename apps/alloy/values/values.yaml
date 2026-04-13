@@ -2,6 +2,19 @@ controller:
   type: deployment
   replicas: 1
 
+image:
+  registry: reg.yiannis.io
+  repository: proxy-dockerhub/grafana/alloy
+  tag: v1.15.0
+  digest: sha256:579582bce40049f2e27bd1e445000689c907a41f0495cb0d0c7f65609316ba7c
+
+configReloader:
+  image:
+    registry: reg.yiannis.io
+    repository: proxy-quay/prometheus-operator/prometheus-config-reloader
+    tag: v0.81.0
+    digest: sha256:959d47672fbff2776a04ec62b8afcec89e8c036af84dc5fade50019dab212746
+
 global:
   podSecurityContext:
     fsGroup: 473

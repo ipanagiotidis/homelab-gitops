@@ -1,3 +1,11 @@
+crds:
+  migration:
+    image:
+      registry: reg.yiannis.io
+      defaultRegistry: reg.yiannis.io
+      repository: proxy-kyverno/kyverno/kyverno-cli
+      tag: v1.17.1@sha256:3a7addf83897abae291361dfccbdf63cba5926c7795fe44e527883ae2237e4b8
+
 config:
   webhooks:
     namespaceSelector:
@@ -32,26 +40,26 @@ features:
 
 test:
   image:
-    registry: ghcr.io
-    repository: kyverno/readiness-checker
+    registry: reg.yiannis.io
+    repository: proxy-ghcr/kyverno/readiness-checker
     tag: v0.1.0@sha256:c54c0aa24d536f7a31ed854db4f2b2d6863b41d7d85725e21f80cd318c4e815b # v0.1.0
 
 webhooksCleanup:
   image:
-    registry: registry.k8s.io
-    repository: kubectl
+    registry: reg.yiannis.io
+    repository: proxy-k8s/kubectl
     tag: v1.34.3@sha256:1c6309bd167feb49b2bc1605bce05973002872fd0d26a2e76499ed0c903ea3cf # v1.34.3
 
 admissionController:
   initContainer:
     image:
-      registry: reg.kyverno.io
-      repository: kyverno/kyvernopre
+      registry: reg.yiannis.io
+      repository: proxy-kyverno/kyverno/kyvernopre
       tag: v1.17.1@sha256:13bb0430078d3e36cfa3a1c905d915fb7ad1a3a936fefa75092b6a480d2e2c2e # v1.17.1
   container:
     image:
-      registry: reg.kyverno.io
-      repository: kyverno/kyverno
+      registry: reg.yiannis.io
+      repository: proxy-kyverno/kyverno/kyverno
       tag: v1.17.1@sha256:f3138bcbd7314b1f66984cde24ea953dc300b36a3bf2f408ac2fe2897dcc40bf # v1.17.1
   serviceMonitor:
     enabled: true
@@ -60,8 +68,8 @@ admissionController:
 
 backgroundController:
   image:
-    registry: reg.kyverno.io
-    repository: kyverno/background-controller
+    registry: reg.yiannis.io
+    repository: proxy-kyverno/kyverno/background-controller
     tag: v1.17.1@sha256:6d694a404b54368f5ad429f9341e2a9e4e17b8d83bd2ec74643cdaed845d6ea8 # v1.17.1
   serviceMonitor:
     enabled: true
@@ -70,8 +78,8 @@ backgroundController:
 
 cleanupController:
   image:
-    registry: reg.kyverno.io
-    repository: kyverno/cleanup-controller
+    registry: reg.yiannis.io
+    repository: proxy-kyverno/kyverno/cleanup-controller
     tag: v1.17.1@sha256:8789cbf5a89cbc97240de9d07be44a504d76e937fa75a43b27cb891b3d2b01c6 # v1.17.1
   serviceMonitor:
     enabled: true
@@ -80,8 +88,8 @@ cleanupController:
 
 reportsController:
   image:
-    registry: reg.kyverno.io
-    repository: kyverno/reports-controller
+    registry: reg.yiannis.io
+    repository: proxy-kyverno/kyverno/reports-controller
     tag: v1.17.1@sha256:7eb66e1fead6a3791209e1a0869d0217f9c89886a6809e99d3094b750e2b731d # v1.17.1
   serviceMonitor:
     enabled: true

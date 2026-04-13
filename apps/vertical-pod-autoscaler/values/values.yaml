@@ -7,7 +7,7 @@ admissionController:
 recommender:
   replicas: 1
   image:
-    repository: registry.k8s.io/autoscaling/vpa-recommender
+    repository: reg.yiannis.io/proxy-k8s/autoscaling/vpa-recommender
     tag: "1.6.0@sha256:4af365370c187e4eb60302e937b18a188774698b049a1bfdd77d43e51b30abec"
     pullPolicy: IfNotPresent
   resources:

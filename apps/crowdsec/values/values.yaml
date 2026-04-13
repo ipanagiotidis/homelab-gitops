@@ -1,6 +1,7 @@
 # for raw logs format: json or cri (docker|containerd)
 container_runtime: containerd
 image:
+  repository: reg.yiannis.io/proxy-dockerhub/crowdsecurity/crowdsec
   tag: "v1.7.7@sha256:6ca53ad26196ca59ddd4fa692a586b73d8fcde085046163b9ca2f04887dca563"
 tls:
   enabled: true
@@ -34,6 +35,7 @@ agent:
   lapiHost: "crowdsec-service.crowdsec.svc.cluster.local"
   wait_for_lapi:
     image:
+      repository: reg.yiannis.io/proxy-dockerhub/library/busybox
       tag: "1.28@sha256:141c253bc4c3fd0a201d32dc1f493bcf3fff003b6df416dea4f41046e0f37d47"
   metrics:
     enabled: true

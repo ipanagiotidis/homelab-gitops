@@ -16,6 +16,11 @@ spec:
     targetRevision: 1.20.1
     helm:
       releaseName: cert-manager
+      valueFiles:
+      - $values/apps/cert-manager/values/values.yaml
+  - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+    targetRevision: master
+    ref: values
   - path: apps/cert-manager/sources/base
     repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
     targetRevision: master

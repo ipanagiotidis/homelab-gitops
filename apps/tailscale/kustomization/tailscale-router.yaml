@@ -16,7 +16,7 @@ spec:
       containers:
         - name: tailscale
           # pinned to stable digest resolved on 2026-04-02; latest GitHub stable release was v1.96.4
-          image: docker.io/tailscale/tailscale@sha256:95e528798bebe75f39b10e74e7051cf51188ee615934f232ba7ad06a3390ffa1
+          image: reg.yiannis.io/proxy-dockerhub/tailscale/tailscale@sha256:95e528798bebe75f39b10e74e7051cf51188ee615934f232ba7ad06a3390ffa1
           env:
             - name: POD_NAME
               valueFrom:

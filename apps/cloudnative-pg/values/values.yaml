@@ -1,0 +1,6 @@
+crds:
+  create: true
+
+image:
+  repository: reg.yiannis.io/proxy-ghcr/cloudnative-pg/cloudnative-pg
+  tag: 1.29.0@sha256:68074486205a33ed41928761e22ad48278c690feebe8316727a1c6b3380f9e5e

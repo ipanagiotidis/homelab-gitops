@@ -4,6 +4,11 @@ kind: Kustomization
 resources: 
   - ../base
 
+images:
+- name: rancher/local-path-provisioner
+  newName: reg.yiannis.io/proxy-dockerhub/rancher/local-path-provisioner
+  digest: sha256:34ff0847cc47ebf69656ba44a3de9324596d0036b66ffd323b21614dd8221530
+
 patches:
 - path: ./patches/roles.yaml
 - patch: |-

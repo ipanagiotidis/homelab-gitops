@@ -1,0 +1,24 @@
+image:
+  repository: reg.yiannis.io/proxy-quay/jetstack/cert-manager-controller
+  tag: v1.20.1
+  digest: sha256:9f9556b4b131554694c67c8229d231b1f7d69b882b5f061a56bafa465f3b22fc
+
+webhook:
+  image:
+    repository: reg.yiannis.io/proxy-quay/jetstack/cert-manager-webhook
+    tag: v1.20.1
+    digest: sha256:b876bcaf46ace2a5e860e8371539a6e1c8ccca54b1988a97c8a7483b3815d985
+
+cainjector:
+  image:
+    repository: reg.yiannis.io/proxy-quay/jetstack/cert-manager-cainjector
+    tag: v1.20.1
+    digest: sha256:a3ff773a577d8ff6ad1fe9ab4ea0b74873e0341e0aac5d9411f3fc235f51bdf8
+
+acmesolver:
+  image:
+    repository: reg.yiannis.io/proxy-quay/jetstack/cert-manager-acmesolver
+
+startupapicheck:
+  image:
+    repository: reg.yiannis.io/proxy-quay/jetstack/cert-manager-startupapicheck

@@ -16,6 +16,11 @@ spec:
     targetRevision: 10.0.26
     helm:
       releaseName: reflector
+      valueFiles:
+      - $values/apps/reflector/values/values.yaml
+  - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+    targetRevision: master
+    ref: values
   - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
     path: apps/reflector/kustomization
     targetRevision: master

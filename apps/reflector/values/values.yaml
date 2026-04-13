@@ -1,0 +1,3 @@
+image:
+  repository: reg.yiannis.io/proxy-dockerhub/emberstack/kubernetes-reflector
+  tag: "10.0.26@sha256:bff50e4be96d9c85bbf0d69f83f13ed8b1944517f40f494093338722ebd16d6c"

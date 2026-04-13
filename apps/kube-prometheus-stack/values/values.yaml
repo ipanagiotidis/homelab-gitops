@@ -26,6 +26,8 @@ grafana:
   initChownData:
     enabled: false
   image:
+    registry: reg.yiannis.io
+    repository: proxy-dockerhub/grafana/grafana
     # pinned to latest stable release tag: 12.4.2
     tag: 12.4.2
     sha: "83749231c3835e390a3144e5e940203e42b9589761f20ef3169c716e734ad505"
@@ -81,6 +83,10 @@ grafana:
     finalizers:
       - kubernetes.io/pvc-protection
   sidecar:
+    image:
+      registry: reg.yiannis.io
+      repository: proxy-quay/kiwigrid/k8s-sidecar
+      tag: 2.5.0@sha256:a6b3f707f883108376514489a94d6629109a327b2978e1d826cd104c4ca436df
     dashboards:
       enabled: true
       label: grafana_dashboard
@@ -97,8 +103,42 @@ grafana:
       type: loki
       access: proxy
       url: http://loki.monitoring.svc.cluster.local:3100
+kube-state-metrics:
+  image:
+    registry: reg.yiannis.io
+    repository: proxy-k8s/kube-state-metrics/kube-state-metrics
+    tag: v2.18.0@sha256:1545919b72e3ae035454fc054131e8d0f14b42ef6fc5b2ad5c751cafa6b2130e
+prometheus-node-exporter:
+  image:
+    registry: reg.yiannis.io
+    repository: proxy-quay/prometheus/node-exporter
+    tag: v1.10.2
+    digest: sha256:9f40ad64a419e3451f11f2a4e7d8f6a8daa94be8b9706f2278d047cccb9e7fe6
+prometheusOperator:
+  image:
+    registry: reg.yiannis.io
+    repository: proxy-quay/prometheus-operator/prometheus-operator
+    tag: v0.89.0
+    sha: fea93ca9be807eee2f51f4d997b7a2bf073d4051d9012b45b3c84a7b9e8b3f25
+  prometheusConfigReloader:
+    image:
+      registry: reg.yiannis.io
+      repository: proxy-quay/prometheus-operator/prometheus-config-reloader
+      tag: v0.89.0
+      sha: cb4ac6a56555bef0e202bec11e367dfe07ffb241cf4d30566b12b864692607a8
+  admissionWebhooks:
+    patch:
+      image:
+        registry: reg.yiannis.io
+        repository: proxy-ghcr/jkroepke/kube-webhook-certgen
+        tag: 1.8.0
 prometheus:
   prometheusSpec:
+    image:
+      registry: reg.yiannis.io
+      repository: proxy-quay/prometheus/prometheus
+      tag: v3.10.0
+      sha: 7571a304e67fbd794be02422b13627dc7de822152f74e99e2bef95d29eceecde
     ruleSelectorNilUsesHelmValues: false
     serviceMonitorSelectorNilUsesHelmValues: false
     podMonitorSelectorNilUsesHelmValues: false
