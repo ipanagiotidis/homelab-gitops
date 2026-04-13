@@ -48,6 +48,9 @@ portal:
       memory: 192Mi
 
 core:
+  existingSecret: harbor-secrets
+  secretName: harbor-secrets
+  existingXsrfSecret: harbor-secrets
   resources:
     requests:
       cpu: 75m
@@ -56,6 +59,7 @@ core:
       memory: 384Mi
 
 jobservice:
+  existingSecret: harbor-secrets
   resources:
     requests:
       cpu: 25m
@@ -64,6 +68,7 @@ jobservice:
       memory: 384Mi
 
 registry:
+  existingSecret: harbor-secrets
   registry:
     resources:
       requests:
@@ -78,6 +83,8 @@ registry:
         memory: 96Mi
       limits:
         memory: 192Mi
+  credentials:
+    existingSecret: harbor-secrets
 
 trivy:
   enabled: false
