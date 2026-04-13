@@ -136,6 +136,15 @@ spec:
     - matchLabels:
         k8s:io.kubernetes.pod.namespace: harbor
         app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: trivy
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
         app.kubernetes.io/component: jobservice
     toPorts:
     - ports:
@@ -276,6 +285,10 @@ spec:
         k8s:io.kubernetes.pod.namespace: harbor
         app.kubernetes.io/name: harbor
         app.kubernetes.io/component: core
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: jobservice
     toPorts:
     - ports:
       - port: "8080"
