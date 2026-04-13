@@ -1,0 +1,511 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: harbor-portal
+  namespace: harbor
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: harbor
+      app.kubernetes.io/component: portal
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: traefik
+        app.kubernetes.io/name: traefik
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+  - fromEntities:
+    - host
+    - remote-node
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+  egress:
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: kube-system
+        k8s-app: kube-dns
+    toPorts:
+    - ports:
+      - port: "53"
+        protocol: UDP
+      - port: "53"
+        protocol: TCP
+      rules:
+        dns:
+        - matchPattern: "*"
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: core
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: harbor-core
+  namespace: harbor
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: harbor
+      app.kubernetes.io/component: core
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: traefik
+        app.kubernetes.io/name: traefik
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: portal
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: jobservice
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: registry
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+  - fromEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: monitoring
+        app.kubernetes.io/instance: kube-prometheus-stack-prometheus
+        app.kubernetes.io/name: prometheus
+    toPorts:
+    - ports:
+      - port: "8001"
+        protocol: TCP
+  - fromEntities:
+    - host
+    - remote-node
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+      - port: "8001"
+        protocol: TCP
+  egress:
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: kube-system
+        k8s-app: kube-dns
+    toPorts:
+    - ports:
+      - port: "53"
+        protocol: UDP
+      - port: "53"
+        protocol: TCP
+      rules:
+        dns:
+        - matchPattern: "*"
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        cnpg.io/cluster: harbor-database
+    toPorts:
+    - ports:
+      - port: "5432"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: redis
+    toPorts:
+    - ports:
+      - port: "6379"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: jobservice
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: registry
+    toPorts:
+    - ports:
+      - port: "5000"
+        protocol: TCP
+      - port: "8080"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: trivy
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+  - toEntities:
+    - world
+    toPorts:
+    - ports:
+      - port: "80"
+        protocol: TCP
+      - port: "443"
+        protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: harbor-exporter
+  namespace: harbor
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: harbor
+      app.kubernetes.io/component: exporter
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: monitoring
+        app.kubernetes.io/instance: kube-prometheus-stack-prometheus
+        app.kubernetes.io/name: prometheus
+    toPorts:
+    - ports:
+      - port: "8001"
+        protocol: TCP
+  - fromEntities:
+    - host
+    - remote-node
+    toPorts:
+    - ports:
+      - port: "8001"
+        protocol: TCP
+  egress:
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: kube-system
+        k8s-app: kube-dns
+    toPorts:
+    - ports:
+      - port: "53"
+        protocol: UDP
+      - port: "53"
+        protocol: TCP
+      rules:
+        dns:
+        - matchPattern: "*"
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        cnpg.io/cluster: harbor-database
+    toPorts:
+    - ports:
+      - port: "5432"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: core
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: harbor-jobservice
+  namespace: harbor
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: harbor
+      app.kubernetes.io/component: jobservice
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: core
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+  - fromEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: monitoring
+        app.kubernetes.io/instance: kube-prometheus-stack-prometheus
+        app.kubernetes.io/name: prometheus
+    toPorts:
+    - ports:
+      - port: "8001"
+        protocol: TCP
+  - fromEntities:
+    - host
+    - remote-node
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+      - port: "8001"
+        protocol: TCP
+  egress:
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: kube-system
+        k8s-app: kube-dns
+    toPorts:
+    - ports:
+      - port: "53"
+        protocol: UDP
+      - port: "53"
+        protocol: TCP
+      rules:
+        dns:
+        - matchPattern: "*"
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: core
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: registry
+    toPorts:
+    - ports:
+      - port: "5000"
+        protocol: TCP
+      - port: "8080"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: redis
+    toPorts:
+    - ports:
+      - port: "6379"
+        protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: harbor-registry
+  namespace: harbor
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: harbor
+      app.kubernetes.io/component: registry
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: core
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: jobservice
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: trivy
+    toPorts:
+    - ports:
+      - port: "5000"
+        protocol: TCP
+      - port: "8080"
+        protocol: TCP
+  - fromEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: monitoring
+        app.kubernetes.io/instance: kube-prometheus-stack-prometheus
+        app.kubernetes.io/name: prometheus
+    toPorts:
+    - ports:
+      - port: "8001"
+        protocol: TCP
+  - fromEntities:
+    - host
+    - remote-node
+    toPorts:
+    - ports:
+      - port: "5000"
+        protocol: TCP
+      - port: "8080"
+        protocol: TCP
+      - port: "8001"
+        protocol: TCP
+  egress:
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: kube-system
+        k8s-app: kube-dns
+    toPorts:
+    - ports:
+      - port: "53"
+        protocol: UDP
+      - port: "53"
+        protocol: TCP
+      rules:
+        dns:
+        - matchPattern: "*"
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: redis
+    toPorts:
+    - ports:
+      - port: "6379"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: core
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+  - toEntities:
+    - world
+    toPorts:
+    - ports:
+      - port: "80"
+        protocol: TCP
+      - port: "443"
+        protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: harbor-redis
+  namespace: harbor
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: harbor
+      app.kubernetes.io/component: redis
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: core
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: exporter
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: jobservice
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: registry
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: trivy
+    toPorts:
+    - ports:
+      - port: "6379"
+        protocol: TCP
+  - fromEntities:
+    - host
+    - remote-node
+    toPorts:
+    - ports:
+      - port: "6379"
+        protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: harbor-trivy
+  namespace: harbor
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: harbor
+      app.kubernetes.io/component: trivy
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: core
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+  - fromEntities:
+    - host
+    - remote-node
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+  egress:
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: kube-system
+        k8s-app: kube-dns
+    toPorts:
+    - ports:
+      - port: "53"
+        protocol: UDP
+      - port: "53"
+        protocol: TCP
+      rules:
+        dns:
+        - matchPattern: "*"
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: redis
+    toPorts:
+    - ports:
+      - port: "6379"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: registry
+    toPorts:
+    - ports:
+      - port: "5000"
+        protocol: TCP
+  - toEntities:
+    - world
+    toPorts:
+    - ports:
+      - port: "80"
+        protocol: TCP
+      - port: "443"
+        protocol: TCP
