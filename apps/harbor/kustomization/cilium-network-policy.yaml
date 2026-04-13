@@ -145,6 +145,15 @@ spec:
     - matchLabels:
         k8s:io.kubernetes.pod.namespace: harbor
         app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: trivy
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
         app.kubernetes.io/component: jobservice
     toPorts:
     - ports:
@@ -268,6 +277,15 @@ spec:
     - ports:
       - port: "6379"
         protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: trivy
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
 ---
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
@@ -353,6 +371,15 @@ spec:
     toPorts:
     - ports:
       - port: "6379"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: trivy
+    toPorts:
+    - ports:
+      - port: "8080"
         protocol: TCP
 ---
 apiVersion: cilium.io/v2
@@ -510,6 +537,10 @@ spec:
         k8s:io.kubernetes.pod.namespace: harbor
         app.kubernetes.io/name: harbor
         app.kubernetes.io/component: core
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: jobservice
     toPorts:
     - ports:
       - port: "8080"
