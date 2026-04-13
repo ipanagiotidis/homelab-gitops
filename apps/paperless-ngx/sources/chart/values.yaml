@@ -10,7 +10,7 @@ common:
       containers:
         app:
           image:
-            repository: ghcr.io/paperless-ngx/paperless-ngx
+            repository: reg.yiannis.io/proxy-ghcr/paperless-ngx/paperless-ngx
             tag: "2.20.13"
             # -- pinned to latest stable release tag: 2.20.13
             digest: sha256:4b05bcd28e6923768000b5d247cbf2c66fd49bdc3f3b05955bd4f6790a638b01
@@ -121,7 +121,7 @@ common:
       containers:
         redis:
           image:
-            repository: redis
+            repository: reg.yiannis.io/proxy-dockerhub/library/redis
             tag: "7.4.8-alpine"
             digest: sha256:8b81dd37ff027bec4e516d41acfbe9fe2460070dc6d4a4570a2ac5b9d59df065
           resources:

@@ -17,7 +17,7 @@ controllers:
       sonarr:
         image:
           # -- image repository
-          repository: linuxserver/sonarr
+          repository: reg.yiannis.io/proxy-dockerhub/linuxserver/sonarr
           # -- pinned to latest stable release tag: 4.0.17.2952-ls305
           digest: sha256:76414c033f290d3c9f1f9dfad71150abe71d92592369a3377a5903d579e6e2b2
         # Configure the container-specific securityContext
