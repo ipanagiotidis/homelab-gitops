@@ -34,4 +34,3 @@ spec:
     - Validate=true
     - CreateNamespace=true
     - ServerSideApply=true
-    - Replace=true
