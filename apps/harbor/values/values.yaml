@@ -25,10 +25,10 @@ persistence:
       size: 20Gi
     jobservice:
       jobLog:
-        storageClass: truenas-apps
+        storageClass: local-path
         size: 1Gi
     redis:
-      storageClass: truenas-apps
+      storageClass: local-path
       size: 1Gi
   imageChartStorage:
     type: filesystem
