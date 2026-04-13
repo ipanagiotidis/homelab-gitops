@@ -1,0 +1,118 @@
+expose:
+  type: ingress
+  tls:
+    enabled: true
+    certSource: secret
+    secret:
+      secretName: harbor-tls
+  ingress:
+    className: traefik
+    hosts:
+      core: reg.yiannis.io
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+
+externalURL: https://reg.yiannis.io
+
+existingSecretAdminPassword: harbor-secrets
+existingSecretSecretKey: harbor-secrets
+
+persistence:
+  enabled: true
+  persistentVolumeClaim:
+    registry:
+      storageClass: truenas-apps
+      size: 20Gi
+    jobservice:
+      jobLog:
+        storageClass: truenas-apps
+        size: 1Gi
+    redis:
+      storageClass: truenas-apps
+      size: 1Gi
+  imageChartStorage:
+    type: filesystem
+    filesystem:
+      rootdirectory: /storage
+
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+    interval: 1m
+
+portal:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 96Mi
+    limits:
+      memory: 192Mi
+
+core:
+  resources:
+    requests:
+      cpu: 75m
+      memory: 192Mi
+    limits:
+      memory: 384Mi
+
+jobservice:
+  resources:
+    requests:
+      cpu: 25m
+      memory: 192Mi
+    limits:
+      memory: 384Mi
+
+registry:
+  registry:
+    resources:
+      requests:
+        cpu: 75m
+        memory: 192Mi
+      limits:
+        memory: 384Mi
+  controller:
+    resources:
+      requests:
+        cpu: 25m
+        memory: 96Mi
+      limits:
+        memory: 192Mi
+
+trivy:
+  enabled: false
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 768Mi
+
+database:
+  type: external
+  external:
+    host: harbor-database-rw
+    port: "5432"
+    username: harbor
+    coreDatabase: registry
+    existingSecret: harbor-cnpg-app
+    sslmode: disable
+
+redis:
+  internal:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 48Mi
+      limits:
+        memory: 128Mi
+
+exporter:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 48Mi
+    limits:
+      memory: 96Mi

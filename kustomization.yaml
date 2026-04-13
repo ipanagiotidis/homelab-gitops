@@ -31,10 +31,12 @@ resources:
   - apps/flaresolverr/applications/flaresolverr.yaml
   - apps/gitea/applications/gitea-db.yaml
   - apps/gitea/applications/gitea.yaml
+  - apps/harbor/applications/harbor-db.yaml
   - apps/traefik/applications/traefik.yaml
   - apps/cert-manager/applications/cert-manager.yaml
   - apps/kube-prometheus-stack/applications/kube-prometheus-stack.yaml
   - apps/loki/applications/loki.yaml
+  - apps/harbor/applications/harbor.yaml
   - apps/speedtest-tracker/applications/speedtest-tracker.yaml
   #- apps/tempo/applications/tempo.yaml
   - apps/homepage/applications/homepage.yaml

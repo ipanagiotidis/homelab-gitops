@@ -1,0 +1,25 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: harbor-database
+  namespace: harbor
+spec:
+  instances: 1
+
+  storage:
+    size: 8Gi
+    storageClass: truenas-cnpg
+
+  nodeMaintenanceWindow:
+    inProgress: false
+    reusePVC: true
+
+  monitoring:
+    enablePodMonitor: true
+
+  bootstrap:
+    initdb:
+      database: registry
+      owner: harbor
+      secret:
+        name: harbor-cnpg-app
