@@ -19,7 +19,7 @@ controllers:
     containers:
       homepage:
         image:
-          repository: ghcr.io/gethomepage/homepage
+          repository: reg.yiannis.io/proxy-ghcr/gethomepage/homepage
           tag: v1.12.3
           digest: sha256:cc84f2f5eb3c7734353701ccbaa24ed02dacb0d119114e50e4251e2005f3990a
         env:
