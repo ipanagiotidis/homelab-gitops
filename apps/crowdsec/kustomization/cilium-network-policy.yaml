@@ -51,6 +51,7 @@ spec:
   - toFQDNs:
     - matchName: api.crowdsec.net
     - matchName: hub-data.crowdsec.net
+    - matchName: version.crowdsec.net
     - matchName: www.cloudflare.com
     toPorts:
     - ports:
@@ -107,6 +108,7 @@ spec:
   - toFQDNs:
     - matchName: api.crowdsec.net
     - matchName: hub-data.crowdsec.net
+    - matchName: version.crowdsec.net
     - matchName: www.cloudflare.com
     toPorts:
     - ports:
