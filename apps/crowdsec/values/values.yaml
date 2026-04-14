@@ -71,8 +71,8 @@ agent:
       value: "crowdsecurity/traefik LePresidente/jellyfin firix/authentik LePresidente/gitea crowdsecurity/base-http-scenarios crowdsecurity/http-cve"
     - name: DISABLE_ONLINE_API
       value: "false"
-    # - name: DISABLE_PARSERS
-    #   value: "crowdsecurity/whitelists"
+    - name: DISABLE_PARSERS
+      value: "crowdsecurity/whitelists"
 lapi:
   metrics:
     enabled: true
@@ -91,8 +91,8 @@ lapi:
       value: "homelab crowdsec kubernetes"
     - name: DISABLE_ONLINE_API
       value: "false"
-    # - name: DISABLE_PARSERS
-    #   value: "crowdsecurity/whitelists"
+    - name: DISABLE_PARSERS
+      value: "crowdsecurity/whitelists"
     - name: COLLECTIONS
       value: "crowdsecurity/traefik LePresidente/jellyfin firix/authentik LePresidente/gitea crowdsecurity/base-http-scenarios crowdsecurity/http-cve"
   nodeSelector:
