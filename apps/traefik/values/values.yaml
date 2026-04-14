@@ -20,6 +20,7 @@ service:
   annotations: 
     metallb.universe.tf/ip-allocated-from-pool: single-lb-pool
   spec:
+    externalTrafficPolicy: Local
     loadBalancerIP: "192.168.88.7"
 
 tlsStore:
@@ -96,23 +97,7 @@ additionalArguments:
   - "--experimental.plugins.bouncer.version=v1.4.2"
   - "--entrypoints.web.http.middlewares=traefik-redirect-http-https@kubernetescrd,traefik-bouncer@kubernetescrd"
   - "--entrypoints.websecure.http.middlewares=traefik-redirect-http-https@kubernetescrd,traefik-bouncer@kubernetescrd"
-  - "--entrypoints.web.forwardedHeaders.trustedIPs=10.244.2.163/32,10.244.1.226/32,10.244.4.0/32"
-  - "--entrypoints.websecure.forwardedHeaders.trustedIPs=10.244.2.163/32,10.244.1.226/32,10.244.4.0/32"
   - "--providers.kubernetescrd"
-
-# entryPoints:
-#   web:
-#     forwardedHeaders:
-#       trustedIPs:
-#         - 10.244.2.163/32
-#         - 10.244.1.226/32
-#         - 10.244.4.0/32
-#   websecure:
-#     forwardedHeaders:
-#       trustedIPs:
-#         - 10.244.2.163/32
-#         - 10.244.1.226/32
-#         - 10.244.4.0/32
 
 metrics:
   prometheus:
