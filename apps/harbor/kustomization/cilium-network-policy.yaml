@@ -13,6 +13,10 @@ spec:
     - matchLabels:
         k8s:io.kubernetes.pod.namespace: traefik
         app.kubernetes.io/name: traefik
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: core
     toPorts:
     - ports:
       - port: "8080"
@@ -179,6 +183,17 @@ spec:
     toPorts:
     - ports:
       - port: "5000"
+        protocol: TCP
+      - port: "8080"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: portal
+    toPorts:
+    - ports:
+      - port: "80"
         protocol: TCP
       - port: "8080"
         protocol: TCP
