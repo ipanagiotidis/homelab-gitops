@@ -53,6 +53,7 @@ ingress:
   jellyseerr:
     enabled: true
     annotations:
+      traefik.ingress.kubernetes.io/router.middlewares: traefik-authentik@kubernetescrd
       gethomepage.dev/enabled: "true"
       gethomepage.dev/description: Request management
       gethomepage.dev/href: "https://demandeur.yiannis.io"

@@ -53,6 +53,7 @@ ingress:
   prowlarr:
     enabled: true
     annotations:
+      traefik.ingress.kubernetes.io/router.middlewares: traefik-authentik@kubernetescrd
       gethomepage.dev/enabled: "true"
       gethomepage.dev/description: Indexer manager
       gethomepage.dev/href: "https://prw.yiannis.io"

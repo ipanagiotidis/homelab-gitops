@@ -53,6 +53,7 @@ ingress:
   sonarr:
     enabled: true
     annotations:
+      traefik.ingress.kubernetes.io/router.middlewares: traefik-authentik@kubernetescrd
       gethomepage.dev/enabled: "true"
       gethomepage.dev/description: Series management
       gethomepage.dev/href: "https://snr.yiannis.io"
