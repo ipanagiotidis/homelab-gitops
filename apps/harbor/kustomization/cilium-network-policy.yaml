@@ -79,6 +79,10 @@ spec:
         k8s:io.kubernetes.pod.namespace: harbor
         app.kubernetes.io/name: harbor
         app.kubernetes.io/component: registry
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app.kubernetes.io/name: harbor
+        app.kubernetes.io/component: trivy
     toPorts:
     - ports:
       - port: "8080"
