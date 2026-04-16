@@ -27,6 +27,12 @@ spec:
       - port: "443"
         protocol: TCP
   - toCIDR:
+    - 10.96.0.1/32
+    toPorts:
+    - ports:
+      - port: "443"
+        protocol: TCP
+  - toCIDR:
     - 192.168.88.7/32
     toPorts:
     - ports:
