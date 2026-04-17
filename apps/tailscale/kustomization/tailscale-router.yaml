@@ -28,21 +28,25 @@ spec:
                   fieldPath: metadata.uid
             - name: TS_KUBE_SECRET
               value: tailscale-router-state
-            - name: KUBERNETES_SERVICE_HOST
-              value: "192.168.88.121"
-            - name: KUBERNETES_SERVICE_PORT
-              value: "6443"
             - name: TS_AUTHKEY
               valueFrom:
                 secretKeyRef:
                   name: tailscale-auth
                   key: TS_AUTHKEY
+            - name: TS_AUTH_ONCE
+              value: "true"
             - name: TS_USERSPACE
               value: "false"
             - name: TS_HOSTNAME
               value: homelab-k8s-router
+            - name: TS_ROUTES
+              value: 192.168.88.7/32,192.168.88.246/32
             - name: TS_EXTRA_ARGS
-              value: --advertise-routes=192.168.88.7/32,192.168.88.246/32 --advertise-tags=tag:k8s-router --accept-routes=false --accept-dns=false --reset
+              value: --advertise-tags=tag:k8s-router --accept-routes=false --accept-dns=false
+            - name: TS_ENABLE_HEALTH_CHECK
+              value: "true"
+            - name: TS_LOCAL_ADDR_PORT
+              value: ":9002"
             - name: TS_DEBUG_FIREWALL_MODE
               value: nftables
           resources:
@@ -52,3 +56,24 @@ spec:
             capabilities:
               add:
                 - NET_ADMIN
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: 9002
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 24
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 9002
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 9002
+            periodSeconds: 15
+            timeoutSeconds: 2
+            failureThreshold: 3
