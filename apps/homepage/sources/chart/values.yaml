@@ -310,10 +310,6 @@ ingress:
             service:
               identifier: homepage
               port: http
-    tls:
-      - hosts:
-          - home.internal.yiannis.io
-        secretName: traefik-internal-wildcard-tls
 
 persistence:
   base-config:
