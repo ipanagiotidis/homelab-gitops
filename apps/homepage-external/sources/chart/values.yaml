@@ -76,12 +76,44 @@ configMaps:
       docker.yaml: ""
       kubernetes.yaml: ""
       services.yaml: |
+        - Platform:
+          - argocd:
+              description: ArgoCD
+              href: https://argocd.yiannis.io
+              icon: argo-cd.png
+              name: argocd
+          - authentik:
+              description: Authentik
+              href: https://authentik.yiannis.io
+              icon: authentik.png
+              name: authentik
+          - gitea:
+              description: Gitea
+              href: https://gitea.yiannis.io/explore/repos
+              icon: gitea.png
+              name: gitea
         - Monitoring:
+          - grafana:
+              description: Grafana
+              href: https://gfn.yiannis.io
+              icon: grafana.png
+              name: grafana
           - prometheus:
               description: Metrics and targets
               href: https://gfn.yiannis.io
               icon: prometheus.png
               name: prometheus
+          - speedtest:
+              description: WAN speed tracking
+              href: https://speed.yiannis.io
+              icon: mdi-speedometer
+              name: Speedtest
+        - Services:
+          - paperless-ngx:
+              description: Document Management
+              href: https://docs.yiannis.io
+              icon: paperless-ngx.png
+              name: Paperless-ngx
         - Infrastructure:
           - adguard:
               description: Adguard
@@ -93,12 +125,65 @@ configMaps:
               href: https://truenas.yiannis.io
               icon: truenas.png
               name: truenas
+        - Ingress:
+          - traefik:
+              description: Traefik
+              href: https://tf.yiannis.io/dashboard/
+              icon: traefik.png
+              name: traefik
+        - Media:
+          - immich:
+              description: Immich
+              href: https://photos.yiannis.io
+              icon: immich.png
+              name: Immich
+          - jellyfin:
+              description: Jellyfin
+              href: https://jf.yiannis.io
+              icon: jellyfin
+              name: Jellyfin
+          - jellyseerr:
+              description: Request management
+              href: https://demandeur.yiannis.io
+              icon: jellyseerr.png
+              name: Jellyseerr
+          - prowlarr:
+              description: Indexer manager
+              href: https://prw.yiannis.io
+              icon: prowlarr.png
+              name: Prowlarr
+          - qbittorrent:
+              description: QBittorrent
+              href: https://qb.yiannis.io
+              icon: qbittorrent.png
+              name: qbittorrent
+          - radarr:
+              description: Movie management
+              href: https://rdr.yiannis.io
+              icon: radarr.png
+              name: Radarr
+          - sonarr:
+              description: Series management
+              href: https://snr.yiannis.io
+              icon: sonarr.png
+              name: Sonarr
+        - Personal:
+          - engineering-blog:
+              description: Engineering notes and software writing
+              href: https://blog.yiannis.io
+              icon: mdi-post-outline
+              name: Engineering Blog
       settings.yaml: |
         title: Homepage
         headerStyle: boxed
         layout:
+          Platform:
           Monitoring:
+          Services:
           Infrastructure:
+          Ingress:
+          Media:
+          Personal:
       widgets.yaml: ""
 
 service:
