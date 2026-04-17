@@ -46,7 +46,7 @@ spec:
             - name: TS_ENABLE_HEALTH_CHECK
               value: "true"
             - name: TS_LOCAL_ADDR_PORT
-              value: ":9002"
+              value: "0.0.0.0:9002"
             - name: TS_DEBUG_FIREWALL_MODE
               value: nftables
           resources:
