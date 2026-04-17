@@ -23,7 +23,7 @@ controllers:
           tag: v1.12.3
           digest: sha256:cc84f2f5eb3c7734353701ccbaa24ed02dacb0d119114e50e4251e2005f3990a
         env:
-          HOMEPAGE_ALLOWED_HOSTS: home.yiannis.io
+          HOMEPAGE_ALLOWED_HOSTS: home.internal.yiannis.io
           HOMEPAGE_VAR_ARGOCD_READONLY:
             valueFrom:
               secretKeyRef:
@@ -266,7 +266,7 @@ configMaps:
                 key: '{{`{{HOMEPAGE_VAR_TRUENAS}}`}}'
                 version: 2
       settings.yaml: |
-        title: Homepage
+        title: Homepage Internal
         headerStyle: boxed
         layout:
           Platform:
@@ -303,13 +303,17 @@ ingress:
     annotations:
       traefik.ingress.kubernetes.io/router.middlewares: traefik-authentik@kubernetescrd
     hosts:
-      - host: home.yiannis.io
+      - host: home.internal.yiannis.io
         paths:
           - path: /
             pathType: Prefix
             service:
               identifier: homepage
               port: http
+    tls:
+      - hosts:
+          - home.internal.yiannis.io
+        secretName: traefik-internal-wildcard-tls
 
 persistence:
   base-config:
