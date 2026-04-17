@@ -26,6 +26,17 @@ spec:
     - ports:
       - port: "443"
         protocol: TCP
+      - port: "6443"
+        protocol: TCP
+  - toEntities:
+    - host
+    - remote-node
+    toPorts:
+    - ports:
+      - port: "443"
+        protocol: TCP
+      - port: "6443"
+        protocol: TCP
   - toServices:
     - k8sService:
         serviceName: kubernetes
