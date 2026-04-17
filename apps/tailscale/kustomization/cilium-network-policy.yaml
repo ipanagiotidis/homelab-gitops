@@ -26,6 +26,14 @@ spec:
     - ports:
       - port: "443"
         protocol: TCP
+  - toServices:
+    - k8sService:
+        serviceName: kubernetes
+        namespace: default
+    toPorts:
+    - ports:
+      - port: "443"
+        protocol: TCP
   - toCIDR:
     - 10.96.0.1/32
     toPorts:
