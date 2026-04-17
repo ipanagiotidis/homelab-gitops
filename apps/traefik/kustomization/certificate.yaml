@@ -10,5 +10,4 @@ spec:
   dnsNames:
   - "yiannis.io"
   - "*.yiannis.io"
-  - "internal.yiannis.io"
   - "*.internal.yiannis.io"
