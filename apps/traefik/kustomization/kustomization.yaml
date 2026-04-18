@@ -5,6 +5,7 @@ resources:
   - ./bouncer.yaml
   - ./certificate.yaml
   - ./cilium-network-policy.yaml
+  - ./gatewayclass.yaml
   - ./middleware.yaml
   - ./jellyfin-tls.yaml
   - ./forwardauth.yaml

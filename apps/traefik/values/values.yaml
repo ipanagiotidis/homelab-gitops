@@ -12,6 +12,14 @@ providers:
     allowEmptyServices: false
     publishedService:
       enabled: true
+  kubernetesGateway:
+    enabled: true
+
+gateway:
+  enabled: false
+
+gatewayClass:
+  enabled: false
 
 service:
   enabled: true
