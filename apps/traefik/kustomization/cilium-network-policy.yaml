@@ -215,8 +215,8 @@ spec:
     - ports:
       - port: "3000"
         protocol: TCP
-  - toFQDNs:
-    - matchName: plugins.traefik.io
+  - toEntities:
+    - world
     toPorts:
     - ports:
       - port: "443"
