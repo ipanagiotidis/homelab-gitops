@@ -171,7 +171,6 @@ common:
               service:
                 identifier: paperless-ngx
                 port: http
-
   persistence:
     data:
       enabled: true
@@ -225,3 +224,13 @@ common:
         redis:
           redis:
             - path: /tmp
+
+gatewayRoute:
+  private:
+    enabled: true
+    gatewayName: private
+    gatewayNamespace: traefik
+    sectionName: websecure-docs
+    hostname: docs.yiannis.io
+    serviceName: paperless-ngx
+    servicePort: 8000
