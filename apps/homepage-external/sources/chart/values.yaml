@@ -21,7 +21,7 @@ controllers:
           tag: v1.12.3
           digest: sha256:cc84f2f5eb3c7734353701ccbaa24ed02dacb0d119114e50e4251e2005f3990a
         env:
-          HOMEPAGE_ALLOWED_HOSTS: home.yiannis.io
+          HOMEPAGE_ALLOWED_HOSTS: dashboard.yiannis.io
         resources:
           requests:
             cpu: 10m
@@ -199,7 +199,7 @@ ingress:
     enabled: true
     className: traefik
     hosts:
-      - host: home.yiannis.io
+      - host: dashboard.yiannis.io
         paths:
           - path: /
             pathType: Prefix
