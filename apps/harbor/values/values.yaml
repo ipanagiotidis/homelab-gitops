@@ -12,6 +12,9 @@ expose:
 
 externalURL: https://reg.yiannis.io
 
+nginx:
+  replicas: 0
+
 existingSecretAdminPassword: harbor-secrets
 existingSecretSecretKey: harbor-secrets
 
