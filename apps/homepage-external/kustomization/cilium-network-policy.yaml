@@ -23,4 +23,6 @@ spec:
   endpointSelector:
     matchLabels:
       app.kubernetes.io/name: homepage-external
-  egress: []
+  egressDeny:
+  - toEntities:
+    - all
