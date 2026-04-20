@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   # - ./network-policy.yaml
   - ./cilium-network-policy.yaml
+  - ./httproute-private.yaml

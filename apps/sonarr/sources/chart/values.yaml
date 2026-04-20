@@ -51,7 +51,7 @@ service:
 ingress:
   # Configure an Ingress for the main application
   sonarr:
-    enabled: true
+    enabled: false
     annotations:
       traefik.ingress.kubernetes.io/router.middlewares: traefik-authentik@kubernetescrd
       gethomepage.dev/enabled: "true"

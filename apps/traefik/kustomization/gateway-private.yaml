@@ -189,3 +189,107 @@ spec:
         selector:
           matchLabels:
             gateway-access: private
+  - name: web-prw
+    protocol: HTTP
+    port: 8000
+    hostname: prw.yiannis.io
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private
+  - name: websecure-prw
+    protocol: HTTPS
+    port: 8443
+    hostname: prw.yiannis.io
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - group: ""
+        kind: Secret
+        name: traefik-wildcard-tls
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private
+  - name: web-qb
+    protocol: HTTP
+    port: 8000
+    hostname: qb.yiannis.io
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private
+  - name: websecure-qb
+    protocol: HTTPS
+    port: 8443
+    hostname: qb.yiannis.io
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - group: ""
+        kind: Secret
+        name: traefik-wildcard-tls
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private
+  - name: web-rdr
+    protocol: HTTP
+    port: 8000
+    hostname: rdr.yiannis.io
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private
+  - name: websecure-rdr
+    protocol: HTTPS
+    port: 8443
+    hostname: rdr.yiannis.io
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - group: ""
+        kind: Secret
+        name: traefik-wildcard-tls
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private
+  - name: web-snr
+    protocol: HTTP
+    port: 8000
+    hostname: snr.yiannis.io
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private
+  - name: websecure-snr
+    protocol: HTTPS
+    port: 8443
+    hostname: snr.yiannis.io
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - group: ""
+        kind: Secret
+        name: traefik-wildcard-tls
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private

@@ -51,7 +51,7 @@ service:
 ingress:
   # Configure an Ingress for the main application
   qbittorrent:
-    enabled: true
+    enabled: false
     annotations:
       gethomepage.dev/enabled: "true"
       gethomepage.dev/description: QBittorrent

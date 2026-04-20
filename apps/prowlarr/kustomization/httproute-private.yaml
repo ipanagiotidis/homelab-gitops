@@ -1,0 +1,41 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: prowlarr-private
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Indexer manager
+    gethomepage.dev/href: "https://prw.yiannis.io"
+    gethomepage.dev/group: Media
+    gethomepage.dev/icon: prowlarr.png
+    gethomepage.dev/name: Prowlarr
+    gethomepage.dev/pod-selector: ""
+    gethomepage.dev/widget.type: "prowlarr"
+    gethomepage.dev/widget.url: "http://prowlarr.media-video.svc.cluster.local:9696"
+    gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_PROWLARR}}"
+spec:
+  parentRefs:
+  - group: gateway.networking.k8s.io
+    kind: Gateway
+    name: private
+    namespace: traefik
+    sectionName: websecure-prw
+  hostnames:
+  - prw.yiannis.io
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    filters:
+    - type: ExtensionRef
+      extensionRef:
+        group: traefik.io
+        kind: Middleware
+        name: authentik
+    backendRefs:
+    - group: ""
+      kind: Service
+      name: prowlarr
+      port: 9696
+      weight: 1
