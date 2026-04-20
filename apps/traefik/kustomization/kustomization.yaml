@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - ./bouncer.yaml
   - ./certificate.yaml
+  - ./cilium-network-policy-egress-observed.yaml
   - ./cilium-network-policy.yaml
   - ./gateway-public.yaml
   - ./gateway-private.yaml
