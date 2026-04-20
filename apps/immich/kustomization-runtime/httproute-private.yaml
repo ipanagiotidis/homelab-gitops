@@ -12,7 +12,7 @@ metadata:
     gethomepage.dev/pod-selector: ""
     gethomepage.dev/widget.type: "immich"
     gethomepage.dev/widget.url: "http://immich-server.immich.svc.cluster.local:2283"
-    gethomepage.dev/widget.key: '{{`{{HOMEPAGE_VAR_IMMICH}}`}}'
+    gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_IMMICH}}"
     gethomepage.dev/widget.version: "2"
 spec:
   parentRefs:

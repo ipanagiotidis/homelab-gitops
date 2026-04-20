@@ -12,7 +12,7 @@ metadata:
     gethomepage.dev/pod-selector: ""
     gethomepage.dev/widget.type: "jellyseerr"
     gethomepage.dev/widget.url: "http://jellyseerr.media-video.svc.cluster.local:5055"
-    gethomepage.dev/widget.key: '{{`{{HOMEPAGE_VAR_JELLYSEERR}}`}}'
+    gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_JELLYSEERR}}"
 spec:
   parentRefs:
   - group: gateway.networking.k8s.io
