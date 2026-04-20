@@ -111,3 +111,81 @@ spec:
         selector:
           matchLabels:
             gateway-access: private
+  - name: web-docs
+    protocol: HTTP
+    port: 8000
+    hostname: docs.yiannis.io
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private
+  - name: websecure-docs
+    protocol: HTTPS
+    port: 8443
+    hostname: docs.yiannis.io
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - group: ""
+        kind: Secret
+        name: traefik-wildcard-tls
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private
+  - name: web-gfn
+    protocol: HTTP
+    port: 8000
+    hostname: gfn.yiannis.io
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private
+  - name: websecure-gfn
+    protocol: HTTPS
+    port: 8443
+    hostname: gfn.yiannis.io
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - group: ""
+        kind: Secret
+        name: traefik-wildcard-tls
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private
+  - name: web-demandeur
+    protocol: HTTP
+    port: 8000
+    hostname: demandeur.yiannis.io
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private
+  - name: websecure-demandeur
+    protocol: HTTPS
+    port: 8443
+    hostname: demandeur.yiannis.io
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - group: ""
+        kind: Secret
+        name: traefik-wildcard-tls
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private
