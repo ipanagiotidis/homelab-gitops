@@ -33,3 +33,81 @@ spec:
         selector:
           matchLabels:
             gateway-access: private
+  - name: web-gitea
+    protocol: HTTP
+    port: 8000
+    hostname: gitea.yiannis.io
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private
+  - name: websecure-gitea
+    protocol: HTTPS
+    port: 8443
+    hostname: gitea.yiannis.io
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - group: ""
+        kind: Secret
+        name: traefik-wildcard-tls
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private
+  - name: web-photos
+    protocol: HTTP
+    port: 8000
+    hostname: photos.yiannis.io
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private
+  - name: websecure-photos
+    protocol: HTTPS
+    port: 8443
+    hostname: photos.yiannis.io
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - group: ""
+        kind: Secret
+        name: traefik-wildcard-tls
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private
+  - name: web-speed
+    protocol: HTTP
+    port: 8000
+    hostname: speed.yiannis.io
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private
+  - name: websecure-speed
+    protocol: HTTPS
+    port: 8443
+    hostname: speed.yiannis.io
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - group: ""
+        kind: Secret
+        name: traefik-wildcard-tls
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private
