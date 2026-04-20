@@ -4,5 +4,12 @@ metadata:
   name: argocd-server
 spec:
   ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 8080
   - name: https
+    port: 443
     appProtocol: kubernetes.io/h2c
+    protocol: TCP
+    targetPort: 8080
