@@ -47,7 +47,7 @@ server:
                   key: password
   ingress:
     main:
-      enabled: true
+      enabled: false
       ingressClassName: traefik
       annotations:
         gethomepage.dev/enabled: "true"

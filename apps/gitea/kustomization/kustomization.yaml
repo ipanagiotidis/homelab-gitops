@@ -2,8 +2,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
+  - ./namespace.yaml
   - ./external-secret.yaml
   - ./external-secret-postgresql.yaml
+  - ./httproute-private.yaml
   # - ./network-policy.yaml
   - ./cilium-network-policy.yaml
   - ./pvc-shared-storage-nas.yaml

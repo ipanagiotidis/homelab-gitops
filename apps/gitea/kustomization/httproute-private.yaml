@@ -1,0 +1,19 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: gitea-private
+spec:
+  parentRefs:
+  - name: private
+    namespace: traefik
+    sectionName: websecure-gitea
+  hostnames:
+  - gitea.yiannis.io
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: gitea-http
+      port: 3000

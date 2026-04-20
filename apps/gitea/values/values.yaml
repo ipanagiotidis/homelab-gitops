@@ -86,7 +86,7 @@ gitea:
           key: password
 
 ingress:
-  enabled: true
+  enabled: false
   className: traefik
   hosts:
     - host: gitea.yiannis.io

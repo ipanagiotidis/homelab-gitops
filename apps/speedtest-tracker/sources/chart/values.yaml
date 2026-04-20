@@ -104,7 +104,7 @@ service:
 
 ingress:
   speedtest-tracker:
-    enabled: true
+    enabled: false
     ingressClassName: traefik
     annotations:
       traefik.ingress.kubernetes.io/router.middlewares: traefik-authentik@kubernetescrd
