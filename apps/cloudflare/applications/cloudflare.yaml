@@ -10,18 +10,8 @@ spec:
     namespace: cloudflare
     server: https://kubernetes.default.svc
   project: default
-  sources:
-  - chart: cloudflare-tunnel-remote
-    repoURL: https://cloudflare.github.io/helm-charts
-    targetRevision: 0.1.2
-    helm:
-      releaseName: cloudflare
-      valueFiles:
-      - $values/apps/cloudflare/values/values.yaml
-  - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
-    targetRevision: master
-    ref: values
-  - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+  source:
+    repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
     path: apps/cloudflare/kustomization
     targetRevision: master
   # Sync policy
