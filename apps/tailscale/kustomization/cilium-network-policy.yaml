@@ -6,6 +6,13 @@ spec:
   endpointSelector:
     matchLabels:
       app: tailscale-router
+  ingress:
+  - fromEntities:
+    - host
+    toPorts:
+    - ports:
+      - port: "9002"
+        protocol: TCP
   egress:
   - toEndpoints:
     - matchLabels:
