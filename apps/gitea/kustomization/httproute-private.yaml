@@ -2,6 +2,17 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: gitea-private
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Gitea
+    gethomepage.dev/href: "https://gitea.yiannis.io/explore/repos"
+    gethomepage.dev/group: Platform
+    gethomepage.dev/icon: gitea.png
+    gethomepage.dev/name: gitea
+    gethomepage.dev/pod-selector: ""
+    gethomepage.dev/widget.type: "gitea"
+    gethomepage.dev/widget.url: "http://gitea-http.gitea.svc.cluster.local:3000"
+    gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_GITEA}}"
 spec:
   parentRefs:
   - name: private
