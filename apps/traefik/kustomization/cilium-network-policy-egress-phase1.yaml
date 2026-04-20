@@ -1,0 +1,99 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: traefik-egress-phase1
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/instance: traefik-traefik
+      app.kubernetes.io/name: traefik
+  egress:
+  # Traefik still needs DNS for FQDN-based plugin/bootstrap traffic.
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: kube-system
+        k8s-app: kube-dns
+    toPorts:
+    - ports:
+      - port: "53"
+        protocol: UDP
+      - port: "53"
+        protocol: TCP
+      rules:
+        dns:
+        - matchPattern: "*"
+  # Control-plane access required by the Kubernetes providers.
+  - toEntities:
+    - kube-apiserver
+    toPorts:
+    - ports:
+      - port: "443"
+        protocol: TCP
+      - port: "6443"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        namespace: default
+        serviceName: kubernetes
+    toPorts:
+    - ports:
+      - port: "443"
+        protocol: TCP
+  # Plugin/bootstrap traffic observed during Traefik restart.
+  - toFQDNs:
+    - matchName: plugins.traefik.io
+    - matchName: traefik.io
+    toPorts:
+    - ports:
+      - port: "443"
+        protocol: TCP
+  # Explicit middleware/control-path dependencies.
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: authentik
+        app.kubernetes.io/component: server
+        app.kubernetes.io/name: authentik
+    toPorts:
+    - ports:
+      - port: "9000"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: crowdsec
+        k8s-app: crowdsec
+        type: lapi
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+  # Phase 1 compromise:
+  # allow Traefik to reach cluster backends only on the small set of ports
+  # that are currently used by routed services. This is broader than a
+  # service-by-service allowlist, but much less brittle during Gateway/API
+  # migration and still materially tighter than unrestricted egress.
+  - toEntities:
+    - cluster
+    toPorts:
+    - ports:
+      - port: "80"
+        protocol: TCP
+      - port: "3000"
+        protocol: TCP
+      - port: "5055"
+        protocol: TCP
+      - port: "7878"
+        protocol: TCP
+      - port: "8000"
+        protocol: TCP
+      - port: "8080"
+        protocol: TCP
+      - port: "8096"
+        protocol: TCP
+      - port: "8989"
+        protocol: TCP
+      - port: "9000"
+        protocol: TCP
+      - port: "9696"
+        protocol: TCP
+      - port: "2283"
+        protocol: TCP

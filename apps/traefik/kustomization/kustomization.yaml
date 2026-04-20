@@ -5,6 +5,7 @@ resources:
   - ./bouncer.yaml
   - ./certificate.yaml
   - ./cilium-network-policy.yaml
+  - ./cilium-network-policy-egress-phase1.yaml
   - ./gateway-public.yaml
   - ./gateway-private.yaml
   - ./gatewayclass.yaml
