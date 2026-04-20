@@ -1,7 +1,7 @@
 expose:
   type: clusterIP
   tls:
-    enabled: true
+    enabled: false
     certSource: none
   ingress:
     className: traefik
