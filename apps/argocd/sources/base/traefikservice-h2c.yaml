@@ -1,0 +1,13 @@
+apiVersion: traefik.io/v1alpha1
+kind: TraefikService
+metadata:
+  name: argocd-server-h2c
+  namespace: argocd
+spec:
+  weighted:
+    services:
+    - kind: Service
+      name: argocd-server
+      port: 80
+      scheme: h2c
+      weight: 1

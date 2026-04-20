@@ -3,6 +3,8 @@ kind: Kustomization
 
 resources: 
   # - ./network-policy.yaml
+  - ./namespace.yaml
   - ./cilium-network-policy.yaml
   - ./external-secret-database.yaml
   - ./authentik-secret.yaml
+  - ./httproute-private.yaml

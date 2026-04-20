@@ -293,3 +293,81 @@ spec:
         selector:
           matchLabels:
             gateway-access: private
+  - name: web-reg
+    protocol: HTTP
+    port: 8000
+    hostname: reg.yiannis.io
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private
+  - name: websecure-reg
+    protocol: HTTPS
+    port: 8443
+    hostname: reg.yiannis.io
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - group: ""
+        kind: Secret
+        name: traefik-wildcard-tls
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private
+  - name: web-authentik
+    protocol: HTTP
+    port: 8000
+    hostname: authentik.yiannis.io
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private
+  - name: websecure-authentik
+    protocol: HTTPS
+    port: 8443
+    hostname: authentik.yiannis.io
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - group: ""
+        kind: Secret
+        name: traefik-wildcard-tls
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private
+  - name: web-argocd
+    protocol: HTTP
+    port: 8000
+    hostname: argocd.yiannis.io
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private
+  - name: websecure-argocd
+    protocol: HTTPS
+    port: 8443
+    hostname: argocd.yiannis.io
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - group: ""
+        kind: Secret
+        name: traefik-wildcard-tls
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private

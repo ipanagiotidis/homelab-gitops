@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - https://raw.githubusercontent.com/argoproj/argo-cd/v3.3.6/manifests/install.yaml
-  - ingressroute-http.yaml
-  - ingressroute-https.yaml
+  - httproute-http.yaml
+  - httproute-https.yaml
+  - traefikservice-h2c.yaml
   - client-secret.yaml
