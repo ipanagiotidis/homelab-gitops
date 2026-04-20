@@ -65,18 +65,21 @@ spec:
     - ports:
       - port: "443"
         protocol: TCP
-  - toServices:
-    - k8sService:
-        serviceName: ak-outpost-authentik-embedded-outpost
-        namespace: authentik
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: authentik
+        app.kubernetes.io/name: authentik
+        app.kubernetes.io/component: server
     toPorts:
     - ports:
       - port: "9000"
         protocol: TCP
-  - toServices:
-    - k8sService:
-        serviceName: crowdsec-service
-        namespace: crowdsec
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: crowdsec
+        k8s-app: crowdsec
+        type: lapi
+        version: v1
     toPorts:
     - ports:
       - port: "8080"
