@@ -51,7 +51,7 @@ service:
 ingress:
   # Configure an Ingress for the main application
   jellyfin:
-    enabled: true
+    enabled: false
     annotations:
       traefik.ingress.kubernetes.io/router.middlewares: traefik-jellyfin-forwarded-headers@kubernetescrd
       gethomepage.dev/enabled: "true"

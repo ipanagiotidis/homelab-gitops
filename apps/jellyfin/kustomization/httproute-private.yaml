@@ -1,0 +1,53 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: jellyfin-private
+  namespace: media-video
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Jellyfin
+    gethomepage.dev/href: "https://jf.yiannis.io"
+    gethomepage.dev/group: Media
+    gethomepage.dev/icon: jellyfin
+    gethomepage.dev/name: Jellyfin
+    gethomepage.dev/pod-selector: ""
+    gethomepage.dev/widget.type: "jellyfin"
+    gethomepage.dev/widget.url: "http://jellyfin.media-video.svc.cluster.local:8096"
+    gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_JF}}"
+    gethomepage.dev/enableBlocks: "true"
+    gethomepage.dev/enableNowPlaying: "true"
+    gethomepage.dev/enableUser: "true"
+    gethomepage.dev/showEpisodeNumber: "true"
+    gethomepage.dev/expandOneStreamToTwoRows: "false"
+spec:
+  parentRefs:
+  - group: gateway.networking.k8s.io
+    kind: Gateway
+    name: private
+    namespace: traefik
+    sectionName: websecure-jf
+  hostnames:
+  - jf.yiannis.io
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    filters:
+    - type: RequestHeaderModifier
+      requestHeaderModifier:
+        set:
+        - name: X-Forwarded-Proto
+          value: https
+        - name: X-Forwarded-Port
+          value: "443"
+        - name: X-Forwarded-Host
+          value: jf.yiannis.io
+        - name: X-Forwarded-Server
+          value: traefik
+    backendRefs:
+    - group: ""
+      kind: Service
+      name: jellyfin
+      port: 8096
+      weight: 1
