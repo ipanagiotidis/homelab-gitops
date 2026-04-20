@@ -20,9 +20,9 @@ server:
         main:
           image:
             repository: reg.yiannis.io/proxy-ghcr/immich-app/immich-server
-            # pinned to latest stable release tag: v2.6.3
-            tag: v2.6.3
-            digest: sha256:0cc1f82953d9598eb9e9dd11cbde1f50fe54f9c46c4506b089e8ad7bfc9d1f0c
+            # pinned to latest stable release tag: v2.7.5
+            tag: v2.7.5
+            digest: sha256:c15bff75068effb03f4355997d03dc7e0fc58720c2b54ad6f7f10d1bc57efaa5
           resources:
             requests:
               cpu: 2000m
@@ -76,8 +76,8 @@ machine-learning:
         main:
           image:
             repository: reg.yiannis.io/proxy-ghcr/immich-app/immich-machine-learning
-            tag: v2.6.3
-            digest: sha256:33b17015c3d14f2565e9b8cd36b48a70027b14b5cd20da7fbfff21a370b0309c
+            tag: v2.7.5
+            digest: sha256:a2501141440f10516d329fdfba2c68082e19eb9ba6016c061ac80d23beadf7f3
 
 valkey:
   enabled: true
