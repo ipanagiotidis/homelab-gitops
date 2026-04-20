@@ -9,8 +9,6 @@ spec:
       app.kubernetes.io/name: traefik
   ingress:
   # Keep Traefik ingress open to cluster and world traffic on its serving ports.
-  # Do not tighten Traefik egress yet; it fronts many backends and should be
-  # narrowed later with Hubble-backed flow evidence.
   - fromEntities:
     - world
     - cluster
@@ -36,4 +34,181 @@ spec:
     toPorts:
     - ports:
       - port: "9100"
+        protocol: TCP
+  egress:
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: kube-system
+        k8s-app: kube-dns
+    toPorts:
+    - ports:
+      - port: "53"
+        protocol: UDP
+      - port: "53"
+        protocol: TCP
+      rules:
+        dns:
+        - matchPattern: "*"
+  - toEntities:
+    - kube-apiserver
+    toPorts:
+    - ports:
+      - port: "6443"
+        protocol: TCP
+      - port: "443"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        serviceName: kubernetes
+        namespace: default
+    toPorts:
+    - ports:
+      - port: "443"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        serviceName: ak-outpost-authentik-embedded-outpost
+        namespace: authentik
+    toPorts:
+    - ports:
+      - port: "9000"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        serviceName: crowdsec-service
+        namespace: crowdsec
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        serviceName: argocd-server
+        namespace: argocd
+    toPorts:
+    - ports:
+      - port: "80"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        serviceName: authentik-server
+        namespace: authentik
+    toPorts:
+    - ports:
+      - port: "80"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        serviceName: gitea-http
+        namespace: gitea
+    toPorts:
+    - ports:
+      - port: "3000"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        serviceName: harbor-core
+        namespace: harbor
+    - k8sService:
+        serviceName: harbor-portal
+        namespace: harbor
+    toPorts:
+    - ports:
+      - port: "80"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        serviceName: immich-server
+        namespace: immich
+    toPorts:
+    - ports:
+      - port: "2283"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        serviceName: jellyfin
+        namespace: media-video
+    toPorts:
+    - ports:
+      - port: "8096"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        serviceName: jellyseerr
+        namespace: media-video
+    toPorts:
+    - ports:
+      - port: "5055"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        serviceName: prowlarr
+        namespace: media-video
+    toPorts:
+    - ports:
+      - port: "9696"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        serviceName: qbittorrent
+        namespace: media-video
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        serviceName: radarr
+        namespace: media-video
+    toPorts:
+    - ports:
+      - port: "7878"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        serviceName: sonarr
+        namespace: media-video
+    toPorts:
+    - ports:
+      - port: "8989"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        serviceName: kube-prometheus-stack-grafana
+        namespace: monitoring
+    toPorts:
+    - ports:
+      - port: "80"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        serviceName: paperless-ngx
+        namespace: paperless-ngx
+    toPorts:
+    - ports:
+      - port: "8000"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        serviceName: speedtest-tracker
+        namespace: speedtest
+    toPorts:
+    - ports:
+      - port: "80"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        serviceName: homepage
+        namespace: homepage
+    toPorts:
+    - ports:
+      - port: "3000"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        serviceName: homepage-external
+        namespace: homepage-external
+    toPorts:
+    - ports:
+      - port: "3000"
         protocol: TCP
