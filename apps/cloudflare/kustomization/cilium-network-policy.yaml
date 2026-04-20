@@ -44,7 +44,7 @@ spec:
   - toServices:
     - k8sService:
         namespace: traefik
-        serviceName: traefik
+        serviceName: traefik-public
     toPorts:
     - ports:
       - port: "80"
