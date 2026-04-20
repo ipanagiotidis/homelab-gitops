@@ -1,0 +1,34 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: private
+  labels:
+    exposure: private
+spec:
+  gatewayClassName: traefik
+  listeners:
+  - name: web-home
+    protocol: HTTP
+    port: 8000
+    hostname: home.yiannis.io
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private
+  - name: websecure-home
+    protocol: HTTPS
+    port: 8443
+    hostname: home.yiannis.io
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - kind: Secret
+        name: traefik-wildcard-tls
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private

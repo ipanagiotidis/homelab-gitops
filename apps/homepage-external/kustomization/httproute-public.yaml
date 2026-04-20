@@ -1,0 +1,19 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: homepage-external-public
+spec:
+  parentRefs:
+  - name: public
+    namespace: traefik
+    sectionName: websecure-dashboard
+  hostnames:
+  - dashboard.yiannis.io
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: homepage-external
+      port: 3000
