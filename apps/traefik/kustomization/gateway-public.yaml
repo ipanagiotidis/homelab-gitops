@@ -9,7 +9,7 @@ spec:
   listeners:
   - name: web-dashboard
     protocol: HTTP
-    port: 8001
+    port: 8000
     hostname: dashboard.yiannis.io
     allowedRoutes:
       namespaces:
@@ -19,7 +19,7 @@ spec:
             gateway-access: public
   - name: websecure-dashboard
     protocol: HTTPS
-    port: 8444
+    port: 8443
     hostname: dashboard.yiannis.io
     tls:
       mode: Terminate
@@ -35,7 +35,7 @@ spec:
             gateway-access: public
   - name: web-gitea
     protocol: HTTP
-    port: 8001
+    port: 8000
     hostname: gitea.yiannis.io
     allowedRoutes:
       namespaces:
@@ -45,7 +45,7 @@ spec:
             gateway-access: public
   - name: websecure-gitea
     protocol: HTTPS
-    port: 8444
+    port: 8443
     hostname: gitea.yiannis.io
     tls:
       mode: Terminate
