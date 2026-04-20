@@ -1,0 +1,206 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: traefik-egress-observed
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/instance: traefik-traefik
+      app.kubernetes.io/name: traefik
+  egress:
+  # DNS is not heavily visible in the steady-state Hubble sample because
+  # Traefik caches resolutions, but it is still required for service FQDNs
+  # used by forward-auth and plugins.
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: kube-system
+        k8s-app: kube-dns
+    toPorts:
+    - ports:
+      - port: "53"
+        protocol: UDP
+      - port: "53"
+        protocol: TCP
+      rules:
+        dns:
+        - matchPattern: "*"
+  # Observed repeatedly in Hubble from Traefik while watching Gateway and
+  # Ingress resources.
+  - toEntities:
+    - kube-apiserver
+    toPorts:
+    - ports:
+      - port: "443"
+        protocol: TCP
+      - port: "6443"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        namespace: default
+        serviceName: kubernetes
+    toPorts:
+    - ports:
+      - port: "443"
+        protocol: TCP
+  # Observed only during Traefik startup/plugin loading after a controlled
+  # rollout restart. The destination IP matched the Cloudflare-backed
+  # resolution of plugins.traefik.io / traefik.io at capture time.
+  - toFQDNs:
+    - matchName: plugins.traefik.io
+    - matchName: traefik.io
+    toPorts:
+    - ports:
+      - port: "443"
+        protocol: TCP
+  # Middleware/control-path traffic observed in Hubble.
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: authentik
+        app.kubernetes.io/component: server
+        app.kubernetes.io/name: authentik
+    toPorts:
+    - ports:
+      - port: "9000"
+        protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: crowdsec
+        k8s-app: crowdsec
+        type: lapi
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+  # Steady-state routed backends observed directly in Hubble.
+  - toServices:
+    - k8sService:
+        namespace: homepage-external
+        serviceName: homepage-external
+    toPorts:
+    - ports:
+      - port: "3000"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        namespace: homepage
+        serviceName: homepage
+    toPorts:
+    - ports:
+      - port: "3000"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        namespace: argocd
+        serviceName: argocd-server
+    toPorts:
+    - ports:
+      - port: "80"
+        protocol: TCP
+      - port: "8080"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        namespace: gitea
+        serviceName: gitea-http
+    toPorts:
+    - ports:
+      - port: "3000"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        namespace: harbor
+        serviceName: harbor-portal
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        namespace: harbor
+        serviceName: harbor-core
+    toPorts:
+    - ports:
+      - port: "80"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        namespace: immich
+        serviceName: immich-server
+    toPorts:
+    - ports:
+      - port: "2283"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        namespace: media-video
+        serviceName: jellyfin
+    toPorts:
+    - ports:
+      - port: "8096"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        namespace: media-video
+        serviceName: jellyseerr
+    toPorts:
+    - ports:
+      - port: "5055"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        namespace: media-video
+        serviceName: prowlarr
+    toPorts:
+    - ports:
+      - port: "9696"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        namespace: media-video
+        serviceName: qbittorrent
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        namespace: media-video
+        serviceName: radarr
+    toPorts:
+    - ports:
+      - port: "7878"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        namespace: media-video
+        serviceName: sonarr
+    toPorts:
+    - ports:
+      - port: "8989"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        namespace: monitoring
+        serviceName: kube-prometheus-stack-grafana
+    toPorts:
+    - ports:
+      - port: "80"
+        protocol: TCP
+      - port: "3000"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        namespace: paperless-ngx
+        serviceName: paperless-ngx
+    toPorts:
+    - ports:
+      - port: "8000"
+        protocol: TCP
+  - toServices:
+    - k8sService:
+        namespace: speedtest
+        serviceName: speedtest-tracker
+    toPorts:
+    - ports:
+      - port: "80"
+        protocol: TCP
