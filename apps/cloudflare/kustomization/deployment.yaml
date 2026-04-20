@@ -14,7 +14,7 @@ spec:
         app.kubernetes.io/name: cloudflared
     spec:
       automountServiceAccountToken: false
-      podSecurityContext:
+      securityContext:
         runAsNonRoot: true
         runAsUser: 65532
       affinity:
