@@ -16,7 +16,9 @@ metadata:
     gethomepage.dev/widget.version: "2"
 spec:
   parentRefs:
-  - name: private
+  - group: gateway.networking.k8s.io
+    kind: Gateway
+    name: private
     namespace: traefik
     sectionName: websecure-photos
   hostnames:
@@ -27,5 +29,8 @@ spec:
         type: PathPrefix
         value: /
     backendRefs:
-    - name: immich-server
+    - group: ""
+      kind: Service
+      name: immich-server
       port: 2283
+      weight: 1

@@ -234,6 +234,7 @@ configMaps:
         ingress: true
         mode: cluster
         traefik: true
+        gateway: true
       services.yaml: |
         - Monitoring:
           - prometheus:

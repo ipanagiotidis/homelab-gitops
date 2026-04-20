@@ -15,7 +15,9 @@ metadata:
     gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_GITEA}}"
 spec:
   parentRefs:
-  - name: private
+  - group: gateway.networking.k8s.io
+    kind: Gateway
+    name: private
     namespace: traefik
     sectionName: websecure-gitea
   hostnames:
@@ -26,5 +28,8 @@ spec:
         type: PathPrefix
         value: /
     backendRefs:
-    - name: gitea-http
+    - group: ""
+      kind: Service
+      name: gitea-http
       port: 3000
+      weight: 1

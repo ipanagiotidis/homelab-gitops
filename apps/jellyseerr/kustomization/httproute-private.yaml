@@ -15,7 +15,9 @@ metadata:
     gethomepage.dev/widget.key: '{{`{{HOMEPAGE_VAR_JELLYSEERR}}`}}'
 spec:
   parentRefs:
-  - name: private
+  - group: gateway.networking.k8s.io
+    kind: Gateway
+    name: private
     namespace: traefik
     sectionName: websecure-demandeur
   hostnames:
@@ -32,5 +34,8 @@ spec:
         kind: Middleware
         name: authentik
     backendRefs:
-    - name: jellyseerr
+    - group: ""
+      kind: Service
+      name: jellyseerr
       port: 5055
+      weight: 1

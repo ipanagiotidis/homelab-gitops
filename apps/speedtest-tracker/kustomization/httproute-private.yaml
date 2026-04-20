@@ -16,7 +16,9 @@ metadata:
     gethomepage.dev/widget.key: '{{`{{HOMEPAGE_VAR_SPEEDTEST}}`}}'
 spec:
   parentRefs:
-  - name: private
+  - group: gateway.networking.k8s.io
+    kind: Gateway
+    name: private
     namespace: traefik
     sectionName: websecure-speed
   hostnames:
@@ -33,5 +35,8 @@ spec:
         kind: Middleware
         name: authentik
     backendRefs:
-    - name: speedtest-tracker
+    - group: ""
+      kind: Service
+      name: speedtest-tracker
       port: 80
+      weight: 1
