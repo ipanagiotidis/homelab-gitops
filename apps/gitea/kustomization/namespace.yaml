@@ -3,4 +3,4 @@ kind: Namespace
 metadata:
   name: gitea
   labels:
-    gateway-access: private
+    gateway-access: public
