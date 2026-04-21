@@ -25,6 +25,17 @@ config:
             - bouncer-ou
           agents_allowed_ou: #OU allowed for agents
             - agent-ou
+  parsers:
+    s02-enrich:
+      00-traefik-cloudflare-realip.yaml: |
+        name: local/traefik-cloudflare-realip
+        description: "Use Cloudflare client IP for Traefik logs before whitelists/scenarios"
+        filter: "evt.Parsed.program == 'traefik' && evt.Unmarshaled.traefik != nil && evt.Unmarshaled.traefik[\"request_Cf-Connecting-Ip\"] != nil"
+        statics:
+          - meta: source_ip
+            expression: "evt.Unmarshaled.traefik[\"request_Cf-Connecting-Ip\"]"
+          - parsed: remote_addr
+            expression: "evt.Unmarshaled.traefik[\"request_Cf-Connecting-Ip\"]"
 secrets:
   externalSecret:
     name: crowdsec-lapi-secrets
