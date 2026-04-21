@@ -30,6 +30,14 @@ service:
   spec:
     externalTrafficPolicy: Cluster
     loadBalancerIP: "192.168.88.7"
+  additionalServices:
+    public:
+      type: LoadBalancer
+      annotations:
+        metallb.universe.tf/ip-allocated-from-pool: single-lb-pool
+      spec:
+        externalTrafficPolicy: Cluster
+        loadBalancerIP: "192.168.88.6"
 
 tlsStore:
   default:
@@ -60,6 +68,20 @@ env:
     value: traefik-redirect-http-https@kubernetescrd,traefik-bouncer@kubernetescrd
   - name: TRAEFIK_ENTRYPOINTS_WEBSECURE_HTTP_MIDDLEWARES
     value: traefik-redirect-http-https@kubernetescrd,traefik-bouncer@kubernetescrd
+
+ports:
+  webpublic:
+    port: 8001
+    expose:
+      public: true
+    exposedPort: 80
+    protocol: TCP
+  websecurepublic:
+    port: 8444
+    expose:
+      public: true
+    exposedPort: 443
+    protocol: TCP
 
 logs:
   general:
@@ -105,6 +127,10 @@ additionalArguments:
   - "--experimental.plugins.bouncer.version=v1.4.2"
   - "--entrypoints.web.http.middlewares=traefik-redirect-http-https@kubernetescrd,traefik-bouncer@kubernetescrd"
   - "--entrypoints.websecure.http.middlewares=traefik-redirect-http-https@kubernetescrd,traefik-bouncer@kubernetescrd"
+  - "--entrypoints.webpublic.http.redirections.entrypoint.to=websecurepublic"
+  - "--entrypoints.webpublic.http.redirections.entrypoint.scheme=https"
+  - "--entrypoints.webpublic.http.middlewares=traefik-redirect-http-https@kubernetescrd,traefik-bouncer@kubernetescrd"
+  - "--entrypoints.websecurepublic.http.middlewares=traefik-redirect-http-https@kubernetescrd,traefik-bouncer@kubernetescrd"
   - "--providers.kubernetescrd"
 
 metrics:
