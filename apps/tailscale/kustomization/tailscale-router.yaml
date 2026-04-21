@@ -40,7 +40,7 @@ spec:
             - name: TS_HOSTNAME
               value: homelab-k8s-router
             - name: TS_ROUTES
-              value: 192.168.88.7/32,192.168.88.246/32
+              value: 192.168.88.6/32,192.168.88.7/32,192.168.88.246/32
             - name: TS_EXTRA_ARGS
               value: --advertise-tags=tag:k8s-router --accept-routes=false --accept-dns=false
             - name: TS_ENABLE_HEALTH_CHECK
