@@ -11,7 +11,7 @@ resources:
   - apps/kyverno/applications/kyverno.yaml
   - apps/kyverno/applications/kyverno-policies.yaml
   - apps/reflector/applications/reflector.yaml
-  # - apps/cloudflare/applications/cloudflare.yaml
+  - apps/cloudflare/applications/cloudflare.yaml
   #- apps/falco/applications/falco.yaml
   - apps/external-secrets/applications/external-secrets.yaml
   - apps/vertical-pod-autoscaler/applications/vertical-pod-autoscaler.yaml
