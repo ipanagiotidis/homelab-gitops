@@ -39,12 +39,12 @@ spec:
     - ports:
       - port: "7844"
         protocol: UDP
-  # Assumption: public tunnel applications target Traefik, not individual app
-  # services, so cloudflared only needs narrow cluster egress.
+  # Assumption: public tunnel applications target the public Traefik service,
+  # not private app services or the private Traefik entrypoints.
   - toServices:
     - k8sService:
         namespace: traefik
-        serviceName: traefik
+        serviceName: traefik-public
     toPorts:
     - ports:
       - port: "80"
