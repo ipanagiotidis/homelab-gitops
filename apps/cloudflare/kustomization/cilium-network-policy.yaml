@@ -39,15 +39,18 @@ spec:
     - ports:
       - port: "7844"
         protocol: UDP
-  # Assumption: public tunnel applications target the public Traefik service,
-  # not private app services or the private Traefik entrypoints.
-  - toServices:
-    - k8sService:
-        namespace: traefik
-        serviceName: traefik-public
+  # Public tunnel applications should only reach the Traefik public
+  # entrypoints, not private app services or the private Traefik entrypoints.
+  # We express this against the Traefik pod endpoints directly because that is
+  # the datapath Cilium is enforcing for these flows.
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: traefik
+        app.kubernetes.io/instance: traefik-traefik
+        app.kubernetes.io/name: traefik
     toPorts:
     - ports:
-      - port: "80"
+      - port: "8001"
         protocol: TCP
-      - port: "443"
+      - port: "8444"
         protocol: TCP
