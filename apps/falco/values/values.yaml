@@ -2,6 +2,16 @@ driver:
   kind: modern_ebpf
 tty: true
 
+# Keep phase-1 Falco lightweight enough to fit the smaller nodes while we tune
+# the runtime-only profile. Requests are what blocked scheduling.
+resources:
+  requests:
+    cpu: 50m
+    memory: 256Mi
+  limits:
+    cpu: 1000m
+    memory: 1024Mi
+
 # Phase 1: start with Falco runtime/syscall detection only and keep the signal
 # intentionally narrow. Incubating rules, k8s audit rules, and rule auto-follow
 # created too much churn/noise for a first useful rollout.
