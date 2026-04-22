@@ -49,6 +49,7 @@ grafana:
       oauth_auto_login: true
       login_cookie_name: __Host-grafana_session
     server:
+      domain: gfn.yiannis.io
       root_url: https://gfn.yiannis.io/
       enforce_domain: true
     security:
