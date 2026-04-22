@@ -5,4 +5,6 @@ resources:
   - ./namespace.yaml
   - ./external-secret.yaml
   - ./deployment.yaml
+  - ./service.yaml
+  - ./servicemonitor.yaml
   - ./cilium-network-policy.yaml
