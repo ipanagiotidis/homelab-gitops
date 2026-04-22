@@ -175,7 +175,7 @@ data:
           "id": 15,
           "options": {"legend": {"calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": true}, "tooltip": {"mode": "single", "sort": "none"}},
           "targets": [
-            {"datasource": {"type": "loki", "uid": "$logs"}, "editorMode": "code", "expr": "sum(count_over_time({namespace=\"falco\", pod=~\"falco.*\"} | json | priority=~\"$priority\" [$__interval]))", "queryType": "range", "refId": "A"}
+            {"datasource": {"type": "loki", "uid": "$logs"}, "editorMode": "code", "expr": "sum(count_over_time({namespace=\"falco\", pod=~\"falco.*\"} | json | __error__=\"\" | rule=~\".+\" | priority=~\"$priority\" [$__interval]))", "queryType": "range", "refId": "A"}
           ],
           "title": "Recent Event Volume (Loki)",
           "type": "timeseries"
@@ -186,7 +186,7 @@ data:
           "id": 16,
           "options": {"dedupStrategy": "exact", "enableLogDetails": true, "prettifyLogMessage": false, "showCommonLabels": false, "showLabels": true, "showTime": true, "sortOrder": "Descending", "wrapLogMessage": true},
           "targets": [
-            {"datasource": {"type": "loki", "uid": "$logs"}, "editorMode": "code", "expr": "{namespace=\"falco\", pod=~\"falco.*\"} | json | priority=~\"$priority\" | line_format \"{{.time}} | {{.priority}} | {{.rule}} | host={{.hostname}} | {{.output}}\"", "queryType": "range", "refId": "A"}
+            {"datasource": {"type": "loki", "uid": "$logs"}, "editorMode": "code", "expr": "{namespace=\"falco\", pod=~\"falco.*\"} | json | __error__=\"\" | rule=~\".+\" | priority=~\"$priority\" | line_format \"{{.time}} | {{.priority}} | {{.rule}} | host={{.hostname}} | {{.output}}\"", "queryType": "range", "refId": "A"}
           ],
           "title": "Recent Falco Events",
           "type": "logs"
