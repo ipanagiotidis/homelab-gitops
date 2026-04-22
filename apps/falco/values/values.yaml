@@ -2,56 +2,34 @@ driver:
   kind: modern_ebpf
 tty: true
 
+# Phase 1: start with Falco runtime/syscall detection only and keep the signal
+# intentionally narrow. Incubating rules, k8s audit rules, and rule auto-follow
+# created too much churn/noise for a first useful rollout.
 falcosidekick:
-  enabled: true
-  replicaCount: 1
-  webui:
-    enabled: true
-    replicaCount: 1
-    redis:
-      storageEnabled: false
-    ingress:
-      enabled: true
-      ingressClassName: "traefik"
-      hosts:
-        - host: falcosidekick.yiannis.io
-          paths:
-            - path: /
+  enabled: false
 
 falcoctl:
   artifact:
     install:
       enabled: true
     follow:
-      enabled: true
+      enabled: false
   config:
     artifact:
       install:
-        refs: [falco-rules:latest, falco-incubating-rules:latest, k8saudit-rules:latest]
+        refs: [falco-rules:5]
       follow:
-        refs: [falco-rules:latest, falco-incubating-rules:latest, k8saudit-rules:latest]
+        refs: [falco-rules:5]
 
-services:
-  - name: k8saudit-webhook
-    type: ClusterIP
-    ports:
-      - port: 9765
-        targetPort: 9765
-        protocol: TCP
-        name: http
+metrics:
+  enabled: true
+
+serviceMonitor:
+  create: true
 
 falco:
+  priority: warning
+  json_output: true
   rules_files:
     - /etc/falco/falco_rules.yaml
-    - /etc/falco/falco-incubating_rules.yaml
-    - /etc/falco/k8s_audit_rules.yaml
     - /etc/falco/rules.d
-  plugins:
-    - name: k8saudit
-      library_path: libk8saudit.so
-      init_config: ""
-      open_params: "http://:9765/k8s-audit"
-    - name: json
-      library_path: libjson.so
-      init_config: ""
-  load_plugins: [k8saudit, json]
