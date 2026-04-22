@@ -1,3 +1,8 @@
+image:
+  registry: reg.yiannis.io
+  repository: proxy-dockerhub/falcosecurity/falco
+  tag: 0.43.1@sha256:b4166a61f41e2fa638c041cac881d8bb32c284e3aaf282fdfed80f15f6eb55e3
+
 driver:
   kind: modern_ebpf
 tty: true
@@ -19,6 +24,10 @@ falcosidekick:
   enabled: false
 
 falcoctl:
+  image:
+    registry: reg.yiannis.io
+    repository: proxy-dockerhub/falcosecurity/falcoctl
+    tag: 0.12.2@sha256:0d3bddce03a26365b86e6ff1aa5c51965d2e16569e8cf8b3e37a3d3ef186dc9b
   artifact:
     install:
       enabled: true
