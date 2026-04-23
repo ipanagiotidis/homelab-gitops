@@ -7,6 +7,10 @@ driver:
   kind: modern_ebpf
 tty: true
 
+collectors:
+  containerEngine:
+    pluginRef: reg.yiannis.io/proxy-ghcr/falcosecurity/plugins/plugin/container:0.6.3
+
 # Keep phase-1 Falco lightweight enough to fit the smaller nodes while we tune
 # the runtime-only profile. Requests are what blocked scheduling.
 resources:
@@ -60,8 +64,10 @@ falcoctl:
     follow:
       enabled: false
   config:
+    indexes: []
     artifact:
       install:
+        resolveDeps: false
         refs:
           - "reg.yiannis.io/proxy-ghcr/falcosecurity/rules/falco-rules:5"
           - "reg.yiannis.io/proxy-ghcr/falcosecurity/plugins/plugin/container:0.6.3"
