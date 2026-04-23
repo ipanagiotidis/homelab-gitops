@@ -13,6 +13,13 @@ spec:
     - ports:
       - port: "2000"
         protocol: TCP
+  - fromEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: monitoring
+    toPorts:
+    - ports:
+      - port: "2000"
+        protocol: TCP
   egress:
   - toEndpoints:
     - matchLabels:

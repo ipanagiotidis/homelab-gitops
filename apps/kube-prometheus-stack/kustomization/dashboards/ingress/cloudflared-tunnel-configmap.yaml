@@ -160,11 +160,11 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "sum(cloudflared_tunnel_active_streams)",
+              "expr": "sum(cloudflared_tunnel_concurrent_requests_per_tunnel)",
               "refId": "A"
             }
           ],
-          "title": "Active Streams",
+          "title": "Concurrent Requests",
           "type": "stat"
         },
         {
@@ -598,8 +598,8 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "sum(increase(cloudflared_tunnel_tunnel_authenticate_success[24h]))",
-              "legendFormat": "auth success (24h)",
+              "expr": "sum(increase(cloudflared_tunnel_tunnel_register_fail[24h]))",
+              "legendFormat": "register fail (24h)",
               "refId": "B"
             }
           ],
@@ -642,12 +642,21 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "sum(cloudflared_tunnel_timer_retries)",
-              "legendFormat": "heartbeat retries",
+              "expr": "sum(rate(cloudflared_rpc_client_failures[5m]))",
+              "legendFormat": "rpc failures/s",
               "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$datasource"
+              },
+              "expr": "sum(rate(cloudflared_proxy_connect_streams_errors[5m]))",
+              "legendFormat": "connect stream errors/s",
+              "refId": "B"
             }
           ],
-          "title": "Heartbeat Retries",
+          "title": "Tunnel Error Signals",
           "type": "timeseries"
         }
       ],
