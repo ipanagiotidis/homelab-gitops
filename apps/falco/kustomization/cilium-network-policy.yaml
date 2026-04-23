@@ -48,6 +48,7 @@ spec:
         - matchName: ghcr.io
         - matchName: falcosecurity.github.io
         - matchName: pkg-containers.githubusercontent.com
+        - matchName: tuf-repo-cdn.sigstore.dev
       toPorts:
         - ports:
             - port: "443"
