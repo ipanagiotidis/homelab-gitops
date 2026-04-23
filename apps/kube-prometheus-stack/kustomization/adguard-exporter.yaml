@@ -5,15 +5,18 @@ metadata:
   namespace: monitoring
   labels:
     app.kubernetes.io/name: adguard-exporter
+    app.kubernetes.io/instance: adguard-exporter
 spec:
   replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: adguard-exporter
+      app.kubernetes.io/instance: adguard-exporter
   template:
     metadata:
       labels:
         app.kubernetes.io/name: adguard-exporter
+        app.kubernetes.io/instance: adguard-exporter
     spec:
       containers:
         - name: adguard-exporter
@@ -74,9 +77,11 @@ metadata:
   namespace: monitoring
   labels:
     app.kubernetes.io/name: adguard-exporter
+    app.kubernetes.io/instance: adguard-exporter
 spec:
   selector:
     app.kubernetes.io/name: adguard-exporter
+    app.kubernetes.io/instance: adguard-exporter
   ports:
     - name: metrics
       port: 9618
@@ -89,10 +94,12 @@ metadata:
   namespace: monitoring
   labels:
     app.kubernetes.io/name: adguard-exporter
+    app.kubernetes.io/instance: adguard-exporter
 spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: adguard-exporter
+      app.kubernetes.io/instance: adguard-exporter
   namespaceSelector:
     matchNames:
       - monitoring
