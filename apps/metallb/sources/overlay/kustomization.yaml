@@ -12,3 +12,12 @@ images:
 - name: quay.io/metallb/speaker
   newName: reg.yiannis.io/proxy-quay/metallb/speaker
   digest: sha256:c6a5b25b2e1fba610a57b2db4bb8141d7c133569d561a8cc29e38ca5113efbc4
+
+patches:
+- patch: |-
+    apiVersion: v1
+    kind: Namespace
+    metadata:
+      name: metallb-system
+      labels:
+        security.yiannis.io/require-harbor: "true"
