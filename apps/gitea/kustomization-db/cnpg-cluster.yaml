@@ -6,6 +6,8 @@ metadata:
 spec:
   instances: 1
 
+  imageName: reg.yiannis.io/proxy-ghcr/cloudnative-pg/postgresql:18.1-system-trixie@sha256:51bc94428be3df3e234447278e33803544a93d27a57a4b6af737f218d6472d12
+
   storage:
     size: 10Gi
     storageClass: truenas-cnpg
