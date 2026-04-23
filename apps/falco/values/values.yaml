@@ -23,6 +23,22 @@ resources:
 falcosidekick:
   enabled: false
 
+customRules:
+  local-platform-tuning.yaml: |-
+    # First-pass noise reduction: keep the default Falco rule, but carve out the
+    # very repetitive Talos/Cilium CNI runtime binaries that are not actionable
+    # for this homelab. The rest of the rule still fires unchanged.
+    - macro: local_platform_runtime_cni_exec
+      condition: >
+        container.id=runtime
+        and proc.pname=containerd
+        and proc.exepath in (/opt/cni/bin/loopback, /opt/cni/bin/cilium-cni)
+
+    - rule: Drop and execute new binary in container
+      condition: and not local_platform_runtime_cni_exec
+      override:
+        condition: append
+
 falcoctl:
   image:
     registry: reg.yiannis.io
