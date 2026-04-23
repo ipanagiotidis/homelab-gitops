@@ -36,6 +36,9 @@ spec:
     automated:
       prune: true
       selfHeal: true
+    managedNamespaceMetadata:
+      labels:
+        security.yiannis.io/require-harbor: "true"
     syncOptions:
     - Validate=true
     - CreateNamespace=true

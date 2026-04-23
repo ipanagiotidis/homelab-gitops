@@ -46,6 +46,7 @@ spec:
         pod-security.kubernetes.io/enforce: privileged
         pod-security.kubernetes.io/audit: privileged
         pod-security.kubernetes.io/warn: privileged
+        security.yiannis.io/require-harbor: "true"
     syncOptions:     # Sync options which modifies sync behavior
     - Validate=true # disables resource validation (equivalent to 'kubectl apply --validate=true')
     - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.

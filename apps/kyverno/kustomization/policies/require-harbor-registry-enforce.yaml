@@ -1,0 +1,45 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-harbor-registry-enforce
+  annotations:
+    policies.kyverno.io/title: Require Harbor Registry For Selected Namespaces
+    policies.kyverno.io/category: Supply Chain
+    policies.kyverno.io/minversion: 1.6.0
+    policies.kyverno.io/severity: high
+    policies.kyverno.io/subject: Pod
+    policies.kyverno.io/description: >-
+      Enforce reg.yiannis.io-only image pulls for namespaces explicitly labeled
+      with security.yiannis.io/require-harbor=true.
+spec:
+  admission: true
+  validationFailureAction: Enforce
+  background: true
+  emitWarning: false
+  rules:
+  - name: validate-registry-enforce
+    match:
+      any:
+      - resources:
+          kinds:
+          - Pod
+          namespaceSelector:
+            matchExpressions:
+            - key: security.yiannis.io/require-harbor
+              operator: In
+              values:
+              - "true"
+    skipBackgroundRequests: true
+    validate:
+      allowExistingViolations: true
+      message: This namespace is restricted to images pulled from reg.yiannis.io.
+      foreach:
+      - list: request.object.spec.containers
+        pattern:
+          image: reg.yiannis.io/*
+      - list: request.object.spec.initContainers || `[]`
+        pattern:
+          image: reg.yiannis.io/*
+      - list: request.object.spec.ephemeralContainers || `[]`
+        pattern:
+          image: reg.yiannis.io/*

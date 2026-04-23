@@ -3,4 +3,6 @@ kind: Kustomization
 
 resources:
   - disallow-latest-tag.yaml
+  - require-harbor-registry-audit.yaml
+  - require-harbor-registry-enforce.yaml
   - require-labels.yaml

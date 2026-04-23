@@ -4,3 +4,4 @@ metadata:
   name: paperless-ngx
   labels:
     gateway-access: private
+    security.yiannis.io/require-harbor: "true"

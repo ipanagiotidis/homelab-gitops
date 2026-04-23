@@ -4,3 +4,4 @@ metadata:
   name: gitea
   labels:
     gateway-access: public
+    security.yiannis.io/require-harbor: "true"

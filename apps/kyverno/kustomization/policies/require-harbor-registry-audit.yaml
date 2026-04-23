@@ -1,0 +1,46 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-harbor-registry-audit
+  annotations:
+    policies.kyverno.io/title: Require Harbor Registry
+    policies.kyverno.io/category: Supply Chain
+    policies.kyverno.io/minversion: 1.6.0
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/subject: Pod
+    policies.kyverno.io/description: >-
+      Audit application namespaces for images that do not come from reg.yiannis.io.
+      Bootstrap and recovery-critical namespaces are excluded from this global report.
+spec:
+  admission: true
+  validationFailureAction: Audit
+  background: true
+  emitWarning: false
+  rules:
+  - name: validate-registry-audit
+    match:
+      any:
+      - resources:
+          kinds:
+          - Pod
+    exclude:
+      any:
+      - resources:
+          namespaces:
+          - argocd
+          - harbor
+          - kube-system
+    skipBackgroundRequests: true
+    validate:
+      allowExistingViolations: true
+      message: Images must be pulled from reg.yiannis.io unless the namespace is in the approved exception set.
+      foreach:
+      - list: request.object.spec.containers
+        pattern:
+          image: reg.yiannis.io/*
+      - list: request.object.spec.initContainers || `[]`
+        pattern:
+          image: reg.yiannis.io/*
+      - list: request.object.spec.ephemeralContainers || `[]`
+        pattern:
+          image: reg.yiannis.io/*
