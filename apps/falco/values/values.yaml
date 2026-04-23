@@ -34,8 +34,18 @@ customRules:
         and proc.pname=containerd
         and proc.exepath in (/opt/cni/bin/loopback, /opt/cni/bin/cilium-cni)
 
+    # FlareSolverr launches chromedriver from /app as part of its normal
+    # challenge-solving flow. Keep the "new binary in container" rule globally,
+    # but ignore this one expected app-specific runtime pattern.
+    - macro: local_expected_flaresolverr_chromedriver_exec
+      condition: >
+        k8s.ns.name=media-video
+        and container.image.repository=reg.yiannis.io/proxy-dockerhub/flaresolverr/flaresolverr
+        and proc.exepath=/app/chromedriver
+        and proc.pname=python
+
     - rule: Drop and execute new binary in container
-      condition: and not local_platform_runtime_cni_exec
+      condition: and not local_platform_runtime_cni_exec and not local_expected_flaresolverr_chromedriver_exec
       override:
         condition: append
 
@@ -52,9 +62,9 @@ falcoctl:
   config:
     artifact:
       install:
-        refs: [falco-rules:5]
+        refs: ["falco-rules:5"]
       follow:
-        refs: [falco-rules:5]
+        refs: ["falco-rules:5"]
 
 metrics:
   enabled: true
