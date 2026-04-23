@@ -1,0 +1,99 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: csi-nfs-controller
+  namespace: csi-driver-nfs
+spec:
+  endpointSelector:
+    matchLabels:
+      app: csi-nfs-controller
+  ingress:
+    - fromEntities:
+        - host
+      toPorts:
+        - ports:
+            - port: "29652"
+              protocol: TCP
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+            - port: "53"
+              protocol: TCP
+          rules:
+            dns:
+              - matchPattern: "*"
+    - toEntities:
+        - kube-apiserver
+      toPorts:
+        - ports:
+            - port: "6443"
+              protocol: TCP
+    - toCIDRSet:
+        - cidr: 192.168.88.0/24
+      toPorts:
+        - ports:
+            - port: "111"
+              protocol: TCP
+            - port: "111"
+              protocol: UDP
+            - port: "2049"
+              protocol: TCP
+            - port: "2049"
+              protocol: UDP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: csi-nfs-node
+  namespace: csi-driver-nfs
+spec:
+  endpointSelector:
+    matchLabels:
+      app: csi-nfs-node
+  ingress:
+    - fromEntities:
+        - host
+      toPorts:
+        - ports:
+            - port: "19809"
+              protocol: TCP
+            - port: "29653"
+              protocol: TCP
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+            - port: "53"
+              protocol: TCP
+          rules:
+            dns:
+              - matchPattern: "*"
+    - toEntities:
+        - kube-apiserver
+      toPorts:
+        - ports:
+            - port: "6443"
+              protocol: TCP
+    - toCIDRSet:
+        - cidr: 192.168.88.0/24
+      toPorts:
+        - ports:
+            - port: "111"
+              protocol: TCP
+            - port: "111"
+              protocol: UDP
+            - port: "2049"
+              protocol: TCP
+            - port: "2049"
+              protocol: UDP

@@ -23,6 +23,9 @@ spec:
   - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
     targetRevision: master
     ref: values
+  - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+    path: apps/cloudnative-pg/kustomization
+    targetRevision: master
   syncPolicy:
     automated:
       prune: true

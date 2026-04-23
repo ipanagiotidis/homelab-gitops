@@ -1,0 +1,140 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: metallb-controller
+  namespace: metallb-system
+spec:
+  endpointSelector:
+    matchLabels:
+      app: metallb
+      component: controller
+  ingress:
+    - fromEntities:
+        - host
+        - remote-node
+      toPorts:
+        - ports:
+            - port: "7472"
+              protocol: TCP
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: monitoring
+            app.kubernetes.io/name: prometheus
+      toPorts:
+        - ports:
+            - port: "7472"
+              protocol: TCP
+    - fromEntities:
+        - remote-node
+        - kube-apiserver
+      toPorts:
+        - ports:
+            - port: "9443"
+              protocol: TCP
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+            - port: "53"
+              protocol: TCP
+          rules:
+            dns:
+              - matchPattern: "*"
+    - toEntities:
+        - kube-apiserver
+      toPorts:
+        - ports:
+            - port: "6443"
+              protocol: TCP
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: metallb-system
+            app: metallb
+      toPorts:
+        - ports:
+            - port: "7946"
+              protocol: TCP
+            - port: "7946"
+              protocol: UDP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: metallb-speaker
+  namespace: metallb-system
+spec:
+  endpointSelector:
+    matchLabels:
+      app: metallb
+      component: speaker
+  ingress:
+    - fromEntities:
+        - host
+        - remote-node
+      toPorts:
+        - ports:
+            - port: "7472"
+              protocol: TCP
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: monitoring
+            app.kubernetes.io/name: prometheus
+      toPorts:
+        - ports:
+            - port: "7472"
+              protocol: TCP
+    - fromEntities:
+        - remote-node
+      toPorts:
+        - ports:
+            - port: "7946"
+              protocol: TCP
+            - port: "7946"
+              protocol: UDP
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: metallb-system
+            app: metallb
+      toPorts:
+        - ports:
+            - port: "7946"
+              protocol: TCP
+            - port: "7946"
+              protocol: UDP
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+            - port: "53"
+              protocol: TCP
+          rules:
+            dns:
+              - matchPattern: "*"
+    - toEntities:
+        - kube-apiserver
+      toPorts:
+        - ports:
+            - port: "6443"
+              protocol: TCP
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: metallb-system
+            app: metallb
+      toPorts:
+        - ports:
+            - port: "7946"
+              protocol: TCP
+            - port: "7946"
+              protocol: UDP
+    - toCIDRSet:
+        - cidr: 192.168.88.0/24

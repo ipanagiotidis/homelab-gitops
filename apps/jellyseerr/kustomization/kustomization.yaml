@@ -5,5 +5,4 @@ resources:
   - ./namespace.yaml
   - ./authentik-middleware.yaml
   - ./httproute-private.yaml
-  # - ./network-policy.yaml
   - ./cilium-network-policy.yaml

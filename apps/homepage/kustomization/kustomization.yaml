@@ -6,5 +6,4 @@ resources:
   - ./authentik-middleware.yaml
   - ./external-secret.yaml
   - ./httproute-private.yaml
-  # - ./network-policy.yaml
   - ./cilium-network-policy.yaml

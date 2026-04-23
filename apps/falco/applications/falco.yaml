@@ -21,6 +21,9 @@ spec:
   - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
     targetRevision: master
     ref: values
+  - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+    path: apps/falco/kustomization
+    targetRevision: master
   # Start with syscall/runtime detection only. Re-introduce the Talos audit-log
   # pipeline later once the base Falco signal is tuned and useful.
   # - chart: fluent-bit
