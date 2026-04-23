@@ -47,6 +47,7 @@ spec:
     - toFQDNs:
         - matchName: ghcr.io
         - matchName: falcosecurity.github.io
+        - matchName: pkg-containers.githubusercontent.com
       toPorts:
         - ports:
             - port: "443"
