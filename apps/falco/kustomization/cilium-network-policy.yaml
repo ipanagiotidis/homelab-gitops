@@ -45,23 +45,9 @@ spec:
             - port: "6443"
               protocol: TCP
     - toFQDNs:
-        - matchName: reg.yiannis.io
+        - matchName: ghcr.io
+        - matchName: falcosecurity.github.io
       toPorts:
         - ports:
             - port: "443"
-              protocol: TCP
-    - toCIDRSet:
-        - cidr: 192.168.88.7/32
-      toPorts:
-        - ports:
-            - port: "443"
-              protocol: TCP
-    - toEndpoints:
-        - matchLabels:
-            k8s:io.kubernetes.pod.namespace: traefik
-            app.kubernetes.io/name: traefik
-            app.kubernetes.io/instance: traefik-traefik
-      toPorts:
-        - ports:
-            - port: "8443"
               protocol: TCP
