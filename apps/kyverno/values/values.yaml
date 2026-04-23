@@ -15,21 +15,9 @@ config:
         values:
         - kube-system
         - kyverno
-        - cert-manager
-        - crowdsec
-        - external-secrets
-        - metallb-system
-        - traefik
-        - trivy-system
 
   resourceFiltersExcludeNamespaces:
-  - cert-manager
-  - crowdsec
-  - external-secrets
   - kyverno
-  - metallb-system
-  - traefik
-  - trivy-system
 
 features:
   policyReports:
