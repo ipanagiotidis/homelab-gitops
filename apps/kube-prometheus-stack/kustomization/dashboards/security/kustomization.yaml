@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - ./crowdsec-configmap.yaml
   - ./falco-configmap.yaml
+  - ./falco-local-guardrails-configmap.yaml
   - ./falco-triggers-configmap.yaml
   - ./kyverno-configmap.yaml
   - ./trivy-critical-apps-configmap.yaml

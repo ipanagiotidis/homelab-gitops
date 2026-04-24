@@ -77,6 +77,12 @@ customRules:
         or proc.exepath startswith /var/tmp/
         or proc.exepath startswith /dev/shm/
 
+    - macro: local_expected_healthcheck_shell
+      condition: >
+        (k8s.ns.name=authentik and proc.cmdline startswith "bash /lifecycle/ak healthcheck")
+        or (k8s.ns.name=gitea and proc.cmdline startswith "sh -c /scripts/ping_readiness_local.sh")
+        or (k8s.ns.name=gitea and proc.cmdline startswith "sh -c /scripts/ping_liveness_local.sh")
+
     - rule: Local Exec From Suspicious Writable Path
       desc: Detect execution of binaries from /tmp, /var/tmp, or /dev/shm inside containers.
       condition: spawned_process and container and local_exec_from_tmp_or_shm
@@ -118,6 +124,7 @@ customRules:
         and proc.name in (local_shell_binaries)
         and proc.pname exists
         and not proc.pname in (local_shell_binaries)
+        and not local_expected_healthcheck_shell
       output: >
         Shell spawned in restricted namespace (user=%user.name k8s_ns=%k8s.ns.name
         k8s_pod=%k8s.pod.name container=%container.name proc=%proc.name
