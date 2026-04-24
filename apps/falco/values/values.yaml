@@ -57,7 +57,7 @@ customRules:
     # post-exploit activity that is unusual in application containers without
     # enabling whole extra upstream rulesets.
     - list: local_restricted_namespaces
-      items: [authentik, cloudflare, crowdsec, external-secrets, falco, gitea, homepage, homepage-external, monitoring, paperless-ngx, speedtest, tailscale, traefik]
+      items: [authentik, cloudflare, crowdsec, external-secrets, falco, gitea, homepage, homepage-external, media-video, monitoring, paperless-ngx, speedtest, tailscale, traefik]
 
     - list: local_shell_binaries
       items: [sh, ash, bash, dash, zsh]
@@ -82,6 +82,7 @@ customRules:
         (k8s.ns.name=authentik and proc.cmdline startswith "bash /lifecycle/ak healthcheck")
         or (k8s.ns.name=gitea and proc.cmdline startswith "sh -c /scripts/ping_readiness_local.sh")
         or (k8s.ns.name=gitea and proc.cmdline startswith "sh -c /scripts/ping_liveness_local.sh")
+        or (k8s.ns.name=speedtest and proc.cmdline startswith "sh -c /usr/bin/php /app/www/artisan schedule:run -q")
 
     - rule: Local Exec From Suspicious Writable Path
       desc: Detect execution of binaries from /tmp, /var/tmp, or /dev/shm inside containers.
