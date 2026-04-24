@@ -52,6 +52,78 @@ customRules:
       condition: and not local_platform_runtime_cni_exec and not local_expected_flaresolverr_chromedriver_exec
       override:
         condition: append
+  local-runtime-guardrails.yaml: |-
+    # Broader, practical runtime guardrails for this homelab. These focus on
+    # post-exploit activity that is unusual in application containers without
+    # enabling whole extra upstream rulesets.
+    - list: local_restricted_namespaces
+      items: [authentik, cloudflare, crowdsec, external-secrets, falco, gitea, homepage, homepage-external, monitoring, paperless-ngx, speedtest, tailscale, traefik]
+
+    - list: local_shell_binaries
+      items: [sh, ash, bash, dash, zsh]
+
+    - list: local_download_tool_binaries
+      items: [curl, wget, nc, ncat, netcat, socat, ftp, tftp]
+
+    - list: local_package_manager_binaries
+      items: [apt, apt-get, apk, dnf, microdnf, yum, pip, pip3, npm, yarn]
+
+    - macro: local_restricted_ns_container
+      condition: container and k8s.ns.name in (local_restricted_namespaces)
+
+    - macro: local_exec_from_tmp_or_shm
+      condition: >
+        proc.exepath startswith /tmp/
+        or proc.exepath startswith /var/tmp/
+        or proc.exepath startswith /dev/shm/
+
+    - rule: Local Exec From Suspicious Writable Path
+      desc: Detect execution of binaries from /tmp, /var/tmp, or /dev/shm inside containers.
+      condition: spawned_process and container and local_exec_from_tmp_or_shm
+      output: >
+        Executable started from suspicious writable path (user=%user.name k8s_ns=%k8s.ns.name
+        k8s_pod=%k8s.pod.name container=%container.name image=%container.image.repository
+        proc=%proc.name exepath=%proc.exepath cmdline=%proc.cmdline parent=%proc.pname)
+      priority: ERROR
+      tags: [maturity_stable, mitre_execution, container, process]
+
+    - rule: Local Download Tool Executed In Restricted Namespace
+      desc: Detect download and remote-access tooling in namespaces where it is unusual.
+      condition: >
+        spawned_process
+        and local_restricted_ns_container
+        and proc.name in (local_download_tool_binaries)
+      output: >
+        Download or remote-access tool executed in restricted namespace (user=%user.name
+        k8s_ns=%k8s.ns.name k8s_pod=%k8s.pod.name container=%container.name
+        proc=%proc.name exepath=%proc.exepath cmdline=%proc.cmdline parent=%proc.pname)
+      priority: WARNING
+      tags: [maturity_stable, mitre_execution, container, process]
+
+    - rule: Local Package Manager Executed In Container
+      desc: Detect package manager execution inside containers.
+      condition: spawned_process and container and proc.name in (local_package_manager_binaries)
+      output: >
+        Package manager executed in container (user=%user.name k8s_ns=%k8s.ns.name
+        k8s_pod=%k8s.pod.name container=%container.name proc=%proc.name
+        exepath=%proc.exepath cmdline=%proc.cmdline parent=%proc.pname)
+      priority: WARNING
+      tags: [maturity_stable, mitre_execution, container, process]
+
+    - rule: Local Shell Spawned In Restricted Namespace
+      desc: Detect shell execution in namespaces where interactive shell activity is unusual.
+      condition: >
+        spawned_process
+        and local_restricted_ns_container
+        and proc.name in (local_shell_binaries)
+        and proc.pname exists
+        and not proc.pname in (local_shell_binaries)
+      output: >
+        Shell spawned in restricted namespace (user=%user.name k8s_ns=%k8s.ns.name
+        k8s_pod=%k8s.pod.name container=%container.name proc=%proc.name
+        exepath=%proc.exepath cmdline=%proc.cmdline parent=%proc.pname)
+      priority: WARNING
+      tags: [maturity_stable, mitre_execution, container, process]
 
 falcoctl:
   image:
