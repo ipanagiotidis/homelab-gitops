@@ -41,6 +41,7 @@ controllers:
           DISPLAY_TIMEZONE: "Europe/Zurich"
           DB_CONNECTION: sqlite
           SPEEDTEST_SCHEDULE: "17 */4 * * *"
+          SPEEDTEST_SERVERS: "42082,65487,68506,41691,16522"
           PRUNE_RESULTS_OLDER_THAN: "90"
           APP_KEY:
             valueFrom:

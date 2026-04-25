@@ -64,8 +64,14 @@ spec:
     - ports:
       - port: "8989"
         protocol: TCP
-  - toEntities:
-    - world
+  - toFQDNs:
+    - matchName: api.themoviedb.org
+    - matchName: image.tmdb.org
+    - matchName: omdbapi.com
+    - matchName: www.omdbapi.com
+    - matchName: imdb.com
+    - matchName: www.imdb.com
+    - matchName: m.media-amazon.com
     toPorts:
     - ports:
       - port: "80"
