@@ -6,3 +6,4 @@ resources:
   - require-harbor-registry-audit.yaml
   - require-harbor-registry-enforce.yaml
   - require-labels.yaml
+  - require-runtime-hardening-audit.yaml

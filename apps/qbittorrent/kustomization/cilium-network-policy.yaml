@@ -46,6 +46,8 @@ spec:
       rules:
         dns:
         - matchPattern: "*"
+  # qBittorrent is the intentional high-egress exception in media-video because
+  # peer traffic is core to its function.
   - toEntities:
     - world
     toPorts:
