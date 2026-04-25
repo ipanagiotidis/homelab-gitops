@@ -231,9 +231,11 @@ spec:
     - matchName: docker.gitea.com
     - matchName: ghcr.io
     - matchName: lscr.io
+    - matchName: quay.io
     - matchName: reg.kyverno.io
     - matchName: registry-1.docker.io
     - matchName: registry.k8s.io
+    - matchPattern: "*.r2.cloudflarestorage.com"
     toPorts:
     - ports:
       - port: "443"
