@@ -14,6 +14,10 @@ configReloader:
     repository: proxy-quay/prometheus-operator/prometheus-config-reloader
     tag: v0.81.0
     digest: sha256:959d47672fbff2776a04ec62b8afcec89e8c036af84dc5fade50019dab212746
+  resources:
+    requests:
+      cpu: 10m
+      memory: 50Mi
 
 global:
   podSecurityContext:
@@ -31,6 +35,10 @@ alloy:
     runAsGroup: 473
     runAsNonRoot: true
     runAsUser: 473
+  resources:
+    requests:
+      cpu: 25m
+      memory: 256Mi
   configMap:
     create: true
     content: |
@@ -130,10 +138,3 @@ rbac:
 
 serviceAccount:
   create: true
-
-resources:
-  requests:
-    cpu: 100m
-    memory: 256Mi
-  limits:
-    memory: 512Mi

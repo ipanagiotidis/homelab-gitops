@@ -62,6 +62,11 @@ securityContext:
   readOnlyRootFilesystem: true
   allowPrivilegeEscalation: false
 
+resources:
+  requests:
+    cpu: 25m
+    memory: 128Mi
+
 env:
   - name: TRAEFIK_ENTRYPOINTS_WEB_ADDRESS
     value: :80

@@ -29,6 +29,10 @@ server:
       drop:
         - ALL
     runAsNonRoot: true
+  resources:
+    requests:
+      cpu: 75m
+      memory: 896Mi
   ingress:
     # Specify kubernetes ingress controller class name
     ingressClassName: traefik
@@ -103,6 +107,10 @@ worker:
       drop:
         - ALL
     runAsNonRoot: true
+  resources:
+    requests:
+      cpu: 100m
+      memory: 704Mi
   volumes:
     - name: postgres-creds
       secret:

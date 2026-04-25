@@ -83,6 +83,10 @@ grafana:
       - ReadWriteOnce
     finalizers:
       - kubernetes.io/pvc-protection
+  resources:
+    requests:
+      cpu: 50m
+      memory: 384Mi
   sidecar:
     image:
       registry: reg.yiannis.io
