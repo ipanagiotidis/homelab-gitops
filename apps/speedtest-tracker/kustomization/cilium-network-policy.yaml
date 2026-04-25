@@ -48,6 +48,7 @@ spec:
   # External IP check used by the application before running tests.
   - toFQDNs:
     - matchName: icanhazip.com
+    - matchName: cli.speedtest.net
     - matchName: speedtest.net
     - matchName: www.speedtest.net
     toPorts:
