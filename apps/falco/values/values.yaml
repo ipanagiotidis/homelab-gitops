@@ -92,8 +92,10 @@ customRules:
         or (k8s.ns.name=speedtest and proc.cmdline startswith "sh -c /usr/bin/php /app/www/artisan schedule:run -q")
         or (proc.cmdline startswith "sh -c -- /controller/manager wal-archive --log-destination /controller/log/postgres.json")
         or (k8s.ns.name=speedtest and proc.cmdline startswith "sh -c run-parts /etc/periodic/")
+        or (k8s.ns.name=media-video and proc.cmdline startswith "sh -c run-parts /etc/periodic/")
         or (k8s.ns.name=media-video and proc.cmdline icontains "/usr/bin/xkbcomp")
         or (k8s.ns.name=paperless-ngx and proc.cmdline startswith "bash /etc/s6-overlay/s6-rc.d/init-")
+        or (k8s.ns.name=paperless-ngx and proc.cmdline startswith "bash ./run svc-")
 
     - macro: local_expected_package_manager_exec
       condition: >
