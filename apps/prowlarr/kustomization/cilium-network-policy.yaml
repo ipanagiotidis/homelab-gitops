@@ -70,8 +70,10 @@ spec:
     - ports:
       - port: "8989"
         protocol: TCP
-  - toEntities:
-    - world
+  # Observed recent external indexer destinations for this instance.
+  - toFQDNs:
+    - matchName: 1337x.to
+    - matchName: apibay.org
     toPorts:
     - ports:
       - port: "80"
