@@ -83,6 +83,9 @@ customRules:
         or (k8s.ns.name=gitea and proc.cmdline startswith "sh -c /scripts/ping_readiness_local.sh")
         or (k8s.ns.name=gitea and proc.cmdline startswith "sh -c /scripts/ping_liveness_local.sh")
         or (k8s.ns.name=speedtest and proc.cmdline startswith "sh -c /usr/bin/php /app/www/artisan schedule:run -q")
+        or (proc.cmdline startswith "sh -c -- /controller/manager wal-archive --log-destination /controller/log/postgres.json")
+        or (k8s.ns.name=speedtest and proc.cmdline startswith "sh -c run-parts /etc/periodic/")
+        or (k8s.ns.name=media-video and proc.cmdline icontains "/usr/bin/xkbcomp")
 
     - rule: Local Exec From Suspicious Writable Path
       desc: Detect execution of binaries from /tmp, /var/tmp, or /dev/shm inside containers.
