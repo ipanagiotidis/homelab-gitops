@@ -97,8 +97,6 @@ common:
           securityContext:
             allowPrivilegeEscalation: false
             runAsNonRoot: true
-            runAsUser: 1001
-            runAsGroup: 3000
             capabilities:
               drop:
                 - ALL

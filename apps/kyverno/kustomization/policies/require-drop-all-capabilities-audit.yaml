@@ -1,0 +1,81 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-drop-all-capabilities-audit
+  annotations:
+    policies.kyverno.io/title: Require Drop All Capabilities
+    policies.kyverno.io/category: Best Practices
+    policies.kyverno.io/minversion: 1.6.0
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/subject: Pod
+    policies.kyverno.io/description: >-
+      Audit workload containers for an explicit `capabilities.drop: [ALL]`
+      baseline, while excluding the system namespaces and the application
+      workloads we have already proven incompatible with this requirement.
+spec:
+  admission: true
+  validationFailureAction: Audit
+  background: true
+  emitWarning: false
+  rules:
+  - name: require-drop-all-capabilities
+    match:
+      any:
+      - resources:
+          kinds:
+          - Pod
+    exclude:
+      any:
+      - resources:
+          namespaces:
+          - argocd
+          - harbor
+          - kube-system
+          - kyverno
+      - resources:
+          namespaces:
+          - media-video
+          selector:
+            matchLabels:
+              app.kubernetes.io/name: prowlarr
+      - resources:
+          namespaces:
+          - media-video
+          selector:
+            matchLabels:
+              app.kubernetes.io/name: radarr
+      - resources:
+          namespaces:
+          - media-video
+          selector:
+            matchLabels:
+              app.kubernetes.io/name: sonarr
+      - resources:
+          namespaces:
+          - media-video
+          selector:
+            matchLabels:
+              app.kubernetes.io/name: qbittorrent
+      - resources:
+          namespaces:
+          - paperless-ngx
+          selector:
+            matchLabels:
+              app.kubernetes.io/name: paperless-ngx
+      - resources:
+          namespaces:
+          - speedtest
+          selector:
+            matchLabels:
+              app.kubernetes.io/name: speedtest-tracker
+    skipBackgroundRequests: true
+    validate:
+      allowExistingViolations: true
+      message: Workload containers should explicitly drop all Linux capabilities.
+      foreach:
+      - list: request.object.spec.containers
+        pattern:
+          securityContext:
+            capabilities:
+              drop:
+              - ALL
