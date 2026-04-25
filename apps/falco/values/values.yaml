@@ -92,6 +92,10 @@ customRules:
         or (k8s.ns.name=gitea and proc.cmdline startswith "bash /usr/sbinx/init_directory_structure.sh")
         or (k8s.ns.name=gitea and proc.cmdline startswith "bash /usr/sbinx/config_environment.sh")
         or (k8s.ns.name=gitea and proc.cmdline startswith "bash /usr/sbinx/configure_gitea.sh")
+        or (k8s.ns.name=media-video and proc.cmdline startswith "bash /docker-mods")
+        or (k8s.ns.name=media-video and proc.cmdline startswith "bash /etc/s6-overlay/s6-rc.d/init-")
+        or (k8s.ns.name=media-video and proc.cmdline startswith "bash ./run svc-")
+        or (k8s.ns.name=media-video and proc.cmdline startswith "sh -c \"/usr/bin/chromium\" --version")
         or (k8s.ns.name=speedtest and proc.cmdline startswith "sh -c /usr/bin/php /app/www/artisan schedule:run -q")
         or (proc.cmdline startswith "sh -c -- /controller/manager wal-archive --log-destination /controller/log/postgres.json")
         or (k8s.ns.name=speedtest and proc.cmdline startswith "sh -c run-parts /etc/periodic/")
@@ -107,6 +111,15 @@ customRules:
         and container.name=configure-gitea
         and proc.name=nc
         and proc.cmdline startswith "nc -vz -w2 gitea-valkey-cluster-headless.gitea.svc 6379")
+        or (k8s.ns.name=media-video
+        and container.name in (sonarr, radarr, prowlarr)
+        and proc.name=curl
+        and proc.cmdline startswith "curl -sL http://localhost:"
+        and proc.cmdline endswith "/ping")
+        or (k8s.ns.name=media-video
+        and container.name=qbittorrent
+        and proc.name=nc
+        and proc.cmdline=nc -z localhost 8080)
 
     - macro: local_expected_package_manager_exec
       condition: >

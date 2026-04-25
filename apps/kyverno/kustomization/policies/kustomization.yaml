@@ -8,3 +8,4 @@ resources:
   - require-harbor-registry-enforce.yaml
   - require-labels.yaml
   - require-runtime-hardening-audit.yaml
+  - require-runtime-hardening-enforce-selected.yaml
