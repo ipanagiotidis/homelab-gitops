@@ -228,6 +228,7 @@ spec:
         protocol: TCP
   - toFQDNs:
     - matchName: auth.docker.io
+    - matchName: docker.gitea.com
     - matchName: ghcr.io
     - matchName: lscr.io
     - matchName: reg.kyverno.io

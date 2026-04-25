@@ -222,6 +222,7 @@ spec:
         protocol: TCP
   - toFQDNs:
     - matchName: aquasecurity.github.io
+    - matchName: bjw-s-labs.github.io
     - matchName: charts.external-secrets.io
     - matchName: charts.goauthentik.io
     - matchName: charts.jetstack.io

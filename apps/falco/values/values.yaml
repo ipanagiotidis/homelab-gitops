@@ -48,8 +48,15 @@ customRules:
         and proc.exepath=/app/chromedriver
         and proc.pname=python
 
+    - macro: local_expected_cilium_sysctlfix_exec
+      condition: >
+        k8s.ns.name=kube-system
+        and container.image.repository=quay.io/cilium/cilium
+        and container.name=apply-sysctl-overwrites
+        and proc.exepath=/opt/cni/bin/cilium-sysctlfix
+
     - rule: Drop and execute new binary in container
-      condition: and not local_platform_runtime_cni_exec and not local_expected_flaresolverr_chromedriver_exec
+      condition: and not local_platform_runtime_cni_exec and not local_expected_flaresolverr_chromedriver_exec and not local_expected_cilium_sysctlfix_exec
       override:
         condition: append
   local-runtime-guardrails.yaml: |-
@@ -86,6 +93,14 @@ customRules:
         or (proc.cmdline startswith "sh -c -- /controller/manager wal-archive --log-destination /controller/log/postgres.json")
         or (k8s.ns.name=speedtest and proc.cmdline startswith "sh -c run-parts /etc/periodic/")
         or (k8s.ns.name=media-video and proc.cmdline icontains "/usr/bin/xkbcomp")
+        or (k8s.ns.name=paperless-ngx and proc.cmdline startswith "bash /etc/s6-overlay/s6-rc.d/init-")
+
+    - macro: local_expected_package_manager_exec
+      condition: >
+        (k8s.ns.name=media-video
+        and k8s.pod.name startswith "jellyseerr-"
+        and proc.name=npm
+        and proc.cmdline startswith "npm node /usr/local/bin/npm start")
 
     - rule: Local Exec From Suspicious Writable Path
       desc: Detect execution of binaries from /tmp, /var/tmp, or /dev/shm inside containers.
@@ -112,7 +127,11 @@ customRules:
 
     - rule: Local Package Manager Executed In Container
       desc: Detect package manager execution inside containers.
-      condition: spawned_process and container and proc.name in (local_package_manager_binaries)
+      condition: >
+        spawned_process
+        and container
+        and proc.name in (local_package_manager_binaries)
+        and not local_expected_package_manager_exec
       output: >
         Package manager executed in container (user=%user.name k8s_ns=%k8s.ns.name
         k8s_pod=%k8s.pod.name container=%container.name proc=%proc.name
@@ -129,6 +148,7 @@ customRules:
         and proc.pname exists
         and not proc.pname in (local_shell_binaries)
         and not local_expected_healthcheck_shell
+        and not (k8s.ns.name=media-video and k8s.pod.name startswith "jellyseerr-" and proc.cmdline startswith "sh -c NODE_ENV=production node dist/index.js")
       output: >
         Shell spawned in restricted namespace (user=%user.name k8s_ns=%k8s.ns.name
         k8s_pod=%k8s.pod.name container=%container.name proc=%proc.name
