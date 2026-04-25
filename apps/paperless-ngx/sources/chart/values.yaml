@@ -96,7 +96,6 @@ common:
               memory: 2048Mi
           securityContext:
             allowPrivilegeEscalation: false
-            runAsNonRoot: true
             capabilities:
               drop:
                 - ALL

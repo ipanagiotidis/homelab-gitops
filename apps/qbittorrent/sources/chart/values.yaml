@@ -29,7 +29,6 @@ controllers:
           capabilities:
             drop:
               - ALL
-          runAsNonRoot: true
         resources:
           requests:
           #   # Hardware acceleration using an Intel iGPU w/ QuickSync and

@@ -28,7 +28,6 @@ controllers:
           capabilities:
             drop:
               - ALL
-          runAsNonRoot: true
         # -- Configure the resource requests and/or limits for the Pod
         resources:
           requests:

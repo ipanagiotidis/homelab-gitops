@@ -55,7 +55,6 @@ controllers:
             memory: 512Mi
         securityContext:
           allowPrivilegeEscalation: false
-          runAsNonRoot: true
           capabilities:
             drop:
               - ALL
