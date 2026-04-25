@@ -6,7 +6,17 @@ resources:
   - argocd-vpas.yaml
   - authentik-vpas.yaml
   - cert-manager-vpas.yaml
+  - cloudflare-vpas.yaml
+  - crowdsec-vpas.yaml
   - external-secrets-vpas.yaml
+  - gitea-vpas.yaml
   - homepage-vpas.yaml
+  - immich-vpas.yaml
+  - kyverno-vpas.yaml
+  - media-video-vpas.yaml
   - monitoring-vpas.yaml
+  - paperless-ngx-vpas.yaml
+  - reflector-vpas.yaml
+  - speedtest-vpas.yaml
   - traefik-vpas.yaml
+  - trivy-system-vpas.yaml
