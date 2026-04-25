@@ -29,6 +29,8 @@ nodeSelector:
   extraDiskNode: "true" 
 
 serviceAccount:
+  create: true
+  name: gitea
   automountServiceAccountToken: false
 
 podSecurityContext:
