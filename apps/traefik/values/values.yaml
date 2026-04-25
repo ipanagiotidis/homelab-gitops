@@ -77,9 +77,9 @@ env:
   - name: TRAEFIK_ENTRYPOINTS_WEB_HTTP_REDIRECTIONS_ENTRYPOINT_SCHEME
     value: https
   - name: TRAEFIK_ENTRYPOINTS_WEB_HTTP_MIDDLEWARES
-    value: traefik-redirect-http-https@kubernetescrd,traefik-bouncer@kubernetescrd
+    value: traefik-redirect-http-https@kubernetescrd,traefik-bouncer@kubernetescrd,traefik-buffering-unlimited@kubernetescrd
   - name: TRAEFIK_ENTRYPOINTS_WEBSECURE_HTTP_MIDDLEWARES
-    value: traefik-redirect-http-https@kubernetescrd,traefik-bouncer@kubernetescrd
+    value: traefik-redirect-http-https@kubernetescrd,traefik-bouncer@kubernetescrd,traefik-buffering-unlimited@kubernetescrd
 
 ports:
   webpublic:
@@ -137,12 +137,12 @@ experimental:
 additionalArguments:
   - "--experimental.plugins.bouncer.moduleName=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
   - "--experimental.plugins.bouncer.version=v1.4.2"
-  - "--entrypoints.web.http.middlewares=traefik-redirect-http-https@kubernetescrd,traefik-bouncer@kubernetescrd"
-  - "--entrypoints.websecure.http.middlewares=traefik-redirect-http-https@kubernetescrd,traefik-bouncer@kubernetescrd"
+  - "--entrypoints.web.http.middlewares=traefik-redirect-http-https@kubernetescrd,traefik-bouncer@kubernetescrd,traefik-buffering-unlimited@kubernetescrd"
+  - "--entrypoints.websecure.http.middlewares=traefik-redirect-http-https@kubernetescrd,traefik-bouncer@kubernetescrd,traefik-buffering-unlimited@kubernetescrd"
   - "--entrypoints.webpublic.http.redirections.entrypoint.to=websecurepublic"
   - "--entrypoints.webpublic.http.redirections.entrypoint.scheme=https"
-  - "--entrypoints.webpublic.http.middlewares=traefik-redirect-http-https@kubernetescrd,traefik-bouncer@kubernetescrd"
-  - "--entrypoints.websecurepublic.http.middlewares=traefik-redirect-http-https@kubernetescrd,traefik-bouncer@kubernetescrd"
+  - "--entrypoints.webpublic.http.middlewares=traefik-redirect-http-https@kubernetescrd,traefik-bouncer@kubernetescrd,traefik-buffering-unlimited@kubernetescrd"
+  - "--entrypoints.websecurepublic.http.middlewares=traefik-redirect-http-https@kubernetescrd,traefik-bouncer@kubernetescrd,traefik-buffering-unlimited@kubernetescrd"
   - "--providers.kubernetescrd"
 
 metrics:
