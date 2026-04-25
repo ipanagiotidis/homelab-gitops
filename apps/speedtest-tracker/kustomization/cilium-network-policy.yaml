@@ -48,6 +48,12 @@ spec:
   # External IP check used by the application before running tests.
   - toFQDNs:
     - matchName: icanhazip.com
+    - matchName: speedtest.net
+    - matchName: www.speedtest.net
+    toPorts:
+    - ports:
+      - port: "443"
+        protocol: TCP
   # Pinned Swiss Ookla servers from SPEEDTEST_SERVERS.
   - toFQDNs:
     - matchName: speedtest-ls.wingo.ch
