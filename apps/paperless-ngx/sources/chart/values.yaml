@@ -1,3 +1,6 @@
+defaultPodOptions:
+  automountServiceAccountToken: false
+
 common:
   controllers:
     paperless-ngx:
@@ -5,6 +8,8 @@ common:
         securityContext:
           fsGroup: 3000
           fsGroupChangePolicy: OnRootMismatch
+          seccompProfile:
+            type: RuntimeDefault
           supplementalGroups:
             - 3000
       containers:
@@ -118,6 +123,8 @@ common:
         securityContext:
           fsGroup: 999
           fsGroupChangePolicy: OnRootMismatch
+          seccompProfile:
+            type: RuntimeDefault
       containers:
         redis:
           image:
