@@ -45,5 +45,17 @@ spec:
       rules:
         dns:
         - matchPattern: "*"
-  - toEntities:
-    - world
+  # External IP check used by the application before running tests.
+  - toFQDNs:
+    - matchName: icanhazip.com
+  # Pinned Swiss Ookla servers from SPEEDTEST_SERVERS.
+  - toFQDNs:
+    - matchName: speedtest-ls.wingo.ch
+    - matchName: ookla-cr.salt.ch
+    - matchName: speedtest2.infomaniak.com
+    - matchName: speedtest2.vtx.ch
+    - matchName: speedtest-ng.sig-telecom.net
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
