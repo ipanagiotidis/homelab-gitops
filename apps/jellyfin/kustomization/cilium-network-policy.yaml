@@ -43,6 +43,23 @@ spec:
       rules:
         dns:
         - matchPattern: "*"
+  # Narrow external metadata/artwork providers instead of broad internet egress.
+  - toFQDNs:
+    - matchName: api.themoviedb.org
+    - matchName: image.tmdb.org
+    - matchName: raw.github.com
+    - matchName: musicbrainz.org
+    - matchName: omdbapi.com
+    - matchName: www.omdbapi.com
+    - matchName: imdb.com
+    - matchName: www.imdb.com
+    - matchName: m.media-amazon.com
+    toPorts:
+    - ports:
+      - port: "80"
+        protocol: TCP
+      - port: "443"
+        protocol: TCP
   - toCIDRSet:
     - cidr: 192.168.88.7/32
     toPorts:
