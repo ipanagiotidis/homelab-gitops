@@ -25,6 +25,12 @@ controllers:
         # Configure the container-specific securityContext
         securityContext:
           allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+            add:
+              - SETGID
+              - SETUID
         # -- Configure the resource requests and/or limits for the Pod
         resources:
           requests:
