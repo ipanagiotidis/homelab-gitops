@@ -89,6 +89,9 @@ customRules:
         (k8s.ns.name=authentik and proc.cmdline startswith "bash /lifecycle/ak healthcheck")
         or (k8s.ns.name=gitea and proc.cmdline startswith "sh -c /scripts/ping_readiness_local.sh")
         or (k8s.ns.name=gitea and proc.cmdline startswith "sh -c /scripts/ping_liveness_local.sh")
+        or (k8s.ns.name=gitea and proc.cmdline startswith "bash /usr/sbinx/init_directory_structure.sh")
+        or (k8s.ns.name=gitea and proc.cmdline startswith "bash /usr/sbinx/config_environment.sh")
+        or (k8s.ns.name=gitea and proc.cmdline startswith "bash /usr/sbinx/configure_gitea.sh")
         or (k8s.ns.name=speedtest and proc.cmdline startswith "sh -c /usr/bin/php /app/www/artisan schedule:run -q")
         or (proc.cmdline startswith "sh -c -- /controller/manager wal-archive --log-destination /controller/log/postgres.json")
         or (k8s.ns.name=speedtest and proc.cmdline startswith "sh -c run-parts /etc/periodic/")
@@ -96,6 +99,14 @@ customRules:
         or (k8s.ns.name=media-video and proc.cmdline icontains "/usr/bin/xkbcomp")
         or (k8s.ns.name=paperless-ngx and proc.cmdline startswith "bash /etc/s6-overlay/s6-rc.d/init-")
         or (k8s.ns.name=paperless-ngx and proc.cmdline startswith "bash ./run svc-")
+
+    - macro: local_expected_download_tool_exec
+      condition: >
+        (k8s.ns.name=gitea
+        and k8s.pod.name startswith "gitea-"
+        and container.name=configure-gitea
+        and proc.name=nc
+        and proc.cmdline startswith "nc -vz -w2 gitea-valkey-cluster-headless.gitea.svc 6379")
 
     - macro: local_expected_package_manager_exec
       condition: >
@@ -120,6 +131,7 @@ customRules:
         spawned_process
         and local_restricted_ns_container
         and proc.name in (local_download_tool_binaries)
+        and not local_expected_download_tool_exec
       output: >
         Download or remote-access tool executed in restricted namespace (user=%user.name
         k8s_ns=%k8s.ns.name k8s_pod=%k8s.pod.name container=%container.name
