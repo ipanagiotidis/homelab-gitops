@@ -226,12 +226,15 @@ spec:
         protocol: TCP
       - port: "9443"
         protocol: TCP
-  - toEntities:
-    - world
+  - toFQDNs:
+    - matchName: auth.docker.io
+    - matchName: ghcr.io
+    - matchName: lscr.io
+    - matchName: reg.kyverno.io
+    - matchName: registry-1.docker.io
+    - matchName: registry.k8s.io
     toPorts:
     - ports:
-      - port: "80"
-        protocol: TCP
       - port: "443"
         protocol: TCP
 ---

@@ -220,15 +220,28 @@ spec:
     - ports:
       - port: "6379"
         protocol: TCP
-  - toEntities:
-    - world
+  - toFQDNs:
+    - matchName: aquasecurity.github.io
+    - matchName: charts.external-secrets.io
+    - matchName: charts.goauthentik.io
+    - matchName: charts.jetstack.io
+    - matchName: cloudnative-pg.github.io
+    - matchName: crowdsecurity.github.io
+    - matchName: dl.gitea.com
+    - matchName: emberstack.github.io
+    - matchName: falcosecurity.github.io
+    - matchName: firefly-iii.github.io
+    - matchName: github.com
+    - matchName: grafana.github.io
+    - matchName: helm.cilium.io
+    - matchName: helm.goharbor.io
+    - matchName: kyverno.github.io
+    - matchName: prometheus-community.github.io
+    - matchName: raw.githubusercontent.com
+    - matchName: traefik.github.io
     toPorts:
     - ports:
-      - port: "80"
-        protocol: TCP
       - port: "443"
-        protocol: TCP
-      - port: "22"
         protocol: TCP
 ---
 apiVersion: cilium.io/v2
