@@ -28,6 +28,9 @@ persistence:
 nodeSelector: 
   extraDiskNode: "true" 
 
+serviceAccount:
+  automountServiceAccountToken: false
+
 podSecurityContext:
   fsGroup: 1000
   seccompProfile:
