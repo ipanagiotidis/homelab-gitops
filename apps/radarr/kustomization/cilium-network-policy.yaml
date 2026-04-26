@@ -64,6 +64,7 @@ spec:
         protocol: TCP
   - toFQDNs:
     - matchName: radarr.servarr.com
+    - matchName: radarr.video
     - matchName: api.themoviedb.org
     - matchName: image.tmdb.org
     - matchName: omdbapi.com
