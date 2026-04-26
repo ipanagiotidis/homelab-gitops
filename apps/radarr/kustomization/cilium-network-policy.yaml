@@ -63,6 +63,7 @@ spec:
       - port: "8080"
         protocol: TCP
   - toFQDNs:
+    - matchName: radarr.servarr.com
     - matchName: api.themoviedb.org
     - matchName: image.tmdb.org
     - matchName: omdbapi.com
