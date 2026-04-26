@@ -6,9 +6,11 @@ resources:
   - ./certificate.yaml
   - ./cilium-network-policy.yaml
   - ./cilium-network-policy-egress-phase1.yaml
+  - ./dashboard-service.yaml
   - ./gateway-public.yaml
   - ./gateway-private.yaml
   - ./gatewayclass.yaml
+  - ./httproute-dashboard-private.yaml
   - ./middleware.yaml
   - ./jellyfin-tls.yaml
   - ./forwardauth.yaml

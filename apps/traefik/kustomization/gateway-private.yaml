@@ -345,6 +345,32 @@ spec:
         selector:
           matchLabels:
             gateway-access: private
+  - name: web-tf
+    protocol: HTTP
+    port: 8000
+    hostname: tf.yiannis.io
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private
+  - name: websecure-tf
+    protocol: HTTPS
+    port: 8443
+    hostname: tf.yiannis.io
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - group: ""
+        kind: Secret
+        name: traefik-wildcard-tls
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private
   - name: web-argocd
     protocol: HTTP
     port: 8000

@@ -1,9 +1,13 @@
 image:
   registry: docker.io
   repository: library/traefik
-  tag: v3.6.12@sha256:171c9c3565b29f6c133f1c1b43c5d4e5853415198e9e1078c001f8702ff66aec
+  tag: v3.6.14@sha256:e08f2a770aee6b838b4c1be5fe25569a653b1592e4673a240414bc8bc4ad0aaa
 
-versionOverride: v3.6.12
+versionOverride: v3.6.14
+
+api:
+  dashboard: true
+  insecure: true
 
 updateStrategy:
   # -- Customize updateStrategy: RollingUpdate or OnDelete
@@ -107,7 +111,7 @@ logs:
 
 ingressRoute:
   dashboard:
-    enabled: true
+    enabled: false
     matchRule: Host(`tf.yiannis.io`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
     entryPoints: ["websecure"]
     annotations:
