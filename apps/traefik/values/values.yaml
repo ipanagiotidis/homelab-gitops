@@ -71,8 +71,6 @@ resources:
     cpu: 25m
     memory: 192Mi
     ephemeral-storage: 128Mi
-  limits:
-    ephemeral-storage: 512Mi
 
 env:
   - name: TRAEFIK_ENTRYPOINTS_WEB_ADDRESS
