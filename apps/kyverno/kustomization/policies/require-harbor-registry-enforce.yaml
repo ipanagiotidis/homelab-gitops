@@ -29,6 +29,11 @@ spec:
               operator: In
               values:
               - "true"
+    exclude:
+      any:
+      - resources:
+          namespaces:
+          - traefik
     skipBackgroundRequests: true
     validate:
       allowExistingViolations: true
