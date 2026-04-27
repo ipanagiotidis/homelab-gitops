@@ -70,10 +70,21 @@ spec:
     - ports:
       - port: "8989"
         protocol: TCP
-  # Temporary indexer discovery mode: allow broad web egress while new
-  # indexers are added, then narrow this back down with Hubble evidence.
-  - toEntities:
-    - world
+  # Direct indexer/API destinations observed with Hubble after the latest
+  # indexer refresh. 1337x fallback domains are included from its configured
+  # indexer URL list so mirror failover does not require emergency policy work.
+  - toFQDNs:
+    - matchName: 1337x.to
+    - matchName: 1337x.st
+    - matchName: x1337x.ws
+    - matchName: x1337x.eu
+    - matchName: x1337x.cc
+    - matchName: apibay.org
+    - matchName: itorrents.org
+    - matchName: movies-api.accel.li
+    - matchName: nyaa.si
+    - matchName: oldgreektracker.xyz
+    - matchName: rutracker.org
     toPorts:
     - ports:
       - port: "80"
