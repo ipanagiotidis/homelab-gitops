@@ -51,3 +51,24 @@ spec:
         - ports:
             - port: "6443"
               protocol: TCP
+    - toEndpoints:
+        - matchLabels:
+            app.kubernetes.io/managed-by: cloudnative-pg
+            app.kubernetes.io/name: postgresql
+          matchExpressions:
+            - key: k8s:io.kubernetes.pod.namespace
+              operator: In
+              values:
+                - authentik
+                - gitea
+                - harbor
+                - immich
+                - paperless-ngx
+            - key: cnpg.io/podRole
+              operator: In
+              values:
+                - instance
+      toPorts:
+        - ports:
+            - port: "8000"
+              protocol: TCP
