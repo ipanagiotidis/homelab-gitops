@@ -10,7 +10,13 @@ spec:
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
-  name: buffering-unlimited
+  name: public-security-headers
 spec:
-  buffering:
-    maxRequestBodyBytes: 0
+  headers:
+    contentTypeNosniff: true
+    frameDeny: true
+    referrerPolicy: no-referrer
+    stsSeconds: 31536000
+    permissionsPolicy: "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+    customResponseHeaders:
+      X-Robots-Tag: "noindex, nofollow"
