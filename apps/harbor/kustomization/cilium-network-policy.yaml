@@ -231,10 +231,12 @@ spec:
     - matchName: docker.gitea.com
     - matchName: ghcr.io
     - matchName: lscr.io
+    - matchName: production.cloudflare.docker.com
     - matchName: quay.io
     - matchName: reg.kyverno.io
     - matchName: registry-1.docker.io
     - matchName: registry.k8s.io
+    - matchPattern: "*.pkg.dev"
     - matchPattern: "*.r2.cloudflarestorage.com"
     - matchPattern: "*.*.r2.cloudflarestorage.com"
     toPorts:
