@@ -397,3 +397,19 @@ spec:
         selector:
           matchLabels:
             gateway-access: private
+  - name: websecure-argocd-grpc
+    protocol: HTTPS
+    port: 8443
+    hostname: argocd-grpc.yiannis.io
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - group: ""
+        kind: Secret
+        name: traefik-wildcard-tls
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: private

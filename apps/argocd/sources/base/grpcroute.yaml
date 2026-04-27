@@ -9,16 +9,11 @@ spec:
     kind: Gateway
     name: private
     namespace: traefik
-    sectionName: websecure-argocd
+    sectionName: websecure-argocd-grpc
   hostnames:
-  - argocd.yiannis.io
+  - argocd-grpc.yiannis.io
   rules:
-  - matches:
-    - headers:
-      - name: Content-Type
-        type: RegularExpression
-        value: "^application/grpc.*$"
-    backendRefs:
+  - backendRefs:
     - group: ""
       kind: Service
       name: argocd-server
