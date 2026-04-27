@@ -1,6 +1,6 @@
 defaultPodOptions:
   automountServiceAccountToken: true
-  enableServiceLinks: true
+  enableServiceLinks: false
 
 controllers:
   homepage:
