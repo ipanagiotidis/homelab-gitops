@@ -70,10 +70,10 @@ spec:
     - ports:
       - port: "8989"
         protocol: TCP
-  # Observed recent external indexer destinations for this instance.
-  - toFQDNs:
-    - matchName: 1337x.to
-    - matchName: apibay.org
+  # Temporary indexer discovery mode: allow broad web egress while new
+  # indexers are added, then narrow this back down with Hubble evidence.
+  - toEntities:
+    - world
     toPorts:
     - ports:
       - port: "80"
