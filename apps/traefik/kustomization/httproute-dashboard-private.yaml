@@ -1,0 +1,37 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: dashboard-private
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Traefik
+    gethomepage.dev/href: "https://tf.yiannis.io/dashboard/"
+    gethomepage.dev/group: Ingress
+    gethomepage.dev/icon: traefik.png
+    gethomepage.dev/name: traefik
+    gethomepage.dev/pod-selector: ""
+    gethomepage.dev/widget.type: "traefik"
+    gethomepage.dev/widget.url: "https://tf.yiannis.io"
+spec:
+  parentRefs:
+  - group: gateway.networking.k8s.io
+    kind: Gateway
+    name: private
+    namespace: traefik
+    sectionName: websecure-tf
+  hostnames:
+  - tf.yiannis.io
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /api
+    - path:
+        type: PathPrefix
+        value: /dashboard
+    backendRefs:
+    - group: ""
+      kind: Service
+      name: traefik-dashboard-internal
+      port: 8080
+      weight: 1
