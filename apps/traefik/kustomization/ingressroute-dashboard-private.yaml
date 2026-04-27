@@ -15,6 +15,8 @@ metadata:
 spec:
   entryPoints:
   - websecure
+  tls:
+    secretName: traefik-wildcard-tls
   routes:
   - match: Host(`tf.yiannis.io`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
     kind: Rule
