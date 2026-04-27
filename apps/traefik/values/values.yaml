@@ -122,7 +122,7 @@ ingressRoute:
       gethomepage.dev/group: Ingress
       gethomepage.dev/icon: traefik.png
       gethomepage.dev/name: traefik
-      gethomepage.dev/pod-selector: ""
+      gethomepage.dev/pod-selector: "app.kubernetes.io/instance=traefik-traefik,app.kubernetes.io/name=traefik"
       gethomepage.dev/widget.type: "traefik"
       gethomepage.dev/widget.url: "https://tf.yiannis.io"
     # middlewares:
