@@ -65,6 +65,8 @@ spec:
       - port: "8989"
         protocol: TCP
   - toFQDNs:
+    - matchName: 79frdp12pn-dsn.algolia.net
+    - matchName: api.github.com
     - matchName: api.themoviedb.org
     - matchName: image.tmdb.org
     - matchName: omdbapi.com
