@@ -35,9 +35,7 @@ hubble:
       - drop
       - tcp
       - flow
-      - port-distribution
       - icmp
-      - http
     enableOpenMetrics: true
     serviceMonitor:
       enabled: true
