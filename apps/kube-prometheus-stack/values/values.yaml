@@ -85,8 +85,8 @@ grafana:
       - kubernetes.io/pvc-protection
   resources:
     requests:
-      cpu: 50m
-      memory: 384Mi
+      cpu: 75m
+      memory: 512Mi
   sidecar:
     image:
       registry: reg.yiannis.io

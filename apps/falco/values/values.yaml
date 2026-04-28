@@ -96,6 +96,9 @@ customRules:
         or (k8s.ns.name=media-video and proc.cmdline startswith "bash /etc/s6-overlay/s6-rc.d/init-")
         or (k8s.ns.name=media-video and proc.cmdline startswith "bash ./run svc-")
         or (k8s.ns.name=media-video and proc.cmdline startswith "sh -c \"/usr/bin/chromium\" --version")
+        or (k8s.ns.name=speedtest and container.name=fix-config-permissions and proc.cmdline startswith "sh -c mkdir -p /config/")
+        or (k8s.ns.name=speedtest and proc.cmdline startswith "bash /docker-mods")
+        or (k8s.ns.name=speedtest and proc.cmdline startswith "bash /etc/s6-overlay/s6-rc.d/init-")
         or (k8s.ns.name=speedtest and proc.cmdline startswith "sh -c /usr/bin/php /app/www/artisan schedule:run -q")
         or (proc.cmdline startswith "sh -c -- /controller/manager wal-archive --log-destination /controller/log/postgres.json")
         or (k8s.ns.name=speedtest and proc.cmdline startswith "sh -c run-parts /etc/periodic/")
@@ -120,6 +123,11 @@ customRules:
         and container.name=qbittorrent
         and proc.name=nc
         and proc.cmdline="nc -z localhost 8080")
+        or (k8s.ns.name=monitoring
+        and k8s.pod.name startswith "prometheus-kube-prometheus-stack-prometheus-"
+        and container.name=prometheus
+        and proc.name=wget
+        and proc.cmdline startswith "wget -qO- http://127.0.0.1:9090/api/v1/")
 
     - macro: local_expected_package_manager_exec
       condition: >

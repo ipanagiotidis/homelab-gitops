@@ -111,11 +111,10 @@ controllers:
                 key: speedtest-key
         resources:
           requests:
-            cpu: 10m
-            memory: 10Mi
+            cpu: 25m
+            memory: 128Mi
           limits:
-            cpu: 500m
-            memory: 200Mi
+            memory: 512Mi
         securityContext:
           runAsUser: 1000
           runAsGroup: 1000
