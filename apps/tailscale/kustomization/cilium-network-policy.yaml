@@ -106,9 +106,23 @@ spec:
     - ports:
       - port: "443"
         protocol: TCP
+  # Direct Tailscale peer paths use WireGuard over arbitrary UDP ports.
+  # Keep TCP egress narrow, but allow UDP peer candidates so active devices
+  # can upgrade from DERP relay to direct connections when NAT allows it.
   - toEntities:
     - world
     toPorts:
     - ports:
-      - port: "3478"
+      - port: "1"
+        endPort: 65535
+        protocol: UDP
+  - toCIDRSet:
+    - cidr: 10.0.0.0/8
+    - cidr: 100.64.0.0/10
+    - cidr: 172.16.0.0/12
+    - cidr: 192.168.0.0/16
+    toPorts:
+    - ports:
+      - port: "1"
+        endPort: 65535
         protocol: UDP
