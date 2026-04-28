@@ -113,6 +113,8 @@ logs:
     fields:
       headers: 
         defaultmode: drop
+        names:
+          Cf-Connecting-Ip: keep
 
 ingressRoute:
   dashboard:
