@@ -622,6 +622,131 @@ data:
           ],
           "title": "Dashboard Public Traffic",
           "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "$logs"
+          },
+          "description": "Unique Cloudflare client IPs that reached Traefik during the selected time range. Cloudflare-blocked requests never reach this log stream.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 0,
+            "y": 22
+          },
+          "id": 13,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "$logs"
+              },
+              "editorMode": "code",
+              "expr": "count(sum by (source_ip) (count_over_time({namespace=\"traefik\"} | json | label_format source_ip=\"{{.request_Cf_Connecting_Ip}}\" | source_ip=~\".+\" [$__range])))",
+              "queryType": "range",
+              "refId": "A"
+            }
+          ],
+          "title": "Unique External IPs",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "$logs"
+          },
+          "description": "Top Cloudflare client IPs by Traefik request count during the selected time range.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "inspect": false
+              },
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 18,
+            "x": 6,
+            "y": 22
+          },
+          "id": 14,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "$logs"
+              },
+              "editorMode": "code",
+              "expr": "topk(50, sum by (source_ip) (count_over_time({namespace=\"traefik\"} | json | label_format source_ip=\"{{.request_Cf_Connecting_Ip}}\" | source_ip=~\".+\" [$__range])))",
+              "queryType": "range",
+              "refId": "A"
+            }
+          ],
+          "title": "Top External IPs by Requests",
+          "type": "table"
         }
       ],
       "refresh": "30s",
@@ -647,6 +772,24 @@ data:
             "name": "datasource",
             "options": [],
             "query": "prometheus",
+            "refresh": 1,
+            "regex": "",
+            "skipUrlSync": false,
+            "type": "datasource"
+          },
+          {
+            "current": {
+              "selected": true,
+              "text": "Loki",
+              "value": "Loki"
+            },
+            "hide": 0,
+            "includeAll": false,
+            "label": "Loki",
+            "multi": false,
+            "name": "logs",
+            "options": [],
+            "query": "loki",
             "refresh": 1,
             "regex": "",
             "skipUrlSync": false,
