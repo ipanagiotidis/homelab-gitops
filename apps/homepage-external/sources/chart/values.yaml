@@ -128,6 +128,23 @@ configMaps:
               href: https://speed.yiannis.io
               icon: mdi-speedometer
               name: Speedtest
+        - Security:
+          - crowdsec:
+              description: Edge decisions and remediation
+              href: https://app.crowdsec.net/security-engines
+              icon: crowdsec.png
+              name: CrowdSec
+        - Edge:
+          - cloudflared:
+              description: Cloudflare Tunnel
+              href: https://one.dash.cloudflare.com
+              icon: cloudflare-zero-trust.png
+              name: Cloudflared
+          - tailscale-router:
+              description: Tailnet router
+              href: https://login.tailscale.com/admin/machines
+              icon: tailscale.png
+              name: Tailscale Router
         - Services:
           - paperless-ngx:
               description: Document Management
@@ -188,11 +205,11 @@ configMaps:
               icon: sonarr.png
               name: Sonarr
         - Personal:
-          - engineering-blog:
-              description: Engineering notes and software writing
+          - blog:
+              description: Personal blog
               href: https://blog.yiannis.io
               icon: mdi-post-outline
-              name: Engineering Blog
+              name: Blog
       settings.yaml: |
         title: Homepage Public
         headerStyle: clean
@@ -201,6 +218,8 @@ configMaps:
         layout:
           Platform:
           Monitoring:
+          Security:
+          Edge:
           Services:
           Infrastructure:
           Ingress:
