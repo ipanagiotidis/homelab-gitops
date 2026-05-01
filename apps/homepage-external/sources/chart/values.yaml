@@ -14,6 +14,26 @@ controllers:
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile:
           type: RuntimeDefault
+    initContainers:
+      seed-next-pages-cache:
+        image:
+          repository: reg.yiannis.io/proxy-ghcr/gethomepage/homepage
+          tag: v1.12.3
+          digest: sha256:cc84f2f5eb3c7734353701ccbaa24ed02dacb0d119114e50e4251e2005f3990a
+        command:
+          - /bin/sh
+          - -c
+          - |
+            cp -a /app/.next/server/pages/. /work/pages/
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+          runAsNonRoot: true
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
     containers:
       homepage:
         image:
@@ -176,6 +196,7 @@ configMaps:
       settings.yaml: |
         title: Homepage Public
         headerStyle: boxed
+        disableUpdateCheck: true
         layout:
           Platform:
           Monitoring:
@@ -242,3 +263,13 @@ persistence:
     type: emptyDir
     globalMounts:
       - path: /tmp
+
+  next-pages-cache:
+    enabled: true
+    type: emptyDir
+    advancedMounts:
+      homepage-external:
+        seed-next-pages-cache:
+          - path: /work/pages
+        homepage:
+          - path: /app/.next/server/pages
