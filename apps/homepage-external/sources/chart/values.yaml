@@ -195,8 +195,9 @@ configMaps:
               name: Engineering Blog
       settings.yaml: |
         title: Homepage Public
-        headerStyle: boxed
+        headerStyle: clean
         disableUpdateCheck: true
+        hideVersion: true
         layout:
           Platform:
           Monitoring:
