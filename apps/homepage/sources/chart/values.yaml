@@ -109,24 +109,6 @@ controllers:
               secretKeyRef:
                 name: homepage-secrets
                 key: speedtest-key
-          HOMEPAGE_VAR_CLOUDFLARE_ACCOUNT_ID:
-            valueFrom:
-              secretKeyRef:
-                name: homepage-secrets
-                key: cloudflare-account-id
-                optional: true
-          HOMEPAGE_VAR_CLOUDFLARE_TUNNEL_ID:
-            valueFrom:
-              secretKeyRef:
-                name: homepage-secrets
-                key: cloudflare-tunnel-id
-                optional: true
-          HOMEPAGE_VAR_CLOUDFLARE_API_TOKEN:
-            valueFrom:
-              secretKeyRef:
-                name: homepage-secrets
-                key: cloudflare-api-token
-                optional: true
           HOMEPAGE_VAR_TAILSCALE_DEVICE_ID:
             valueFrom:
               secretKeyRef:
@@ -283,24 +265,18 @@ configMaps:
                 type: prometheusmetric
                 url: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
                 metrics:
-                  - label: Public req/s
-                    query: sum(rate(traefik_router_requests_total{router=~".*public-gw.*"}[5m])) or vector(0)
+                  - label: Public req 24h
+                    query: sum(increase(traefik_router_requests_total{router=~".*public-gw.*"}[24h])) or vector(0)
                     format:
                       type: number
                       options:
-                        maximumFractionDigits: 2
-                  - label: Public 5xx/s
-                    query: sum(rate(traefik_router_requests_total{router=~".*public-gw.*",code=~"5.."}[5m])) or vector(0)
+                        maximumFractionDigits: 0
+                  - label: Public 5xx 24h
+                    query: sum(increase(traefik_router_requests_total{router=~".*public-gw.*",code=~"5.."}[24h])) or vector(0)
                     format:
                       type: number
                       options:
-                        maximumFractionDigits: 2
-                  - label: Tunnel errors
-                    query: sum(cloudflared_tunnel_request_errors) or vector(0)
-                    format:
-                      type: number
-                      options:
-                        maximumFractionDigits: 2
+                        maximumFractionDigits: 0
           - security-health:
               description: CrowdSec security signal from Prometheus
               href: https://gfn.yiannis.io/d/crowdsec-overview/crowdsec-overview
@@ -335,15 +311,38 @@ configMaps:
                         unit: second
         - Edge:
           - cloudflared:
-              description: Cloudflare Tunnel edge status
-              href: https://one.dash.cloudflare.com
-              icon: cloudflare-zero-trust.png
+              description: Cloudflare Tunnel metrics from Prometheus
+              href: https://gfn.yiannis.io/d/cloudflared-tunnel/cloudflared-tunnel
+              icon: prometheus.png
               name: Cloudflared
               widget:
-                type: cloudflared
-                accountid: '{{`{{HOMEPAGE_VAR_CLOUDFLARE_ACCOUNT_ID}}`}}'
-                tunnelid: '{{`{{HOMEPAGE_VAR_CLOUDFLARE_TUNNEL_ID}}`}}'
-                key: '{{`{{HOMEPAGE_VAR_CLOUDFLARE_API_TOKEN}}`}}'
+                type: prometheusmetric
+                url: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
+                metrics:
+                  - label: HA conn
+                    query: sum(cloudflared_tunnel_ha_connections) or vector(0)
+                    format:
+                      type: number
+                      options:
+                        maximumFractionDigits: 0
+                  - label: Req 24h
+                    query: sum(increase(cloudflared_tunnel_total_requests[24h])) or vector(0)
+                    format:
+                      type: number
+                      options:
+                        maximumFractionDigits: 0
+                  - label: Errors 24h
+                    query: sum(increase(cloudflared_tunnel_request_errors[24h])) or vector(0)
+                    format:
+                      type: number
+                      options:
+                        maximumFractionDigits: 0
+                  - label: Reg fails 24h
+                    query: sum(increase(cloudflared_tunnel_tunnel_register_fail[24h])) or vector(0)
+                    format:
+                      type: number
+                      options:
+                        maximumFractionDigits: 0
           - tailscale-router:
               description: Tailnet router health
               href: https://login.tailscale.com/admin/machines

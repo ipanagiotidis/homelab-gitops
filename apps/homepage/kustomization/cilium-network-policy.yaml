@@ -185,7 +185,6 @@ spec:
       - port: "443"
         protocol: TCP
   - toFQDNs:
-    - matchName: api.cloudflare.com
     - matchName: api.tailscale.com
     toPorts:
     - ports:
