@@ -257,10 +257,10 @@ configMaps:
                 type: prometheus
                 url: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
           - edge-health:
-              description: Public edge health from Prometheus
+              description: Public Gateway health from Traefik metrics
               href: https://gfn.yiannis.io/d/edge-overview/edge-overview
               icon: prometheus.png
-              name: Edge Health
+              name: Edge Health from Traefik
               widget:
                 type: prometheusmetric
                 url: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
@@ -273,6 +273,12 @@ configMaps:
                         maximumFractionDigits: 0
                   - label: Public 5xx 24h
                     query: sum(increase(traefik_router_requests_total{router=~".*public-gw.*",code=~"5.."}[24h])) or vector(0)
+                    format:
+                      type: number
+                      options:
+                        maximumFractionDigits: 0
+                  - label: Public 4xx 24h
+                    query: sum(increase(traefik_router_requests_total{router=~".*public-gw.*",code=~"4.."}[24h])) or vector(0)
                     format:
                       type: number
                       options:
