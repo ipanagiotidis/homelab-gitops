@@ -74,6 +74,7 @@ spec:
     - matchName: imdb.com
     - matchName: www.imdb.com
     - matchName: m.media-amazon.com
+    - matchName: raw.githubusercontent.com
     toPorts:
     - ports:
       - port: "80"
