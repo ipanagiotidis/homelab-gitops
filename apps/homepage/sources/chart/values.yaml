@@ -109,18 +109,6 @@ controllers:
               secretKeyRef:
                 name: homepage-secrets
                 key: speedtest-key
-          HOMEPAGE_VAR_TAILSCALE_DEVICE_ID:
-            valueFrom:
-              secretKeyRef:
-                name: homepage-secrets
-                key: tailscale-device-id
-                optional: true
-          HOMEPAGE_VAR_TAILSCALE_API_KEY:
-            valueFrom:
-              secretKeyRef:
-                name: homepage-secrets
-                key: tailscale-api-key
-                optional: true
         resources:
           requests:
             cpu: 25m
@@ -351,13 +339,33 @@ configMaps:
                         maximumFractionDigits: 0
           - tailscale-router:
               description: Tailnet router health
-              href: https://login.tailscale.com/admin/machines
-              icon: tailscale.png
+              href: https://gfn.yiannis.io
+              icon: prometheus.png
               name: Tailscale Router
               widget:
-                type: tailscale
-                deviceid: '{{`{{HOMEPAGE_VAR_TAILSCALE_DEVICE_ID}}`}}'
-                key: '{{`{{HOMEPAGE_VAR_TAILSCALE_API_KEY}}`}}'
+                type: prometheusmetric
+                url: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
+                metrics:
+                  - label: Available
+                    query: sum(kube_deployment_status_replicas_available{namespace="tailscale",deployment="tailscale-router"}) or vector(0)
+                    format:
+                      type: number
+                      options:
+                        maximumFractionDigits: 0
+                  - label: RX/s
+                    query: sum(rate(container_network_receive_bytes_total{namespace="tailscale",pod=~"tailscale-router-.*"}[5m])) or vector(0)
+                    format:
+                      type: number
+                      options:
+                        style: unit
+                        unit: byte
+                  - label: TX/s
+                    query: sum(rate(container_network_transmit_bytes_total{namespace="tailscale",pod=~"tailscale-router-.*"}[5m])) or vector(0)
+                    format:
+                      type: number
+                      options:
+                        style: unit
+                        unit: byte
         - Infrastructure:
           - adguard:
               description: Adguard
