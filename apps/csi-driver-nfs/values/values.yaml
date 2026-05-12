@@ -2,7 +2,7 @@ image:
   baseRepo: reg.yiannis.io/proxy-k8s
   nfs:
     repository: /sig-storage/nfsplugin
-    tag: v4.13.1@sha256:c1ab25922c8ec4d7f1744c272f28a89898bd020152e3942592c022410b544948
+    tag: v4.13.2@sha256:4d36099293d06ede941876e6166573830eac41d6d23cd6f86d21257fb29cdb98
   csiProvisioner:
     repository: /sig-storage/csi-provisioner
     tag: v6.1.0@sha256:e5900dc98b0d02f317ea9572f3824983c47a2fb5d5fe2b160aedf1b99c14c9e4

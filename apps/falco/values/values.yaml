@@ -195,7 +195,7 @@ falcoctl:
   image:
     registry: reg.yiannis.io
     repository: proxy-dockerhub/falcosecurity/falcoctl
-    tag: 0.12.2@sha256:0d3bddce03a26365b86e6ff1aa5c51965d2e16569e8cf8b3e37a3d3ef186dc9b
+    tag: 0.13.0@sha256:0eeb79adc580ae6a5abfdefd7f8f0fed9151fcb545f015c84e8f1d7b2d8a6b02
   artifact:
     install:
       enabled: true

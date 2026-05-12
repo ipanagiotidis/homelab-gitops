@@ -2,7 +2,7 @@
 container_runtime: containerd
 image:
   repository: reg.yiannis.io/proxy-dockerhub/crowdsecurity/crowdsec
-  tag: "v1.7.7@sha256:6ca53ad26196ca59ddd4fa692a586b73d8fcde085046163b9ca2f04887dca563"
+  tag: "v1.7.8@sha256:2f527c9bb8b367120eb08b82890aa912ce96bfa1ada93dda0721700e4b4e0dde"
 tls:
   enabled: true
   agent:
