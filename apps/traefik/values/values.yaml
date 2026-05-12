@@ -115,6 +115,13 @@ logs:
         defaultmode: drop
         names:
           Cf-Connecting-Ip: keep
+          Cf-Ipcountry: keep
+          Cf-Ray: keep
+          User-Agent: keep
+          Referer: keep
+          Accept-Language: keep
+          X-Forwarded-For: keep
+          X-Forwarded-Proto: keep
 
 ingressRoute:
   dashboard:
