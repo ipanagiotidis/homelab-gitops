@@ -228,15 +228,19 @@ spec:
         protocol: TCP
   - toFQDNs:
     - matchName: auth.docker.io
+    - matchName: cdn01.quay.io
     - matchName: docker.gitea.com
     - matchName: ghcr.io
     - matchName: lscr.io
+    - matchName: pkg-containers.githubusercontent.com
     - matchName: production.cloudflare.docker.com
     - matchName: quay.io
     - matchName: reg.kyverno.io
     - matchName: registry-1.docker.io
     - matchName: registry.k8s.io
     - matchPattern: "*.pkg.dev"
+    - matchPattern: "*.quay.io"
+    - matchPattern: "prod-registry-k8s-io-*.s3.dualstack.*.amazonaws.com"
     - matchPattern: "*.r2.cloudflarestorage.com"
     - matchPattern: "*.*.r2.cloudflarestorage.com"
     toPorts:
