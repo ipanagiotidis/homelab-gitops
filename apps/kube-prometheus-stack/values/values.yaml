@@ -72,6 +72,10 @@ grafana:
       api_url: "https://authentik.yiannis.io/application/o/userinfo/"
       # Optionally map user groups to Grafana roles
       role_attribute_path: contains(groups, 'Grafana Admins') && 'Admin' || contains(groups, 'Grafana Editors') && 'Editor' || contains(groups, 'Grafana Viewers') && 'Viewer'
+    plugins:
+      public_key_retrieval_disabled: true
+      preinstall_disabled: true
+      preinstall_auto_update: false
   extraSecretMounts:
     - name: auth-generic-oauth-secret-mount
       secretName: grafana-client
