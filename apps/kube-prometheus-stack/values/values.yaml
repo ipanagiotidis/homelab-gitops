@@ -44,9 +44,12 @@ grafana:
     hosts:
       - gfn.yiannis.io
   grafana.ini:
+    analytics:
+      reporting_enabled: false
+      check_for_updates: false
+      check_for_plugin_updates: false
     auth:
       signout_redirect_url: "https://authentik.yiannis.io/application/o/grafana/end-session/"
-      oauth_auto_login: true
       login_cookie_name: __Host-grafana_session
     server:
       domain: gfn.yiannis.io
@@ -60,6 +63,7 @@ grafana:
     auth.generic_oauth:
       name: authentik
       enabled: true
+      auto_login: true
       client_id: $__file{/etc/secrets/auth_generic_oauth/GRAFANA_CLIENT_ID}
       client_secret: $__file{/etc/secrets/auth_generic_oauth/GRAFANA_CLIENT_SECRET}
       scopes: "openid profile email"
