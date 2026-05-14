@@ -1,10 +1,10 @@
-deploymentMode: SingleBinary
+deploymentMode: Monolithic
 loki:
   image:
     registry: reg.yiannis.io
     repository: proxy-dockerhub/grafana/loki
-    tag: 3.6.10
-    digest: sha256:f59e6aedfee6af2388d69962b178a35a23152573b4bf0937106746deb7146ec7
+    tag: 3.7.2
+    digest: sha256:191d4fdfb7264f16989f0a57f320872620a5a7c2ceeec6229212c4190ec49b86
   auth_enabled: false
   commonConfig:
     replication_factor: 1
@@ -31,6 +31,8 @@ analytics:
   reporting_enabled: false
   usage_stats_url: ""
 gateway:
+  metrics:
+    enabled: false
   image:
     registry: reg.yiannis.io
     repository: proxy-dockerhub/nginxinc/nginx-unprivileged
@@ -53,10 +55,6 @@ singleBinary:
 monitoring:
   serviceMonitor:
     enabled: true
-  selfMonitoring:
-    enabled: false
-    grafanaAgent:
-      installOperator: false
 lokiCanary:
   enabled: false
 test:
