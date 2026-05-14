@@ -5,8 +5,8 @@ controller:
 image:
   registry: reg.yiannis.io
   repository: proxy-dockerhub/grafana/alloy
-  tag: v1.15.1
-  digest: sha256:1f40cf52adda8fab3e058f9347a5d165624ecb9fbc1527769cb744748961940d
+  tag: v1.16.1
+  digest: sha256:51aeb9d829239345070619dad3edd6873186f913c84f45b365b74574fcb38ec0
 
 configReloader:
   image:

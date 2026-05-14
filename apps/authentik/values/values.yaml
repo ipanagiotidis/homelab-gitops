@@ -3,8 +3,8 @@ global:
     extraDiskNode: "true"
   image:
     repository: reg.yiannis.io/proxy-ghcr/goauthentik/server
-    tag: 2026.2.2
-    digest: sha256:40f0df709957c11324420fa387f1135c427f16086f12ca266b2d883d39c71fe3
+    tag: 2026.2.3
+    digest: sha256:7806ae1ae3423624fe90331e8b3dcca0afc155fac890c696dd92ddac6dc3a384
 
 authentik:
   secret_key: "PleaseGenerateA50CharKey"
