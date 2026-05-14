@@ -234,6 +234,7 @@ spec:
     - matchName: lscr.io
     - matchName: pkg-containers.githubusercontent.com
     - matchName: production.cloudflare.docker.com
+    - matchName: production.cloudfront.docker.com
     - matchName: quay.io
     - matchName: reg.kyverno.io
     - matchName: registry-1.docker.io
