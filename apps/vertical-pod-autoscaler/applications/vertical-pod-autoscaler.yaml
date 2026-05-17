@@ -11,8 +11,11 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   sources:
+  - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+    path: apps/vertical-pod-autoscaler/crds
+    targetRevision: master
   - repoURL: https://github.com/kubernetes/autoscaler.git
-    targetRevision: vertical-pod-autoscaler-chart-0.8.1
+    targetRevision: vertical-pod-autoscaler-chart-0.9.0
     path: vertical-pod-autoscaler/charts/vertical-pod-autoscaler
     helm:
       releaseName: vertical-pod-autoscaler
@@ -34,5 +37,6 @@ spec:
     syncOptions:
     - Validate=true
     - CreateNamespace=true
+    - SkipDryRunOnMissingResource=true
     - ServerSideApply=true
     - Replace=true
