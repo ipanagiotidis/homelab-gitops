@@ -51,7 +51,7 @@ spec:
               value: nftables
           resources:
             limits:
-              squat.ai/tun: "1"
+              devic.es/tun: "1"
           securityContext:
             capabilities:
               add:
