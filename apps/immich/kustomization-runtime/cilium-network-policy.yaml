@@ -58,6 +58,14 @@ spec:
       rules:
         dns:
         - matchPattern: "*"
+  # Immich resolves the OAuth provider during login; keep this to the
+  # Authentik hostname instead of opening general internet/LAN egress.
+  - toFQDNs:
+    - matchName: authentik.yiannis.io
+    toPorts:
+    - ports:
+      - port: "443"
+        protocol: TCP
   - toEndpoints:
     - matchLabels:
         k8s:io.kubernetes.pod.namespace: immich
