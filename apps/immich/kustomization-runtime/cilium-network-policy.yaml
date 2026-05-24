@@ -66,6 +66,15 @@ spec:
     - ports:
       - port: "443"
         protocol: TCP
+  # The private Gateway address is DNATed to Traefik's websecure entrypoint.
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: traefik
+        app.kubernetes.io/name: traefik
+    toPorts:
+    - ports:
+      - port: "8443"
+        protocol: TCP
   - toEndpoints:
     - matchLabels:
         k8s:io.kubernetes.pod.namespace: immich
