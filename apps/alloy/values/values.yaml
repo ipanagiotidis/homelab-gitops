@@ -5,15 +5,15 @@ controller:
 image:
   registry: reg.yiannis.io
   repository: proxy-dockerhub/grafana/alloy
-  tag: v1.16.1
-  digest: sha256:51aeb9d829239345070619dad3edd6873186f913c84f45b365b74574fcb38ec0
+  tag: v1.17.1
+  digest: sha256:4f6ddc56ffdcf8a6316748fc5162972e20cb301523cac1bb4a31957df733ae9b
 
 configReloader:
   image:
     registry: reg.yiannis.io
     repository: proxy-quay/prometheus-operator/prometheus-config-reloader
-    tag: v0.81.0
-    digest: sha256:959d47672fbff2776a04ec62b8afcec89e8c036af84dc5fade50019dab212746
+    tag: v0.91.0
+    digest: sha256:7d9e4eea5f1139e602508871f422b0116c60e87c662f3dcd234d5ab60cd0d8c1
   resources:
     requests:
       cpu: 10m

@@ -8,4 +8,4 @@ name: speedtest-tracker
 description: Speedtest Tracker on bjw-s common chart
 type: application
 version: 0.0.1
-appVersion: stable
+appVersion: v1.14.5

@@ -1,13 +1,13 @@
 image:
   repository: reg.yiannis.io/proxy-ghcr/external-secrets/external-secrets
-  tag: v2.4.1@sha256:9440a40b394791a5e93f3f7e1b33399ecbdc0e38273de1d69ed83fe12936fc09
+  tag: v2.7.0@sha256:6615aaea8ff44924d9d7dbc99982a130c82913f7583e212fa3aeebc6dc21fbf9
 
 webhook:
   image:
     repository: reg.yiannis.io/proxy-ghcr/external-secrets/external-secrets
-    tag: v2.4.1@sha256:9440a40b394791a5e93f3f7e1b33399ecbdc0e38273de1d69ed83fe12936fc09
+    tag: v2.7.0@sha256:6615aaea8ff44924d9d7dbc99982a130c82913f7583e212fa3aeebc6dc21fbf9
 
 certController:
   image:
     repository: reg.yiannis.io/proxy-ghcr/external-secrets/external-secrets
-    tag: v2.4.1@sha256:9440a40b394791a5e93f3f7e1b33399ecbdc0e38273de1d69ed83fe12936fc09
+    tag: v2.7.0@sha256:6615aaea8ff44924d9d7dbc99982a130c82913f7583e212fa3aeebc6dc21fbf9

@@ -23,8 +23,8 @@ controllers:
         image:
           # -- image repository
           repository: reg.yiannis.io/proxy-dockerhub/linuxserver/prowlarr
-          # -- pinned to latest stable release tag: 2.3.5.5327-ls146
-          digest: sha256:a89f252d6a22bd25af14a5380aec0adcc3c3af2e3282164f981680e6844070f3
+          # -- pinned to latest stable release tag: 2.4.0.5397-ls153
+          digest: sha256:536036aeb2c740d1a660ccf143b58a8bd6222f09010258fdfc10a538af7bec78
         # Configure the container-specific securityContext
         securityContext:
           allowPrivilegeEscalation: false

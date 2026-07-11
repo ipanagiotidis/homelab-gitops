@@ -19,9 +19,9 @@ common:
         app:
           image:
             repository: reg.yiannis.io/proxy-ghcr/paperless-ngx/paperless-ngx
-            tag: "2.20.13"
-            # -- pinned to latest stable release tag: 2.20.13
-            digest: sha256:4b05bcd28e6923768000b5d247cbf2c66fd49bdc3f3b05955bd4f6790a638b01
+            tag: "2.20.15"
+            # -- pinned to latest stable release tag: 2.20.15
+            digest: sha256:6c86cad803970ea782683a8e80e7403444c5bf3cf70de63b4d3c8e87500db92f
           env:
             PAPERLESS_URL: "https://docs.yiannis.io"
             PAPERLESS_PORT: "8000"

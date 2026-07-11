@@ -23,8 +23,8 @@ controllers:
         image:
           # -- image repository
           repository: reg.yiannis.io/proxy-dockerhub/linuxserver/radarr
-          # -- pinned to latest stable release tag: 6.1.1.10360-ls302
-          digest: sha256:15417a594ebda4c660a9fa9748e7199d33e2d17b31bbc5ad7ba2e86f0b414763
+          # -- pinned to latest stable release tag: 6.2.1.10461-ls309
+          digest: sha256:28852d0eacababc206762af48fe86d78594a4f434cc46b358f9764a857098662
         # Configure the container-specific securityContext
         securityContext:
           allowPrivilegeEscalation: false

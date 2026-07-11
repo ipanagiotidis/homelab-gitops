@@ -23,8 +23,8 @@ controllers:
         image:
           # -- image repository
           repository: reg.yiannis.io/proxy-dockerhub/linuxserver/sonarr
-          # -- pinned to latest stable release tag: 4.0.17.2952-ls311
-          digest: sha256:60f3b6b5c7647ba2bafd81163acfe34b11117b9b834ebd7fbcc3e5f1b309c7ef
+          # -- pinned to latest stable release tag: 4.0.19.2979-ls319
+          digest: sha256:4b025354d338999e03bf6dbdadcdde94815d39d4a5aba5de3cdc86a56d7d6c51
         # Configure the container-specific securityContext
         securityContext:
           allowPrivilegeEscalation: false
