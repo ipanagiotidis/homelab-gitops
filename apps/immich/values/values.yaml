@@ -23,9 +23,9 @@ server:
         main:
           image:
             repository: reg.yiannis.io/proxy-ghcr/immich-app/immich-server
-            # pinned to latest stable release tag: v2.7.5
-            tag: v2.7.5
-            digest: sha256:c15bff75068effb03f4355997d03dc7e0fc58720c2b54ad6f7f10d1bc57efaa5
+            # pinned to latest stable release tag: v3.0.2
+            tag: v3.0.2
+            digest: sha256:14390f3dc9512dc3273b12ccee6363d9be16c388699abc3f3fe0498bb9829937
           resources:
             requests:
               cpu: 2000m
@@ -57,7 +57,6 @@ server:
   ingress:
     main:
       enabled: false
-      ingressClassName: traefik
       annotations:
         gethomepage.dev/enabled: "true"
         gethomepage.dev/description: Immich
@@ -86,8 +85,8 @@ machine-learning:
         main:
           image:
             repository: reg.yiannis.io/proxy-ghcr/immich-app/immich-machine-learning
-            tag: v2.7.5
-            digest: sha256:a2501141440f10516d329fdfba2c68082e19eb9ba6016c061ac80d23beadf7f3
+            tag: v3.0.2
+            digest: sha256:cfde27af4382c12940e02186abf0c6089e4eca9ebd75490d0ac32daaf52a0add
 
 valkey:
   enabled: true

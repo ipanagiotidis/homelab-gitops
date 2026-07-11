@@ -6,7 +6,7 @@ resources:
   - ./cilium-network-policy.yaml
 
 images:
-- name: rancher/local-path-provisioner
+- name: docker.io/rancher/local-path-provisioner
   newName: reg.yiannis.io/proxy-dockerhub/rancher/local-path-provisioner
   digest: sha256:1eba82e9c386038b4af6d69cca7519fac738c28c42735ed48ce70c882ad0d80f
 
@@ -28,6 +28,21 @@ patches:
                 }
                 ]
         }
+      helperPod.yaml: |-
+        apiVersion: v1
+        kind: Pod
+        metadata:
+          name: helper-pod
+        spec:
+          priorityClassName: system-node-critical
+          tolerations:
+            - key: node.kubernetes.io/disk-pressure
+              operator: Exists
+              effect: NoSchedule
+          containers:
+          - name: helper-pod
+            image: reg.yiannis.io/proxy-dockerhub/library/busybox:1.28@sha256:141c253bc4c3fd0a201d32dc1f493bcf3fff003b6df416dea4f41046e0f37d47
+            imagePullPolicy: IfNotPresent
 - patch: |-
     apiVersion: storage.k8s.io/v1
     kind: StorageClass
