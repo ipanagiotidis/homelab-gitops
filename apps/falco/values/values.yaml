@@ -1,7 +1,7 @@
 image:
   registry: reg.yiannis.io
   repository: proxy-dockerhub/falcosecurity/falco
-  tag: 0.43.1@sha256:b4166a61f41e2fa638c041cac881d8bb32c284e3aaf282fdfed80f15f6eb55e3
+  tag: 0.44.1@sha256:d0cfe422d6ac0e0f20857798f46c7d7273210e1b064b22821e4e6e7f843cde6b
 
 driver:
   kind: modern_ebpf
@@ -9,7 +9,7 @@ tty: true
 
 collectors:
   containerEngine:
-    pluginRef: ghcr.io/falcosecurity/plugins/plugin/container:0.6.3
+    pluginRef: ghcr.io/falcosecurity/plugins/plugin/container:0.7.1
 
 # Keep phase-1 Falco lightweight enough to fit the smaller nodes while we tune
 # the runtime-only profile. Requests are what blocked scheduling.

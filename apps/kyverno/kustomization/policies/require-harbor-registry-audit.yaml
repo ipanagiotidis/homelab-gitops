@@ -28,6 +28,7 @@ spec:
       - resources:
           namespaces:
           - argocd
+          - cnpg-system
           - harbor
           - kube-system
     skipBackgroundRequests: true

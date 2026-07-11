@@ -33,6 +33,7 @@ spec:
       any:
       - resources:
           namespaces:
+          - cnpg-system
           - traefik
     skipBackgroundRequests: true
     validate:

@@ -3,8 +3,8 @@ loki:
   image:
     registry: reg.yiannis.io
     repository: proxy-dockerhub/grafana/loki
-    tag: 3.7.2
-    digest: sha256:191d4fdfb7264f16989f0a57f320872620a5a7c2ceeec6229212c4190ec49b86
+    tag: 3.7.3
+    digest: sha256:70b9f699fc9bb868b62f1cfd4f787dfa50242f1fd92e6089787d5d7daea75fe8
   auth_enabled: false
   commonConfig:
     replication_factor: 1
@@ -36,8 +36,8 @@ gateway:
   image:
     registry: reg.yiannis.io
     repository: proxy-dockerhub/nginxinc/nginx-unprivileged
-    tag: 1.29-alpine
-    digest: sha256:601c823234c474696ded03d619e67f1e59538802731543099c691aea67e4a553
+    tag: 1.31-alpine
+    digest: sha256:592b23aa79a6e6c08ba4b20f1fff700e1328895705966722608e115d62e52d39
 singleBinary:
   replicas: 1
   resources:
@@ -70,11 +70,11 @@ chunksCache:
 memcached:
   image:
     repository: reg.yiannis.io/proxy-dockerhub/library/memcached
-    tag: 1.6.39-alpine@sha256:c8503d4491edd3110cc07d0465089d3a41cf1daf8645e71149e39a51835e92cd
+    tag: 1.6.45-alpine@sha256:c29847751abb41f4c268c84fb3087fee05d4edcbda44409ccb5086e26148e8a7
 memcachedExporter:
   image:
     repository: reg.yiannis.io/proxy-dockerhub/prom/memcached-exporter
-    tag: v0.15.4@sha256:b6763ecb3c47f2408e0398518851b7f8c5fc46232b2649f8c78a321130c54266
+    tag: v0.16.0@sha256:fa03aba2f2aa6f572bf56ba07dd2960c62433805427be0fddc8b21b8074c1728
 resultsCache:
   allocatedMemory: 128
   allocatedCPU: 50m
@@ -82,5 +82,5 @@ sidecar:
   image:
     registry: reg.yiannis.io
     repository: proxy-dockerhub/kiwigrid/k8s-sidecar
-    tag: 2.5.0
-    sha: a6b3f707f883108376514489a94d6629109a327b2978e1d826cd104c4ca436df
+    tag: 2.8.1
+    sha: abb55b2165c60e8f97e473862c7a3123df6f67d44f592949577c29b8fb2df9d6
