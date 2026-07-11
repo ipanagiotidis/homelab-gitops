@@ -5,6 +5,9 @@ image:
   tag: "v1.7.8@sha256:2f527c9bb8b367120eb08b82890aa912ce96bfa1ada93dda0721700e4b4e0dde"
 tls:
   enabled: true
+  certManager:
+    duration: 4320h # 180d
+    renewBefore: 720h # 30d
   agent:
     tlsClientAuth: true
   bouncer:
@@ -42,6 +45,10 @@ secrets:
     csLapiSecretKey: csLapiSecret
     registrationTokenKey: registrationToken
 agent:
+  daemonsetAnnotations:
+    secret.reloader.stakater.com/reload: "crowdsec-agent-tls,crowdsec-root-secret"
+  podAnnotations:
+    reloader.yiannis.io/managed: "true"
   lapiURL: "https://crowdsec-service.crowdsec.svc.cluster.local:8080"
   lapiHost: "crowdsec-service.crowdsec.svc.cluster.local"
   wait_for_lapi:
@@ -83,6 +90,10 @@ agent:
     - name: DISABLE_ONLINE_API
       value: "false"
 lapi:
+  deployAnnotations:
+    secret.reloader.stakater.com/reload: "crowdsec-lapi-tls,crowdsec-agent-tls,crowdsec-root-secret"
+  podAnnotations:
+    reloader.yiannis.io/managed: "true"
   metrics:
     enabled: true
     serviceMonitor:

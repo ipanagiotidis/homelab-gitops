@@ -146,6 +146,12 @@ volumes:
     mountPath: /etc/traefik/crowdsec-certs/
     type: secret
 
+deployment:
+  annotations:
+    secret.reloader.stakater.com/reload: "crowdsec-bouncer-tls"
+  podAnnotations:
+    reloader.yiannis.io/managed: "true"
+
 experimental:
   plugins:
     bouncer:

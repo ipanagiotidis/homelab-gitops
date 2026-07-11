@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: reloader
+  namespace: argocd
+  labels:
+    app: reloader
+spec:
+  destination:
+    namespace: reloader
+    server: https://kubernetes.default.svc
+  project: default
+  sources:
+  - chart: reloader
+    repoURL: https://stakater.github.io/stakater-charts
+    targetRevision: 2.2.14
+    helm:
+      releaseName: reloader
+      valueFiles:
+      - $values/apps/reloader/values/values.yaml
+  - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+    targetRevision: master
+    ref: values
+  - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+    path: apps/reloader/kustomization
+    targetRevision: master
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    managedNamespaceMetadata:
+      labels:
+        security.yiannis.io/require-harbor: "true"
+    syncOptions:
+    - Validate=true
+    - CreateNamespace=true

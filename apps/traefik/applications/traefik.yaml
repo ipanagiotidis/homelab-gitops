@@ -6,6 +6,13 @@ metadata:
   labels:
     app: traefik
 spec:
+  ignoreDifferences:
+  - group: apps
+    kind: Deployment
+    name: traefik
+    namespace: traefik
+    jqPathExpressions:
+    - '.spec.template.metadata.annotations["reloader.stakater.com/last-reloaded-from"]'
   destination:
     namespace: traefik
     server: https://kubernetes.default.svc

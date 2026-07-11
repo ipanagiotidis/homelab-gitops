@@ -1,0 +1,26 @@
+image:
+  repository: reg.yiannis.io/proxy-ghcr/stakater/reloader
+  tag: "v1.4.19@sha256:0530cf462fa3ba530fab887372e3b79caf608d0093ffc2fded9fa33bac8b74cd"
+
+reloader:
+  autoReloadAll: false
+  ignoreJobs: true
+  ignoreCronJobs: true
+  reloadStrategy: annotations
+  logFormat: json
+  logLevel: info
+  watchGlobally: true
+  readOnlyRootFileSystem: true
+  deployment:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 128Mi
+      limits:
+        memory: 256Mi
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      capabilities:
+        drop:
+        - ALL

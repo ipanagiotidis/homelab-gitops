@@ -6,6 +6,19 @@ metadata:
   labels:
     app: crowdsec
 spec:
+  ignoreDifferences:
+  - group: apps
+    kind: DaemonSet
+    name: crowdsec-agent
+    namespace: crowdsec
+    jqPathExpressions:
+    - '.spec.template.metadata.annotations["reloader.stakater.com/last-reloaded-from"]'
+  - group: apps
+    kind: Deployment
+    name: crowdsec-lapi
+    namespace: crowdsec
+    jqPathExpressions:
+    - '.spec.template.metadata.annotations["reloader.stakater.com/last-reloaded-from"]'
   destination:
     namespace: crowdsec
     server: https://kubernetes.default.svc
