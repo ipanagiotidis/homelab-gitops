@@ -35,6 +35,10 @@ spec:
           namespaces:
           - cnpg-system
           - traefik
+      - resources:
+          selector:
+            matchLabels:
+              app.kubernetes.io/managed-by: cloudnative-pg
     skipBackgroundRequests: true
     validate:
       allowExistingViolations: true
