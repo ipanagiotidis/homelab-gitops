@@ -237,7 +237,6 @@ spec:
     - matchName: dl.gitea.com
     - matchName: emberstack.github.io
     - matchName: falcosecurity.github.io
-    - matchName: firefly-iii.github.io
     - matchName: github.com
     - matchName: grafana.github.io
     - matchName: helm.cilium.io

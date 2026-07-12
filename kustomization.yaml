@@ -45,7 +45,6 @@ resources:
   - apps/homepage/applications/homepage.yaml
   - apps/homepage-external/applications/homepage-external.yaml
   - apps/tailscale/applications/tailscale.yaml
-  #- apps/firefly-iii/applications/firefly-iii.yaml
   #- apps/loki-stack/applications/loki-stack.yaml
   - apps/paperless-ngx/applications/paperless-ngx-db.yaml
   - apps/paperless-ngx/applications/paperless-ngx.yaml
