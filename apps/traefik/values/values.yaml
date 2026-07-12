@@ -1,9 +1,9 @@
 image:
   registry: docker.io
   repository: library/traefik
-  tag: v3.7.1@sha256:6b9cbca6fac42ab0075f5437d8dc1685cfd188626d8d515839ea94f8b6271c42
+  tag: v3.7.7@sha256:1cb3845d7a05e1473c9086351426597e911db49db382b6e4769f9b0744962ac8
 
-versionOverride: v3.7.1
+versionOverride: v3.7.7
 
 api:
   dashboard: true
@@ -104,24 +104,24 @@ ports:
     exposedPort: 443
     protocol: TCP
 
-logs:
-  general:
-    format: "json"
-  access:
-    enabled: true
-    format: "json"
-    fields:
-      headers: 
-        defaultmode: drop
-        names:
-          Cf-Connecting-Ip: keep
-          Cf-Ipcountry: keep
-          Cf-Ray: keep
-          User-Agent: keep
-          Referer: keep
-          Accept-Language: keep
-          X-Forwarded-For: keep
-          X-Forwarded-Proto: keep
+log:
+  format: "json"
+
+accessLog:
+  enabled: true
+  format: "json"
+  fields:
+    headers:
+      defaultMode: drop
+      names:
+        Cf-Connecting-Ip: keep
+        Cf-Ipcountry: keep
+        Cf-Ray: keep
+        User-Agent: keep
+        Referer: keep
+        Accept-Language: keep
+        X-Forwarded-For: keep
+        X-Forwarded-Proto: keep
 
 ingressRoute:
   dashboard:
