@@ -85,6 +85,7 @@ spec:
     - matchName: nyaa.si
     - matchName: oldgreektracker.xyz
     - matchName: rutracker.org
+    - matchName: yts.gg
     toPorts:
     - ports:
       - port: "80"
