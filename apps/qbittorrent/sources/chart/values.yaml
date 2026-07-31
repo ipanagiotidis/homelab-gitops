@@ -24,8 +24,8 @@ controllers:
         image:
           # -- image repository
           repository: reg.yiannis.io/proxy-dockerhub/linuxserver/qbittorrent
-          # -- pinned to latest stable release tag: 5.2.3_v2.0.13-ls467
-          digest: sha256:2e074403c7b72e6d89cee3d0d41a47f7b5708c6a9e5316f3958c90765cbe12ce
+          # -- pinned to latest stable release tag: 5.2.3_v2.0.13-ls469
+          digest: sha256:b024436f8ca665d16d9a997d26fd27fdf867ee5566ba09f32764e7b2976d3e02
         # Configure the container-specific securityContext
         securityContext:
           allowPrivilegeEscalation: false

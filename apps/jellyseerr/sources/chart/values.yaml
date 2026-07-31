@@ -23,8 +23,8 @@ controllers:
         image:
           # -- image repository
           repository: reg.yiannis.io/proxy-ghcr/seerr-team/seerr
-          # -- pinned to latest stable release tag: v3.3.0
-          digest: sha256:c92d2dc117f62185e7bcb88cd56efd374ea79210eaf433275449e8d5988eb5a8
+          # -- pinned to latest stable release tag: v3.4.1
+          digest: sha256:f4768de5f616248d723e05891f3345a1402123775d03bf0890dbfedc0831bda1
         # Configure the container-specific securityContext
         securityContext:
           allowPrivilegeEscalation: false

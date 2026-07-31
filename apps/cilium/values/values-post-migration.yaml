@@ -1,3 +1,5 @@
+upgradeCompatibility: "1.19"
+
 operator:
   unmanagedPodWatcher:
     restart: true
