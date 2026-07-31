@@ -1,9 +1,9 @@
 image:
   registry: docker.io
   repository: library/traefik
-  tag: v3.7.7@sha256:1cb3845d7a05e1473c9086351426597e911db49db382b6e4769f9b0744962ac8
+  tag: v3.7.9@sha256:652929a140a32d7cafafb13c6cdfab5376cfeff800f51397b87b524501ed02a8
 
-versionOverride: v3.7.7
+versionOverride: v3.7.9
 
 api:
   dashboard: true
