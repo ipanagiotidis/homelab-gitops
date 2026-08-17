@@ -156,11 +156,11 @@ experimental:
   plugins:
     bouncer:
       moduleName: "github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
-      version: "v1.4.2"
+      version: "v1.7.1"
 
 additionalArguments:
   - "--experimental.plugins.bouncer.moduleName=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
-  - "--experimental.plugins.bouncer.version=v1.4.2"
+  - "--experimental.plugins.bouncer.version=v1.7.1"
   - "--entrypoints.web.transport.respondingTimeouts.readTimeout=10m"
   - "--entrypoints.websecure.transport.respondingTimeouts.readTimeout=10m"
   - "--entrypoints.web.http.middlewares=traefik-redirect-http-https@kubernetescrd,traefik-bouncer@kubernetescrd"
