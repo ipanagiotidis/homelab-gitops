@@ -153,6 +153,7 @@ deployment:
     reloader.yiannis.io/managed: "true"
 
 experimental:
+  abortOnPluginFailure: true
   plugins:
     bouncer:
       moduleName: "github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
