@@ -6,6 +6,9 @@ image:
 tls:
   enabled: true
   certManager:
+    issuerRef:
+      name: crowdsec-ca-issuer
+      kind: Issuer
     duration: 4320h # 180d
     renewBefore: 720h # 30d
   agent:
