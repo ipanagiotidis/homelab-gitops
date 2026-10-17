@@ -8,8 +8,7 @@ defaultPodOptions:
 controllers:
   # Configure the main controller
   jellyfin:
-    # Maintenance hold for the stopped-server backup and SSO migration.
-    replicas: 0
+    replicas: 1
 
     # Configure the pod-specific securityContext
     pod:
@@ -25,8 +24,8 @@ controllers:
         image:
           # -- image repository
           repository: reg.yiannis.io/proxy-dockerhub/jellyfin/jellyfin
-          # -- pinned to latest stable release tag: 10.11.11
-          digest: sha256:aefb67e6a7ff1debdd154a78a7bbb780fd0c873d8639210a7f6a2016ad2b35db
+          # -- pinned release: 12.2
+          digest: sha256:357724bf0ae27a672c7cbaa899db2d9abeb13dbd8657ccce750258a4c059d037
         # Configure the container-specific securityContext
         securityContext:
           allowPrivilegeEscalation: false
