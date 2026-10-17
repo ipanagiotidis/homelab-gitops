@@ -244,6 +244,8 @@ spec:
     - matchName: kyverno.github.io
     - matchName: prometheus-community.github.io
     - matchName: raw.githubusercontent.com
+    # GitHub release downloads redirect here; do not rely on shared CDN IPs.
+    - matchName: release-assets.githubusercontent.com
     - matchName: traefik.github.io
     toPorts:
     - ports:
