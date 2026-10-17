@@ -1,0 +1,19 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: immich
+  namespace: immich
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
+spec:
+  name: immich
+  owner: immich
+  cluster:
+    name: immich-database
+  ensure: present
+  databaseReclaimPolicy: retain
+  # The extension is owned by postgres; keep upgrades with CNPG, not the app role.
+  extensions:
+    - name: vchord
+      ensure: present
+      version: "1.1.1"
