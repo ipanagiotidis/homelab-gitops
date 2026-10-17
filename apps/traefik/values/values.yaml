@@ -1,9 +1,9 @@
 image:
   registry: docker.io
   repository: library/traefik
-  tag: v3.7.9@sha256:652929a140a32d7cafafb13c6cdfab5376cfeff800f51397b87b524501ed02a8
+  tag: v3.7.15@sha256:0f6150202bc1fed72a7bd2107460eaa510e5b8a905f3fdb5b84f2c8619c33368
 
-versionOverride: v3.7.9
+versionOverride: v3.7.15
 
 api:
   dashboard: true
@@ -160,6 +160,8 @@ experimental:
       version: "v1.7.1"
 
 additionalArguments:
+  # Preserve namespace-name@kubernetescrd middleware references.
+  - "--providers.kubernetescrd.safeNaming=false"
   - "--experimental.plugins.bouncer.moduleName=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
   - "--experimental.plugins.bouncer.version=v1.7.1"
   - "--entrypoints.web.transport.respondingTimeouts.readTimeout=10m"
