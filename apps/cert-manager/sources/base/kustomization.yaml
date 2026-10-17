@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
   # Keep aligned with the controller/chart version, not a separate upgrade track.
-  - https://github.com/cert-manager/cert-manager/releases/download/v1.21.1/cert-manager.crds.yaml
+  - https://github.com/cert-manager/cert-manager/releases/download/v1.21.2/cert-manager.crds.yaml
   - ./resources/clusterissuer.yaml
   - ./resources/external-secret.yaml
   - ./resources/truenas-certificate.yaml

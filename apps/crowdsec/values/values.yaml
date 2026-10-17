@@ -2,7 +2,7 @@
 container_runtime: containerd
 image:
   repository: reg.yiannis.io/proxy-dockerhub/crowdsecurity/crowdsec
-  tag: "v1.7.8@sha256:2f527c9bb8b367120eb08b82890aa912ce96bfa1ada93dda0721700e4b4e0dde"
+  tag: "v1.8.1@sha256:0f2523fa61ef507f15d953045cface490cc880670c62f2755ced17524107f71a"
 tls:
   enabled: true
   certManager:
@@ -57,7 +57,7 @@ agent:
   wait_for_lapi:
     image:
       repository: reg.yiannis.io/proxy-dockerhub/library/busybox
-      tag: "1.28@sha256:141c253bc4c3fd0a201d32dc1f493bcf3fff003b6df416dea4f41046e0f37d47"
+      tag: "1.37.0@sha256:bdf57e528e45e4433820e045b29b4597825a1c9e38353532d90a01445013f82e"
   metrics:
     enabled: true
     podMonitor:
@@ -90,8 +90,7 @@ agent:
   env:
     - name: COLLECTIONS
       value: "crowdsecurity/traefik LePresidente/jellyfin firix/authentik LePresidente/gitea crowdsecurity/base-http-scenarios crowdsecurity/http-cve"
-    - name: DISABLE_ONLINE_API
-      value: "false"
+    # The chart disables CAPI on agents; only LAPI connects to the online API.
 lapi:
   deployAnnotations:
     secret.reloader.stakater.com/reload: "crowdsec-lapi-tls,crowdsec-agent-tls,crowdsec-root-secret"

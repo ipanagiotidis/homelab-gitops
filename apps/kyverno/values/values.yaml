@@ -4,7 +4,7 @@ crds:
       registry: reg.yiannis.io
       defaultRegistry: reg.yiannis.io
       repository: proxy-kyverno/kyverno/kyverno-cli
-      tag: v1.18.2@sha256:7224ed05508c24419c3df98114c28ba682ad0a940dcdb7b9fdba0a4b6bf943cf
+      tag: v1.19.1@sha256:ced7b2be0b04250cabfe695f15307f69eb715fe23234816388af4f3812915b2a
 
 config:
   webhooks:
@@ -20,6 +20,11 @@ config:
   - kyverno
 
 features:
+  # Explicitly preserve the existing 3.8.2 chart defaults during the upgrade.
+  generateValidatingAdmissionPolicy:
+    enabled: true
+  validatingAdmissionPolicyReports:
+    enabled: true
   policyReports:
     enabled: true
   backgroundScan:
@@ -43,12 +48,12 @@ admissionController:
     image:
       registry: reg.yiannis.io
       repository: proxy-kyverno/kyverno/kyvernopre
-      tag: v1.18.2@sha256:cd8cb4a31d25b3992734fb8f24a90ef691c90ce49338c89bea96792160eacb98 # v1.18.2
+      tag: v1.19.1@sha256:c25c47461f06f2845a48c319ae86fbbc1730a7b9ed5b701889c9dc1f9ee94b09 # v1.19.1
   container:
     image:
       registry: reg.yiannis.io
       repository: proxy-kyverno/kyverno/kyverno
-      tag: v1.18.2@sha256:0a540e2ddf74d0d2d3d45f9ef248d7dbc96576accdbcc6a2dd7eaff9fea56504 # v1.18.2
+      tag: v1.19.1@sha256:b31d8511ae5fd6010e2a01ea72ebae08eb82fa51d91af14a1d9fe989949b4edb # v1.19.1
   serviceMonitor:
     enabled: true
     namespace: monitoring
@@ -58,7 +63,7 @@ backgroundController:
   image:
     registry: reg.yiannis.io
     repository: proxy-kyverno/kyverno/background-controller
-    tag: v1.18.2@sha256:d62566ce41bd0d4a32bf2cf44b9ebfc02c36374f821f83070890287f62f68671 # v1.18.2
+    tag: v1.19.1@sha256:8f1e9143373a27578cafc2d28d2c66ba0926c63b4c77e63de8d2fdd4a122859f # v1.19.1
   serviceMonitor:
     enabled: true
     namespace: monitoring
@@ -68,7 +73,7 @@ cleanupController:
   image:
     registry: reg.yiannis.io
     repository: proxy-kyverno/kyverno/cleanup-controller
-    tag: v1.18.2@sha256:b0395d29ae332276e6910eb40418be9bc127c068d659f90aa1bcddd6be99ccb4 # v1.18.2
+    tag: v1.19.1@sha256:67a48e62a8d8f8120c86914ff822b90017c54054c7b64ef8a1555645e9d9761e # v1.19.1
   serviceMonitor:
     enabled: true
     namespace: monitoring
@@ -78,7 +83,7 @@ reportsController:
   image:
     registry: reg.yiannis.io
     repository: proxy-kyverno/kyverno/reports-controller
-    tag: v1.18.2@sha256:f09cf305170014e191b94e1c54f5be73163d8824eefad49349675c4efe43159a # v1.18.2
+    tag: v1.19.1@sha256:c0eee97b9b44a0dd35805d56b358fa52548480f79d4944602b9609538eccd64c # v1.19.1
   serviceMonitor:
     enabled: true
     namespace: monitoring

@@ -26,9 +26,11 @@ spec:
   sources:
   - chart: crowdsec
     repoURL: https://crowdsecurity.github.io/helm-charts
-    targetRevision: 0.24.0
+    targetRevision: 0.24.2
     helm:
       releaseName: crowdsec
+      # Upstream test pods use an unpinned, external curl image and plain HTTP.
+      skipTests: true
       valueFiles:
         - $values/apps/crowdsec/values/values.yaml
   - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git

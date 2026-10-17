@@ -5,7 +5,7 @@ automountServiceAccountToken: true
 image:
   registry: reg.yiannis.io
   repository: proxy-dockerhub/aquasec/trivy-operator
-  tag: 0.32.0@sha256:d4a61c4607e2931bd2615bf3bcf8912669d11d194c44c77edd413e6301b50c5b # 0.32.0
+  tag: 0.35.0@sha256:4cdb11af98ff409cfa7af980098203a841a5fe957cc6a0bbb0df7668065eb5fa # 0.35.0
 
 operator:
   scannerReportTTL: 168h
@@ -36,4 +36,4 @@ trivy:
   image:
     registry: reg.yiannis.io
     repository: proxy-dockerhub/aquasec/trivy
-    tag: 0.72.0@sha256:cffe3f5161a47a6823fbd23d985795b3ed72a4c806da4c4df16266c02accdd6f # 0.72.0
+    tag: 0.75.0@sha256:af6acf9a6b85dfe389a1941505c0ce9efef52a4719635e1a962f022a3d855daa # 0.75.0

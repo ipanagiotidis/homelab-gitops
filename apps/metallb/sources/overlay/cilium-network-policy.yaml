@@ -14,7 +14,7 @@ spec:
         - remote-node
       toPorts:
         - ports:
-            - port: "7472"
+            - port: "17472"
               protocol: TCP
     - fromEndpoints:
         - matchLabels:
@@ -22,7 +22,7 @@ spec:
             app.kubernetes.io/name: prometheus
       toPorts:
         - ports:
-            - port: "7472"
+            - port: "9120"
               protocol: TCP
     - fromEntities:
         - remote-node
@@ -78,7 +78,7 @@ spec:
         - remote-node
       toPorts:
         - ports:
-            - port: "7472"
+            - port: "17472"
               protocol: TCP
     - fromEndpoints:
         - matchLabels:
@@ -86,7 +86,7 @@ spec:
             app.kubernetes.io/name: prometheus
       toPorts:
         - ports:
-            - port: "7472"
+            - port: "9120"
               protocol: TCP
     - fromEntities:
         - remote-node

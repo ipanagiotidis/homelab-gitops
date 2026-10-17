@@ -1,7 +1,7 @@
 image:
   registry: reg.yiannis.io
   repository: proxy-dockerhub/falcosecurity/falco
-  tag: 0.44.1@sha256:d0cfe422d6ac0e0f20857798f46c7d7273210e1b064b22821e4e6e7f843cde6b
+  tag: 0.45.0@sha256:788f1129c542171813083d4afc61b16730a47dde8c23d9c39370acef996349b6
 
 driver:
   kind: modern_ebpf
@@ -9,7 +9,24 @@ tty: true
 
 collectors:
   containerEngine:
-    pluginRef: ghcr.io/falcosecurity/plugins/plugin/container:0.7.1
+    pluginRef: ghcr.io/falcosecurity/plugins/plugin/container:0.7.4@sha256:42f154787c862863e9ad9ac99b91c58116500b3bc2ff84f0d50175e825c4b4a0
+    # Chart 9.2 mounts socket parent directories; expose only the Talos CRI runtime.
+    engines:
+      docker:
+        enabled: false
+      podman:
+        enabled: false
+      containerd:
+        enabled: false
+      cri:
+        enabled: true
+        sockets: ["/run/containerd/containerd.sock"]
+      lxc:
+        enabled: false
+      libvirt_lxc:
+        enabled: false
+      bpm:
+        enabled: false
 
 # Keep phase-1 Falco lightweight enough to fit the smaller nodes while we tune
 # the runtime-only profile. Requests are what blocked scheduling.
@@ -209,7 +226,7 @@ falcoctl:
   image:
     registry: reg.yiannis.io
     repository: proxy-dockerhub/falcosecurity/falcoctl
-    tag: 0.13.0@sha256:0eeb79adc580ae6a5abfdefd7f8f0fed9151fcb545f015c84e8f1d7b2d8a6b02
+    tag: 0.14.2@sha256:90ba9627886e8f26b746fa52465d755b28ee49b76eb1d047a0fefd8cadb21907
   artifact:
     install:
       enabled: true

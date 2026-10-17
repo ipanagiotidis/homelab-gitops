@@ -8,4 +8,4 @@ name: prowlarr
 description: Test
 type: application
 version: 0.0.1
-appVersion: 0.0.1
+appVersion: 2.6.5.5623

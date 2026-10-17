@@ -21,8 +21,8 @@ controllers:
       seed-next-pages-cache:
         image:
           repository: reg.yiannis.io/proxy-ghcr/gethomepage/homepage
-          tag: v1.13.2
-          digest: sha256:a0b71c8e757298d02560186bab9fbe3fc2d375c523a62cc1019177b37e48aa28
+          tag: v2.6.0
+          digest: sha256:3e38fe788223cb46a3ce1f046ef11667b40f7707fdca0dcbfa3f86c5c42bf1e8
         command:
           - /bin/sh
           - -c
@@ -41,9 +41,11 @@ controllers:
       homepage:
         image:
           repository: reg.yiannis.io/proxy-ghcr/gethomepage/homepage
-          tag: v1.13.2
-          digest: sha256:a0b71c8e757298d02560186bab9fbe3fc2d375c523a62cc1019177b37e48aa28
+          tag: v2.6.0
+          digest: sha256:3e38fe788223cb46a3ce1f046ef11667b40f7707fdca0dcbfa3f86c5c42bf1e8
         env:
+          # Preserve the public dashboard; native authentication is opt-in.
+          HOMEPAGE_AUTH_ENABLED: "false"
           HOMEPAGE_ALLOWED_HOSTS: dashboard.yiannis.io
         resources:
           requests:

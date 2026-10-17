@@ -8,10 +8,10 @@ resources:
 images:
 - name: quay.io/metallb/controller
   newName: reg.yiannis.io/proxy-quay/metallb/controller
-  digest: sha256:6698ccc54c380913816ed1fd0758637ec87dd79da419c4ab170a2c26c158ab89
+  digest: sha256:f51ab515de9ccd20dc3dccb093e48df8adddac019326c456f449e55ba91b6420
 - name: quay.io/metallb/speaker
   newName: reg.yiannis.io/proxy-quay/metallb/speaker
-  digest: sha256:c6a5b25b2e1fba610a57b2db4bb8141d7c133569d561a8cc29e38ca5113efbc4
+  digest: sha256:16561e96531e1852d5c229ad7fae6e994dcfa983ff7f4de6b6208b34a4e2ddbc
 
 patches:
 - patch: |-
