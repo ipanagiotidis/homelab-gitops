@@ -10,8 +10,8 @@ images:
   newTag: v3.5.5
   digest: sha256:13db7b10db23283b1b36f855046602e18539a8a8204c9f6f039e8896c8897518
 - name: ghcr.io/dexidp/dex
-  newTag: v2.45.0
-  digest: sha256:b8469881d3cb3a73001506f0d3aaefecb9c45d2311c1e0f405d8ac538316c59d
+  newTag: v2.46.0
+  digest: sha256:933fcd3f523338c847b88ef84a7145fb2fcb7b9917f08418612afeaaa2001777
 - name: public.ecr.aws/docker/library/redis
   newTag: 8.2.3-alpine
   digest: sha256:08ad0b1d280850169a790dba1393ff7a90aef951fc19632cf4d3ce4f78e679ba
