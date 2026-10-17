@@ -6,7 +6,7 @@ metadata:
 spec:
   instances: 1
 
-  imageName: reg.yiannis.io/proxy-ghcr/cloudnative-pg/postgresql:18.3-system-trixie@sha256:0f29b435fb501ee534cd0c555d122a6b8e90de477de8e8381c82c5e10d9a9de4
+  imageName: reg.yiannis.io/proxy-ghcr/cloudnative-pg/postgresql:18.6-system-trixie@sha256:5efb66993894055f0aa50bd94337c6c4ff2e2129f4d433c527151aebbf283fb0
 
   storage:
     size: 10Gi
