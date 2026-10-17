@@ -4,6 +4,7 @@ metadata:
   name: authentik
 spec:
   forwardAuth:
+    maxResponseBodySize: 1048576
     address: http://ak-outpost-authentik-embedded-outpost.authentik.svc.cluster.local:9000/outpost.goauthentik.io/auth/traefik
     trustForwardHeader: true
     authResponseHeaders:
