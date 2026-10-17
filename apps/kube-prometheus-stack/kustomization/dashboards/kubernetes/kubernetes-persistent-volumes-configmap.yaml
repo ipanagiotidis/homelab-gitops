@@ -258,16 +258,17 @@ data:
         "list": [
           {
             "current": {
-              "selected": true,
-              "text": "default",
-              "value": "default"
+              "text": "Prometheus",
+              "value": "prometheus"
             },
             "hide": 0,
             "label": "Data source",
             "name": "datasource",
             "query": "prometheus",
             "regex": "",
-            "type": "datasource"
+            "type": "datasource",
+            "options": [],
+            "refresh": 1
           },
           {
             "allValue": ".*",
@@ -318,6 +319,6 @@ data:
       "timezone": "utc",
       "title": "Kubernetes / Persistent Volumes",
       "uid": "919b92a8e8041bd567af9edab12c840c",
-      "version": 1,
+      "version": 2,
       "id": null
     }

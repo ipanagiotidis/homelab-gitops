@@ -603,16 +603,17 @@ data:
         "list": [
           {
             "current": {
-              "selected": true,
-              "text": "default",
-              "value": "default"
+              "text": "Prometheus",
+              "value": "prometheus"
             },
             "hide": 0,
             "label": "Data source",
             "name": "datasource",
             "query": "prometheus",
             "regex": "",
-            "type": "datasource"
+            "type": "datasource",
+            "options": [],
+            "refresh": 1
           },
           {
             "allValue": ".*",
@@ -651,6 +652,6 @@ data:
       "timezone": "utc",
       "title": "Kubernetes / Proxy",
       "uid": "632e265de029684c40b21cb76bca4f94",
-      "version": 1,
+      "version": 2,
       "id": null
     }

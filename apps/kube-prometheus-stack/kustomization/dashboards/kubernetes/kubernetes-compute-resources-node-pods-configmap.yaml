@@ -630,16 +630,17 @@ data:
         "list": [
           {
             "current": {
-              "selected": true,
-              "text": "default",
-              "value": "default"
+              "text": "Prometheus",
+              "value": "prometheus"
             },
             "hide": 0,
             "label": "Data source",
             "name": "datasource",
             "query": "prometheus",
             "regex": "",
-            "type": "datasource"
+            "type": "datasource",
+            "options": [],
+            "refresh": 1
           },
           {
             "allValue": ".*",
@@ -677,6 +678,6 @@ data:
       "timezone": "utc",
       "title": "Kubernetes / Compute Resources / Node (Pods)",
       "uid": "200ac8fdbfbb74b39aff88118e4d1c2c",
-      "version": 1,
+      "version": 2,
       "id": null
     }

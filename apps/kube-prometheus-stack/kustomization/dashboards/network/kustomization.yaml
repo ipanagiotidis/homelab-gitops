@@ -4,3 +4,7 @@ kind: Kustomization
 resources:
   - ./adguard-home-configmap.yaml
   - ./speedtest-tracker-configmap.yaml
+  - ./grafana-curated-hubble-dashboard.yaml
+  - ./grafana-curated-hubble-dns-namespace.yaml
+  - ./grafana-curated-hubble-l7-http-metrics-by-workload.yaml
+  - ./grafana-curated-hubble-network-overview-namespace.yaml

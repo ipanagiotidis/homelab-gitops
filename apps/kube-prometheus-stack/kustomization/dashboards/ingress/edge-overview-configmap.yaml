@@ -32,17 +32,79 @@ data:
       "links": [],
       "panels": [
         {
+          "id": 15,
+          "title": "Telemetry scrape health",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "gridPos": {
+            "x": 0,
+            "y": 0,
+            "w": 24,
+            "h": 3
+          },
+          "description": "Minimum up across matching targets. 1 = all discovered targets scraped successfully, 0 = scrape failure. NO TELEMETRY = no recent samples or no matching targets; not zero events. This does not detect a missing replica by itself.",
+          "fieldConfig": {
+            "defaults": {
+              "min": 0,
+              "max": 1,
+              "noValue": "NO TELEMETRY",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "options": {
+            "colorMode": "background",
+            "graphMode": "none",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            }
+          },
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "min(up{job=\"traefik-metrics\"})",
+              "instant": true,
+              "range": false
+            }
+          ]
+        },
+        {
           "collapsed": false,
           "gridPos": {
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 0
+            "y": 3
           },
           "id": 1,
           "panels": [],
           "title": "Overview",
-          "type": "row"
+          "type": "row",
+          "fieldConfig": {
+            "defaults": {
+              "noValue": "No matching samples"
+            }
+          },
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -63,7 +125,8 @@ data:
                   }
                 ]
               },
-              "unit": "reqps"
+              "unit": "reqps",
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -71,7 +134,7 @@ data:
             "h": 5,
             "w": 4,
             "x": 0,
-            "y": 1
+            "y": 4
           },
           "id": 2,
           "options": {
@@ -99,7 +162,8 @@ data:
             }
           ],
           "title": "Public Requests/s",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -120,7 +184,8 @@ data:
                   }
                 ]
               },
-              "unit": "reqps"
+              "unit": "reqps",
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -128,7 +193,7 @@ data:
             "h": 5,
             "w": 4,
             "x": 4,
-            "y": 1
+            "y": 4
           },
           "id": 3,
           "options": {
@@ -156,7 +221,8 @@ data:
             }
           ],
           "title": "Private Requests/s",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -185,7 +251,8 @@ data:
                   }
                 ]
               },
-              "unit": "reqps"
+              "unit": "reqps",
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -193,7 +260,7 @@ data:
             "h": 5,
             "w": 4,
             "x": 8,
-            "y": 1
+            "y": 4
           },
           "id": 4,
           "options": {
@@ -221,7 +288,8 @@ data:
             }
           ],
           "title": "Public 4xx/s",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -250,7 +318,8 @@ data:
                   }
                 ]
               },
-              "unit": "reqps"
+              "unit": "reqps",
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -258,7 +327,7 @@ data:
             "h": 5,
             "w": 4,
             "x": 12,
-            "y": 1
+            "y": 4
           },
           "id": 5,
           "options": {
@@ -286,7 +355,8 @@ data:
             }
           ],
           "title": "Public 5xx/s",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -307,7 +377,8 @@ data:
                   }
                 ]
               },
-              "unit": "short"
+              "unit": "short",
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -315,7 +386,7 @@ data:
             "h": 5,
             "w": 4,
             "x": 16,
-            "y": 1
+            "y": 4
           },
           "id": 6,
           "options": {
@@ -343,7 +414,8 @@ data:
             }
           ],
           "title": "CrowdSec Active Decisions",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -365,7 +437,8 @@ data:
                   }
                 ]
               },
-              "unit": "s"
+              "unit": "s",
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -373,7 +446,7 @@ data:
             "h": 5,
             "w": 4,
             "x": 20,
-            "y": 1
+            "y": 4
           },
           "id": 7,
           "options": {
@@ -401,7 +474,8 @@ data:
             }
           ],
           "title": "Public P95 Latency",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -413,7 +487,8 @@ data:
               "color": {
                 "mode": "palette-classic"
               },
-              "unit": "reqps"
+              "unit": "reqps",
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -421,7 +496,7 @@ data:
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 6
+            "y": 9
           },
           "id": 8,
           "options": {
@@ -445,7 +520,8 @@ data:
             }
           ],
           "title": "Requests by Entrypoint",
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -457,7 +533,8 @@ data:
               "color": {
                 "mode": "palette-classic"
               },
-              "unit": "reqps"
+              "unit": "reqps",
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -465,7 +542,7 @@ data:
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 6
+            "y": 9
           },
           "id": 9,
           "options": {
@@ -489,7 +566,8 @@ data:
             }
           ],
           "title": "Public Status Codes",
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -501,7 +579,8 @@ data:
               "color": {
                 "mode": "palette-classic"
               },
-              "unit": "reqps"
+              "unit": "reqps",
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -509,7 +588,7 @@ data:
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 14
+            "y": 17
           },
           "id": 10,
           "options": {
@@ -533,7 +612,8 @@ data:
             }
           ],
           "title": "Top Public Routers",
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -545,7 +625,8 @@ data:
               "color": {
                 "mode": "palette-classic"
               },
-              "unit": "reqps"
+              "unit": "reqps",
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -553,7 +634,7 @@ data:
             "h": 8,
             "w": 6,
             "x": 12,
-            "y": 14
+            "y": 17
           },
           "id": 11,
           "options": {
@@ -577,7 +658,8 @@ data:
             }
           ],
           "title": "Gitea Public Traffic",
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -589,7 +671,8 @@ data:
               "color": {
                 "mode": "palette-classic"
               },
-              "unit": "reqps"
+              "unit": "reqps",
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -597,7 +680,7 @@ data:
             "h": 8,
             "w": 6,
             "x": 18,
-            "y": 14
+            "y": 17
           },
           "id": 12,
           "options": {
@@ -621,14 +704,15 @@ data:
             }
           ],
           "title": "Dashboard Public Traffic",
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
             "type": "loki",
             "uid": "$logs"
           },
-          "description": "Unique Cloudflare client IPs that reached Traefik during the selected time range. Cloudflare-blocked requests never reach this log stream.",
+          "description": "Unique Cloudflare client IPs that reached Traefik during the selected time range. Cloudflare-blocked requests never reach this log stream.\nEmpty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -643,7 +727,8 @@ data:
                   }
                 ]
               },
-              "unit": "short"
+              "unit": "short",
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -651,7 +736,7 @@ data:
             "h": 5,
             "w": 6,
             "x": 0,
-            "y": 22
+            "y": 25
           },
           "id": 13,
           "options": {
@@ -688,7 +773,7 @@ data:
             "type": "loki",
             "uid": "$logs"
           },
-          "description": "Top Cloudflare client IPs by Traefik request count during the selected time range.",
+          "description": "Top Cloudflare client IPs by Traefik request count during the selected time range.\nEmpty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -710,7 +795,8 @@ data:
                   }
                 ]
               },
-              "unit": "short"
+              "unit": "short",
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -718,7 +804,7 @@ data:
             "h": 10,
             "w": 18,
             "x": 6,
-            "y": 22
+            "y": 25
           },
           "id": 14,
           "options": {
@@ -761,9 +847,8 @@ data:
         "list": [
           {
             "current": {
-              "selected": true,
               "text": "Prometheus",
-              "value": "Prometheus"
+              "value": "prometheus"
             },
             "hide": 0,
             "includeAll": false,
@@ -778,11 +863,7 @@ data:
             "type": "datasource"
           },
           {
-            "current": {
-              "selected": true,
-              "text": "Loki",
-              "value": "Loki"
-            },
+            "current": {},
             "hide": 0,
             "includeAll": false,
             "label": "Loki",
@@ -791,7 +872,7 @@ data:
             "options": [],
             "query": "loki",
             "refresh": 1,
-            "regex": "",
+            "regex": "/^Loki$/",
             "skipUrlSync": false,
             "type": "datasource"
           }
@@ -803,5 +884,5 @@ data:
       },
       "timezone": "browser",
       "title": "Edge Overview",
-      "version": 1
+      "version": 2
     }

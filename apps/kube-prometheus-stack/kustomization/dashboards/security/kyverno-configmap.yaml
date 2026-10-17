@@ -30,24 +30,82 @@ data:
       "fiscalYearStartMonth": 0,
       "graphTooltip": 1,
       "id": null,
-      "links": [
-
-      ],
+      "links": [],
       "panels": [
+        {
+          "id": 15,
+          "title": "Telemetry scrape health",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "gridPos": {
+            "x": 0,
+            "y": 0,
+            "w": 24,
+            "h": 3
+          },
+          "description": "Minimum up across matching targets. 1 = all discovered targets scraped successfully, 0 = scrape failure. NO TELEMETRY = no recent samples or no matching targets; not zero events. This does not detect a missing replica by itself.",
+          "fieldConfig": {
+            "defaults": {
+              "min": 0,
+              "max": 1,
+              "noValue": "NO TELEMETRY",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "options": {
+            "colorMode": "background",
+            "graphMode": "none",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            }
+          },
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "min(up{namespace=\"kyverno\"})",
+              "instant": true,
+              "range": false
+            }
+          ]
+        },
         {
           "collapsed": false,
           "gridPos": {
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 0
+            "y": 3
           },
           "id": 1,
-          "panels": [
-
-          ],
+          "panels": [],
           "title": "Overview",
-          "type": "row"
+          "type": "row",
+          "fieldConfig": {
+            "defaults": {
+              "noValue": "No matching samples"
+            }
+          },
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -68,17 +126,16 @@ data:
                   }
                 ]
               },
-              "unit": "ops"
+              "unit": "ops",
+              "noValue": "No matching samples"
             },
-            "overrides": [
-
-            ]
+            "overrides": []
           },
           "gridPos": {
             "h": 5,
             "w": 4,
             "x": 0,
-            "y": 1
+            "y": 4
           },
           "id": 2,
           "options": {
@@ -107,7 +164,8 @@ data:
             }
           ],
           "title": "Admission Requests/s",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -132,17 +190,16 @@ data:
                   }
                 ]
               },
-              "unit": "ops"
+              "unit": "ops",
+              "noValue": "No matching samples"
             },
-            "overrides": [
-
-            ]
+            "overrides": []
           },
           "gridPos": {
             "h": 5,
             "w": 4,
             "x": 4,
-            "y": 1
+            "y": 4
           },
           "id": 3,
           "options": {
@@ -171,7 +228,8 @@ data:
             }
           ],
           "title": "Denied Requests/s",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -200,17 +258,16 @@ data:
                   }
                 ]
               },
-              "unit": "s"
+              "unit": "s",
+              "noValue": "No matching samples"
             },
-            "overrides": [
-
-            ]
+            "overrides": []
           },
           "gridPos": {
             "h": 5,
             "w": 4,
             "x": 8,
-            "y": 1
+            "y": 4
           },
           "id": 4,
           "options": {
@@ -239,7 +296,8 @@ data:
             }
           ],
           "title": "Admission P95",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -260,17 +318,16 @@ data:
                   }
                 ]
               },
-              "unit": "short"
+              "unit": "short",
+              "noValue": "No matching samples"
             },
-            "overrides": [
-
-            ]
+            "overrides": []
           },
           "gridPos": {
             "h": 5,
             "w": 4,
             "x": 12,
-            "y": 1
+            "y": 4
           },
           "id": 5,
           "options": {
@@ -299,7 +356,8 @@ data:
             }
           ],
           "title": "Policy Fails",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -320,17 +378,16 @@ data:
                   }
                 ]
               },
-              "unit": "short"
+              "unit": "short",
+              "noValue": "No matching samples"
             },
-            "overrides": [
-
-            ]
+            "overrides": []
           },
           "gridPos": {
             "h": 5,
             "w": 4,
             "x": 16,
-            "y": 1
+            "y": 4
           },
           "id": 6,
           "options": {
@@ -359,7 +416,8 @@ data:
             }
           ],
           "title": "Policy Passes",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -380,17 +438,16 @@ data:
                   }
                 ]
               },
-              "unit": "ops"
+              "unit": "ops",
+              "noValue": "No matching samples"
             },
-            "overrides": [
-
-            ]
+            "overrides": []
           },
           "gridPos": {
             "h": 5,
             "w": 4,
             "x": 20,
-            "y": 1
+            "y": 4
           },
           "id": 7,
           "options": {
@@ -419,7 +476,8 @@ data:
             }
           ],
           "title": "Controller Reconciles/s",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "collapsed": false,
@@ -427,14 +485,18 @@ data:
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 6
+            "y": 9
           },
           "id": 8,
-          "panels": [
-
-          ],
+          "panels": [],
           "title": "Policy Outcomes",
-          "type": "row"
+          "type": "row",
+          "fieldConfig": {
+            "defaults": {
+              "noValue": "No matching samples"
+            }
+          },
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -445,17 +507,16 @@ data:
             "defaults": {
               "color": {
                 "mode": "palette-classic"
-              }
+              },
+              "noValue": "No matching samples"
             },
-            "overrides": [
-
-            ]
+            "overrides": []
           },
           "gridPos": {
             "h": 8,
             "w": 8,
             "x": 0,
-            "y": 7
+            "y": 10
           },
           "id": 9,
           "options": {
@@ -469,8 +530,7 @@ data:
               "values": false
             },
             "showUnfilled": true,
-            "text": {
-            }
+            "text": {}
           },
           "targets": [
             {
@@ -485,7 +545,8 @@ data:
             }
           ],
           "title": "Policy Results",
-          "type": "bargauge"
+          "type": "bargauge",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -496,17 +557,16 @@ data:
             "defaults": {
               "color": {
                 "mode": "palette-classic"
-              }
+              },
+              "noValue": "No matching samples"
             },
-            "overrides": [
-
-            ]
+            "overrides": []
           },
           "gridPos": {
             "h": 8,
             "w": 8,
             "x": 8,
-            "y": 7
+            "y": 10
           },
           "id": 10,
           "options": {
@@ -520,8 +580,7 @@ data:
               "values": false
             },
             "showUnfilled": true,
-            "text": {
-            }
+            "text": {}
           },
           "targets": [
             {
@@ -536,7 +595,8 @@ data:
             }
           ],
           "title": "Top Failing Policies",
-          "type": "bargauge"
+          "type": "bargauge",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -547,17 +607,16 @@ data:
             "defaults": {
               "color": {
                 "mode": "palette-classic"
-              }
+              },
+              "noValue": "No matching samples"
             },
-            "overrides": [
-
-            ]
+            "overrides": []
           },
           "gridPos": {
             "h": 8,
             "w": 8,
             "x": 16,
-            "y": 7
+            "y": 10
           },
           "id": 11,
           "options": {
@@ -571,8 +630,7 @@ data:
               "values": false
             },
             "showUnfilled": true,
-            "text": {
-            }
+            "text": {}
           },
           "targets": [
             {
@@ -587,7 +645,8 @@ data:
             }
           ],
           "title": "Top Failing Namespaces",
-          "type": "bargauge"
+          "type": "bargauge",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "collapsed": false,
@@ -595,14 +654,18 @@ data:
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 15
+            "y": 18
           },
           "id": 12,
-          "panels": [
-
-          ],
+          "panels": [],
           "title": "Admission and Controllers",
-          "type": "row"
+          "type": "row",
+          "fieldConfig": {
+            "defaults": {
+              "noValue": "No matching samples"
+            }
+          },
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -613,17 +676,16 @@ data:
             "defaults": {
               "color": {
                 "mode": "palette-classic"
-              }
+              },
+              "noValue": "No matching samples"
             },
-            "overrides": [
-
-            ]
+            "overrides": []
           },
           "gridPos": {
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 16
+            "y": 19
           },
           "id": 13,
           "options": {
@@ -648,7 +710,8 @@ data:
             }
           ],
           "title": "Admission Requests by Webhook",
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -659,17 +722,16 @@ data:
             "defaults": {
               "color": {
                 "mode": "palette-classic"
-              }
+              },
+              "noValue": "No matching samples"
             },
-            "overrides": [
-
-            ]
+            "overrides": []
           },
           "gridPos": {
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 16
+            "y": 19
           },
           "id": 14,
           "options": {
@@ -683,8 +745,7 @@ data:
               "values": false
             },
             "showUnfilled": true,
-            "text": {
-            }
+            "text": {}
           },
           "targets": [
             {
@@ -699,7 +760,8 @@ data:
             }
           ],
           "title": "Top Controllers by Reconcile Rate",
-          "type": "bargauge"
+          "type": "bargauge",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         }
       ],
       "refresh": "5m",
@@ -714,7 +776,6 @@ data:
         "list": [
           {
             "current": {
-              "selected": true,
               "text": "Prometheus",
               "value": "prometheus"
             },
@@ -723,9 +784,7 @@ data:
             "label": "datasource",
             "multi": false,
             "name": "datasource",
-            "options": [
-
-            ],
+            "options": [],
             "query": "prometheus",
             "refresh": 1,
             "regex": "",
@@ -738,11 +797,10 @@ data:
         "from": "now-24h",
         "to": "now"
       },
-      "timepicker": {
-      },
+      "timepicker": {},
       "timezone": "",
       "title": "Kyverno",
       "uid": "kyverno-overview",
-      "version": 1,
+      "version": 2,
       "weekStart": ""
     }

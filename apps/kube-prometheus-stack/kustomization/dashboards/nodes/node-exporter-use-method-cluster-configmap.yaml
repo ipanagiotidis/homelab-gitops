@@ -554,7 +554,13 @@ data:
           {
             "name": "datasource",
             "query": "prometheus",
-            "type": "datasource"
+            "type": "datasource",
+            "current": {
+              "text": "Prometheus",
+              "value": "prometheus"
+            },
+            "options": [],
+            "refresh": 1
           },
           {
             "allValue": ".*",
@@ -579,6 +585,6 @@ data:
       "timezone": "utc",
       "title": "Node Exporter / USE Method / Cluster",
       "uid": "3e97d1d02672cdd0861f4c97c64f89b2",
-      "version": 1,
+      "version": 2,
       "id": null
     }

@@ -418,16 +418,17 @@ data:
         "list": [
           {
             "current": {
-              "selected": true,
-              "text": "default",
-              "value": "default"
+              "text": "Prometheus",
+              "value": "prometheus"
             },
             "hide": 0,
             "label": "Data source",
             "name": "datasource",
             "query": "prometheus",
             "regex": "",
-            "type": "datasource"
+            "type": "datasource",
+            "options": [],
+            "refresh": 1
           },
           {
             "allValue": ".*",
@@ -464,11 +465,7 @@ data:
             "type": "query"
           },
           {
-            "current": {
-              "selected": false,
-              "text": "kube-system",
-              "value": "kube-system"
-            },
+            "current": {},
             "datasource": {
               "type": "prometheus",
               "uid": "${datasource}"
@@ -490,6 +487,6 @@ data:
       "timezone": "utc",
       "title": "Kubernetes / Networking / Pod",
       "uid": "7a18067ce943a40ae25454675c19ff5c",
-      "version": 1,
+      "version": 2,
       "id": null
     }

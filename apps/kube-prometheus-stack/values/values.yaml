@@ -14,8 +14,9 @@ kubeDns:
 #   enabled: false
 kubeScheduler:
   enabled: false
-# kubeProxy:
-#   enabled: false
+# kube-proxy is still used, but its node:10249 metrics endpoint is not exposed.
+kubeProxy:
+  enabled: false
 kubeStateMetrics:
   enabled: true
 nodeExporter:
@@ -102,20 +103,47 @@ grafana:
       tag: 2.8.1@sha256:abb55b2165c60e8f97e473862c7a3123df6f67d44f592949577c29b8fb2df9d6
     dashboards:
       enabled: true
+      resource: configmap
+      skipReload: true
       label: grafana_dashboard
       labelValue: "1"
       folderAnnotation: k8s-sidecar-target-directory
       provider:
         foldersFromFilesStructure: true
+        # Poll files instead of requiring Grafana server-admin credentials.
+        updateIntervalSeconds: 30
     datasources:
-      enabled: true
-      label: grafana_datasource
-      labelValue: "1"
-  additionalDataSources:
-    - name: Loki
-      type: loki
-      access: proxy
-      url: http://loki.monitoring.svc.cluster.local:3100
+      enabled: false
+  # The chart checksums this file into the pod template. Changes cause a
+  # controlled rollout and startup provisioning, without an admin API reload.
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      deleteDatasources:
+        - name: Alertmanager
+          orgId: 1
+      datasources:
+        - name: Prometheus
+          uid: prometheus
+          type: prometheus
+          access: proxy
+          url: http://kube-prometheus-stack-prometheus.monitoring:9090/
+          isDefault: true
+          jsonData:
+            httpMethod: POST
+            timeInterval: 60s
+        - name: Loki
+          type: loki
+          access: proxy
+          url: http://loki.monitoring.svc.cluster.local:3100
+        # Preserve the legacy name/UID for any UI-created dashboards. Both
+        # definitions now have one provisioning owner; remove after UI audit.
+        - name: loki
+          type: loki
+          access: proxy
+          url: http://loki.monitoring.svc.cluster.local:3100
+          jsonData:
+            maxLines: 500
 kube-state-metrics:
   image:
     registry: reg.yiannis.io

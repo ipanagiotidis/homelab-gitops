@@ -686,7 +686,13 @@ data:
           {
             "name": "datasource",
             "query": "prometheus",
-            "type": "datasource"
+            "type": "datasource",
+            "current": {
+              "text": "Prometheus",
+              "value": "prometheus"
+            },
+            "options": [],
+            "refresh": 1
           },
           {
             "allValue": ".*",
@@ -721,6 +727,6 @@ data:
       "timezone": "utc",
       "title": "Node Exporter / Nodes",
       "uid": "7d57716318ee0dddbac5a7f451fb7753",
-      "version": 1,
+      "version": 2,
       "id": null
     }

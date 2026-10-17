@@ -20,7 +20,9 @@ operator:
 serviceMonitor:
   enabled: true
   namespace: monitoring
-  interval: 15m
+  # Scrape cached reports frequently enough for Prometheus's 5m lookback.
+  # This does not change vulnerability scan scheduling.
+  interval: 2m
 
 policiesBundle:
   registry: reg.yiannis.io

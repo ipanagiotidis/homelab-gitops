@@ -254,7 +254,8 @@ data:
                   }
                 ]
               },
-              "unit": "percent"
+              "unit": "percent",
+              "noValue": "Not reported"
             },
             "overrides": []
           },
@@ -291,7 +292,8 @@ data:
             }
           ],
           "title": "Latest Packet Loss",
-          "type": "stat"
+          "type": "stat",
+          "description": "Optional result field; absence is not 0% packet loss. Some tests do not provide packet-loss measurements."
         },
         {
           "collapsed": false,
@@ -349,7 +351,7 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "speedtest_tracker_download_bits{job=\"speedtest-tracker\"}",
+              "expr": "last_over_time(speedtest_tracker_download_bits{job=\"speedtest-tracker\"}[65m])",
               "legendFormat": "Download {{server_name}}",
               "refId": "A"
             },
@@ -358,13 +360,14 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "speedtest_tracker_upload_bits{job=\"speedtest-tracker\"}",
+              "expr": "last_over_time(speedtest_tracker_upload_bits{job=\"speedtest-tracker\"}[65m])",
               "legendFormat": "Upload {{server_name}}",
               "refId": "B"
             }
           ],
           "title": "Download / Upload History",
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "Last observed measurement held between 30-minute exporter scrapes, for at most 65 minutes. The underlying speed tests run independently of scraping; this is not continuous bandwidth measurement."
         },
         {
           "datasource": {
@@ -409,7 +412,7 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "speedtest_tracker_ping_ms{job=\"speedtest-tracker\"}",
+              "expr": "last_over_time(speedtest_tracker_ping_ms{job=\"speedtest-tracker\"}[65m])",
               "legendFormat": "Ping {{server_name}}",
               "refId": "A"
             },
@@ -418,13 +421,73 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "speedtest_tracker_ping_jitter_ms{job=\"speedtest-tracker\"}",
+              "expr": "last_over_time(speedtest_tracker_ping_jitter_ms{job=\"speedtest-tracker\"}[65m])",
               "legendFormat": "Jitter {{server_name}}",
               "refId": "B"
             }
           ],
           "title": "Ping / Jitter History",
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "Last observed measurement held between 30-minute exporter scrapes, for at most 65 minutes. The underlying speed tests run independently of scraping; this is not continuous bandwidth measurement."
+        },
+        {
+          "id": 9,
+          "title": "Age of last successful exporter scrape",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "gridPos": {
+            "x": 0,
+            "y": 16,
+            "w": 24,
+            "h": 3
+          },
+          "fieldConfig": {
+            "defaults": {
+              "unit": "s",
+              "noValue": "NO RECENT SCRAPE",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 2100
+                  },
+                  {
+                    "color": "red",
+                    "value": 3600
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "options": {
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "colorMode": "background",
+            "graphMode": "none"
+          },
+          "description": "Exporter sample age, not the time of the last speed test. Expected scrape interval: 30 minutes. Beyond 65 minutes no recent scrape is shown.",
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "time() - max(max_over_time(timestamp(up{job=\"speedtest-tracker\"} == 1)[65m:1m]))",
+              "instant": true,
+              "range": false
+            }
+          ]
         }
       ],
       "refresh": "1h",
@@ -438,7 +501,6 @@ data:
         "list": [
           {
             "current": {
-              "selected": false,
               "text": "Prometheus",
               "value": "prometheus"
             },
@@ -464,6 +526,6 @@ data:
       "timezone": "",
       "title": "Speedtest Tracker",
       "uid": "speedtest-tracker",
-      "version": 1,
+      "version": 2,
       "weekStart": ""
     }

@@ -604,9 +604,8 @@
     "list": [
       {
         "current": {
-          "selected": false,
           "text": "Prometheus",
-          "value": "Prometheus"
+          "value": "prometheus"
         },
         "hide": 0,
         "includeAll": false,
@@ -658,6 +657,6 @@
   "timezone": "",
   "title": "AdGuard Home",
   "uid": "adguard-home",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }

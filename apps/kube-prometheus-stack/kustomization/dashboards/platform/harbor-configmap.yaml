@@ -963,7 +963,6 @@ data:
         "list": [
           {
             "current": {
-              "selected": false,
               "text": "Prometheus",
               "value": "prometheus"
             },
@@ -1018,6 +1017,6 @@ data:
       "timezone": "",
       "title": "Harbor Overview",
       "uid": "harbor-overview",
-      "version": 1,
+      "version": 2,
       "weekStart": ""
     }

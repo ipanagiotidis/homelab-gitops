@@ -33,21 +33,66 @@ data:
       "panels": [
         {
           "collapsed": false,
-          "gridPos": {"h": 1, "w": 24, "x": 0, "y": 0},
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 0
+          },
           "id": 1,
           "panels": [],
           "title": "Local Guardrails Overview",
           "type": "row"
         },
         {
-          "datasource": {"type": "loki", "uid": "$logs"},
-          "fieldConfig": {"defaults": {"color": {"mode": "thresholds"}, "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}]}}, "overrides": []},
-          "gridPos": {"h": 5, "w": 6, "x": 0, "y": 1},
+          "datasource": {
+            "type": "loki",
+            "uid": "$logs"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 0,
+            "y": 1
+          },
           "id": 2,
-          "options": {"colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "textMode": "auto"},
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
           "targets": [
             {
-              "datasource": {"type": "loki", "uid": "$logs"},
+              "datasource": {
+                "type": "loki",
+                "uid": "$logs"
+              },
               "editorMode": "code",
               "expr": "sum(count_over_time({namespace=\"falco\", pod=~\"falco.*\"} | json | __error__=\"\" | rule=~\"Local .*\" [$__range]))",
               "queryType": "instant",
@@ -58,14 +103,54 @@ data:
           "type": "stat"
         },
         {
-          "datasource": {"type": "loki", "uid": "$logs"},
-          "fieldConfig": {"defaults": {"color": {"mode": "thresholds"}, "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}]}}, "overrides": []},
-          "gridPos": {"h": 5, "w": 6, "x": 6, "y": 1},
+          "datasource": {
+            "type": "loki",
+            "uid": "$logs"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 6,
+            "y": 1
+          },
           "id": 3,
-          "options": {"colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "textMode": "auto"},
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
           "targets": [
             {
-              "datasource": {"type": "loki", "uid": "$logs"},
+              "datasource": {
+                "type": "loki",
+                "uid": "$logs"
+              },
               "editorMode": "code",
               "expr": "count(sum by (rule) (count_over_time({namespace=\"falco\", pod=~\"falco.*\"} | json | __error__=\"\" | rule=~\"Local .*\" [$__range])))",
               "queryType": "instant",
@@ -76,14 +161,54 @@ data:
           "type": "stat"
         },
         {
-          "datasource": {"type": "loki", "uid": "$logs"},
-          "fieldConfig": {"defaults": {"color": {"mode": "thresholds"}, "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}]}}, "overrides": []},
-          "gridPos": {"h": 5, "w": 6, "x": 12, "y": 1},
+          "datasource": {
+            "type": "loki",
+            "uid": "$logs"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 12,
+            "y": 1
+          },
           "id": 4,
-          "options": {"colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "textMode": "auto"},
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
           "targets": [
             {
-              "datasource": {"type": "loki", "uid": "$logs"},
+              "datasource": {
+                "type": "loki",
+                "uid": "$logs"
+              },
               "editorMode": "code",
               "expr": "count(sum by (output_fields_k8s_ns_name) (count_over_time({namespace=\"falco\", pod=~\"falco.*\"} | json | __error__=\"\" | rule=~\"Local .*\" | output_fields_k8s_ns_name=~\".+\" [$__range])))",
               "queryType": "instant",
@@ -94,14 +219,54 @@ data:
           "type": "stat"
         },
         {
-          "datasource": {"type": "loki", "uid": "$logs"},
-          "fieldConfig": {"defaults": {"color": {"mode": "thresholds"}, "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}]}}, "overrides": []},
-          "gridPos": {"h": 5, "w": 6, "x": 18, "y": 1},
+          "datasource": {
+            "type": "loki",
+            "uid": "$logs"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 18,
+            "y": 1
+          },
           "id": 5,
-          "options": {"colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "textMode": "auto"},
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
           "targets": [
             {
-              "datasource": {"type": "loki", "uid": "$logs"},
+              "datasource": {
+                "type": "loki",
+                "uid": "$logs"
+              },
               "editorMode": "code",
               "expr": "count(sum by (output_fields_k8s_pod_name) (count_over_time({namespace=\"falco\", pod=~\"falco.*\"} | json | __error__=\"\" | rule=~\"Local .*\" | output_fields_k8s_pod_name=~\".+\" [$__range])))",
               "queryType": "instant",
@@ -113,21 +278,56 @@ data:
         },
         {
           "collapsed": false,
-          "gridPos": {"h": 1, "w": 24, "x": 0, "y": 6},
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 6
+          },
           "id": 6,
           "panels": [],
           "title": "Local Guardrails Detail",
           "type": "row"
         },
         {
-          "datasource": {"type": "loki", "uid": "$logs"},
-          "fieldConfig": {"defaults": {"color": {"mode": "palette-classic"}, "unit": "short"}, "overrides": []},
-          "gridPos": {"h": 8, "w": 8, "x": 0, "y": 7},
+          "datasource": {
+            "type": "loki",
+            "uid": "$logs"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 0,
+            "y": 7
+          },
           "id": 7,
-          "options": {"displayMode": "gradient", "orientation": "horizontal", "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "showUnfilled": true},
+          "options": {
+            "displayMode": "gradient",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showUnfilled": true
+          },
           "targets": [
             {
-              "datasource": {"type": "loki", "uid": "$logs"},
+              "datasource": {
+                "type": "loki",
+                "uid": "$logs"
+              },
               "editorMode": "code",
               "expr": "topk(10, sum by (rule) (count_over_time({namespace=\"falco\", pod=~\"falco.*\"} | json | __error__=\"\" | rule=~\"Local .*\" [$__range])))",
               "queryType": "instant",
@@ -138,14 +338,44 @@ data:
           "type": "bargauge"
         },
         {
-          "datasource": {"type": "loki", "uid": "$logs"},
-          "fieldConfig": {"defaults": {"color": {"mode": "palette-classic"}, "unit": "short"}, "overrides": []},
-          "gridPos": {"h": 8, "w": 8, "x": 8, "y": 7},
+          "datasource": {
+            "type": "loki",
+            "uid": "$logs"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 8,
+            "y": 7
+          },
           "id": 8,
-          "options": {"displayMode": "gradient", "orientation": "horizontal", "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "showUnfilled": true},
+          "options": {
+            "displayMode": "gradient",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showUnfilled": true
+          },
           "targets": [
             {
-              "datasource": {"type": "loki", "uid": "$logs"},
+              "datasource": {
+                "type": "loki",
+                "uid": "$logs"
+              },
               "editorMode": "code",
               "expr": "topk(10, sum by (output_fields_k8s_ns_name) (count_over_time({namespace=\"falco\", pod=~\"falco.*\"} | json | __error__=\"\" | rule=~\"Local .*\" | output_fields_k8s_ns_name=~\".+\" [$__range])))",
               "queryType": "instant",
@@ -156,14 +386,44 @@ data:
           "type": "bargauge"
         },
         {
-          "datasource": {"type": "loki", "uid": "$logs"},
-          "fieldConfig": {"defaults": {"color": {"mode": "palette-classic"}, "unit": "short"}, "overrides": []},
-          "gridPos": {"h": 8, "w": 8, "x": 16, "y": 7},
+          "datasource": {
+            "type": "loki",
+            "uid": "$logs"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 16,
+            "y": 7
+          },
           "id": 9,
-          "options": {"displayMode": "gradient", "orientation": "horizontal", "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "showUnfilled": true},
+          "options": {
+            "displayMode": "gradient",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showUnfilled": true
+          },
           "targets": [
             {
-              "datasource": {"type": "loki", "uid": "$logs"},
+              "datasource": {
+                "type": "loki",
+                "uid": "$logs"
+              },
               "editorMode": "code",
               "expr": "topk(10, sum by (output_fields_k8s_pod_name) (count_over_time({namespace=\"falco\", pod=~\"falco.*\"} | json | __error__=\"\" | rule=~\"Local .*\" | output_fields_k8s_pod_name=~\".+\" [$__range])))",
               "queryType": "instant",
@@ -174,14 +434,40 @@ data:
           "type": "bargauge"
         },
         {
-          "datasource": {"type": "loki", "uid": "$logs"},
-          "fieldConfig": {"defaults": {"color": {"mode": "palette-classic"}}, "overrides": []},
-          "gridPos": {"h": 8, "w": 24, "x": 0, "y": 15},
+          "datasource": {
+            "type": "loki",
+            "uid": "$logs"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 15
+          },
           "id": 10,
-          "options": {"legend": {"displayMode": "table", "placement": "bottom"}, "tooltip": {"mode": "multi"}},
+          "options": {
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom"
+            },
+            "tooltip": {
+              "mode": "multi"
+            }
+          },
           "targets": [
             {
-              "datasource": {"type": "loki", "uid": "$logs"},
+              "datasource": {
+                "type": "loki",
+                "uid": "$logs"
+              },
               "editorMode": "code",
               "expr": "sum by (rule) (count_over_time({namespace=\"falco\", pod=~\"falco.*\"} | json | __error__=\"\" | rule=~\"Local .*\" [$__interval]))",
               "queryType": "range",
@@ -192,13 +478,33 @@ data:
           "type": "timeseries"
         },
         {
-          "datasource": {"type": "loki", "uid": "$logs"},
-          "gridPos": {"h": 16, "w": 24, "x": 0, "y": 23},
+          "datasource": {
+            "type": "loki",
+            "uid": "$logs"
+          },
+          "gridPos": {
+            "h": 16,
+            "w": 24,
+            "x": 0,
+            "y": 23
+          },
           "id": 11,
-          "options": {"dedupStrategy": "exact", "enableLogDetails": true, "prettifyLogMessage": false, "showCommonLabels": false, "showLabels": true, "showTime": true, "sortOrder": "Descending", "wrapLogMessage": true},
+          "options": {
+            "dedupStrategy": "exact",
+            "enableLogDetails": true,
+            "prettifyLogMessage": false,
+            "showCommonLabels": false,
+            "showLabels": true,
+            "showTime": true,
+            "sortOrder": "Descending",
+            "wrapLogMessage": true
+          },
           "targets": [
             {
-              "datasource": {"type": "loki", "uid": "$logs"},
+              "datasource": {
+                "type": "loki",
+                "uid": "$logs"
+              },
               "editorMode": "code",
               "expr": "{namespace=\"falco\", pod=~\"falco.*\"} | json | __error__=\"\" | rule=~\"Local .*\" | line_format \"{{.time}} | {{.priority}} | rule={{.rule}} | ns={{.output_fields_k8s_ns_name}} | pod={{.output_fields_k8s_pod_name}} | {{.output}}\"",
               "queryType": "range",
@@ -212,11 +518,15 @@ data:
       "refresh": "30s",
       "schemaVersion": 39,
       "style": "dark",
-      "tags": ["security", "falco", "guardrails"],
+      "tags": [
+        "security",
+        "falco",
+        "guardrails"
+      ],
       "templating": {
         "list": [
           {
-            "current": {"selected": true, "text": "Loki", "value": "Loki"},
+            "current": {},
             "hide": 0,
             "includeAll": false,
             "label": "Logs",
@@ -225,14 +535,17 @@ data:
             "options": [],
             "query": "loki",
             "refresh": 1,
-            "regex": "",
+            "regex": "/^Loki$/",
             "skipUrlSync": false,
             "type": "datasource"
           }
         ]
       },
-      "time": {"from": "now-24h", "to": "now"},
+      "time": {
+        "from": "now-24h",
+        "to": "now"
+      },
       "timezone": "browser",
       "title": "Falco Local Guardrails",
-      "version": 1
+      "version": 2
     }

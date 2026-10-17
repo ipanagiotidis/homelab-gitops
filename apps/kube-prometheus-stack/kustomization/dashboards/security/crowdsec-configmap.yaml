@@ -32,17 +32,79 @@ data:
       "links": [],
       "panels": [
         {
+          "id": 20,
+          "title": "Telemetry scrape health",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "gridPos": {
+            "x": 0,
+            "y": 0,
+            "w": 24,
+            "h": 3
+          },
+          "description": "Minimum up across matching targets. 1 = all discovered targets scraped successfully, 0 = scrape failure. NO TELEMETRY = no recent samples or no matching targets; not zero events. This does not detect a missing replica by itself.",
+          "fieldConfig": {
+            "defaults": {
+              "min": 0,
+              "max": 1,
+              "noValue": "NO TELEMETRY",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "options": {
+            "colorMode": "background",
+            "graphMode": "none",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            }
+          },
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "min(up{namespace=\"crowdsec\"})",
+              "instant": true,
+              "range": false
+            }
+          ]
+        },
+        {
           "collapsed": false,
           "gridPos": {
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 0
+            "y": 3
           },
           "id": 1,
           "panels": [],
           "title": "Overview",
-          "type": "row"
+          "type": "row",
+          "fieldConfig": {
+            "defaults": {
+              "noValue": "No matching samples"
+            }
+          },
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -63,7 +125,8 @@ data:
                   }
                 ]
               },
-              "unit": "short"
+              "unit": "short",
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -71,7 +134,7 @@ data:
             "h": 5,
             "w": 4,
             "x": 0,
-            "y": 1
+            "y": 4
           },
           "id": 2,
           "options": {
@@ -99,7 +162,8 @@ data:
             }
           ],
           "title": "Active Decisions",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -120,7 +184,8 @@ data:
                   }
                 ]
               },
-              "unit": "reqps"
+              "unit": "reqps",
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -128,7 +193,7 @@ data:
             "h": 5,
             "w": 4,
             "x": 4,
-            "y": 1
+            "y": 4
           },
           "id": 3,
           "options": {
@@ -156,7 +221,8 @@ data:
             }
           ],
           "title": "Bouncer Requests/s",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -177,7 +243,8 @@ data:
                   }
                 ]
               },
-              "unit": "reqps"
+              "unit": "reqps",
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -185,7 +252,7 @@ data:
             "h": 5,
             "w": 4,
             "x": 8,
-            "y": 1
+            "y": 4
           },
           "id": 4,
           "options": {
@@ -213,7 +280,8 @@ data:
             }
           ],
           "title": "Agent Heartbeats/s",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -242,7 +310,8 @@ data:
                   }
                 ]
               },
-              "unit": "ops"
+              "unit": "ops",
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -250,7 +319,7 @@ data:
             "h": 5,
             "w": 4,
             "x": 12,
-            "y": 1
+            "y": 4
           },
           "id": 5,
           "options": {
@@ -278,7 +347,8 @@ data:
             }
           ],
           "title": "Parser Failures/s",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -308,7 +378,8 @@ data:
                   }
                 ]
               },
-              "unit": "s"
+              "unit": "s",
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -316,7 +387,7 @@ data:
             "h": 5,
             "w": 4,
             "x": 16,
-            "y": 1
+            "y": 4
           },
           "id": 6,
           "options": {
@@ -344,7 +415,8 @@ data:
             }
           ],
           "title": "LAPI P95 Latency",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -365,7 +437,8 @@ data:
                   }
                 ]
               },
-              "unit": "ops"
+              "unit": "ops",
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -373,7 +446,7 @@ data:
             "h": 5,
             "w": 4,
             "x": 20,
-            "y": 1
+            "y": 4
           },
           "id": 7,
           "options": {
@@ -401,7 +474,8 @@ data:
             }
           ],
           "title": "Scenario Hits/s",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "collapsed": false,
@@ -409,12 +483,18 @@ data:
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 6
+            "y": 9
           },
           "id": 8,
           "panels": [],
           "title": "LAPI",
-          "type": "row"
+          "type": "row",
+          "fieldConfig": {
+            "defaults": {
+              "noValue": "No matching samples"
+            }
+          },
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -425,7 +505,8 @@ data:
             "defaults": {
               "color": {
                 "mode": "palette-classic"
-              }
+              },
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -433,7 +514,7 @@ data:
             "h": 8,
             "w": 8,
             "x": 0,
-            "y": 7
+            "y": 10
           },
           "id": 9,
           "options": {
@@ -462,7 +543,8 @@ data:
             }
           ],
           "title": "Active Decisions by Reason",
-          "type": "barchart"
+          "type": "barchart",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -473,7 +555,8 @@ data:
             "defaults": {
               "color": {
                 "mode": "palette-classic"
-              }
+              },
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -481,7 +564,7 @@ data:
             "h": 8,
             "w": 8,
             "x": 8,
-            "y": 7
+            "y": 10
           },
           "id": 10,
           "options": {
@@ -507,7 +590,8 @@ data:
             }
           ],
           "title": "LAPI Route Requests/s",
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -518,7 +602,8 @@ data:
             "defaults": {
               "color": {
                 "mode": "palette-classic"
-              }
+              },
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -526,7 +611,7 @@ data:
             "h": 8,
             "w": 8,
             "x": 16,
-            "y": 7
+            "y": 10
           },
           "id": 11,
           "options": {
@@ -552,7 +637,8 @@ data:
             }
           ],
           "title": "Bouncer Requests by Bouncer",
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -564,7 +650,8 @@ data:
               "color": {
                 "mode": "palette-classic"
               },
-              "unit": "s"
+              "unit": "s",
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -572,7 +659,7 @@ data:
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 15
+            "y": 18
           },
           "id": 12,
           "options": {
@@ -598,7 +685,8 @@ data:
             }
           ],
           "title": "LAPI Endpoint P95 Latency",
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -609,7 +697,8 @@ data:
             "defaults": {
               "color": {
                 "mode": "palette-classic"
-              }
+              },
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -617,7 +706,7 @@ data:
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 15
+            "y": 18
           },
           "id": 13,
           "options": {
@@ -643,7 +732,8 @@ data:
             }
           ],
           "title": "Agent Heartbeats by Machine",
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "collapsed": false,
@@ -651,12 +741,18 @@ data:
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 23
+            "y": 26
           },
           "id": 14,
           "panels": [],
           "title": "Parsing and Scenarios",
-          "type": "row"
+          "type": "row",
+          "fieldConfig": {
+            "defaults": {
+              "noValue": "No matching samples"
+            }
+          },
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -667,7 +763,8 @@ data:
             "defaults": {
               "color": {
                 "mode": "palette-classic"
-              }
+              },
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -675,7 +772,7 @@ data:
             "h": 8,
             "w": 8,
             "x": 0,
-            "y": 24
+            "y": 27
           },
           "id": 15,
           "options": {
@@ -701,7 +798,8 @@ data:
             }
           ],
           "title": "Filesource Throughput/s",
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -712,7 +810,8 @@ data:
             "defaults": {
               "color": {
                 "mode": "palette-classic"
-              }
+              },
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -720,7 +819,7 @@ data:
             "h": 8,
             "w": 8,
             "x": 8,
-            "y": 24
+            "y": 27
           },
           "id": 16,
           "options": {
@@ -749,7 +848,8 @@ data:
             }
           ],
           "title": "Top Parser Failures by Source",
-          "type": "barchart"
+          "type": "barchart",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -760,7 +860,8 @@ data:
             "defaults": {
               "color": {
                 "mode": "palette-classic"
-              }
+              },
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -768,7 +869,7 @@ data:
             "h": 8,
             "w": 8,
             "x": 16,
-            "y": 24
+            "y": 27
           },
           "id": 17,
           "options": {
@@ -797,7 +898,8 @@ data:
             }
           ],
           "title": "Top Scenario Hits",
-          "type": "barchart"
+          "type": "barchart",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -809,7 +911,8 @@ data:
               "color": {
                 "mode": "palette-classic"
               },
-              "unit": "s"
+              "unit": "s",
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -817,7 +920,7 @@ data:
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 32
+            "y": 35
           },
           "id": 18,
           "options": {
@@ -843,7 +946,8 @@ data:
             }
           ],
           "title": "Parsing P95 Latency",
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -854,7 +958,8 @@ data:
             "defaults": {
               "color": {
                 "mode": "palette-classic"
-              }
+              },
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -862,7 +967,7 @@ data:
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 32
+            "y": 35
           },
           "id": 19,
           "options": {
@@ -891,7 +996,8 @@ data:
             }
           ],
           "title": "Top Scenario Failures",
-          "type": "barchart"
+          "type": "barchart",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         }
       ],
       "refresh": "30s",
@@ -905,9 +1011,8 @@ data:
         "list": [
           {
             "current": {
-              "selected": false,
               "text": "Prometheus",
-              "value": "Prometheus"
+              "value": "prometheus"
             },
             "hide": 0,
             "includeAll": false,
@@ -931,6 +1036,6 @@ data:
       "timezone": "",
       "title": "CrowdSec",
       "uid": "crowdsec-overview",
-      "version": 1,
+      "version": 2,
       "weekStart": ""
     }

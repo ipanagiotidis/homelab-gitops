@@ -616,16 +616,17 @@ data:
         "list": [
           {
             "current": {
-              "selected": true,
-              "text": "default",
-              "value": "default"
+              "text": "Prometheus",
+              "value": "prometheus"
             },
             "hide": 0,
             "label": "Data source",
             "name": "datasource",
             "query": "prometheus",
             "regex": "",
-            "type": "datasource"
+            "type": "datasource",
+            "options": [],
+            "refresh": 1
           }
         ]
       },
@@ -636,6 +637,6 @@ data:
       "timezone": "utc",
       "title": "Kubernetes / Compute Resources /  Multi-Cluster",
       "uid": "b59e6c9f2fcbe2e16d77fc492374cc4f",
-      "version": 1,
+      "version": 2,
       "id": null
     }

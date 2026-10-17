@@ -55,7 +55,7 @@
       }
     ]
   },
-  "description": "Loki Metrics Dashboard",
+  "description": "Curated for Loki 3.7 single-binary/TSDB. Unsupported legacy Cortex, table-manager and old query-cache metrics were removed. Rate queries use the datasource scrape-aware interval.",
   "editable": false,
   "fiscalYearStartMonth": 0,
   "gnetId": 17781,
@@ -65,12 +65,68 @@
   "liveNow": false,
   "panels": [
     {
+      "id": 240,
+      "title": "Telemetry scrape health",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 3
+      },
+      "description": "Minimum up across matching targets. 1 = all discovered targets scraped successfully, 0 = scrape failure. NO TELEMETRY = no recent samples or no matching targets; not zero events. This does not detect a missing replica by itself.",
+      "fieldConfig": {
+        "defaults": {
+          "min": 0,
+          "max": 1,
+          "noValue": "NO TELEMETRY",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "min(up{namespace=\"monitoring\",job=\"monitoring/loki\"})",
+          "instant": true,
+          "range": false
+        }
+      ]
+    },
+    {
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 0
+        "y": 3
       },
       "id": 102,
       "panels": [],
@@ -113,7 +169,7 @@
         "h": 3,
         "w": 3,
         "x": 0,
-        "y": 1
+        "y": 4
       },
       "id": 59,
       "interval": "$interval",
@@ -209,7 +265,7 @@
         "h": 3,
         "w": 3,
         "x": 3,
-        "y": 1
+        "y": 4
       },
       "id": 10,
       "interval": "$interval",
@@ -275,7 +331,7 @@
         "h": 3,
         "w": 3,
         "x": 6,
-        "y": 1
+        "y": 4
       },
       "id": 80,
       "interval": "$interval",
@@ -355,7 +411,7 @@
         "h": 3,
         "w": 3,
         "x": 9,
-        "y": 1
+        "y": 4
       },
       "id": 24,
       "interval": "$interval",
@@ -429,7 +485,7 @@
         "h": 3,
         "w": 3,
         "x": 12,
-        "y": 1
+        "y": 4
       },
       "id": 112,
       "interval": "$interval",
@@ -498,7 +554,7 @@
         "h": 3,
         "w": 3,
         "x": 15,
-        "y": 1
+        "y": 4
       },
       "id": 81,
       "interval": "$interval",
@@ -611,7 +667,7 @@
         "h": 3,
         "w": 3,
         "x": 18,
-        "y": 1
+        "y": 4
       },
       "id": 86,
       "options": {
@@ -688,7 +744,7 @@
         "h": 3,
         "w": 3,
         "x": 21,
-        "y": 1
+        "y": 4
       },
       "id": 87,
       "options": {
@@ -757,7 +813,7 @@
         "h": 6,
         "w": 6,
         "x": 0,
-        "y": 4
+        "y": 7
       },
       "id": 235,
       "interval": "$interval",
@@ -840,7 +896,7 @@
         "h": 6,
         "w": 6,
         "x": 6,
-        "y": 4
+        "y": 7
       },
       "id": 234,
       "interval": "$interval",
@@ -930,7 +986,7 @@
         "h": 6,
         "w": 6,
         "x": 12,
-        "y": 4
+        "y": 7
       },
       "id": 230,
       "interval": "$interval",
@@ -1023,7 +1079,7 @@
         "h": 6,
         "w": 6,
         "x": 18,
-        "y": 4
+        "y": 7
       },
       "id": 188,
       "interval": "$interval",
@@ -1104,257 +1160,8 @@
       "gridPos": {
         "h": 3,
         "w": 3,
-        "x": 0,
-        "y": 10
-      },
-      "id": 23,
-      "interval": "$interval",
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "9.3.2",
-      "targets": [
-        {
-          "datasource": "Prometheus",
-          "editorMode": "code",
-          "expr": "sum(loki_store_series_total{job=~\"$jobs\"}) by(status)",
-          "instant": false,
-          "interval": "$interval",
-          "legendFormat": "{{ status }}",
-          "refId": "A"
-        }
-      ],
-      "title": "Store Series",
-      "transformations": [
-        {
-          "id": "calculateField",
-          "options": {}
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {},
-            "indexByName": {},
-            "renameByName": {
-              "discarded": "Discarded",
-              "matched": "Matched"
-            }
-          }
-        }
-      ],
-      "type": "stat"
-    },
-    {
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "links": [],
-          "mappings": [
-            {
-              "options": {
-                "null": {
-                  "index": 0,
-                  "text": "N/A"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 3,
-        "x": 3,
-        "y": 10
-      },
-      "id": 131,
-      "interval": "$interval",
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "9.3.2",
-      "targets": [
-        {
-          "datasource": "Prometheus",
-          "editorMode": "code",
-          "expr": "sum(loki_store_chunks_downloaded_total{job=~\"$jobs\"}) by(status)",
-          "instant": false,
-          "interval": "$interval",
-          "legendFormat": "{{ status }}",
-          "refId": "A"
-        }
-      ],
-      "title": "Store Chunks Downloaded",
-      "transformations": [
-        {
-          "id": "calculateField",
-          "options": {}
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {},
-            "indexByName": {},
-            "renameByName": {
-              "discarded": "Discarded",
-              "matched": "Matched"
-            }
-          }
-        }
-      ],
-      "type": "stat"
-    },
-    {
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "links": [],
-          "mappings": [
-            {
-              "options": {
-                "null": {
-                  "index": 0,
-                  "text": "N/A"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 3,
-        "x": 6,
-        "y": 10
-      },
-      "id": 137,
-      "interval": "$interval",
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "9.3.2",
-      "targets": [
-        {
-          "datasource": "Prometheus",
-          "editorMode": "code",
-          "expr": "sum(loki_index_chunk_refs_total{job=~\"$jobs\"}) by(status)",
-          "instant": false,
-          "interval": "$interval",
-          "legendFormat": "{{ status }}",
-          "refId": "A"
-        }
-      ],
-      "title": "Index Chunks Downloaded",
-      "transformations": [
-        {
-          "id": "calculateField",
-          "options": {}
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {},
-            "indexByName": {},
-            "renameByName": {
-              "discarded": "Discarded",
-              "matched": "Matched"
-            }
-          }
-        }
-      ],
-      "type": "stat"
-    },
-    {
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "links": [],
-          "mappings": [
-            {
-              "options": {
-                "null": {
-                  "index": 0,
-                  "text": "N/A"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 3,
         "x": 12,
-        "y": 10
+        "y": 13
       },
       "id": 191,
       "interval": "$interval",
@@ -1422,7 +1229,7 @@
         "h": 3,
         "w": 3,
         "x": 15,
-        "y": 10
+        "y": 13
       },
       "id": 192,
       "interval": "$interval",
@@ -1510,7 +1317,7 @@
         "h": 6,
         "w": 6,
         "x": 18,
-        "y": 10
+        "y": 13
       },
       "id": 233,
       "interval": "$interval",
@@ -1604,95 +1411,8 @@
       "gridPos": {
         "h": 3,
         "w": 6,
-        "x": 0,
-        "y": 13
-      },
-      "id": 236,
-      "interval": "$interval",
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "9.3.2",
-      "targets": [
-        {
-          "datasource": "Prometheus",
-          "editorMode": "code",
-          "expr": "sum(rate(loki_chunk_store_fetched_chunks_total{job=~\"$jobs\"}[$__rate_interval])) by (user)",
-          "hide": false,
-          "instant": false,
-          "interval": "$interval",
-          "legendFormat": "{{ user}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Store Operations Fetched",
-      "transformations": [
-        {
-          "id": "calculateField",
-          "options": {}
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {},
-            "indexByName": {},
-            "renameByName": {
-              "Create / fake": "Create / Default Tenant",
-              "Delete / fake": "Delete / Default Tenant",
-              "Fetch / fake": "Fetch / Default Tenant",
-              "Store / fake": "Store / Default Tenant",
-              "fake": "Default Tenant"
-            }
-          }
-        }
-      ],
-      "type": "stat"
-    },
-    {
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "links": [],
-          "mappings": [
-            {
-              "options": {
-                "null": {
-                  "index": 0,
-                  "text": "N/A"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "ops"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 6,
         "x": 6,
-        "y": 13
+        "y": 16
       },
       "id": 237,
       "interval": "$interval",
@@ -1779,7 +1499,7 @@
         "h": 3,
         "w": 3,
         "x": 12,
-        "y": 13
+        "y": 16
       },
       "id": 231,
       "interval": "$interval",
@@ -1847,7 +1567,7 @@
         "h": 3,
         "w": 3,
         "x": 15,
-        "y": 13
+        "y": 16
       },
       "id": 232,
       "interval": "$interval",
@@ -1914,95 +1634,8 @@
       "gridPos": {
         "h": 3,
         "w": 6,
-        "x": 0,
-        "y": 16
-      },
-      "id": 238,
-      "interval": "$interval",
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "9.3.2",
-      "targets": [
-        {
-          "datasource": "Prometheus",
-          "editorMode": "code",
-          "expr": "rate(loki_chunk_store_fetched_chunk_bytes_total{job=~\"$jobs\"}[$__rate_interval])",
-          "hide": false,
-          "instant": false,
-          "interval": "$interval",
-          "legendFormat": "{{ user}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Store Volume Fetched",
-      "transformations": [
-        {
-          "id": "calculateField",
-          "options": {}
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {},
-            "indexByName": {},
-            "renameByName": {
-              "Create / fake": "Create / Default Tenant",
-              "Delete / fake": "Delete / Default Tenant",
-              "Fetch / fake": "Fetch / Default Tenant",
-              "Store / fake": "Store / Default Tenant",
-              "fake": "Default Tenant"
-            }
-          }
-        }
-      ],
-      "type": "stat"
-    },
-    {
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "links": [],
-          "mappings": [
-            {
-              "options": {
-                "null": {
-                  "index": 0,
-                  "text": "N/A"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "binBps"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 6,
         "x": 6,
-        "y": 16
+        "y": 19
       },
       "id": 239,
       "interval": "$interval",
@@ -2062,7 +1695,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 19
+        "y": 22
       },
       "id": 143,
       "panels": [
@@ -2122,7 +1755,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 2
+            "y": 5
           },
           "id": 151,
           "options": {
@@ -2214,7 +1847,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 2
+            "y": 5
           },
           "id": 128,
           "options": {
@@ -2306,7 +1939,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 10
+            "y": 13
           },
           "id": 153,
           "options": {
@@ -2398,7 +2031,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 10
+            "y": 13
           },
           "id": 152,
           "options": {
@@ -2490,7 +2123,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 18
+            "y": 21
           },
           "id": 96,
           "options": {
@@ -2566,7 +2199,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 20
+        "y": 23
       },
       "id": 114,
       "panels": [
@@ -2626,7 +2259,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 3
+            "y": 6
           },
           "id": 115,
           "options": {
@@ -2718,7 +2351,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 3
+            "y": 6
           },
           "id": 116,
           "options": {
@@ -2810,7 +2443,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 11
+            "y": 14
           },
           "id": 118,
           "options": {
@@ -2910,7 +2543,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 11
+            "y": 14
           },
           "id": 119,
           "options": {
@@ -2956,7 +2589,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 21
+        "y": 24
       },
       "id": 108,
       "panels": [
@@ -3016,7 +2649,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 4
+            "y": 7
           },
           "id": 109,
           "options": {
@@ -3119,7 +2752,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 4
+            "y": 7
           },
           "id": 110,
           "options": {
@@ -3222,7 +2855,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 12
+            "y": 15
           },
           "id": 111,
           "options": {
@@ -3279,7 +2912,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 22
+        "y": 25
       },
       "id": 127,
       "panels": [
@@ -3339,7 +2972,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 5
+            "y": 8
           },
           "id": 130,
           "options": {
@@ -3394,136 +3027,6 @@
               "custom": {
                 "axisCenteredZero": false,
                 "axisColorMode": "text",
-                "axisLabel": "Chunks",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "cps"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 5
-          },
-          "id": 138,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "sum(rate(loki_index_chunk_refs_total{job=~\"$jobs\"}[$__rate_interval])) by (status)",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "{{ status }}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Loki Index - Chunks Downloaded",
-          "transformations": [
-            {
-              "id": "calculateField",
-              "options": {
-                "mode": "reduceRow",
-                "reduce": {
-                  "include": [
-                    "debug",
-                    "error",
-                    "info",
-                    "warn"
-                  ],
-                  "reducer": "sum"
-                }
-              }
-            },
-            {
-              "id": "organize",
-              "options": {
-                "excludeByName": {},
-                "indexByName": {
-                  "Time": 1,
-                  "Total": 0,
-                  "grpc": 2,
-                  "http": 3
-                },
-                "renameByName": {
-                  "debug": "Debug",
-                  "discarded": "Discarded",
-                  "error": "Error",
-                  "grpc": "gRPC",
-                  "http": "HTTP",
-                  "info": "Info",
-                  "matched": "Matched",
-                  "warn": "Warn"
-                }
-              }
-            }
-          ],
-          "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
                 "axisLabel": "Time",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
@@ -3569,7 +3072,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 13
+            "y": 16
           },
           "id": 201,
           "options": {
@@ -3604,190 +3107,6 @@
           "title": "Loki KV - Request Duration",
           "transformations": [],
           "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Time",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "s"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 13
-          },
-          "id": 202,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "histogram_quantile(0.95, sum(rate(cortex_kv_request_duration_seconds_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,kv_name,operation,role,status_code,type))",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "{{ kv_name }} / {{ type }} / {{ operation }} / {{ status_code }}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Cortex KV - Request Duration",
-          "transformations": [],
-          "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Time",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "s"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 21
-          },
-          "id": 228,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "histogram_quantile(0.95, sum(rate(cortex_consul_request_duration_seconds_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,kv_name,operation,status_code))",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "{{ kv_name }} / {{ operation }} / {{ status_code }}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Cortex KV - Request Duration",
-          "transformations": [],
-          "type": "timeseries"
         }
       ],
       "title": "Loki Index Metrics",
@@ -3799,7 +3118,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 23
+        "y": 26
       },
       "id": 174,
       "panels": [
@@ -3859,7 +3178,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 6
+            "y": 9
           },
           "id": 189,
           "options": {
@@ -3951,7 +3270,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 6
+            "y": 9
           },
           "id": 185,
           "options": {
@@ -4071,7 +3390,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 14
+            "y": 17
           },
           "id": 175,
           "options": {
@@ -4201,7 +3520,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 14
+            "y": 17
           },
           "id": 177,
           "options": {
@@ -4301,7 +3620,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 22
+            "y": 25
           },
           "id": 183,
           "options": {
@@ -4413,7 +3732,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 22
+            "y": 25
           },
           "id": 176,
           "options": {
@@ -4505,7 +3824,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 30
+            "y": 33
           },
           "id": 180,
           "options": {
@@ -4597,7 +3916,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 30
+            "y": 33
           },
           "id": 190,
           "options": {
@@ -4689,7 +4008,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 38
+            "y": 41
           },
           "id": 184,
           "options": {
@@ -4781,7 +4100,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 38
+            "y": 41
           },
           "id": 178,
           "options": {
@@ -4873,7 +4192,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 46
+            "y": 49
           },
           "id": 186,
           "options": {
@@ -4965,7 +4284,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 46
+            "y": 49
           },
           "id": 187,
           "options": {
@@ -5065,7 +4384,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 54
+            "y": 57
           },
           "id": 194,
           "options": {
@@ -5157,7 +4476,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 54
+            "y": 57
           },
           "id": 179,
           "options": {
@@ -5249,7 +4568,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 62
+            "y": 65
           },
           "id": 181,
           "options": {
@@ -5341,7 +4660,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 62
+            "y": 65
           },
           "id": 182,
           "options": {
@@ -5433,7 +4752,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 70
+            "y": 73
           },
           "id": 196,
           "options": {
@@ -5543,7 +4862,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 70
+            "y": 73
           },
           "id": 193,
           "options": {
@@ -5643,7 +4962,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 78
+            "y": 81
           },
           "id": 197,
           "options": {
@@ -5773,7 +5092,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 78
+            "y": 81
           },
           "id": 200,
           "options": {
@@ -5902,7 +5221,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 86
+            "y": 89
           },
           "id": 198,
           "options": {
@@ -6022,7 +5341,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 86
+            "y": 89
           },
           "id": 199,
           "options": {
@@ -6075,190 +5394,6 @@
             }
           ],
           "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Length",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "none"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 94
-          },
-          "id": 218,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "cortex_ingester_flush_queue_length{job=~\"$jobs\"}",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Series pending in the flush queue",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Cortex Ingester - Flush Queue",
-          "transformations": [],
-          "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Clients",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "none"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 94
-          },
-          "id": 229,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "cortex_distributor_ingester_clients{job=~\"$jobs\"}",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Ingester clients",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Cortex Ingester - Clients",
-          "transformations": [],
-          "type": "timeseries"
         }
       ],
       "title": "Loki Ingester Metrics",
@@ -6270,7 +5405,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 24
+        "y": 27
       },
       "id": 121,
       "panels": [
@@ -6330,7 +5465,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 7
+            "y": 10
           },
           "id": 124,
           "options": {
@@ -6458,7 +5593,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 7
+            "y": 10
           },
           "id": 217,
           "options": {
@@ -6517,7 +5652,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 15
+            "y": 18
           },
           "id": 122,
           "maxDataPoints": 50,
@@ -6654,7 +5789,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 15
+            "y": 18
           },
           "id": 123,
           "options": {
@@ -6708,760 +5843,10 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 25
-      },
-      "id": 140,
-      "panels": [
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Lines",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "cps"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 8
-          },
-          "id": 148,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "rate(loki_logql_querystats_ingester_sent_lines_total{job=~\"$jobs\"}[$__rate_interval])",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Lines",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Loki LogQL - Lines Received From Ingester",
-          "transformations": [],
-          "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Duplicates",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "cps"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 8
-          },
-          "id": 150,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "rate(loki_logql_querystats_duplicates_total{job=~\"$jobs\"}[$__rate_interval])",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Lines",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Loki LogQL - Duplicates Found",
-          "transformations": [],
-          "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Time",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "s"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 16
-          },
-          "id": 125,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "histogram_quantile(0.95, sum(rate(logql_query_duration_seconds_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,query_type))",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "{{ query_type }}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Loki LogQL - Query Duration",
-          "transformations": [],
-          "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Zime",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "s"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 16
-          },
-          "id": 147,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "histogram_quantile(0.95, sum(rate(loki_logql_querystats_latency_seconds_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,type,status_code))",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "{{ type }} / {{ status_code }}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Loki LogQL - Query Latency",
-          "transformations": [],
-          "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Size",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "binBps"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 24
-          },
-          "id": 141,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "histogram_quantile(0.95, sum(rate(loki_logql_querystats_bytes_processed_per_seconds_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,type,status_code))",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "{{ type }} / {{ status_code }}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Loki LogQL - Query Volume Processed",
-          "transformations": [],
-          "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Chunks",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "cps"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 24
-          },
-          "id": 149,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "sum(rate(loki_logql_querystats_downloaded_chunk_total{job=~\"$jobs\"}[$__rate_interval])) by(type,status_code)",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "{{ type }} / {{ status_code }}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Loki LogQL - Downloaded Chunks",
-          "transformations": [],
-          "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Zime",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "s"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 32
-          },
-          "id": 146,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "histogram_quantile(0.95, sum(rate(loki_logql_querystats_chunk_download_latency_seconds_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,type,status_code))",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "{{ type }} / {{ status_code }}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Loki LogQL - Chunk Download Latency",
-          "transformations": [],
-          "type": "timeseries"
-        }
-      ],
-      "title": "Loki LogQL Metrics",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 26
+        "y": 29
       },
       "id": 204,
       "panels": [
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Time",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "s"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 9
-          },
-          "id": 206,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "histogram_quantile(0.95, sum(rate(loki_querier_query_frontend_request_duration_seconds_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,operation,status_code))",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "{{ operation }} / {{ status_code }}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Loki Querier - Frontend Request Duration",
-          "transformations": [],
-          "type": "timeseries"
-        },
         {
           "datasource": "Prometheus",
           "description": "",
@@ -7518,7 +5903,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 9
+            "y": 12
           },
           "id": 210,
           "options": {
@@ -7620,7 +6005,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 17
+            "y": 20
           },
           "id": 211,
           "options": {
@@ -7712,7 +6097,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 17
+            "y": 20
           },
           "id": 212,
           "options": {
@@ -7803,110 +6188,8 @@
           "gridPos": {
             "h": 8,
             "w": 12,
-            "x": 0,
-            "y": 25
-          },
-          "id": 213,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "sum(rate(loki_query_frontend_sharding_parsed_queries_total{job=~\"$jobs\"}[$__rate_interval])) by (le,mapper,type)",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Parsed queries by evaluation type / {{ mapper }} / {{ type }}",
-              "range": true,
-              "refId": "A"
-            },
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "histogram_quantile(0.95, sum(rate(loki_query_frontend_shards_total{job=~\"$jobs\"}[$__rate_interval])) by (le,mapper,type))",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Downstream queries by expression type / {{ mapper }} / {{ type }}",
-              "range": true,
-              "refId": "B"
-            }
-          ],
-          "title": "Loki Querier - Frontend Shards",
-          "transformations": [],
-          "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Count",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "none"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
             "x": 12,
-            "y": 25
+            "y": 28
           },
           "id": 209,
           "options": {
@@ -8038,7 +6321,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 33
+            "y": 36
           },
           "id": 208,
           "options": {
@@ -8113,951 +6396,6 @@
           "title": "Loki Querier - Index Cache Operations",
           "transformations": [],
           "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Connections",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "none"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 33
-          },
-          "id": 219,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "cortex_query_frontend_connected_schedulers{job=~\"$jobs\"}",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Schedulers this frontend is connected to",
-              "range": true,
-              "refId": "A"
-            },
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "cortex_query_scheduler_connected_frontend_clients{job=~\"$jobs\"}",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Query-frontend worker clients",
-              "range": true,
-              "refId": "B"
-            },
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "cortex_query_scheduler_connected_querier_clients{job=~\"$jobs\"}",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Querier worker clients",
-              "range": true,
-              "refId": "C"
-            }
-          ],
-          "title": "Cortex Query - Frontend Connections",
-          "transformations": [],
-          "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Operations",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "cps"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 41
-          },
-          "id": 215,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "sum(rate(querier_cache_added_total{job=~\"$jobs\"}[$__rate_interval])) by (cache)",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Entries added to the cache / {{ cache }}",
-              "range": true,
-              "refId": "A"
-            },
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "sum(rate(querier_cache_added_new_total{job=~\"$jobs\"}[$__rate_interval])) by (cache)",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "New entries added to the cache / {{ cache }}",
-              "range": true,
-              "refId": "B"
-            },
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "sum(rate(querier_cache_evicted_total{job=~\"$jobs\"}[$__rate_interval])) by (cache,reason)",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Entries evicted from the cache / {{ cache }} / {{ reason }}",
-              "range": true,
-              "refId": "C"
-            },
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "sum(rate(querier_cache_gets_total{job=~\"$jobs\"}[$__rate_interval])) by (cache)",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Get calls to the cache / {{ cache }}",
-              "range": true,
-              "refId": "D"
-            },
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "sum(rate(querier_cache_misses_total{job=~\"$jobs\"}[$__rate_interval])) by (cache)",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Missed calls to the cache / {{ cache }}",
-              "range": true,
-              "refId": "E"
-            }
-          ],
-          "title": "Loki Query Cache - Throughput",
-          "transformations": [],
-          "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Count",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "none"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 41
-          },
-          "id": 214,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "sum(querier_cache_entries{job=~\"$jobs\"}) by (cache)",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Cache Entries / {{ cache }}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Loki Query Cache - Entries",
-          "transformations": [],
-          "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Bytes",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "bytes"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 49
-          },
-          "id": 216,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "sum(querier_cache_memory_bytes{job=~\"$jobs\"}) by (cache)",
-              "hide": false,
-              "legendFormat": "Current cache size / {{ cache }}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Loki Query Cache - Size",
-          "transformations": [
-            {
-              "id": "renameByRegex",
-              "options": {
-                "regex": "(.*)fake$",
-                "renamePattern": "$1Default Tenant"
-              }
-            }
-          ],
-          "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Count",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "none"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 49
-          },
-          "id": 207,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "histogram_quantile(0.95, sum(rate(cortex_query_frontend_retries_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le))",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Request retries",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Cortex Query - Frontend Retries",
-          "transformations": [],
-          "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Time",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "s"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 57
-          },
-          "id": 205,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "histogram_quantile(0.95, sum(rate(cortex_frontend_query_range_duration_seconds_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,method,status_code))",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "{{ method }} / {{ status_code }}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Cortex Query - Frontend Range Request Duration",
-          "transformations": [],
-          "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Connections",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "none"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 57
-          },
-          "id": 220,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "cortex_query_frontend_queries_in_progress{job=~\"$jobs\"}",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Queries in progress",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Cortex Query - Frontend Operations",
-          "transformations": [],
-          "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Requests",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "none"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 65
-          },
-          "id": 221,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "cortex_query_scheduler_inflight_requests{job=\"$jobs\",instance=\"$host:$instance\",quantile=\"0.99\"}",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Number of inflight requests (0.99 quantile)",
-              "range": true,
-              "refId": "A"
-            },
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "cortex_query_scheduler_inflight_requests{job=\"$jobs\",instance=\"$host:$instance\",quantile=\"0.95\"}",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Number of inflight requests (0.95 quantile)",
-              "range": true,
-              "refId": "B"
-            },
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "cortex_query_scheduler_inflight_requests{job=\"$jobs\",instance=\"$host:$instance\",quantile=\"0.9\"}",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Number of inflight requests (0.9 quantile)",
-              "range": true,
-              "refId": "C"
-            },
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "cortex_query_scheduler_inflight_requests{job=\"$jobs\",instance=\"$host:$instance\",quantile=\"0.8\"}",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Number of inflight requests (0.8 quantile)",
-              "range": true,
-              "refId": "D"
-            },
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "cortex_query_scheduler_inflight_requests{job=\"$jobs\",instance=\"$host:$instance\",quantile=\"0.75\"}",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Number of inflight requests (0.75 quantile)",
-              "range": true,
-              "refId": "E"
-            },
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "cortex_query_scheduler_inflight_requests{job=\"$jobs\",instance=\"$host:$instance\",quantile=\"0.5\"}",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Number of inflight requests (0.5 quantile)",
-              "range": true,
-              "refId": "F"
-            }
-          ],
-          "title": "Cortex Query - Scheduler Inflight Requests",
-          "transformations": [],
-          "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Time",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "s"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 65
-          },
-          "id": 222,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "histogram_quantile(0.95, sum(rate(cortex_query_scheduler_queue_duration_seconds_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le))",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Time spend by requests in queue before getting picked up by a querier",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Cortex Query - Scheduler Queue Duration",
-          "transformations": [],
-          "type": "timeseries"
         }
       ],
       "title": "Loki Querier",
@@ -9069,7 +6407,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 27
+        "y": 30
       },
       "id": 224,
       "panels": [
@@ -9129,7 +6467,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 10
+            "y": 13
           },
           "id": 225,
           "options": {
@@ -9221,7 +6559,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 10
+            "y": 13
           },
           "id": 226,
           "options": {
@@ -9266,98 +6604,6 @@
           "title": "Loki Ring - Tokens",
           "transformations": [],
           "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Heartbeats",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "cps"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 18
-          },
-          "id": 227,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "sum(rate(cortex_member_consul_heartbeats_total{job=~\"$jobs\"}[$__rate_interval])) by (name)",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Heartbeats sent / {{ name }}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Cortex Ring Member - Heathbeats",
-          "transformations": [],
-          "type": "timeseries"
         }
       ],
       "title": "Loki Ring Metrics",
@@ -9369,7 +6615,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 28
+        "y": 31
       },
       "id": 133,
       "panels": [
@@ -9429,471 +6675,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 11
-          },
-          "id": 135,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "sum(rate(loki_store_series_total{job=~\"$jobs\"}[$__rate_interval])) by (status)",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "{{ status }}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Loki Store - Series Referenced",
-          "transformations": [
-            {
-              "id": "calculateField",
-              "options": {
-                "mode": "reduceRow",
-                "reduce": {
-                  "include": [
-                    "debug",
-                    "error",
-                    "info",
-                    "warn"
-                  ],
-                  "reducer": "sum"
-                }
-              }
-            },
-            {
-              "id": "organize",
-              "options": {
-                "excludeByName": {},
-                "indexByName": {
-                  "Time": 1,
-                  "Total": 0,
-                  "grpc": 2,
-                  "http": 3
-                },
-                "renameByName": {
-                  "debug": "Debug",
-                  "discarded": "Discarded",
-                  "error": "Error",
-                  "grpc": "gRPC",
-                  "http": "HTTP",
-                  "info": "Info",
-                  "matched": "Matched",
-                  "warn": "Warn"
-                }
-              }
-            }
-          ],
-          "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Chunks",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "cps"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 11
-          },
-          "id": 134,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "sum(rate(loki_store_chunks_downloaded_total{job=~\"$jobs\"}[$__rate_interval])) by (status)",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "{{ status }}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Loki Store - Chunks Downloaded",
-          "transformations": [
-            {
-              "id": "calculateField",
-              "options": {
-                "mode": "reduceRow",
-                "reduce": {
-                  "include": [
-                    "debug",
-                    "error",
-                    "info",
-                    "warn"
-                  ],
-                  "reducer": "sum"
-                }
-              }
-            },
-            {
-              "id": "organize",
-              "options": {
-                "excludeByName": {},
-                "indexByName": {
-                  "Time": 1,
-                  "Total": 0,
-                  "grpc": 2,
-                  "http": 3
-                },
-                "renameByName": {
-                  "debug": "Debug",
-                  "discarded": "Discarded",
-                  "error": "Error",
-                  "grpc": "gRPC",
-                  "http": "HTTP",
-                  "info": "Info",
-                  "matched": "Matched",
-                  "warn": "Warn"
-                }
-              }
-            }
-          ],
-          "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Batch Size",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "none"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 19
-          },
-          "id": 136,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "histogram_quantile(0.95, sum(rate(loki_store_chunks_per_batch_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,status))",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "{{ status }}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Loki Store - Chunk Batch Size",
-          "transformations": [],
-          "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Count",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "cps"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 19
-          },
-          "id": 165,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "rate(loki_chunk_fetcher_cache_dequeued_total{job=~\"$jobs\"}[$__rate_interval])",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Dequeue from buffer",
-              "range": true,
-              "refId": "A"
-            },
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "rate(loki_chunk_fetcher_cache_enqueued_total{job=~\"$jobs\"}[$__rate_interval])",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Enqueue to buffer",
-              "range": true,
-              "refId": "B"
-            },
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "rate(loki_chunk_fetcher_cache_skipped_buffer_full_total{job=~\"$jobs\"}[$__rate_interval])",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Skipped due to buffer full",
-              "range": true,
-              "refId": "C"
-            }
-          ],
-          "title": "Loki Store - Chunk Fetcher Cache",
-          "transformations": [],
-          "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Chunks",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "cps"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 27
+            "y": 30
           },
           "id": 166,
           "options": {
@@ -9914,16 +6696,6 @@
             }
           },
           "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "sum(rate(loki_chunk_store_fetched_chunks_total{job=~\"$jobs\"}[$__rate_interval])) by (user)",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Fetched / {{ user }}",
-              "range": true,
-              "refId": "A"
-            },
             {
               "datasource": "Prometheus",
               "editorMode": "code",
@@ -10003,7 +6775,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 27
+            "y": 30
           },
           "id": 167,
           "options": {
@@ -10024,16 +6796,6 @@
             }
           },
           "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "rate(loki_chunk_store_fetched_chunk_bytes_total{job=~\"$jobs\"}[$__rate_interval])",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Fetched / {{ user }}",
-              "range": true,
-              "refId": "A"
-            },
             {
               "datasource": "Prometheus",
               "editorMode": "code",
@@ -10080,7 +6842,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 35
+            "y": 38
           },
           "id": 163,
           "maxDataPoints": 50,
@@ -10228,7 +6990,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 35
+            "y": 38
           },
           "id": 156,
           "options": {
@@ -10287,7 +7049,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 43
+            "y": 46
           },
           "id": 154,
           "maxDataPoints": 50,
@@ -10435,7 +7197,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 43
+            "y": 46
           },
           "id": 164,
           "options": {
@@ -10494,7 +7256,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 51
+            "y": 54
           },
           "id": 159,
           "maxDataPoints": 50,
@@ -10642,7 +7404,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 51
+            "y": 54
           },
           "id": 160,
           "options": {
@@ -10701,7 +7463,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 59
+            "y": 62
           },
           "id": 157,
           "maxDataPoints": 50,
@@ -10849,7 +7611,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 59
+            "y": 62
           },
           "id": 158,
           "options": {
@@ -10908,7 +7670,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 67
+            "y": 70
           },
           "id": 161,
           "maxDataPoints": 50,
@@ -11056,7 +7818,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 67
+            "y": 70
           },
           "id": 162,
           "options": {
@@ -11102,231 +7864,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 29
-      },
-      "id": 170,
-      "panels": [
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Errors",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "none"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 12
-          },
-          "id": 171,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "loki_table_manager_create_failures{job=~\"$jobs\"}",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Table create failures",
-              "range": true,
-              "refId": "A"
-            },
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "loki_table_manager_delete_failures{job=~\"$jobs\"}",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "Table delete failures",
-              "range": true,
-              "refId": "B"
-            }
-          ],
-          "title": "Loki Table Manager - Errors",
-          "transformations": [
-            {
-              "id": "renameByRegex",
-              "options": {
-                "regex": "(.*)fake$",
-                "renamePattern": "$1Default Tenant"
-              }
-            }
-          ],
-          "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Time",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "s"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 12
-          },
-          "id": 172,
-          "options": {
-            "legend": {
-              "calcs": [
-                "min",
-                "max",
-                "mean",
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": "Prometheus",
-              "editorMode": "code",
-              "expr": "histogram_quantile(0.95, sum(rate(loki_table_manager_sync_duration_seconds_bucket{job=~\"$jobs\"}[$__rate_interval])) by (le,operation,status_code))",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "{{ operation }} / {{ status_code }}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Loki Table Manager - Sync Duration",
-          "transformations": [
-            {
-              "id": "renameByRegex",
-              "options": {
-                "regex": "(.*)\\.(.*)",
-                "renamePattern": "$1 $2"
-              }
-            }
-          ],
-          "type": "timeseries"
-        }
-      ],
-      "title": "Loki Table Manager Metrics",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 30
+        "y": 33
       },
       "id": 83,
       "panels": [
@@ -11386,7 +7924,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 13
+            "y": 16
           },
           "id": 168,
           "options": {
@@ -11496,7 +8034,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 13
+            "y": 16
           },
           "id": 91,
           "options": {
@@ -11555,7 +8093,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 21
+            "y": 24
           },
           "id": 94,
           "maxDataPoints": 50,
@@ -11657,7 +8195,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 31
+        "y": 34
       },
       "id": 104,
       "panels": [
@@ -11721,7 +8259,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 14
+            "y": 17
           },
           "id": 92,
           "options": {
@@ -11855,7 +8393,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 14
+            "y": 17
           },
           "id": 93,
           "options": {
@@ -12015,7 +8553,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 22
+            "y": 25
           },
           "id": 95,
           "options": {
@@ -12086,7 +8624,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 22
+            "y": 25
           },
           "id": 89,
           "maxDataPoints": 50,
@@ -12192,7 +8730,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 30
+            "y": 33
           },
           "id": 88,
           "maxDataPoints": 50,
@@ -12285,7 +8823,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 32
+        "y": 35
       },
       "id": 106,
       "panels": [
@@ -12345,7 +8883,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 15
+            "y": 18
           },
           "id": 84,
           "options": {
@@ -12455,7 +8993,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 15
+            "y": 18
           },
           "id": 85,
           "options": {
@@ -12523,7 +9061,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 23
+            "y": 26
           },
           "id": 90,
           "maxDataPoints": 50,
@@ -12614,7 +9152,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 33
+        "y": 36
       },
       "id": 75,
       "panels": [
@@ -12678,7 +9216,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 16
+            "y": 19
           },
           "id": 78,
           "options": {
@@ -12773,7 +9311,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 16
+            "y": 19
           },
           "id": 79,
           "options": {
@@ -12877,7 +9415,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 24
+            "y": 27
           },
           "id": 77,
           "options": {
@@ -12936,9 +9474,8 @@
     "list": [
       {
         "current": {
-          "selected": false,
-          "text": "default",
-          "value": "default"
+          "text": "Prometheus",
+          "value": "prometheus"
         },
         "hide": 2,
         "includeAll": false,
@@ -13022,9 +9559,8 @@
         "auto_count": 30,
         "auto_min": "10s",
         "current": {
-          "selected": false,
-          "text": "30s",
-          "value": "30s"
+          "text": "5m",
+          "value": "5m"
         },
         "hide": 0,
         "label": "Interval",
@@ -13036,7 +9572,7 @@
             "value": "$__auto_interval_interval"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "30s",
             "value": "30s"
           },
@@ -13046,7 +9582,7 @@
             "value": "1m"
           },
           {
-            "selected": false,
+            "selected": true,
             "text": "5m",
             "value": "5m"
           },
@@ -13105,6 +9641,6 @@
   "timezone": "browser",
   "title": "Loki Metrics Dashboard",
   "uid": "loki-metrics-dashboard",
-  "version": 13,
+  "version": 14,
   "weekStart": ""
 }

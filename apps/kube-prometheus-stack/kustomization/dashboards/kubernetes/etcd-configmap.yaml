@@ -524,7 +524,13 @@ data:
             "label": "Data Source",
             "name": "datasource",
             "query": "prometheus",
-            "type": "datasource"
+            "type": "datasource",
+            "current": {
+              "text": "Prometheus",
+              "value": "prometheus"
+            },
+            "options": [],
+            "refresh": 1
           },
           {
             "allValue": ".*",
@@ -548,6 +554,6 @@ data:
       "timezone": "utc",
       "title": "etcd",
       "uid": "c2f4e12cdf69feb95caa41a5a1b423d9",
-      "version": 1,
+      "version": 2,
       "id": null
     }

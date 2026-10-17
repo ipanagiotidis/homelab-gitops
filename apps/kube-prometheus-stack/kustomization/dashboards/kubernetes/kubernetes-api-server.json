@@ -821,16 +821,17 @@
     "list": [
       {
         "current": {
-          "selected": true,
-          "text": "default",
-          "value": "default"
+          "text": "Prometheus",
+          "value": "prometheus"
         },
         "hide": 0,
         "label": "Data source",
         "name": "datasource",
         "query": "prometheus",
         "regex": "",
-        "type": "datasource"
+        "type": "datasource",
+        "options": [],
+        "refresh": 1
       },
       {
         "allValue": ".*",
@@ -868,6 +869,6 @@
   "timezone": "utc",
   "title": "Kubernetes / API server",
   "uid": "09ec8aa1e996d6ffcd6817bbaff4db1b",
-  "version": 1,
+  "version": 2,
   "id": null
 }

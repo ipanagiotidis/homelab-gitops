@@ -32,174 +32,859 @@ data:
       "links": [],
       "panels": [
         {
+          "id": 17,
+          "title": "Telemetry scrape health",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "gridPos": {
+            "x": 0,
+            "y": 0,
+            "w": 24,
+            "h": 3
+          },
+          "description": "Minimum up across matching targets. 1 = all discovered targets scraped successfully, 0 = scrape failure. NO TELEMETRY = no recent samples or no matching targets; not zero events. This does not detect a missing replica by itself.",
+          "fieldConfig": {
+            "defaults": {
+              "min": 0,
+              "max": 1,
+              "noValue": "NO TELEMETRY",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "options": {
+            "colorMode": "background",
+            "graphMode": "none",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            }
+          },
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "min(up{job=\"falco-metrics\"})",
+              "instant": true,
+              "range": false
+            }
+          ]
+        },
+        {
           "collapsed": false,
-          "gridPos": {"h": 1, "w": 24, "x": 0, "y": 0},
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 3
+          },
           "id": 1,
           "panels": [],
           "title": "Overview",
-          "type": "row"
+          "type": "row",
+          "fieldConfig": {
+            "defaults": {
+              "noValue": "No matching samples"
+            }
+          },
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
-          "datasource": {"type": "prometheus", "uid": "$prometheus"},
-          "fieldConfig": {"defaults": {"color": {"mode": "thresholds"}, "thresholds": {"mode": "absolute", "steps": [{"color": "red", "value": null}, {"color": "orange", "value": 3}, {"color": "green", "value": 6}]}, "unit": "short"}, "overrides": []},
-          "gridPos": {"h": 5, "w": 4, "x": 0, "y": 1},
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 3
+                  },
+                  {
+                    "color": "green",
+                    "value": 6
+                  }
+                ]
+              },
+              "unit": "short",
+              "noValue": "No matching samples"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 4,
+            "x": 0,
+            "y": 4
+          },
           "id": 2,
-          "options": {"colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "textMode": "auto"},
-          "targets": [{"datasource": {"type": "prometheus", "uid": "$prometheus"}, "expr": "count(up{job=\"falco-metrics\"} == 1)", "refId": "A"}],
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$prometheus"
+              },
+              "expr": "count(up{job=\"falco-metrics\"} == 1)",
+              "refId": "A"
+            }
+          ],
           "title": "Falco Pods Up",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
-          "datasource": {"type": "prometheus", "uid": "$prometheus"},
-          "fieldConfig": {"defaults": {"color": {"mode": "thresholds"}, "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}]}, "unit": "reqps"}, "overrides": []},
-          "gridPos": {"h": 5, "w": 4, "x": 4, "y": 1},
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "reqps",
+              "noValue": "No matching samples"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 4,
+            "x": 4,
+            "y": 4
+          },
           "id": 3,
-          "options": {"colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "textMode": "auto"},
-          "targets": [{"datasource": {"type": "prometheus", "uid": "$prometheus"}, "expr": "sum(rate(falcosecurity_falco_rules_matches_total[5m]))", "refId": "A"}],
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$prometheus"
+              },
+              "expr": "sum(rate(falcosecurity_falco_rules_matches_total[5m]))",
+              "refId": "A"
+            }
+          ],
           "title": "Rule Matches/s",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
-          "datasource": {"type": "prometheus", "uid": "$prometheus"},
-          "fieldConfig": {"defaults": {"color": {"mode": "thresholds"}, "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}, {"color": "orange", "value": 1}, {"color": "red", "value": 5}]}, "unit": "short"}, "overrides": []},
-          "gridPos": {"h": 5, "w": 4, "x": 8, "y": 1},
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 1
+                  },
+                  {
+                    "color": "red",
+                    "value": 5
+                  }
+                ]
+              },
+              "unit": "short",
+              "noValue": "No matching samples"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 4,
+            "x": 8,
+            "y": 4
+          },
           "id": 4,
-          "options": {"colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "textMode": "auto"},
-          "targets": [{"datasource": {"type": "prometheus", "uid": "$prometheus"}, "expr": "sum(increase(falcosecurity_falco_rules_matches_total{priority=\"2\"}[1h]))", "refId": "A"}],
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$prometheus"
+              },
+              "expr": "sum(increase(falcosecurity_falco_rules_matches_total{priority=\"2\"}[1h]))",
+              "refId": "A"
+            }
+          ],
           "title": "Critical Matches (1h)",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
-          "datasource": {"type": "prometheus", "uid": "$prometheus"},
-          "fieldConfig": {"defaults": {"color": {"mode": "thresholds"}, "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}]}, "unit": "short"}, "overrides": []},
-          "gridPos": {"h": 5, "w": 4, "x": 12, "y": 1},
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "short",
+              "noValue": "No matching samples"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 4,
+            "x": 12,
+            "y": 4
+          },
           "id": 5,
-          "options": {"colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "textMode": "auto"},
-          "targets": [{"datasource": {"type": "prometheus", "uid": "$prometheus"}, "expr": "count(count by (rule_name) (increase(falcosecurity_falco_rules_matches_total[24h]) > 0))", "refId": "A"}],
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$prometheus"
+              },
+              "expr": "count(count by (rule_name) (increase(falcosecurity_falco_rules_matches_total[24h]) > 0))",
+              "refId": "A"
+            }
+          ],
           "title": "Unique Rules (24h)",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
-          "datasource": {"type": "prometheus", "uid": "$prometheus"},
-          "fieldConfig": {"defaults": {"color": {"mode": "thresholds"}, "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}, {"color": "orange", "value": 1}, {"color": "red", "value": 5}]}, "unit": "ops"}, "overrides": []},
-          "gridPos": {"h": 5, "w": 4, "x": 16, "y": 1},
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 1
+                  },
+                  {
+                    "color": "red",
+                    "value": 5
+                  }
+                ]
+              },
+              "unit": "ops",
+              "noValue": "No matching samples"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 4,
+            "x": 16,
+            "y": 4
+          },
           "id": 6,
-          "options": {"colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "textMode": "auto"},
-          "targets": [{"datasource": {"type": "prometheus", "uid": "$prometheus"}, "expr": "sum(rate(falcosecurity_scap_n_drops_total[5m]))", "refId": "A"}],
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$prometheus"
+              },
+              "expr": "sum(rate(falcosecurity_scap_n_drops_total[5m]))",
+              "refId": "A"
+            }
+          ],
           "title": "Kernel Drops/s",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
-          "datasource": {"type": "prometheus", "uid": "$prometheus"},
-          "fieldConfig": {"defaults": {"color": {"mode": "thresholds"}, "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}, {"color": "orange", "value": 1}, {"color": "red", "value": 3}]}, "unit": "ops"}, "overrides": []},
-          "gridPos": {"h": 5, "w": 4, "x": 20, "y": 1},
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 1
+                  },
+                  {
+                    "color": "red",
+                    "value": 3
+                  }
+                ]
+              },
+              "unit": "ops",
+              "noValue": "No matching samples"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 4,
+            "x": 20,
+            "y": 4
+          },
           "id": 7,
-          "options": {"colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "textMode": "auto"},
-          "targets": [{"datasource": {"type": "prometheus", "uid": "$prometheus"}, "expr": "sum(rate(falcosecurity_falco_outputs_queue_num_drops_total[5m]))", "refId": "A"}],
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$prometheus"
+              },
+              "expr": "sum(rate(falcosecurity_falco_outputs_queue_num_drops_total[5m]))",
+              "refId": "A"
+            }
+          ],
           "title": "Output Queue Drops/s",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "collapsed": false,
-          "gridPos": {"h": 1, "w": 24, "x": 0, "y": 6},
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 9
+          },
           "id": 8,
           "panels": [],
           "title": "Detections",
-          "type": "row"
+          "type": "row",
+          "fieldConfig": {
+            "defaults": {
+              "noValue": "No matching samples"
+            }
+          },
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
-          "datasource": {"type": "prometheus", "uid": "$prometheus"},
-          "fieldConfig": {"defaults": {"color": {"mode": "palette-classic"}, "unit": "short"}, "overrides": []},
-          "gridPos": {"h": 8, "w": 8, "x": 0, "y": 7},
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "unit": "short",
+              "noValue": "No matching samples"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 0,
+            "y": 10
+          },
           "id": 9,
-          "options": {"displayMode": "gradient", "orientation": "horizontal", "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "showUnfilled": true},
-          "targets": [{"datasource": {"type": "prometheus", "uid": "$prometheus"}, "expr": "topk(10, sum by (rule_name) (increase(falcosecurity_falco_rules_matches_total[24h])))", "legendFormat": "{{rule_name}}", "refId": "A"}],
-          "title": "Top Rules (24h)",
-          "type": "bargauge"
-        },
-        {
-          "datasource": {"type": "prometheus", "uid": "$prometheus"},
-          "fieldConfig": {"defaults": {"color": {"mode": "palette-classic"}, "unit": "short"}, "overrides": []},
-          "gridPos": {"h": 8, "w": 8, "x": 8, "y": 7},
-          "id": 10,
-          "options": {"displayMode": "gradient", "orientation": "horizontal", "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "showUnfilled": true},
-          "targets": [{"datasource": {"type": "prometheus", "uid": "$prometheus"}, "expr": "sum by (priority) (increase(falcosecurity_falco_rules_matches_total[24h]))", "legendFormat": "priority {{priority}}", "refId": "A"}],
-          "title": "Matches by Priority (24h)",
-          "type": "bargauge"
-        },
-        {
-          "datasource": {"type": "prometheus", "uid": "$prometheus"},
-          "fieldConfig": {"defaults": {"color": {"mode": "palette-classic"}, "unit": "short"}, "overrides": []},
-          "gridPos": {"h": 8, "w": 8, "x": 16, "y": 7},
-          "id": 11,
-          "options": {"displayMode": "gradient", "orientation": "horizontal", "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "showUnfilled": true},
-          "targets": [{"datasource": {"type": "prometheus", "uid": "$prometheus"}, "expr": "topk(10, sum by (pod) (increase(falcosecurity_falco_rules_matches_total[24h])))", "legendFormat": "{{pod}}", "refId": "A"}],
-          "title": "Where It Fired: Top Falco Pods (24h)",
-          "type": "bargauge"
-        },
-        {
-          "datasource": {"type": "prometheus", "uid": "$prometheus"},
-          "fieldConfig": {"defaults": {"color": {"mode": "palette-classic"}, "unit": "reqps"}, "overrides": []},
-          "gridPos": {"h": 8, "w": 12, "x": 0, "y": 15},
-          "id": 12,
-          "options": {"legend": {"displayMode": "table", "placement": "bottom"}, "tooltip": {"mode": "multi"}},
-          "targets": [{"datasource": {"type": "prometheus", "uid": "$prometheus"}, "expr": "sum by (pod) (rate(falcosecurity_falco_rules_matches_total[5m]))", "legendFormat": "{{pod}}", "refId": "A"}],
-          "title": "Rule Matches by Pod",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {"type": "prometheus", "uid": "$prometheus"},
-          "fieldConfig": {"defaults": {"color": {"mode": "palette-classic"}, "unit": "ops"}, "overrides": []},
-          "gridPos": {"h": 8, "w": 12, "x": 12, "y": 15},
-          "id": 13,
-          "options": {"legend": {"displayMode": "table", "placement": "bottom"}, "tooltip": {"mode": "multi"}},
+          "options": {
+            "displayMode": "gradient",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showUnfilled": true
+          },
           "targets": [
-            {"datasource": {"type": "prometheus", "uid": "$prometheus"}, "expr": "sum(rate(falcosecurity_scap_n_evts_total[5m]))", "legendFormat": "events/s", "refId": "A"},
-            {"datasource": {"type": "prometheus", "uid": "$prometheus"}, "expr": "sum(rate(falcosecurity_scap_n_drops_total[5m]))", "legendFormat": "drops/s", "refId": "B"}
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$prometheus"
+              },
+              "expr": "topk(10, sum by (rule_name) (increase(falcosecurity_falco_rules_matches_total[24h])))",
+              "legendFormat": "{{rule_name}}",
+              "refId": "A"
+            }
+          ],
+          "title": "Top Rules (24h)",
+          "type": "bargauge",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "unit": "short",
+              "noValue": "No matching samples"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 8,
+            "y": 10
+          },
+          "id": 10,
+          "options": {
+            "displayMode": "gradient",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showUnfilled": true
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$prometheus"
+              },
+              "expr": "sum by (priority) (increase(falcosecurity_falco_rules_matches_total[24h]))",
+              "legendFormat": "priority {{priority}}",
+              "refId": "A"
+            }
+          ],
+          "title": "Matches by Priority (24h)",
+          "type": "bargauge",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "unit": "short",
+              "noValue": "No matching samples"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 16,
+            "y": 10
+          },
+          "id": 11,
+          "options": {
+            "displayMode": "gradient",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showUnfilled": true
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$prometheus"
+              },
+              "expr": "topk(10, sum by (pod) (increase(falcosecurity_falco_rules_matches_total[24h])))",
+              "legendFormat": "{{pod}}",
+              "refId": "A"
+            }
+          ],
+          "title": "Where It Fired: Top Falco Pods (24h)",
+          "type": "bargauge",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "unit": "reqps",
+              "noValue": "No matching samples"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 18
+          },
+          "id": 12,
+          "options": {
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom"
+            },
+            "tooltip": {
+              "mode": "multi"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$prometheus"
+              },
+              "expr": "sum by (pod) (rate(falcosecurity_falco_rules_matches_total[5m]))",
+              "legendFormat": "{{pod}}",
+              "refId": "A"
+            }
+          ],
+          "title": "Rule Matches by Pod",
+          "type": "timeseries",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "unit": "ops",
+              "noValue": "No matching samples"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 18
+          },
+          "id": 13,
+          "options": {
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom"
+            },
+            "tooltip": {
+              "mode": "multi"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$prometheus"
+              },
+              "expr": "sum(rate(falcosecurity_scap_n_evts_total[5m]))",
+              "legendFormat": "events/s",
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "$prometheus"
+              },
+              "expr": "sum(rate(falcosecurity_scap_n_drops_total[5m]))",
+              "legendFormat": "drops/s",
+              "refId": "B"
+            }
           ],
           "title": "Syscall Event and Drop Rate",
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "collapsed": false,
-          "gridPos": {"h": 1, "w": 24, "x": 0, "y": 23},
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 26
+          },
           "id": 14,
           "panels": [],
           "title": "Event Context",
-          "type": "row"
+          "type": "row",
+          "fieldConfig": {
+            "defaults": {
+              "noValue": "No matching samples"
+            }
+          },
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
-          "datasource": {"type": "loki", "uid": "$logs"},
-          "fieldConfig": {"defaults": {"color": {"mode": "palette-classic"}}, "overrides": []},
-          "gridPos": {"h": 6, "w": 24, "x": 0, "y": 24},
+          "datasource": {
+            "type": "loki",
+            "uid": "$logs"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "noValue": "No matching samples"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 24,
+            "x": 0,
+            "y": 27
+          },
           "id": 15,
-          "options": {"legend": {"calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": true}, "tooltip": {"mode": "single", "sort": "none"}},
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
           "targets": [
-            {"datasource": {"type": "loki", "uid": "$logs"}, "editorMode": "code", "expr": "sum(count_over_time({namespace=\"falco\", pod=~\"falco.*\"} | json | __error__=\"\" | rule=~\".+\" | priority=~\"$priority\" [$__interval]))", "queryType": "range", "refId": "A"}
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "$logs"
+              },
+              "editorMode": "code",
+              "expr": "sum(count_over_time({namespace=\"falco\", pod=~\"falco.*\"} | json | __error__=\"\" | rule=~\".+\" | priority=~\"$priority\" [$__interval]))",
+              "queryType": "range",
+              "refId": "A"
+            }
           ],
           "title": "Recent Event Volume (Loki)",
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
-          "datasource": {"type": "loki", "uid": "$logs"},
-          "gridPos": {"h": 14, "w": 24, "x": 0, "y": 30},
+          "datasource": {
+            "type": "loki",
+            "uid": "$logs"
+          },
+          "gridPos": {
+            "h": 14,
+            "w": 24,
+            "x": 0,
+            "y": 33
+          },
           "id": 16,
-          "options": {"dedupStrategy": "exact", "enableLogDetails": true, "prettifyLogMessage": false, "showCommonLabels": false, "showLabels": true, "showTime": true, "sortOrder": "Descending", "wrapLogMessage": true},
+          "options": {
+            "dedupStrategy": "exact",
+            "enableLogDetails": true,
+            "prettifyLogMessage": false,
+            "showCommonLabels": false,
+            "showLabels": true,
+            "showTime": true,
+            "sortOrder": "Descending",
+            "wrapLogMessage": true
+          },
           "targets": [
-            {"datasource": {"type": "loki", "uid": "$logs"}, "editorMode": "code", "expr": "{namespace=\"falco\", pod=~\"falco.*\"} | json | __error__=\"\" | rule=~\".+\" | priority=~\"$priority\" | line_format \"{{.time}} | {{.priority}} | {{.rule}} | host={{.hostname}} | {{.output}}\"", "queryType": "range", "refId": "A"}
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "$logs"
+              },
+              "editorMode": "code",
+              "expr": "{namespace=\"falco\", pod=~\"falco.*\"} | json | __error__=\"\" | rule=~\".+\" | priority=~\"$priority\" | line_format \"{{.time}} | {{.priority}} | {{.rule}} | host={{.hostname}} | {{.output}}\"",
+              "queryType": "range",
+              "refId": "A"
+            }
           ],
           "title": "Recent Falco Events",
-          "type": "logs"
+          "type": "logs",
+          "fieldConfig": {
+            "defaults": {
+              "noValue": "No matching samples"
+            }
+          },
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         }
       ],
       "refresh": "30s",
       "schemaVersion": 39,
       "style": "dark",
-      "tags": ["security", "falco"],
+      "tags": [
+        "security",
+        "falco"
+      ],
       "templating": {
         "list": [
           {
-            "current": {"selected": true, "text": "Prometheus", "value": "Prometheus"},
+            "current": {
+              "text": "Prometheus",
+              "value": "prometheus"
+            },
             "hide": 0,
             "includeAll": false,
             "label": "Prometheus",
@@ -213,7 +898,7 @@ data:
             "type": "datasource"
           },
           {
-            "current": {"selected": true, "text": "Loki", "value": "Loki"},
+            "current": {},
             "hide": 0,
             "includeAll": false,
             "label": "Loki",
@@ -222,25 +907,57 @@ data:
             "options": [],
             "query": "loki",
             "refresh": 1,
-            "regex": "",
+            "regex": "/^Loki$/",
             "skipUrlSync": false,
             "type": "datasource"
           },
           {
-            "current": {"selected": true, "text": ".*", "value": ".*"},
+            "current": {
+              "selected": true,
+              "text": ".*",
+              "value": ".*"
+            },
             "hide": 0,
             "includeAll": false,
             "label": "Priority",
             "multi": false,
             "name": "priority",
             "options": [
-              {"selected": true, "text": ".*", "value": ".*"},
-              {"selected": false, "text": "Critical", "value": "Critical"},
-              {"selected": false, "text": "Error", "value": "Error"},
-              {"selected": false, "text": "Warning", "value": "Warning"},
-              {"selected": false, "text": "Notice", "value": "Notice"},
-              {"selected": false, "text": "Informational", "value": "Informational"},
-              {"selected": false, "text": "Debug", "value": "Debug"}
+              {
+                "selected": true,
+                "text": ".*",
+                "value": ".*"
+              },
+              {
+                "selected": false,
+                "text": "Critical",
+                "value": "Critical"
+              },
+              {
+                "selected": false,
+                "text": "Error",
+                "value": "Error"
+              },
+              {
+                "selected": false,
+                "text": "Warning",
+                "value": "Warning"
+              },
+              {
+                "selected": false,
+                "text": "Notice",
+                "value": "Notice"
+              },
+              {
+                "selected": false,
+                "text": "Informational",
+                "value": "Informational"
+              },
+              {
+                "selected": false,
+                "text": "Debug",
+                "value": "Debug"
+              }
             ],
             "query": "Critical",
             "skipUrlSync": false,
@@ -248,8 +965,11 @@ data:
           }
         ]
       },
-      "time": {"from": "now-6h", "to": "now"},
+      "time": {
+        "from": "now-6h",
+        "to": "now"
+      },
       "timezone": "browser",
       "title": "Falco Runtime",
-      "version": 2
+      "version": 3
     }

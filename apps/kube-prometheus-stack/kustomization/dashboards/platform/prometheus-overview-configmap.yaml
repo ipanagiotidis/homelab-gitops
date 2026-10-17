@@ -432,7 +432,7 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "sum by (cluster, job, instance) (rate(prometheus_target_scrapes_exceeded_body_size_limit_total{cluster=~\"$cluster\",job=~\"$job\",instance=~\"$instance\"}[1m]))",
+              "expr": "sum by (cluster, job, instance) (rate(prometheus_target_scrapes_exceeded_body_size_limit_total{cluster=~\"$cluster\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]))",
               "format": "time_series",
               "legendFormat": "exceeded body size limit: {{cluster}} {{job}} {{instance}}"
             },
@@ -441,7 +441,7 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "sum by (cluster, job, instance) (rate(prometheus_target_scrapes_exceeded_sample_limit_total{cluster=~\"$cluster\",job=~\"$job\",instance=~\"$instance\"}[1m]))",
+              "expr": "sum by (cluster, job, instance) (rate(prometheus_target_scrapes_exceeded_sample_limit_total{cluster=~\"$cluster\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]))",
               "format": "time_series",
               "legendFormat": "exceeded sample limit: {{cluster}} {{job}} {{instance}}"
             },
@@ -450,7 +450,7 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "sum by (cluster, job, instance) (rate(prometheus_target_scrapes_sample_duplicate_timestamp_total{cluster=~\"$cluster\",job=~\"$job\",instance=~\"$instance\"}[1m]))",
+              "expr": "sum by (cluster, job, instance) (rate(prometheus_target_scrapes_sample_duplicate_timestamp_total{cluster=~\"$cluster\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]))",
               "format": "time_series",
               "legendFormat": "duplicate timestamp: {{cluster}} {{job}} {{instance}}"
             },
@@ -459,7 +459,7 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "sum by (cluster, job, instance) (rate(prometheus_target_scrapes_sample_out_of_bounds_total{cluster=~\"$cluster\",job=~\"$job\",instance=~\"$instance\"}[1m]))",
+              "expr": "sum by (cluster, job, instance) (rate(prometheus_target_scrapes_sample_out_of_bounds_total{cluster=~\"$cluster\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]))",
               "format": "time_series",
               "legendFormat": "out of bounds: {{cluster}} {{job}} {{instance}}"
             },
@@ -468,7 +468,7 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "sum by (cluster, job, instance) (rate(prometheus_target_scrapes_sample_out_of_order_total{cluster=~\"$cluster\",job=~\"$job\",instance=~\"$instance\"}[1m]))",
+              "expr": "sum by (cluster, job, instance) (rate(prometheus_target_scrapes_sample_out_of_order_total{cluster=~\"$cluster\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]))",
               "format": "time_series",
               "legendFormat": "out of order: {{cluster}} {{job}} {{instance}}"
             }
@@ -746,15 +746,16 @@ data:
         "list": [
           {
             "current": {
-              "selected": false,
-              "text": "default",
-              "value": "default"
+              "text": "Prometheus",
+              "value": "prometheus"
             },
             "hide": 0,
             "label": "Data source",
             "name": "datasource",
             "query": "prometheus",
-            "type": "datasource"
+            "type": "datasource",
+            "options": [],
+            "refresh": 1
           },
           {
             "allValue": ".*",
@@ -825,6 +826,6 @@ data:
       "timezone": "utc",
       "title": "Prometheus / Overview",
       "uid": "9fa0d141-d019-4ad7-8bc5-42196ee308bd",
-      "version": 1,
+      "version": 2,
       "id": null
     }

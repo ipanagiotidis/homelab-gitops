@@ -1,5 +1,12 @@
 upgradeCompatibility: "1.19"
 
+# Apply metric-context ConfigMap changes through GitOps, one agent at a time.
+rollOutCiliumPods: true
+updateStrategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxUnavailable: 1
+
 routingMode: tunnel
 tunnelProtocol: vxlan
 tunnelPort: 8473
@@ -29,19 +36,20 @@ hubble:
   enabled: true
   metrics:
     enabled:
-      - dns:query;ignoreAAAA
-      - drop
-      - tcp
-      - flow
-      - icmp
+      # Namespace-only context avoids per-IP/per-pod metric cardinality.
+      - dns:query;ignoreAAAA;sourceContext=namespace;destinationContext=namespace;labelsContext=source_namespace,destination_namespace
+      - drop:sourceContext=namespace;destinationContext=namespace;labelsContext=source_namespace,destination_namespace
+      - tcp:sourceContext=namespace;destinationContext=namespace;labelsContext=source_namespace,destination_namespace
+      - flow:sourceContext=namespace;destinationContext=namespace;labelsContext=source_namespace,destination_namespace
+      - icmp:sourceContext=namespace;destinationContext=namespace;labelsContext=source_namespace,destination_namespace
     enableOpenMetrics: true
     serviceMonitor:
       enabled: true
       trustCRDsExist: true
     dashboards:
-      enabled: true
-      annotations:
-        k8s-sidecar-target-directory: /tmp/dashboards/Hubble
+      # Curated copies use distinct UIDs for a safe handoff until pruning.
+      # Disabled HTTP/port-distribution metrics are documented, not queried.
+      enabled: false
   relay:
     enabled: true
   ui:
@@ -52,10 +60,11 @@ prometheus:
   serviceMonitor:
     enabled: true
     trustCRDsExist: true
-  dashboards:
-    enabled: true
-    annotations:
-      k8s-sidecar-target-directory: /tmp/dashboards/Cilium
+
+dashboards:
+  enabled: true
+  annotations:
+    k8s-sidecar-target-directory: /tmp/dashboards/Cilium
 
 operator:
   unmanagedPodWatcher:

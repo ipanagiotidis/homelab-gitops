@@ -22,17 +22,79 @@
   "links": [],
   "panels": [
     {
+      "id": 6,
+      "title": "Telemetry scrape health",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 3
+      },
+      "description": "Minimum up across matching targets. 1 = all discovered targets scraped successfully, 0 = scrape failure. NO TELEMETRY = no recent samples or no matching targets; not zero events. This does not detect a missing replica by itself.",
+      "fieldConfig": {
+        "defaults": {
+          "min": 0,
+          "max": 1,
+          "noValue": "NO TELEMETRY",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "min(up{job=\"trivy-operator\"})",
+          "instant": true,
+          "range": false
+        }
+      ]
+    },
+    {
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 0
+        "y": 3
       },
       "id": 1,
       "panels": [],
       "title": "Overview",
-      "type": "row"
+      "type": "row",
+      "fieldConfig": {
+        "defaults": {
+          "noValue": "No matching samples"
+        }
+      },
+      "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
     },
     {
       "datasource": {
@@ -57,7 +119,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "noValue": "No matching samples"
         },
         "overrides": []
       },
@@ -65,7 +128,7 @@
         "h": 5,
         "w": 6,
         "x": 0,
-        "y": 1
+        "y": 4
       },
       "id": 2,
       "options": {
@@ -94,7 +157,8 @@
         }
       ],
       "title": "Apps With Critical Vulns",
-      "type": "stat"
+      "type": "stat",
+      "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
     },
     {
       "datasource": {
@@ -119,7 +183,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "noValue": "No matching samples"
         },
         "overrides": []
       },
@@ -127,7 +192,7 @@
         "h": 5,
         "w": 6,
         "x": 6,
-        "y": 1
+        "y": 4
       },
       "id": 3,
       "options": {
@@ -156,7 +221,8 @@
         }
       ],
       "title": "Total Critical CVEs",
-      "type": "stat"
+      "type": "stat",
+      "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
     },
     {
       "datasource": {
@@ -167,7 +233,8 @@
         "defaults": {
           "color": {
             "mode": "palette-classic"
-          }
+          },
+          "noValue": "No matching samples"
         },
         "overrides": []
       },
@@ -175,7 +242,7 @@
         "h": 5,
         "w": 12,
         "x": 12,
-        "y": 1
+        "y": 4
       },
       "id": 4,
       "options": {
@@ -202,7 +269,8 @@
         }
       ],
       "title": "Top Apps by Critical CVEs",
-      "type": "bargauge"
+      "type": "bargauge",
+      "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
     },
     {
       "datasource": {
@@ -232,7 +300,8 @@
                 "value": 1
               }
             ]
-          }
+          },
+          "noValue": "No matching samples"
         },
         "overrides": []
       },
@@ -240,7 +309,7 @@
         "h": 12,
         "w": 24,
         "x": 0,
-        "y": 6
+        "y": 9
       },
       "id": 5,
       "options": {
@@ -300,7 +369,8 @@
           }
         }
       ],
-      "type": "table"
+      "type": "table",
+      "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
     }
   ],
   "refresh": "10m",
@@ -316,7 +386,6 @@
     "list": [
       {
         "current": {
-          "selected": true,
           "text": "Prometheus",
           "value": "prometheus"
         },
@@ -342,6 +411,6 @@
   "timezone": "",
   "title": "Trivy Critical Apps",
   "uid": "trivy-critical-apps",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }

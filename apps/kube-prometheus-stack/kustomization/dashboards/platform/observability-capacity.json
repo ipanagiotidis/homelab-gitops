@@ -667,9 +667,8 @@
     "list": [
       {
         "current": {
-          "selected": false,
           "text": "Prometheus",
-          "value": "Prometheus"
+          "value": "prometheus"
         },
         "hide": 0,
         "includeAll": false,
@@ -693,6 +692,6 @@
   "timezone": "",
   "title": "Observability Capacity",
   "uid": "observability-capacity",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }

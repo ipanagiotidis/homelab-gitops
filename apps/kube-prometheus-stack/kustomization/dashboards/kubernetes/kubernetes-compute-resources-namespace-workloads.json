@@ -1188,16 +1188,17 @@
     "list": [
       {
         "current": {
-          "selected": true,
-          "text": "default",
-          "value": "default"
+          "text": "Prometheus",
+          "value": "prometheus"
         },
         "hide": 0,
         "label": "Data source",
         "name": "datasource",
         "query": "prometheus",
         "regex": "",
-        "type": "datasource"
+        "type": "datasource",
+        "options": [],
+        "refresh": 1
       },
       {
         "allValue": ".*",
@@ -1249,6 +1250,6 @@
   "timezone": "utc",
   "title": "Kubernetes / Compute Resources / Namespace (Workloads)",
   "uid": "a87fb0d919ec0ea5f6543124e16c42a5",
-  "version": 1,
+  "version": 2,
   "id": null
 }

@@ -33,17 +33,79 @@ data:
       "links": [],
       "panels": [
         {
+          "id": 14,
+          "title": "Telemetry scrape health",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "gridPos": {
+            "x": 0,
+            "y": 0,
+            "w": 24,
+            "h": 3
+          },
+          "description": "Minimum up across matching targets. 1 = all discovered targets scraped successfully, 0 = scrape failure. NO TELEMETRY = no recent samples or no matching targets; not zero events. This does not detect a missing replica by itself.",
+          "fieldConfig": {
+            "defaults": {
+              "min": 0,
+              "max": 1,
+              "noValue": "NO TELEMETRY",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "options": {
+            "colorMode": "background",
+            "graphMode": "none",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            }
+          },
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "min(up{namespace=\"immich\",service=\"immich-server\"})",
+              "instant": true,
+              "range": false
+            }
+          ]
+        },
+        {
           "collapsed": false,
           "gridPos": {
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 0
+            "y": 3
           },
           "id": 1,
           "panels": [],
           "title": "Health",
-          "type": "row"
+          "type": "row",
+          "fieldConfig": {
+            "defaults": {
+              "noValue": "No matching samples"
+            }
+          },
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -72,7 +134,8 @@ data:
                   }
                 ]
               },
-              "unit": "short"
+              "unit": "short",
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -80,7 +143,7 @@ data:
             "h": 5,
             "w": 4,
             "x": 0,
-            "y": 1
+            "y": 4
           },
           "id": 2,
           "options": {
@@ -103,12 +166,13 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "sum(up{job=\"immich-server\"})",
+              "expr": "sum(up{namespace=\"immich\",service=\"immich-server\"})",
               "refId": "A"
             }
           ],
           "title": "Targets Up",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -145,7 +209,8 @@ data:
                     "value": 1
                   }
                 ]
-              }
+              },
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -153,7 +218,7 @@ data:
             "h": 5,
             "w": 4,
             "x": 4,
-            "y": 1
+            "y": 4
           },
           "id": 3,
           "options": {
@@ -176,12 +241,13 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "up{job=\"immich-server\",endpoint=\"metrics-api\"}",
+              "expr": "up{namespace=\"immich\",service=\"immich-server\",endpoint=\"metrics-api\"}",
               "refId": "A"
             }
           ],
           "title": "API Endpoint",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -218,7 +284,8 @@ data:
                     "value": 1
                   }
                 ]
-              }
+              },
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -226,7 +293,7 @@ data:
             "h": 5,
             "w": 4,
             "x": 8,
-            "y": 1
+            "y": 4
           },
           "id": 4,
           "options": {
@@ -249,12 +316,13 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "up{job=\"immich-server\",endpoint=\"metrics-ms\"}",
+              "expr": "up{namespace=\"immich\",service=\"immich-server\",endpoint=\"metrics-ms\"}",
               "refId": "A"
             }
           ],
           "title": "Microservices Endpoint",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -275,7 +343,8 @@ data:
                   }
                 ]
               },
-              "unit": "short"
+              "unit": "short",
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -283,7 +352,7 @@ data:
             "h": 5,
             "w": 4,
             "x": 12,
-            "y": 1
+            "y": 4
           },
           "id": 5,
           "options": {
@@ -306,12 +375,13 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "sum(immich_event_repository_emit_duration_count{job=\"immich-server\"})",
+              "expr": "sum(immich_event_repository_emit_duration_count{namespace=\"immich\",service=\"immich-server\"})",
               "refId": "A"
             }
           ],
           "title": "Event Emits Total",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -332,7 +402,8 @@ data:
                   }
                 ]
               },
-              "unit": "short"
+              "unit": "short",
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -340,7 +411,7 @@ data:
             "h": 5,
             "w": 4,
             "x": 16,
-            "y": 1
+            "y": 4
           },
           "id": 6,
           "options": {
@@ -363,12 +434,13 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "sum(immich_asset_repository_get_for_thumbnail_duration_count{job=\"immich-server\"})",
+              "expr": "sum(immich_asset_repository_get_file_samples_duration_count{namespace=\"immich\",service=\"immich-server\"})",
               "refId": "A"
             }
           ],
-          "title": "Thumbnail Lookups Total",
-          "type": "stat"
+          "title": "File Sampling Calls",
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -389,7 +461,8 @@ data:
                   }
                 ]
               },
-              "unit": "short"
+              "unit": "short",
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -397,7 +470,7 @@ data:
             "h": 5,
             "w": 4,
             "x": 20,
-            "y": 1
+            "y": 4
           },
           "id": 7,
           "options": {
@@ -420,12 +493,13 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "sum(immich_job_repository_run_duration_count{job=\"immich-server\"})",
+              "expr": "sum(immich_job_repository_run_duration_count{namespace=\"immich\",service=\"immich-server\"})",
               "refId": "A"
             }
           ],
           "title": "Job Runs Total",
-          "type": "stat"
+          "type": "stat",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "collapsed": false,
@@ -433,12 +507,18 @@ data:
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 6
+            "y": 9
           },
           "id": 8,
           "panels": [],
           "title": "Rates",
-          "type": "row"
+          "type": "row",
+          "fieldConfig": {
+            "defaults": {
+              "noValue": "No matching samples"
+            }
+          },
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -450,7 +530,8 @@ data:
               "color": {
                 "mode": "palette-classic"
               },
-              "unit": "ops"
+              "unit": "ops",
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -458,7 +539,7 @@ data:
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 7
+            "y": 10
           },
           "id": 9,
           "options": {
@@ -483,7 +564,7 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "sum(rate(immich_event_repository_emit_duration_count{job=\"immich-server\"}[5m]))",
+              "expr": "sum(rate(immich_event_repository_emit_duration_count{namespace=\"immich\",service=\"immich-server\"}[5m]))",
               "legendFormat": "Event emits",
               "refId": "A"
             },
@@ -492,7 +573,7 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "sum(rate(immich_session_repository_get_by_token_duration_count{job=\"immich-server\"}[5m]))",
+              "expr": "sum(rate(immich_session_repository_get_by_token_duration_count{namespace=\"immich\",service=\"immich-server\"}[5m]))",
               "legendFormat": "Session token lookups",
               "refId": "B"
             },
@@ -501,13 +582,14 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "sum(rate(immich_crypto_repository_hash_sha_256_duration_count{job=\"immich-server\"}[5m]))",
+              "expr": "sum(rate(immich_crypto_repository_hash_sha_256_duration_count{namespace=\"immich\",service=\"immich-server\"}[5m]))",
               "legendFormat": "SHA256 operations",
               "refId": "C"
             }
           ],
           "title": "API / Auth Activity Rate",
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -519,7 +601,8 @@ data:
               "color": {
                 "mode": "palette-classic"
               },
-              "unit": "ops"
+              "unit": "ops",
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -527,7 +610,7 @@ data:
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 7
+            "y": 10
           },
           "id": 10,
           "options": {
@@ -552,8 +635,8 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "sum(rate(immich_asset_repository_get_for_thumbnail_duration_count{job=\"immich-server\"}[5m]))",
-              "legendFormat": "Thumbnail lookups",
+              "expr": "sum(rate(immich_asset_repository_get_file_samples_duration_count{namespace=\"immich\",service=\"immich-server\"}[5m]))",
+              "legendFormat": "File sampling calls",
               "refId": "A"
             },
             {
@@ -561,7 +644,7 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "sum(rate(immich_job_repository_get_queue_duration_count{job=\"immich-server\"}[5m]))",
+              "expr": "sum(rate(immich_job_repository_get_queue_duration_count{namespace=\"immich\",service=\"immich-server\"}[5m]))",
               "legendFormat": "Queue lookups",
               "refId": "B"
             },
@@ -570,13 +653,14 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "sum(rate(immich_job_repository_run_duration_count{job=\"immich-server\"}[5m]))",
+              "expr": "sum(rate(immich_job_repository_run_duration_count{namespace=\"immich\",service=\"immich-server\"}[5m]))",
               "legendFormat": "Job runs",
               "refId": "C"
             }
           ],
           "title": "Media / Job Activity Rate",
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "collapsed": false,
@@ -584,12 +668,18 @@ data:
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 16
+            "y": 19
           },
           "id": 11,
           "panels": [],
           "title": "Totals",
-          "type": "row"
+          "type": "row",
+          "fieldConfig": {
+            "defaults": {
+              "noValue": "No matching samples"
+            }
+          },
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -601,7 +691,8 @@ data:
               "color": {
                 "mode": "palette-classic"
               },
-              "unit": "short"
+              "unit": "short",
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -609,7 +700,7 @@ data:
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 17
+            "y": 20
           },
           "id": 12,
           "options": {
@@ -633,7 +724,7 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "sum(immich_event_repository_emit_duration_count{job=\"immich-server\"})",
+              "expr": "sum(immich_event_repository_emit_duration_count{namespace=\"immich\",service=\"immich-server\"})",
               "legendFormat": "Event emits",
               "refId": "A"
             },
@@ -642,8 +733,8 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "sum(immich_asset_repository_get_for_thumbnail_duration_count{job=\"immich-server\"})",
-              "legendFormat": "Thumbnail lookups",
+              "expr": "sum(immich_asset_repository_get_file_samples_duration_count{namespace=\"immich\",service=\"immich-server\"})",
+              "legendFormat": "File sampling calls",
               "refId": "B"
             },
             {
@@ -651,7 +742,7 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "sum(immich_job_repository_run_duration_count{job=\"immich-server\"})",
+              "expr": "sum(immich_job_repository_run_duration_count{namespace=\"immich\",service=\"immich-server\"})",
               "legendFormat": "Job runs",
               "refId": "C"
             },
@@ -660,13 +751,14 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "sum(immich_session_repository_get_by_token_duration_count{job=\"immich-server\"})",
+              "expr": "sum(immich_session_repository_get_by_token_duration_count{namespace=\"immich\",service=\"immich-server\"})",
               "legendFormat": "Session lookups",
               "refId": "D"
             }
           ],
           "title": "Core Counters",
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         },
         {
           "datasource": {
@@ -691,7 +783,8 @@ data:
                     "value": null
                   }
                 ]
-              }
+              },
+              "noValue": "No matching samples"
             },
             "overrides": []
           },
@@ -699,7 +792,7 @@ data:
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 17
+            "y": 20
           },
           "id": 13,
           "options": {
@@ -721,7 +814,7 @@ data:
                 "type": "prometheus",
                 "uid": "$datasource"
               },
-              "expr": "topk(10, sum by (__name__) ({job=\"immich-server\",__name__=~\"immich_.*_duration_count\"}))",
+              "expr": "topk(10, sum by (__name__) ({namespace=\"immich\",service=\"immich-server\",__name__=~\"immich_.*_duration_count\"}))",
               "format": "table",
               "instant": true,
               "refId": "A"
@@ -742,7 +835,8 @@ data:
               }
             }
           ],
-          "type": "table"
+          "type": "table",
+          "description": "Empty results can mean no matching events/findings or missing instrumentation. Check telemetry scrape health before interpreting them as zero."
         }
       ],
       "refresh": "30s",
@@ -756,7 +850,6 @@ data:
         "list": [
           {
             "current": {
-              "selected": false,
               "text": "Prometheus",
               "value": "prometheus"
             },
@@ -782,6 +875,6 @@ data:
       "timezone": "",
       "title": "Immich",
       "uid": "immich-overview",
-      "version": 2,
+      "version": 3,
       "weekStart": ""
     }

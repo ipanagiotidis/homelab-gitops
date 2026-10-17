@@ -35,26 +35,12 @@ data:
       "links": [],
       "panels": [
         {
-          "datasource": "$datasource",
-          "fieldConfig": {
-            "defaults": {
-              "mappings": [],
-              "noValue": "0",
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              }
-            },
-            "overrides": []
+          "id": 6,
+          "title": "Grafana scrape health",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
           },
           "gridPos": {
             "h": 5,
@@ -62,36 +48,47 @@ data:
             "x": 0,
             "y": 0
           },
-          "id": 6,
+          "description": "Minimum up across matching targets. 1 = all discovered targets scraped successfully, 0 = scrape failure. NO TELEMETRY = no recent samples or no matching targets; not zero events. This does not detect a missing replica by itself.",
+          "fieldConfig": {
+            "defaults": {
+              "min": 0,
+              "max": 1,
+              "noValue": "NO TELEMETRY",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
           "options": {
-            "colorMode": "value",
-            "graphMode": "area",
-            "justifyMode": "auto",
-            "orientation": "auto",
+            "colorMode": "background",
+            "graphMode": "none",
             "reduceOptions": {
               "calcs": [
-                "mean"
+                "lastNotNull"
               ],
               "fields": "",
               "values": false
-            },
-            "text": {},
-            "textMode": "auto"
+            }
           },
-          "pluginVersion": "8.1.3",
           "targets": [
             {
-              "expr": "grafana_alerting_result_total{job=~\"$job\", instance=~\"$instance\", state=\"alerting\"}",
+              "refId": "A",
+              "expr": "min(up{job=~\"$job\",instance=~\"$instance\"})",
               "instant": true,
-              "interval": "1m",
-              "legendFormat": "",
-              "refId": "A"
+              "range": false
             }
-          ],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Firing Alerts",
-          "type": "stat"
+          ]
         },
         {
           "datasource": "$datasource",
@@ -284,7 +281,7 @@ data:
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (status_code) (irate(grafana_http_request_duration_seconds_count{job=~\"$job\", instance=~\"$instance\"}[1m])) ",
+              "expr": "sum by (status_code) (irate(grafana_http_request_duration_seconds_count{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])) ",
               "interval": "1m",
               "legendFormat": "{{status_code}}",
               "refId": "A"
@@ -452,9 +449,8 @@ data:
         "list": [
           {
             "current": {
-              "selected": true,
-              "text": "dev-cortex",
-              "value": "dev-cortex"
+              "text": "Prometheus",
+              "value": "prometheus"
             },
             "description": null,
             "error": null,
@@ -474,13 +470,8 @@ data:
           {
             "allValue": ".*",
             "current": {
-              "selected": false,
-              "text": [
-                "default/grafana"
-              ],
-              "value": [
-                "default/grafana"
-              ]
+              "text": "kube-prometheus-stack-grafana",
+              "value": "kube-prometheus-stack-grafana"
             },
             "datasource": "$datasource",
             "definition": "label_values(grafana_build_info, job)",
@@ -557,6 +548,6 @@ data:
       "timezone": "utc",
       "title": "Grafana Overview",
       "uid": "6be0s85Mk",
-      "version": 1,
+      "version": 2,
       "id": null
     }
