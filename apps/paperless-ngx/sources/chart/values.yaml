@@ -19,14 +19,15 @@ common:
         app:
           image:
             repository: reg.yiannis.io/proxy-ghcr/paperless-ngx/paperless-ngx
-            tag: "2.20.15"
-            # -- pinned to latest stable release tag: 2.20.15
-            digest: sha256:6c86cad803970ea782683a8e80e7403444c5bf3cf70de63b4d3c8e87500db92f
+            tag: "3.3.2"
+            # -- pinned to stable release tag: 3.3.2
+            digest: sha256:d232cba37cc0bab0d6c6581ecd320383b7a6f49f33e0fd16adda4d009eb600dd
           env:
             PAPERLESS_URL: "https://docs.yiannis.io"
             PAPERLESS_PORT: "8000"
             PAPERLESS_TIME_ZONE: "Europe/Athens"
             PAPERLESS_OCR_LANGUAGE: "eng"
+            PAPERLESS_ARCHIVE_FILE_GENERATION: "auto"
             PAPERLESS_FILENAME_FORMAT: '{{`{{ created_year }}/{{ correspondent }}/{{ created }} {{ title }}`}}'
             PAPERLESS_FILENAME_FORMAT_REMOVE_NONE: "true"
             PAPERLESS_APPS: "allauth.socialaccount.providers.openid_connect"
@@ -42,9 +43,9 @@ common:
             USERMAP_UID: "1001"
             USERMAP_GID: "3000"
             PAPERLESS_REDIS: "redis://paperless-ngx-redis:6379"
-            PAPERLESS_CONSUMER_POLLING: "5"
-            PAPERLESS_CONSUMER_POLLING_RETRY_COUNT: "5"
-            PAPERLESS_CONSUMER_POLLING_DELAY: "5"
+            PAPERLESS_CONSUMER_POLLING_INTERVAL: "5"
+            PAPERLESS_CONSUMER_STABILITY_DELAY: "5"
+            PAPERLESS_CONSUMER_DELETE_DUPLICATES: "false"
             PAPERLESS_DBENGINE: "postgresql"
             PAPERLESS_DBHOST:
               valueFrom:
@@ -100,6 +101,16 @@ common:
           securityContext:
             allowPrivilegeEscalation: false
           probes:
+            startup:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /
+                  port: 8000
+                periodSeconds: 10
+                failureThreshold: 60
+                timeoutSeconds: 5
             liveness:
               enabled: true
               custom: true

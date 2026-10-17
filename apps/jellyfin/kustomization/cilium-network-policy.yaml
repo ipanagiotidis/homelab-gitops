@@ -60,6 +60,15 @@ spec:
         protocol: TCP
       - port: "443"
         protocol: TCP
+  # SSO plugin catalog, versioned releases, and GitHub release redirects.
+  - toFQDNs:
+    - matchName: raw.githubusercontent.com
+    - matchName: github.com
+    - matchName: release-assets.githubusercontent.com
+    toPorts:
+    - ports:
+      - port: "443"
+        protocol: TCP
   - toCIDRSet:
     - cidr: 192.168.88.7/32
     toPorts:

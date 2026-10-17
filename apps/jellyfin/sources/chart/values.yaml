@@ -8,6 +8,8 @@ defaultPodOptions:
 controllers:
   # Configure the main controller
   jellyfin:
+    # Maintenance hold for the stopped-server backup and SSO migration.
+    replicas: 0
 
     # Configure the pod-specific securityContext
     pod:
