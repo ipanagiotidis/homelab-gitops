@@ -60,8 +60,9 @@ spec:
         protocol: TCP
       - port: "443"
         protocol: TCP
-  # SSO plugin catalog, versioned releases, and GitHub release redirects.
+  # Official/SSO plugin catalogs, versioned releases, and GitHub release redirects.
   - toFQDNs:
+    - matchName: repo.jellyfin.org
     - matchName: raw.githubusercontent.com
     - matchName: github.com
     - matchName: release-assets.githubusercontent.com
