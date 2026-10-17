@@ -1,9 +1,5 @@
 upgradeCompatibility: "1.19"
 
-operator:
-  unmanagedPodWatcher:
-    restart: true
-
 routingMode: tunnel
 tunnelProtocol: vxlan
 tunnelPort: 8473
@@ -62,6 +58,8 @@ prometheus:
       k8s-sidecar-target-directory: /tmp/dashboards/Cilium
 
 operator:
+  unmanagedPodWatcher:
+    restart: true
   prometheus:
     enabled: true
     serviceMonitor:

@@ -3,8 +3,12 @@ global:
     extraDiskNode: "true"
   image:
     repository: reg.yiannis.io/proxy-ghcr/goauthentik/server
-    tag: 2026.5.6
-    digest: sha256:ed120caf710ccf82ef0026f0bc74e51615bc95ebff228a7a2d6fc60c441c3868
+    tag: 2026.8.4
+    digest: sha256:e7226ae116dac5aa0a5643803e735b010038f492c401e08e16b3bf1ac54c090c
+  env:
+    # Traefik connects from the pod CIDR; CNPs restrict allowed callers.
+    - name: AUTHENTIK_LISTEN__TRUSTED_PROXY_CIDRS
+      value: "127.0.0.1/32,::1/128,10.245.0.0/16"
 
 authentik:
   secret_key: "PleaseGenerateA50CharKey"

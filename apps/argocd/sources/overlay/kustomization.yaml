@@ -4,6 +4,18 @@ kind: Kustomization
 resources: 
   - ../base
 
+# Keep recovery-critical images upstream, with immutable digests.
+images:
+- name: quay.io/argoproj/argocd
+  newTag: v3.4.11
+  digest: sha256:1680b5c7d31e5eac9356678467b9ae801ea984a9df7e5c0361936ba1ba73cf2c
+- name: ghcr.io/dexidp/dex
+  newTag: v2.45.0
+  digest: sha256:b8469881d3cb3a73001506f0d3aaefecb9c45d2311c1e0f405d8ac538316c59d
+- name: public.ecr.aws/docker/library/redis
+  newTag: 8.2.3-alpine
+  digest: sha256:08ad0b1d280850169a790dba1393ff7a90aef951fc19632cf4d3ce4f78e679ba
+
 patches:
 - path: ./patches/argocd-cmd-params-cm.yaml
 - path: ./patches/argocd-cm.yaml

@@ -32,8 +32,8 @@ controllers:
       speedtest-tracker:
         image:
           repository: reg.yiannis.io/proxy-lscr/linuxserver/speedtest-tracker
-          # pinned to latest stable release tag: v1.14.5-ls162
-          digest: sha256:e4732e8e9073bdd5b419959c1151b761afa591166328d2ab751adc1e3d070563
+          # pinned release: v1.15.0-ls175
+          digest: sha256:1eeed2307699c083407bd4c1eb86f14d5179f9e1cd960f57d4cbab6f1f8b8a42
         env:
           PUID: "1000"
           PGID: "1000"

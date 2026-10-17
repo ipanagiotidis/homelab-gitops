@@ -126,8 +126,8 @@ prometheus-node-exporter:
   image:
     registry: reg.yiannis.io
     repository: proxy-quay/prometheus/node-exporter
-    tag: v1.12.0
-    digest: sha256:843ed23bb564f897ddcc6b6b9b605e398779487a561aae36fddd2933394836cd
+    tag: v1.12.1
+    digest: sha256:8c9bac11973b94b59be88d6e11fee4429aa743c8846cdc75d65b18db33f6a106
 prometheusOperator:
   image:
     registry: reg.yiannis.io

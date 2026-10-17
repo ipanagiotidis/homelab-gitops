@@ -239,6 +239,8 @@ spec:
     - matchName: reg.kyverno.io
     - matchName: registry-1.docker.io
     - matchName: registry.k8s.io
+    # registry.k8s.io redirects image blobs to this CDN.
+    - matchName: cdn.registry.k8s.io
     - matchPattern: "*.pkg.dev"
     - matchPattern: "*.quay.io"
     - matchPattern: "prod-registry-k8s-io-*.s3.dualstack.*.amazonaws.com"

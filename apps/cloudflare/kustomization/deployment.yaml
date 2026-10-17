@@ -30,7 +30,7 @@ spec:
               topologyKey: kubernetes.io/hostname
       containers:
       - name: cloudflared
-        image: reg.yiannis.io/proxy-dockerhub/cloudflare/cloudflared:2026.7.1@sha256:188bb03589a32affed3cf4d0590565ffe67b78866e6b5582574afab2b705bafe
+        image: reg.yiannis.io/proxy-dockerhub/cloudflare/cloudflared:2026.10.1@sha256:a15a3b50b8dabd57ac2090e9484c0247dba9dfa1f0df4d298d4317f9d69eb2d5
         imagePullPolicy: IfNotPresent
         args:
         - tunnel
