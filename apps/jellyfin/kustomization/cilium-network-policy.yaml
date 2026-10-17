@@ -63,6 +63,8 @@ spec:
   # Official/SSO plugin catalogs, versioned releases, and GitHub release redirects.
   - toFQDNs:
     - matchName: repo.jellyfin.org
+    # The official catalog redirects to rotating regional download mirrors.
+    - matchPattern: "*.mirror.jellyfin.org"
     - matchName: raw.githubusercontent.com
     - matchName: github.com
     - matchName: release-assets.githubusercontent.com
