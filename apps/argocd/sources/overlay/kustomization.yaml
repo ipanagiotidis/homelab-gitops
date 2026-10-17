@@ -13,8 +13,8 @@ images:
   newTag: v2.46.0
   digest: sha256:933fcd3f523338c847b88ef84a7145fb2fcb7b9917f08418612afeaaa2001777
 - name: public.ecr.aws/docker/library/redis
-  newTag: 8.2.3-alpine
-  digest: sha256:08ad0b1d280850169a790dba1393ff7a90aef951fc19632cf4d3ce4f78e679ba
+  newTag: 8.2.10-alpine
+  digest: sha256:b51665e66f00759be7c3152ad5ac3c66fb2f619c13ef62dea7cc1f9914524635
 
 patches:
 - path: ./patches/argocd-cmd-params-cm.yaml

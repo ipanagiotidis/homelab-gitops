@@ -143,8 +143,8 @@ common:
         redis:
           image:
             repository: reg.yiannis.io/proxy-dockerhub/library/redis
-            tag: "7.4.8-alpine"
-            digest: sha256:8b81dd37ff027bec4e516d41acfbe9fe2460070dc6d4a4570a2ac5b9d59df065
+            tag: "7.4.11-alpine"
+            digest: sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
           resources:
             requests:
               cpu: 50m

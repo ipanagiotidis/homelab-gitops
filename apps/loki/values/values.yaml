@@ -37,7 +37,7 @@ gateway:
     registry: reg.yiannis.io
     repository: proxy-dockerhub/nginxinc/nginx-unprivileged
     tag: 1.31-alpine
-    digest: sha256:592b23aa79a6e6c08ba4b20f1fff700e1328895705966722608e115d62e52d39
+    digest: sha256:378d0c32f6562f7fd9629170797f57d2b953aa09be983b3daaf4809bb039ca00
 singleBinary:
   replicas: 1
   resources:
@@ -72,12 +72,12 @@ memcached:
   image:
     registry: reg.yiannis.io
     repository: proxy-dockerhub/library/memcached
-    tag: 1.6.45-alpine@sha256:c29847751abb41f4c268c84fb3087fee05d4edcbda44409ccb5086e26148e8a7
+    tag: 1.6.45-alpine@sha256:9e4de012dc607573052061c0bcb38abc775e1dd59b24e7ac38d1892842094aaf
 memcachedExporter:
   image:
     registry: reg.yiannis.io
     repository: proxy-dockerhub/prom/memcached-exporter
-    tag: v0.16.0@sha256:fa03aba2f2aa6f572bf56ba07dd2960c62433805427be0fddc8b21b8074c1728
+    tag: v0.17.0@sha256:995c80e3ffbe6bc1a8e6a917c3a9f2075ad04dd16b86fac63c7eeb04e7c38f9b
 resultsCache:
   allocatedMemory: 128
   allocatedCPU: 50m
@@ -85,5 +85,5 @@ sidecar:
   image:
     registry: reg.yiannis.io
     repository: proxy-dockerhub/kiwigrid/k8s-sidecar
-    tag: 2.8.1
-    sha: abb55b2165c60e8f97e473862c7a3123df6f67d44f592949577c29b8fb2df9d6
+    tag: 2.14.1
+    sha: 092dbe0c335fba9af414a27630ca68f34df6185784fa847d9954187e69dbfdd7
