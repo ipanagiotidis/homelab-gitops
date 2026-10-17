@@ -12,6 +12,8 @@ controllers:
 
     # Configure the pod-specific securityContext
     pod:
+      annotations:
+        homelab.yiannis.io/restart-reason: "sso-5.1.1-2026-10-17"
       securityContext:
         fsGroup: 1001
         fsGroupChangePolicy: "OnRootMismatch"
