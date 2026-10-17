@@ -160,6 +160,13 @@ experimental:
       version: "v1.7.1"
 
 additionalArguments:
+  # Drop aliasing header names before backends can normalize them to trusted headers.
+  - "--entrypoints.web.http.aliasHeadersStrategy=delete"
+  - "--entrypoints.websecure.http.aliasHeadersStrategy=delete"
+  - "--entrypoints.webpublic.http.aliasHeadersStrategy=delete"
+  - "--entrypoints.websecurepublic.http.aliasHeadersStrategy=delete"
+  - "--entrypoints.traefik.http.aliasHeadersStrategy=delete"
+  - "--entrypoints.metrics.http.aliasHeadersStrategy=delete"
   # Preserve namespace-name@kubernetescrd middleware references.
   - "--providers.kubernetescrd.safeNaming=false"
   - "--experimental.plugins.bouncer.moduleName=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
