@@ -18,6 +18,8 @@ spec:
       releaseName: gitea
       valueFiles:
         - $values/apps/gitea/values/values.yaml
+        # OnDelete stages Valkey; recreate shards only after maintenance backups.
+        - $values/apps/gitea/values/valkey-official.yaml
   - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
     targetRevision: master
     ref: values

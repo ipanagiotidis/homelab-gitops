@@ -3,6 +3,7 @@ kind: CiliumNetworkPolicy
 metadata:
   name: reflector
 spec:
+  description: "Restrict Reflector to Kubernetes API, cluster DNS, and node health checks."
   endpointSelector:
     matchLabels:
       app.kubernetes.io/instance: reflector

@@ -1,0 +1,109 @@
+# Active migration overlay, loaded after values.yaml. Back up before syncing:
+# OnDelete holds existing pods, but evicted/recreated pods use this template.
+# This preserves the installed chart's StatefulSet, service and PVC identities.
+valkey-cluster:
+  image:
+    repository: proxy-dockerhub/valkey/valkey
+    tag: 8.1.10-alpine
+    digest: sha256:081c2f5cb575efc901aa80ff9cdbd1ec6a301682fd35e1ebb4b0990a4a4a8507
+  # Preserve current authentication; enabling it needs a separate Gitea migration.
+  usePassword: false
+  usePasswordFiles: false
+  cluster:
+    nodes: 3
+    replicas: 0
+    init: false
+    update:
+      addNodes: false
+  networkPolicy:
+    enabled: false
+  persistentVolumeClaimRetentionPolicy:
+    enabled: true
+    whenDeleted: Retain
+    whenScaled: Retain
+  metrics:
+    enabled: false
+  volumePermissions:
+    enabled: false
+  sysctlImage:
+    enabled: false
+  valkey:
+    automountServiceAccountToken: false
+    # Explicitly recreate pods during maintenance, never roll three unreplicated shards.
+    updateStrategy:
+      type: OnDelete
+      rollingUpdate: null
+    command: ["/bin/sh", "-ec"]
+    args:
+      - |
+        data=/bitnami/valkey/data
+        if [ ! -s "$data/nodes.conf" ] || [ ! -s "$data/appendonlydir/appendonly.aof.manifest" ]; then
+          echo 'Existing cluster identity or AOF manifest missing; refusing empty bootstrap.' >&2
+          exit 1
+        fi
+        : "${POD_IP:?Pod IP required}"
+        exec valkey-server \
+          --bind 0.0.0.0 :: --port 6379 --protected-mode no \
+          --daemonize no --logfile '' \
+          --dir "$data" --dbfilename dump.rdb \
+          --appendonly yes --appenddirname appendonlydir --appendfilename appendonly.aof \
+          --appendfsync everysec --aof-use-rdb-preamble yes \
+          --save '900 1 300 10 60 10000' \
+          --cluster-enabled yes --cluster-config-file "$data/nodes.conf" \
+          --cluster-node-timeout 15000 --cluster-require-full-coverage yes \
+          --cluster-announce-ip "$POD_IP" \
+          --cluster-announce-port 6379 --cluster-announce-bus-port 16379
+    extraEnvVars:
+      - name: POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
+    lifecycleHooks:
+      postStart:
+        exec:
+          command:
+            - /bin/sh
+            - -ec
+            - |
+              # Persisted nodes.conf retains IDs/slots, but all pod IPs can change.
+              # MEET reconnects known peers; it does not create/reset/reshard a cluster.
+              attempt=0
+              while [ "$attempt" -lt 60 ]; do
+                if [ "$(timeout 2 valkey-cli -h 127.0.0.1 ping 2>/dev/null || true)" = PONG ]; then
+                  for ordinal in 0 1 2; do
+                    peer="gitea-valkey-cluster-${ordinal}.gitea-valkey-cluster-headless.gitea.svc.cluster.local"
+                    ip=$(timeout 2 getent hosts "$peer" | awk '$1 ~ /^[0-9]+\./ {print $1; exit}' || true)
+                    if [ -n "$ip" ] && [ "$ip" != "$POD_IP" ]; then
+                      timeout 2 valkey-cli -h 127.0.0.1 cluster meet "$ip" 6379 16379 >/dev/null 2>&1 || true
+                    fi
+                  done
+                  if timeout 2 valkey-cli -h 127.0.0.1 cluster info | tr -d '\r' | grep -qx 'cluster_state:ok'; then
+                    exit 0
+                  fi
+                fi
+                attempt=$((attempt + 1))
+                sleep 2
+              done
+              # Leave the server alive for diagnosis; readiness still fails closed.
+              echo 'Cluster rejoin incomplete; inspect peer connectivity and slot health.' >&2
+    customStartupProbe:
+      exec:
+        command: ["/bin/sh", "-ec", "test \"$(valkey-cli -h 127.0.0.1 ping)\" = PONG"]
+      periodSeconds: 5
+      timeoutSeconds: 3
+      failureThreshold: 120
+    customLivenessProbe:
+      exec:
+        command: ["/bin/sh", "-ec", "test \"$(valkey-cli -h 127.0.0.1 ping)\" = PONG"]
+      periodSeconds: 10
+      timeoutSeconds: 3
+      failureThreshold: 6
+    customReadinessProbe:
+      exec:
+        command:
+          - /bin/sh
+          - -ec
+          - "valkey-cli -h 127.0.0.1 cluster info | tr -d '\r' | grep -qx 'cluster_state:ok'"
+      periodSeconds: 5
+      timeoutSeconds: 3
+      failureThreshold: 3
