@@ -7,4 +7,5 @@ resources:
   - ./external-secret-postgresql.yaml
   - ./httproute-public.yaml
   - ./cilium-network-policy.yaml
+  - ./cilium-network-policy-valkey.yaml
   - ./pvc-shared-storage-nas.yaml

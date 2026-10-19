@@ -1,0 +1,58 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: gitea-valkey-cluster
+  annotations:
+    # Install the replacement before pruning the chart's NetworkPolicy.
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: valkey-cluster
+      app.kubernetes.io/instance: gitea
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: gitea
+            app.kubernetes.io/name: gitea
+            app.kubernetes.io/instance: gitea
+      toPorts:
+        - ports:
+            - port: "6379"
+              protocol: TCP
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: gitea
+            app.kubernetes.io/name: valkey-cluster
+            app.kubernetes.io/instance: gitea
+      toPorts:
+        - ports:
+            - port: "6379"
+              protocol: TCP
+            - port: "16379"
+              protocol: TCP
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+            - port: "53"
+              protocol: TCP
+          rules:
+            dns:
+              - matchPattern: "*"
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: gitea
+            app.kubernetes.io/name: valkey-cluster
+            app.kubernetes.io/instance: gitea
+      toPorts:
+        - ports:
+            - port: "6379"
+              protocol: TCP
+            - port: "16379"
+              protocol: TCP
