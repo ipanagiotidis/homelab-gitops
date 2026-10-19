@@ -63,6 +63,7 @@ kind: CiliumNetworkPolicy
 metadata:
   name: crowdsec-agent
 spec:
+  description: "Restrict CrowdSec agents to LAPI, approved HTTPS hosts, DNS, health checks, and monitoring."
   endpointSelector:
     matchLabels:
       k8s-app: crowdsec

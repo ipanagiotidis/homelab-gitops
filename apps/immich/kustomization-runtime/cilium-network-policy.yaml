@@ -4,6 +4,7 @@ metadata:
   name: immich-server
   namespace: immich
 spec:
+  description: "Restrict Immich server to approved clients, monitoring, DNS, OAuth, and its database and cache."
   endpointSelector:
     matchLabels:
       app.kubernetes.io/controller: main

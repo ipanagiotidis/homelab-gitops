@@ -3,6 +3,7 @@ kind: CiliumNetworkPolicy
 metadata:
   name: radarr-ingress
 spec:
+  description: "Allow Radarr ingress only from the proxy, Homepage, Seerr, and Prowlarr."
   endpointSelector:
     matchLabels:
       app.kubernetes.io/name: radarr
@@ -29,6 +30,7 @@ kind: CiliumNetworkPolicy
 metadata:
   name: radarr-egress
 spec:
+  description: "Restrict Radarr egress to DNS, Prowlarr, qBittorrent, and approved metadata hosts."
   endpointSelector:
     matchLabels:
       app.kubernetes.io/name: radarr

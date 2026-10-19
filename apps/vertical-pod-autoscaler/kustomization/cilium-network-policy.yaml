@@ -4,6 +4,7 @@ metadata:
   name: vertical-pod-autoscaler-recommender
   namespace: vpa-system
 spec:
+  description: "Restrict the VPA recommender to Kubernetes API, cluster DNS, and node health checks."
   endpointSelector:
     matchLabels:
       app.kubernetes.io/name: vertical-pod-autoscaler

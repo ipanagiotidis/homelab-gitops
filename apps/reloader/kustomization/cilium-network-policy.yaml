@@ -3,6 +3,7 @@ kind: CiliumNetworkPolicy
 metadata:
   name: reloader
 spec:
+  description: "Restrict Reloader to Kubernetes API, cluster DNS, and node health checks."
   endpointSelector:
     matchLabels:
       app.kubernetes.io/instance: reloader

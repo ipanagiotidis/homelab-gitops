@@ -3,6 +3,7 @@ kind: CiliumNetworkPolicy
 metadata:
   name: sonarr-ingress
 spec:
+  description: "Allow Sonarr ingress only from the proxy, Homepage, Seerr, and Prowlarr."
   endpointSelector:
     matchLabels:
       app.kubernetes.io/name: sonarr
@@ -29,6 +30,7 @@ kind: CiliumNetworkPolicy
 metadata:
   name: sonarr-egress
 spec:
+  description: "Restrict Sonarr egress to DNS, Prowlarr, qBittorrent, and approved metadata hosts."
   endpointSelector:
     matchLabels:
       app.kubernetes.io/name: sonarr

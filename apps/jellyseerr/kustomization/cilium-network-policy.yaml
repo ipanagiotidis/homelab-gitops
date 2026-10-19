@@ -3,6 +3,7 @@ kind: CiliumNetworkPolicy
 metadata:
   name: jellyseerr-ingress
 spec:
+  description: "Allow Seerr ingress only from the proxy and Homepage."
   endpointSelector:
     matchLabels:
       app.kubernetes.io/name: jellyseerr
@@ -23,6 +24,7 @@ kind: CiliumNetworkPolicy
 metadata:
   name: jellyseerr-egress
 spec:
+  description: "Restrict Seerr egress to DNS, Jellyfin, Radarr, Sonarr, and approved external APIs."
   endpointSelector:
     matchLabels:
       app.kubernetes.io/name: jellyseerr

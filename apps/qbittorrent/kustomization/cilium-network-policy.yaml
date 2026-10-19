@@ -3,6 +3,7 @@ kind: CiliumNetworkPolicy
 metadata:
   name: qbittorrent-ingress
 spec:
+  description: "Allow qBittorrent web ingress only from the proxy, Homepage, Radarr, and Sonarr."
   endpointSelector:
     matchLabels:
       app.kubernetes.io/name: qbittorrent
@@ -29,6 +30,7 @@ kind: CiliumNetworkPolicy
 metadata:
   name: qbittorrent-egress
 spec:
+  description: "Allow qBittorrent cluster DNS and intentional Internet peer traffic without general cluster access."
   endpointSelector:
     matchLabels:
       app.kubernetes.io/name: qbittorrent

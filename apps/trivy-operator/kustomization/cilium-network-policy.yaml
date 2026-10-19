@@ -3,6 +3,7 @@ kind: CiliumNetworkPolicy
 metadata:
   name: trivy-operator
 spec:
+  description: "Restrict Trivy Operator to Kubernetes API, cluster DNS, node health checks, and monitoring."
   endpointSelector:
     matchLabels:
       app.kubernetes.io/instance: trivy-operator
