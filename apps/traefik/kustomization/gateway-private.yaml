@@ -7,20 +7,20 @@ metadata:
 spec:
   gatewayClassName: traefik
   listeners:
-  - name: web-home
+  - name: web-lab
     protocol: HTTP
     port: 8000
-    hostname: home.yiannis.io
+    hostname: lab.yiannis.io
     allowedRoutes:
       namespaces:
         from: Selector
         selector:
           matchLabels:
             gateway-access: private
-  - name: websecure-home
+  - name: websecure-lab
     protocol: HTTPS
     port: 8443
-    hostname: home.yiannis.io
+    hostname: lab.yiannis.io
     tls:
       mode: Terminate
       certificateRefs:

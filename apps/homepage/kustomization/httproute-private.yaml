@@ -6,9 +6,9 @@ spec:
   parentRefs:
   - name: private
     namespace: traefik
-    sectionName: websecure-home
+    sectionName: websecure-lab
   hostnames:
-  - home.yiannis.io
+  - lab.yiannis.io
   rules:
   - matches:
     - path:
