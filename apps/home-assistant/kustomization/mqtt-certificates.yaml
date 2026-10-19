@@ -1,0 +1,56 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: home-assistant-selfsigned
+spec:
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: home-assistant-mqtt-ca
+spec:
+  isCA: true
+  commonName: home-assistant-mqtt-ca
+  secretName: home-assistant-mqtt-ca
+  duration: 87600h
+  renewBefore: 8760h
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+    rotationPolicy: Never
+  issuerRef:
+    name: home-assistant-selfsigned
+    kind: Issuer
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: home-assistant-mqtt-ca
+spec:
+  ca:
+    secretName: home-assistant-mqtt-ca
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: home-assistant-mqtt
+spec:
+  secretName: home-assistant-mqtt-tls
+  duration: 2160h
+  renewBefore: 720h
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+    rotationPolicy: Always
+  usages:
+    - digital signature
+    - server auth
+  dnsNames:
+    - home-assistant-mqtt
+    - home-assistant-mqtt.home-assistant
+    - home-assistant-mqtt.home-assistant.svc
+    - home-assistant-mqtt.home-assistant.svc.cluster.local
+  issuerRef:
+    name: home-assistant-mqtt-ca
+    kind: Issuer

@@ -1,0 +1,10 @@
+apiVersion: v2
+name: home-assistant
+description: Private Home Assistant, MQTT, and hardware-gated Zigbee2MQTT
+type: application
+version: 0.1.0
+appVersion: "2026.10.2"
+dependencies:
+  - name: common
+    version: 5.3.0
+    repository: https://bjw-s-labs.github.io/helm-charts/

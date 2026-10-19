@@ -2,6 +2,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
+  # Home Assistant paused until hardware arrives. Enable its Traefik/CNPG
+  # additions too, then register these manual-sync Applications.
+  # - apps/home-assistant/applications/home-assistant-db.yaml
+  # - apps/home-assistant/applications/home-assistant.yaml
   - apps/argocd/applications/argocd-self.yaml
   - apps/metallb/applications/metallb.yaml
   - apps/authentik/applications/authentik.yaml

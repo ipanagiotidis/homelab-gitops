@@ -1,0 +1,29 @@
+# Prepared only: registration in the root Kustomization is paused until hardware arrives.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: home-assistant
+  namespace: argocd
+  labels:
+    app: home-assistant
+  annotations:
+    argocd.argoproj.io/sync-wave: "30"
+spec:
+  project: default
+  destination:
+    namespace: home-assistant
+    server: https://kubernetes.default.svc
+  sources:
+    - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+      targetRevision: master
+      path: apps/home-assistant/sources/chart
+    - repoURL: https://github.com/ipanagiotidis/homelab-gitops.git
+      targetRevision: master
+      path: apps/home-assistant/kustomization
+  # Manual activation: create secrets/provider and sync the database first.
+  syncPolicy:
+    syncOptions:
+      - Validate=true
+      - CreateNamespace=true
+      - SkipDryRunOnMissingResource=true
+      - ServerSideApply=true

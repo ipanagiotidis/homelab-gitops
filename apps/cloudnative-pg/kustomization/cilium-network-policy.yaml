@@ -62,6 +62,8 @@ spec:
                 - authentik
                 - gitea
                 - harbor
+                # Home Assistant paused until hardware arrives.
+                # - home-assistant
                 - immich
                 - paperless-ngx
             - key: cnpg.io/podRole

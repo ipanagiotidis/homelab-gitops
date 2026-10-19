@@ -1,0 +1,16 @@
+version: 5
+homeassistant:
+  enabled: true
+mqtt:
+  server: mqtts://home-assistant-mqtt.home-assistant.svc.cluster.local:8883
+  user: zigbee2mqtt
+  ca: /tls/ca.crt
+  reject_unauthorized: true
+serial:
+  adapter: zstack
+frontend:
+  enabled: false
+advanced:
+  log_level: warning
+  log_output:
+    - console

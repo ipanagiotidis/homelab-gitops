@@ -1,0 +1,123 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: home-assistant
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/instance: home-assistant
+      app.kubernetes.io/controller: home-assistant
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: traefik
+            app.kubernetes.io/name: traefik
+            app.kubernetes.io/instance: traefik-traefik
+      toPorts:
+        - ports:
+            - {port: "8123", protocol: TCP}
+    - fromEntities: [host, remote-node]
+      toPorts:
+        - ports:
+            - {port: "8123", protocol: TCP}
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - {port: "53", protocol: UDP}
+            - {port: "53", protocol: TCP}
+          rules:
+            dns:
+              - matchName: authentik.yiannis.io
+              - matchName: home-assistant-database-rw.home-assistant.svc.cluster.local
+              - matchName: home-assistant-mqtt.home-assistant.svc.cluster.local
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: home-assistant
+            cnpg.io/cluster: home-assistant-database
+      toPorts:
+        - ports:
+            - {port: "5432", protocol: TCP}
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: home-assistant
+            app.kubernetes.io/instance: home-assistant
+            app.kubernetes.io/controller: mqtt
+      toPorts:
+        - ports:
+            - {port: "8883", protocol: TCP}
+    # SNI limits TLS handshakes, not encrypted HTTP Host headers. This is
+    # defense in depth, not full virtual-host isolation on shared Traefik.
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: traefik
+            app.kubernetes.io/name: traefik
+            app.kubernetes.io/instance: traefik-traefik
+      toPorts:
+        - ports:
+            - {port: "8443", protocol: TCP}
+          serverNames: [authentik.yiannis.io]
+    - toCIDR:
+        - 192.168.88.7/32
+      toPorts:
+        - ports:
+            - {port: "443", protocol: TCP}
+          serverNames: [authentik.yiannis.io]
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: home-assistant-mqtt
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/instance: home-assistant
+      app.kubernetes.io/controller: mqtt
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/instance: home-assistant
+            app.kubernetes.io/controller: home-assistant
+        - matchLabels:
+            app.kubernetes.io/instance: home-assistant
+            app.kubernetes.io/controller: zigbee2mqtt
+      toPorts:
+        - ports:
+            - {port: "8883", protocol: TCP}
+    - fromEntities: [host, remote-node]
+      toPorts:
+        - ports:
+            - {port: "8883", protocol: TCP}
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: home-assistant-zigbee-mqtt
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/instance: home-assistant
+      app.kubernetes.io/controller: zigbee2mqtt
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - {port: "53", protocol: UDP}
+            - {port: "53", protocol: TCP}
+          rules:
+            dns:
+              - matchName: home-assistant-mqtt.home-assistant.svc.cluster.local
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: home-assistant
+            app.kubernetes.io/instance: home-assistant
+            app.kubernetes.io/controller: mqtt
+      toPorts:
+        - ports:
+            - {port: "8883", protocol: TCP}

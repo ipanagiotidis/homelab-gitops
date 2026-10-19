@@ -1,0 +1,56 @@
+{{- if .Values.metrics.serviceMonitorEnabled }}
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: home-assistant-prometheus-ingress
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/instance: home-assistant
+      app.kubernetes.io/controller: home-assistant
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: monitoring
+            app.kubernetes.io/name: prometheus
+      toPorts:
+        - ports:
+            - {port: "8123", protocol: TCP}
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: home-assistant-prometheus
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: infisical
+  target:
+    name: home-assistant-prometheus
+    creationPolicy: Owner
+    deletionPolicy: Retain
+  data:
+    - secretKey: token
+      remoteRef:
+        key: HOME_ASSISTANT_PROMETHEUS_TOKEN
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: home-assistant
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: home-assistant
+      app.kubernetes.io/service: home-assistant
+  endpoints:
+    - port: http
+      path: /api/prometheus
+      interval: 60s
+      authorization:
+        type: Bearer
+        credentials:
+          name: home-assistant-prometheus
+          key: token
+{{- end }}

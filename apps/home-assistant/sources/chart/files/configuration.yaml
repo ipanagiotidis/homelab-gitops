@@ -1,0 +1,71 @@
+homeassistant:
+  name: Home
+  time_zone: Europe/Zurich
+  internal_url: https://home.yiannis.io
+  auth_providers:
+    - type: homeassistant
+  auth_mfa_modules:
+    - type: totp
+
+# Explicit integrations: no cloud, multicast discovery, or host Bluetooth access.
+frontend:
+config:
+api:
+history:
+logbook:
+system_health:
+my:
+mobile_app:
+energy:
+person:
+sun:
+recorder:
+  db_url: !env_var HA_DATABASE_URL
+  purge_keep_days: 30
+  auto_purge: true
+  auto_repack: true
+  commit_interval: 5
+http:
+  use_x_forwarded_for: true
+  # CNP restricts pod callers to Traefik; optional monitoring needs a separate grant.
+  trusted_proxies:
+    - 10.245.0.0/16
+logger:
+  default: warning
+prometheus:
+  requires_auth: true
+  filter:
+    include_domains:
+      - sensor
+      - binary_sensor
+lovelace:
+  mode: storage
+  dashboards:
+    home-observability:
+      mode: yaml
+      title: Home Observability
+      icon: mdi:home-analytics
+      show_in_sidebar: true
+      filename: observability.yaml
+auth_oidc:
+  client_id: !env_var HA_OIDC_CLIENT_ID
+  client_secret: !env_var HA_OIDC_CLIENT_SECRET
+  discovery_url: https://authentik.yiannis.io/application/o/home-assistant/.well-known/openid-configuration
+  display_name: Authentik
+  id_token_signing_alg: RS256
+  features:
+    automatic_user_linking: false
+    automatic_person_creation: false
+    disable_rfc7636: false
+    include_groups_scope: false
+    force_https: true
+    default_redirect: false
+  claims:
+    username: preferred_username
+    display_name: name
+    groups: groups
+  roles:
+    user: home-assistant-users
+    admin: home-assistant-admins
+  network:
+    tls_verify: true

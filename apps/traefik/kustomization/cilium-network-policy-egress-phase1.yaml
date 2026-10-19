@@ -8,6 +8,16 @@ spec:
       app.kubernetes.io/instance: traefik-traefik
       app.kubernetes.io/name: traefik
   egress:
+  # Home Assistant paused until hardware arrives.
+  # - toEndpoints:
+  #   - matchLabels:
+  #       k8s:io.kubernetes.pod.namespace: home-assistant
+  #       app.kubernetes.io/instance: home-assistant
+  #       app.kubernetes.io/controller: home-assistant
+  #   toPorts:
+  #   - ports:
+  #     - port: "8123"
+  #       protocol: TCP
   # Traefik still needs DNS for FQDN-based plugin/bootstrap traffic.
   - toEndpoints:
     - matchLabels:

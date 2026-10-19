@@ -1,0 +1,87 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: home-assistant-default-deny
+spec:
+  endpointSelector: {}
+  ingress: []
+  egress: []
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: home-assistant-database-dns
+spec:
+  # CNPG keeps its existing DNS behavior; app DNS grants live with app CNPs.
+  endpointSelector:
+    matchLabels:
+      cnpg.io/cluster: home-assistant-database
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - {port: "53", protocol: UDP}
+            - {port: "53", protocol: TCP}
+          rules:
+            dns:
+              - matchPattern: "*"
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: home-assistant-database
+spec:
+  endpointSelector:
+    matchLabels:
+      cnpg.io/cluster: home-assistant-database
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: home-assistant
+            app.kubernetes.io/instance: home-assistant
+            app.kubernetes.io/controller: home-assistant
+        - matchLabels:
+            cnpg.io/cluster: home-assistant-database
+      toPorts:
+        - ports:
+            - {port: "5432", protocol: TCP}
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: cnpg-system
+            app.kubernetes.io/name: cloudnative-pg
+      toPorts:
+        - ports:
+            - {port: "8000", protocol: TCP}
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: monitoring
+            app.kubernetes.io/name: prometheus
+      toPorts:
+        - ports:
+            - {port: "9187", protocol: TCP}
+    - fromEntities: [host, remote-node]
+      toPorts:
+        - ports:
+            - {port: "8000", protocol: TCP}
+  egress:
+    - toEntities: [kube-apiserver]
+      toPorts:
+        - ports:
+            - {port: "443", protocol: TCP}
+            - {port: "6443", protocol: TCP}
+    - toServices:
+        - k8sService:
+            namespace: default
+            serviceName: kubernetes
+      toPorts:
+        - ports:
+            - {port: "443", protocol: TCP}
+    - toEndpoints:
+        - matchLabels:
+            cnpg.io/cluster: home-assistant-database
+      toPorts:
+        - ports:
+            - {port: "5432", protocol: TCP}

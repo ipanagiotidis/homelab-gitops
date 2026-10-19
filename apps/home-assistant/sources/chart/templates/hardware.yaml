@@ -1,0 +1,45 @@
+{{- if gt (int .Values.controllers.zigbee2mqtt.replicas) 0 }}
+{{- $ip := required "Reserve the coordinator IPv4 address before enabling Zigbee2MQTT" .Values.hardware.coordinatorAddress }}
+{{- if not (regexMatch "^([0-9]{1,3}\\.){3}[0-9]{1,3}$" $ip) }}
+{{- fail "hardware.coordinatorAddress must be a single IPv4 address, not a CIDR or URL" }}
+{{- end }}
+{{- range splitList "." $ip }}
+{{- if gt (int .) 255 }}
+{{- fail "hardware.coordinatorAddress contains an invalid IPv4 octet" }}
+{{- end }}
+{{- end }}
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: home-assistant-zigbee-network
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: infisical
+  target:
+    name: home-assistant-zigbee-network
+    creationPolicy: Owner
+    deletionPolicy: Retain
+  data:
+    - secretKey: network-key
+      remoteRef:
+        key: ZIGBEE2MQTT_NETWORK_KEY
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: home-assistant-zigbee-coordinator
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/instance: home-assistant
+      app.kubernetes.io/controller: zigbee2mqtt
+  egress:
+    - toCIDR:
+        - {{ printf "%s/32" $ip | quote }}
+      toPorts:
+        - ports:
+            - port: {{ .Values.hardware.coordinatorPort | quote }}
+              protocol: TCP
+{{- end }}

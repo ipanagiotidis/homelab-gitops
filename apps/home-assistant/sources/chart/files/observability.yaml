@@ -1,0 +1,16 @@
+title: Home Observability
+views:
+  - title: Overview
+    path: overview
+    cards:
+      - type: markdown
+        content: |
+          # Home observability
+          Software setup is ready for onboarding. Sensors have not arrived yet.
+
+          Add MQTT using the internal TLS broker, then pair devices after the
+          Zigbee coordinator has a reserved IP and its network policy is approved.
+
+          Room temperature, humidity, CO2, cabinet conditions, and battery
+          cards can be added when real entity IDs are known. Detailed history
+          is retained for 30 days; eligible hourly statistics remain longer.

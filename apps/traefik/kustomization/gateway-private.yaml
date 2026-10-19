@@ -7,6 +7,33 @@ metadata:
 spec:
   gatewayClassName: traefik
   listeners:
+  # Home Assistant paused until hardware arrives.
+  # - name: web-home
+  #   protocol: HTTP
+  #   port: 8000
+  #   hostname: home.yiannis.io
+  #   allowedRoutes:
+  #     namespaces:
+  #       from: Selector
+  #       selector:
+  #         matchLabels:
+  #           gateway-access: private
+  # - name: websecure-home
+  #   protocol: HTTPS
+  #   port: 8443
+  #   hostname: home.yiannis.io
+  #   tls:
+  #     mode: Terminate
+  #     certificateRefs:
+  #     - group: ""
+  #       kind: Secret
+  #       name: traefik-wildcard-tls
+  #   allowedRoutes:
+  #     namespaces:
+  #       from: Selector
+  #       selector:
+  #         matchLabels:
+  #           gateway-access: private
   - name: web-lab
     protocol: HTTP
     port: 8000

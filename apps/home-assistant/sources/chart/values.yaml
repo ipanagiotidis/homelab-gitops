@@ -1,0 +1,314 @@
+global:
+  createDefaultServiceAccount: false
+
+defaultPodOptions:
+  automountServiceAccountToken: false
+  enableServiceLinks: false
+  # Query configured dotted names first, avoiding ndots:5 search expansion
+  # against the application's exact-name DNS allowlist.
+  dnsConfig:
+    options:
+      - name: ndots
+        value: "1"
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1001
+    runAsGroup: 3000
+    fsGroup: 3000
+    fsGroupChangePolicy: OnRootMismatch
+    seccompProfile:
+      type: RuntimeDefault
+
+# Do not activate Zigbee2MQTT until hardware IP, network key, and CNP are ready.
+hardware:
+  coordinatorAddress: ""
+  coordinatorPort: 6638
+
+# Requires a separate HA long-lived token created after onboarding.
+metrics:
+  serviceMonitorEnabled: false
+
+controllers:
+  home-assistant:
+    replicas: 1
+    strategy: Recreate
+    annotations:
+      secret.reloader.stakater.com/reload: home-assistant-secrets,home-assistant-cnpg-app,home-assistant-database-ca,home-assistant-mqtt-tls
+      configmap.reloader.stakater.com/reload: home-assistant-config,home-assistant-sso
+    initContainers:
+      install-sso:
+        image: &haImage
+          repository: reg.yiannis.io/proxy-ghcr/home-assistant/home-assistant
+          tag: "2026.10.2"
+          digest: sha256:33afb0659d786213264c2211f8d91c5fe87461c56eba6a3a546eb05fc71e89f4
+        command: [python3, /bootstrap/install_plugin.py]
+        args: [/vendor/plugin.zip, /plugin]
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        securityContext: &security
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop: [ALL]
+        resources:
+          requests: {cpu: 10m, memory: 64Mi}
+          limits: {memory: 256Mi}
+    containers:
+      app:
+        image: *haImage
+        # Bypass root-only s6 startup; use the upstream HA command as non-root.
+        command: [python3, -P, -m, homeassistant]
+        args: [--config, /config, --skip-pip, --log-file, /tmp/home-assistant.log, --log-no-color]
+        env:
+          TZ: Europe/Zurich
+          HOME: /config
+          PYTHONDONTWRITEBYTECODE: "1"
+          HA_DATABASE_URL:
+            valueFrom:
+              secretKeyRef: {name: home-assistant-cnpg-app, key: db-url}
+          HA_OIDC_CLIENT_ID:
+            valueFrom:
+              secretKeyRef: {name: home-assistant-secrets, key: oidc-client-id}
+          HA_OIDC_CLIENT_SECRET:
+            valueFrom:
+              secretKeyRef: {name: home-assistant-secrets, key: oidc-client-secret}
+        securityContext: *security
+        resources:
+          requests: {cpu: 100m, memory: 512Mi}
+          limits: {memory: 2Gi}
+        probes:
+          startup:
+            enabled: true
+            custom: true
+            spec:
+              tcpSocket: {port: 8123}
+              periodSeconds: 10
+              timeoutSeconds: 2
+              failureThreshold: 60
+          readiness: &haProbe
+            enabled: true
+            custom: true
+            spec:
+              httpGet: {path: /, port: 8123}
+              periodSeconds: 10
+              timeoutSeconds: 5
+              failureThreshold: 6
+          liveness: *haProbe
+  mqtt:
+    replicas: 1
+    strategy: Recreate
+    annotations:
+      secret.reloader.stakater.com/reload: home-assistant-secrets,home-assistant-mqtt-tls
+      configmap.reloader.stakater.com/reload: home-assistant-mqtt-config
+    initContainers:
+      passwords:
+        image: &mqttImage
+          repository: reg.yiannis.io/proxy-dockerhub/library/eclipse-mosquitto
+          tag: 2.1.2-alpine
+          digest: sha256:38c0da4f2ef84284d47b3b3eeea1cb3bdeabe81ee10caf0cd5c5ff61ee3ea408
+        command: [/bin/sh, -ec]
+        args:
+          - |
+            umask 077
+            # Use hex passwords; never pass them as command arguments or log them.
+            for password in "$HA_PASSWORD" "$ZIGBEE_PASSWORD"; do
+              case "$password" in ''|*[!0-9a-fA-F]*) echo 'MQTT passwords must be hex' >&2; exit 1;; esac
+              [ "${#password}" -ge 32 ] || exit 1
+            done
+            printf 'homeassistant:%s\nzigbee2mqtt:%s\n' "$HA_PASSWORD" "$ZIGBEE_PASSWORD" > /auth/passwords
+            mosquitto_passwd -H sha512-pbkdf2 -U /auth/passwords
+        env:
+          HA_PASSWORD:
+            valueFrom:
+              secretKeyRef: {name: home-assistant-secrets, key: mqtt-ha-password}
+          ZIGBEE_PASSWORD:
+            valueFrom:
+              secretKeyRef: {name: home-assistant-secrets, key: mqtt-zigbee-password}
+        securityContext: *security
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}
+          limits: {memory: 64Mi}
+    containers:
+      app:
+        image: *mqttImage
+        command: [/usr/sbin/mosquitto, -c, /etc/mqtt/mosquitto.conf]
+        securityContext: *security
+        resources:
+          requests: {cpu: 20m, memory: 32Mi}
+          limits: {memory: 128Mi}
+        probes:
+          startup:
+            enabled: true
+            custom: true
+            spec:
+              tcpSocket: {port: 8883}
+              periodSeconds: 5
+              failureThreshold: 30
+          readiness: &mqttProbe
+            enabled: true
+            custom: true
+            spec:
+              tcpSocket: {port: 8883}
+              periodSeconds: 10
+          liveness: *mqttProbe
+  zigbee2mqtt:
+    replicas: 0
+    strategy: Recreate
+    annotations:
+      secret.reloader.stakater.com/reload: home-assistant-secrets,home-assistant-zigbee-network,home-assistant-mqtt-tls
+      configmap.reloader.stakater.com/reload: home-assistant-zigbee-config
+    initContainers:
+      seed-config:
+        image: &zigbeeImage
+          repository: reg.yiannis.io/proxy-ghcr/koenkk/zigbee2mqtt
+          tag: "2.14.2"
+          digest: sha256:addbfb08fcef2e4477de1535636118241e10d13e898fbe4d9faba8a4d7396311
+        command: [/bin/sh, -ec]
+        args:
+          - |
+            if [ ! -f /app/data/configuration.yaml ]; then
+              cp /bootstrap/configuration.yaml /app/data/configuration.yaml
+            fi
+        securityContext: *security
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}
+          limits: {memory: 64Mi}
+    containers:
+      app:
+        image: *zigbeeImage
+        command: [node, /app/index.js]
+        env:
+          TZ: Europe/Zurich
+          ZIGBEE2MQTT_DATA: /app/data
+          ZIGBEE2MQTT_CONFIG_SERIAL_PORT: '{{ if .Values.hardware.coordinatorAddress }}tcp://{{ .Values.hardware.coordinatorAddress }}:{{ .Values.hardware.coordinatorPort }}{{ end }}'
+          ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD:
+            valueFrom:
+              secretKeyRef: {name: home-assistant-secrets, key: mqtt-zigbee-password}
+          ZIGBEE2MQTT_CONFIG_ADVANCED_NETWORK_KEY:
+            valueFrom:
+              secretKeyRef: {name: home-assistant-zigbee-network, key: network-key}
+        securityContext: *security
+        resources:
+          requests: {cpu: 50m, memory: 128Mi}
+          limits: {memory: 512Mi}
+
+service:
+  home-assistant:
+    controller: home-assistant
+    forceRename: home-assistant
+    ports:
+      http: {port: 8123}
+  mqtt:
+    controller: mqtt
+    forceRename: home-assistant-mqtt
+    ports:
+      mqtts: {port: 8883}
+
+persistence:
+  config:
+    type: persistentVolumeClaim
+    storageClass: truenas-apps
+    accessMode: ReadWriteOnce
+    size: 5Gi
+    retain: true
+    annotations:
+      argocd.argoproj.io/sync-options: Prune=false,Delete=false
+    advancedMounts:
+      home-assistant:
+        app: [{path: /config}]
+  mqtt-data:
+    type: persistentVolumeClaim
+    storageClass: truenas-apps
+    accessMode: ReadWriteOnce
+    size: 1Gi
+    retain: true
+    annotations:
+      argocd.argoproj.io/sync-options: Prune=false,Delete=false
+    advancedMounts:
+      mqtt:
+        app: [{path: /mosquitto/data}]
+  zigbee-data:
+    type: persistentVolumeClaim
+    storageClass: truenas-apps
+    accessMode: ReadWriteOnce
+    size: 1Gi
+    retain: true
+    annotations:
+      argocd.argoproj.io/sync-options: Prune=false,Delete=false
+    advancedMounts:
+      zigbee2mqtt:
+        seed-config: [{path: /app/data}]
+        app: [{path: /app/data}]
+  ha-config:
+    type: configMap
+    name: home-assistant-config
+    advancedMounts:
+      home-assistant:
+        install-sso: [{path: /bootstrap, readOnly: true}]
+        app:
+          - {path: /config/configuration.yaml, subPath: configuration.yaml, readOnly: true}
+          - {path: /config/observability.yaml, subPath: observability.yaml, readOnly: true}
+  sso-archive:
+    type: configMap
+    name: home-assistant-sso
+    advancedMounts:
+      home-assistant:
+        install-sso: [{path: /vendor, readOnly: true}]
+  sso:
+    type: emptyDir
+    advancedMounts:
+      home-assistant:
+        install-sso: [{path: /plugin}]
+        app: [{path: /config/custom_components/auth_oidc, readOnly: true}]
+  database-ca:
+    type: secret
+    name: home-assistant-database-ca
+    # Do not mount the CA private key generated by CNPG.
+    items:
+      - {key: ca.crt, path: ca.crt}
+    advancedMounts:
+      home-assistant:
+        app: [{path: /database-ca, readOnly: true}]
+  mqtt-config:
+    type: configMap
+    name: home-assistant-mqtt-config
+    advancedMounts:
+      mqtt:
+        app:
+          - {path: /etc/mqtt/mosquitto.conf, subPath: mosquitto.conf, readOnly: true}
+          - {path: /etc/mqtt/acl, subPath: acl, readOnly: true}
+  mqtt-auth:
+    type: emptyDir
+    medium: Memory
+    advancedMounts:
+      mqtt:
+        passwords: [{path: /auth}]
+        app: [{path: /auth, readOnly: true}]
+  mqtt-tls:
+    type: secret
+    name: home-assistant-mqtt-tls
+    defaultMode: 0440
+    advancedMounts:
+      mqtt:
+        app:
+          - {path: /tls/tls.crt, subPath: tls.crt, readOnly: true}
+          - {path: /tls/tls.key, subPath: tls.key, readOnly: true}
+  mqtt-ca:
+    type: secret
+    name: home-assistant-mqtt-tls
+    items:
+      - {key: ca.crt, path: ca.crt}
+    advancedMounts:
+      home-assistant:
+        app: [{path: /mqtt-ca, readOnly: true}]
+      zigbee2mqtt:
+        app: [{path: /tls, readOnly: true}]
+  zigbee-config:
+    type: configMap
+    name: home-assistant-zigbee-config
+    advancedMounts:
+      zigbee2mqtt:
+        seed-config: [{path: /bootstrap, readOnly: true}]
+  tmp:
+    type: emptyDir
+    globalMounts: [{path: /tmp}]
