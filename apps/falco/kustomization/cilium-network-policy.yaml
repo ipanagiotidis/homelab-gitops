@@ -4,6 +4,7 @@ metadata:
   name: falco
   namespace: falco
 spec:
+  description: "Restrict Falco to node health checks, monitoring, DNS, the Kubernetes API, and approved artifact hosts."
   endpointSelector:
     matchLabels:
       app.kubernetes.io/instance: falco
