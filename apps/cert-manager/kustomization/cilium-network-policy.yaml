@@ -4,6 +4,7 @@ metadata:
   name: cert-manager-egress
   namespace: cert-manager
 spec:
+  description: "Restrict cert-manager egress to Kubernetes, DNS, certificate providers and internal services."
   endpointSelector: {}
   egress:
   - toEndpoints:

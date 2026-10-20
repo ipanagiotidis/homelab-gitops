@@ -4,6 +4,7 @@ metadata:
   name: cnpg-cloudnative-pg
   namespace: cnpg-system
 spec:
+  description: "Restrict CNPG operator traffic to webhooks, monitoring, DNS, Kubernetes and managed instances."
   endpointSelector:
     matchLabels:
       app.kubernetes.io/instance: cnpg

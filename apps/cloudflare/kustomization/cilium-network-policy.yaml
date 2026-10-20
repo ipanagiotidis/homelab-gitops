@@ -3,6 +3,7 @@ kind: CiliumNetworkPolicy
 metadata:
   name: cloudflared
 spec:
+  description: "Restrict cloudflared to tunnel transport, DNS, monitoring and public Traefik origins."
   endpointSelector:
     matchLabels:
       app.kubernetes.io/name: cloudflared

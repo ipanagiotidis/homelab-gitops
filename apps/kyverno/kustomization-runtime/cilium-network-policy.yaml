@@ -3,6 +3,7 @@ kind: CiliumNetworkPolicy
 metadata:
   name: kyverno-admission-controller
 spec:
+  description: "Restrict Kyverno admission traffic to webhooks, monitoring, DNS and the Kubernetes API."
   endpointSelector:
     matchLabels:
       app.kubernetes.io/component: admission-controller
@@ -56,6 +57,7 @@ kind: CiliumNetworkPolicy
 metadata:
   name: kyverno-background-controller
 spec:
+  description: "Restrict Kyverno background traffic to monitoring, DNS and the Kubernetes API."
   endpointSelector:
     matchLabels:
       app.kubernetes.io/component: background-controller

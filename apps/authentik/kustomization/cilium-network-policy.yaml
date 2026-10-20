@@ -3,6 +3,7 @@ kind: CiliumNetworkPolicy
 metadata:
   name: authentik-server-ingress
 spec:
+  description: "Allow Authentik server access from Traefik, Homepage and Authentik workloads."
   endpointSelector:
     matchLabels:
       app.kubernetes.io/name: authentik
@@ -29,6 +30,7 @@ kind: CiliumNetworkPolicy
 metadata:
   name: authentik-egress
 spec:
+  description: "Restrict Authentik workloads to cluster DNS and their namespace dependencies."
   endpointSelector:
     matchLabels:
       app.kubernetes.io/name: authentik

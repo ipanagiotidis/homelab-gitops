@@ -4,6 +4,7 @@ metadata:
   name: metallb-controller
   namespace: metallb-system
 spec:
+  description: "Restrict MetalLB controller traffic to health, webhooks, monitoring, DNS, Kubernetes and members."
   endpointSelector:
     matchLabels:
       app: metallb

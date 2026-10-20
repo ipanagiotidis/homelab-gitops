@@ -4,6 +4,7 @@ metadata:
   name: kubelet-serving-cert-approver
   namespace: kubelet-serving-cert-approver
 spec:
+  description: "Restrict certificate approver traffic to health, monitoring, DNS and the Kubernetes API."
   endpointSelector:
     matchLabels:
       app.kubernetes.io/instance: kubelet-serving-cert-approver
