@@ -101,9 +101,44 @@ customRules:
         or proc.exepath startswith /var/tmp/
         or proc.exepath startswith /dev/shm/
 
+    # Match the official Valkey overlay's probes exactly, including its CR byte.
+    # Never exempt the whole container, namespace, or arbitrary sh -ec commands.
+    - list: local_gitea_valkey_probe_cmdlines
+      items:
+        - '"sh -ec test \"$(valkey-cli -h 127.0.0.1 ping)\" = PONG"'
+        - '"sh -ec valkey-cli -h 127.0.0.1 cluster info | tr -d ''\r'' | grep -qx ''cluster_state:ok''"'
+
+    - macro: local_expected_gitea_valkey_probe_shell
+      condition: >
+        k8s.ns.name=gitea
+        and container.name=gitea-valkey-cluster
+        and container.image.repository=reg.yiannis.io/proxy-dockerhub/valkey/valkey
+        and proc.name=sh
+        and proc.exepath=/bin/busybox
+        and proc.pname in (containerd-shim, runc)
+        and proc.cmdline in (local_gitea_valkey_probe_cmdlines)
+
+    - list: local_speedtest_php85_cleanup_cmdlines
+      items:
+        - '"sh -c ''/usr/bin/php85'' ''artisan'' model:prune > ''/dev/null'' 2>&1"'
+        - '"sh -c ''/usr/bin/php85'' ''artisan'' queue:prune-batches --hours=48 > ''/dev/null'' 2>&1"'
+        - '"sh -c ''/usr/bin/php85'' ''artisan'' queue:prune-failed --hours=48 > ''/dev/null'' 2>&1"'
+
+    - macro: local_expected_speedtest_php85_cleanup_shell
+      condition: >
+        k8s.ns.name=speedtest
+        and container.name=speedtest-tracker
+        and container.image.repository=reg.yiannis.io/proxy-lscr/linuxserver/speedtest-tracker
+        and proc.name=sh
+        and proc.exepath=/bin/busybox
+        and proc.pname=php
+        and proc.cmdline in (local_speedtest_php85_cleanup_cmdlines)
+
     - macro: local_expected_healthcheck_shell
       condition: >
-        (k8s.ns.name=authentik and proc.cmdline startswith "bash /lifecycle/ak healthcheck")
+        local_expected_gitea_valkey_probe_shell
+        or local_expected_speedtest_php85_cleanup_shell
+        or (k8s.ns.name=authentik and proc.cmdline startswith "bash /lifecycle/ak healthcheck")
         or (k8s.ns.name=authentik and container.name in (server, worker) and proc.cmdline startswith "bash /lifecycle/ak ")
         or (k8s.ns.name=crowdsec and container.name=crowdsec-agent and proc.cmdline="bash /docker_start.sh")
         or (k8s.ns.name=gitea and proc.cmdline startswith "sh -c /scripts/ping_readiness_local.sh")

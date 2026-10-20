@@ -80,7 +80,7 @@ agent:
       program: jellyfin
       poll_without_inotify: true
     - namespace: gitea
-      podName: gitea-6df474f875-*
+      podName: gitea-*
       program: gitea
       poll_without_inotify: true
     - namespace: monitoring

@@ -30,6 +30,18 @@ alertmanager:
           repeat_interval: 1m
         - receiver: 'null'
           matchers: ['alertname="InfoInhibitor"']
+        # Event windows expiring are not incident resolutions. Keep these
+        # grouped by detector/severity, with no per-IP/pod notification fanout.
+        - receiver: pushover-security
+          matchers: ['notification_class="security-event"']
+          group_wait: 1m
+          # Shorter than the 10m event window so new rule groups are not missed.
+          group_interval: 5m
+          repeat_interval: 24h
+          routes:
+            - matchers: ['severity="critical"']
+              group_wait: 30s
+              repeat_interval: 4h
         - receiver: pushover
           matchers: ['severity="critical"']
           repeat_interval: 4h
@@ -59,6 +71,20 @@ alertmanager:
               Firing: {{ len .Alerts.Firing }}; resolved: {{ len .Alerts.Resolved }}.
               Open Grafana for details; raw annotations and logs are not sent.
             # Explicitly empty: omission defaults to Alertmanager's own URL.
+            url: ''
+            url_title: ''
+      - name: pushover-security
+        pushover_configs:
+          - user_key_file: /etc/alertmanager/secrets/alertmanager-notification-credentials/pushover-user-key
+            token_file: /etc/alertmanager/secrets/alertmanager-notification-credentials/pushover-api-token
+            send_resolved: false
+            priority: '{{ if eq .CommonLabels.severity "critical" }}1{{ else }}0{{ end }}'
+            title: '[Homelab security] {{ .CommonLabels.alertname }}'
+            message: >-
+              Severity: {{ .CommonLabels.severity }}.
+              Detector namespace: {{ .CommonLabels.namespace }}.
+              Active rule/scenario groups: {{ len .Alerts.Firing }}.
+              Review local Grafana/CrowdSec details; this is not confirmation of compromise.
             url: ''
             url_title: ''
   alertmanagerSpec:

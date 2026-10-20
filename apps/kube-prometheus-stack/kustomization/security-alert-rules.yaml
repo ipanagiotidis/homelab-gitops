@@ -1,0 +1,105 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: homelab-security
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  groups:
+    - name: homelab.security-events
+      rules:
+        # Falco creates some rule counters only after the first event. Include
+        # newly appearing nonzero series, not just increases between scrapes.
+        # Metrics identify the detector/rule, not the affected app namespace.
+        - alert: FalcoHighSeverityEvent
+          expr: |
+            sum by (rule_name) (
+              (increase(falcosecurity_falco_rules_matches_total{namespace="falco",job="falco-metrics",priority=~"0|1|2|3"}[10m]) > 0)
+              or
+              (falcosecurity_falco_rules_matches_total{namespace="falco",job="falco-metrics",priority=~"0|1|2|3"}
+               unless falcosecurity_falco_rules_matches_total{namespace="falco",job="falco-metrics",priority=~"0|1|2|3"} offset 10m)
+            ) > 0
+          labels:
+            severity: critical
+            namespace: falco
+            notification_class: security-event
+          annotations:
+            summary: Falco detected a high-severity runtime event
+            description: 'Rule {{ $labels.rule_name }} matched recently. Inspect local Falco logs for the affected workload. This is a detection, not proof of compromise.'
+        - alert: FalcoWarningEvent
+          expr: |
+            sum by (rule_name) (
+              (increase(falcosecurity_falco_rules_matches_total{namespace="falco",job="falco-metrics",priority="4"}[10m]) > 0)
+              or
+              (falcosecurity_falco_rules_matches_total{namespace="falco",job="falco-metrics",priority="4"}
+               unless falcosecurity_falco_rules_matches_total{namespace="falco",job="falco-metrics",priority="4"} offset 10m)
+            ) > 0
+          for: 1m
+          labels:
+            severity: warning
+            namespace: falco
+            notification_class: security-event
+          annotations:
+            summary: Falco detected a runtime warning
+            description: 'Rule {{ $labels.rule_name }} matched recently after local exceptions. Inspect local logs; authorized diagnostics can also trigger this rule.'
+        # This is a gauge of currently active local bans, not a counter of new
+        # attacks. Exclude CAPI/lists/manual decisions and never use increase().
+        - alert: CrowdSecLocalBanActive
+          expr: |
+            sum by (reason) (cs_active_decisions{namespace="crowdsec",origin="crowdsec",action="ban"}) > 0
+          for: 1m
+          labels:
+            severity: warning
+            namespace: crowdsec
+            notification_class: security-event
+          annotations:
+            summary: CrowdSec has an active locally generated ban
+            description: 'Scenario {{ $labels.reason }} has an active ban. Inspect CrowdSec locally for details; no source IP or request data is sent to the phone.'
+    - name: homelab.security-health
+      rules:
+        - alert: FalcoMetricsUnavailable
+          expr: |
+            (min(up{namespace="falco",job="falco-metrics"}) == 0)
+            or absent(up{namespace="falco",job="falco-metrics"})
+          for: 10m
+          labels:
+            severity: warning
+            namespace: falco
+          annotations:
+            summary: Falco metrics are unavailable
+            description: At least one discovered target is down or all targets are absent. Check Falco and ServiceMonitor discovery; DaemonSet alerts cover missing pods.
+        - alert: FalcoEventsDropped
+          expr: |
+            (sum(rate(falcosecurity_scap_n_drops_total{namespace="falco"}[5m])) > 1)
+            or (sum(rate(falcosecurity_falco_outputs_queue_num_drops_total{namespace="falco"}[5m])) > 0)
+          for: 10m
+          labels:
+            severity: warning
+            namespace: falco
+          annotations:
+            summary: Falco has sustained event loss
+            description: More than one syscall event per second is being dropped, or the output queue is dropping events. Runtime detection visibility may be incomplete.
+        - alert: CrowdSecMetricsUnavailable
+          expr: |
+            (min(up{namespace="crowdsec",job=~"crowdsec-service|crowdsec/crowdsec-agent"}) == 0)
+            or absent(up{namespace="crowdsec",job="crowdsec-service"})
+            or absent(up{namespace="crowdsec",job="crowdsec/crowdsec-agent"})
+          for: 10m
+          labels:
+            severity: warning
+            namespace: crowdsec
+          annotations:
+            summary: CrowdSec metrics are unavailable
+            description: A discovered LAPI/agent target is down or an entire job is absent. Check acquisition and monitoring; quiet traffic alone is not an error.
+        - alert: CrowdSecBouncerPollingStopped
+          expr: |
+            (sum(increase(cs_lapi_bouncer_requests_total{namespace="crowdsec",route="/v1/decisions/stream",method="GET"}[10m])) == 0)
+            or absent(cs_lapi_bouncer_requests_total{namespace="crowdsec",route="/v1/decisions/stream",method="GET"})
+          for: 5m
+          labels:
+            severity: critical
+            namespace: crowdsec
+          annotations:
+            summary: CrowdSec is not seeing bouncer decision polling
+            description: No stream polls observed across a ten-minute window, sustained for five minutes, or the metric is absent. Inspect Traefik bouncer connectivity and TLS. Polling alone does not prove successful enforcement.
