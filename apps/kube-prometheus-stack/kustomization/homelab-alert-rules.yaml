@@ -1,0 +1,43 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: homelab-resource-health
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  groups:
+    - name: homelab.resource-health
+      rules:
+        - alert: HomelabNodeMemoryHeadroomLow
+          expr: |
+            (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes < 0.10)
+            and (node_memory_MemAvailable_bytes < 1073741824)
+          for: 15m
+          labels:
+            severity: warning
+          annotations:
+            summary: Node memory headroom is below 10% and 1 GiB
+            description: 'Node exporter {{ $labels.instance }} has sustained low available memory. Inspect processes and scheduling before changing resources.'
+        - alert: HomelabNodeMemoryHeadroomLow
+          expr: |
+            (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes < 0.05)
+            and (node_memory_MemAvailable_bytes < 536870912)
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Node memory headroom is below 5% and 512 MiB
+            description: 'Node exporter {{ $labels.instance }} is close to memory exhaustion. Talos user-space OOM kills need not increment the kernel OOM counter.'
+        - alert: HomelabCriticalComponentRestarted
+          expr: |
+            increase(kube_pod_container_status_restarts_total{
+              namespace="kube-system",
+              container=~"kube-apiserver|kube-controller-manager|kube-scheduler|etcd|cilium-agent"
+            }[15m]) > 0
+          for: 1m
+          labels:
+            severity: warning
+          annotations:
+            summary: A control-plane or Cilium container restarted
+            description: '{{ $labels.pod }}/{{ $labels.container }} restarted within 15 minutes. Correlate with planned maintenance, previous logs and Talos OOM events; a restart alone does not establish an OOM or security incident.'

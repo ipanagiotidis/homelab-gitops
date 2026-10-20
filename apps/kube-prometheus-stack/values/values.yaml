@@ -1,5 +1,123 @@
 alertmanager:
-  enabled: false
+  enabled: true
+  serviceAccount:
+    automountServiceAccountToken: false
+  ingress:
+    enabled: false
+  config:
+    global:
+      resolve_timeout: 5m
+      http_config:
+        follow_redirects: false
+    inhibit_rules:
+      - source_matchers: ['severity="critical"']
+        target_matchers: ['severity=~"warning|info"']
+        equal: [namespace, alertname, instance]
+      - source_matchers: ['severity="warning"']
+        target_matchers: ['severity="info"']
+        equal: [namespace, alertname, instance]
+    route:
+      receiver: 'null'
+      group_by: [namespace, alertname, severity]
+      group_wait: 30s
+      group_interval: 5m
+      repeat_interval: 12h
+      routes:
+        - receiver: healthchecks
+          matchers: ['alertname="Watchdog"']
+          group_wait: 0s
+          group_interval: 1m
+          repeat_interval: 1m
+        - receiver: 'null'
+          matchers: ['alertname="InfoInhibitor"']
+        - receiver: pushover
+          matchers: ['severity="critical"']
+          repeat_interval: 4h
+        - receiver: pushover
+          matchers: ['severity="warning"']
+    receivers:
+      - name: 'null'
+      - name: healthchecks
+        webhook_configs:
+          - url_file: /etc/alertmanager/secrets/alertmanager-notification-credentials/healthchecks-url
+            send_resolved: false
+            timeout: 10s
+            # Do not export alert annotations, labels or internal generator URLs.
+            payload:
+              heartbeat: homelab-alerting
+      - name: pushover
+        pushover_configs:
+          - user_key_file: /etc/alertmanager/secrets/alertmanager-notification-credentials/pushover-user-key
+            token_file: /etc/alertmanager/secrets/alertmanager-notification-credentials/pushover-api-token
+            send_resolved: true
+            # Explicitly avoid Pushover's repeating emergency-priority default.
+            priority: '{{ if and (eq .Status "firing") (eq .CommonLabels.severity "critical") }}1{{ else }}0{{ end }}'
+            title: '[Homelab {{ .Status }}] {{ .CommonLabels.alertname }}'
+            message: >-
+              Severity: {{ .CommonLabels.severity }}.
+              Namespace: {{ .CommonLabels.namespace }}.
+              Firing: {{ len .Alerts.Firing }}; resolved: {{ len .Alerts.Resolved }}.
+              Open Grafana for details; raw annotations and logs are not sent.
+            # Explicitly empty: omission defaults to Alertmanager's own URL.
+            url: ''
+            url_title: ''
+  alertmanagerSpec:
+    image:
+      registry: reg.yiannis.io
+      repository: proxy-quay/prometheus/alertmanager
+      tag: v0.34.1
+      sha: e9733bafb1bdef9b00e25a21f8f99dc26a22224bf16641ad754d1649f4c3357a
+    replicas: 1
+    retention: 120h
+    automountServiceAccountToken: false
+    # Do not merge arbitrary AlertmanagerConfig objects from other namespaces.
+    alertmanagerConfigSelector:
+      matchLabels:
+        alertmanager.yiannis.io/config: explicitly-approved
+    alertmanagerConfigNamespaceSelector:
+      matchLabels:
+        kubernetes.io/metadata.name: monitoring
+    secrets:
+      - alertmanager-notification-credentials
+    nodeSelector:
+      extraDiskNode: "true"
+    resources:
+      requests:
+        cpu: 25m
+        memory: 64Mi
+      limits:
+        memory: 256Mi
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 2000
+      fsGroup: 2000
+      seccompProfile:
+        type: RuntimeDefault
+    containers:
+      - name: alertmanager
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop: [ALL]
+      - name: config-reloader
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop: [ALL]
+    storage:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: local-path
+          accessModes: [ReadWriteOnce]
+          resources:
+            requests:
+              storage: 1Gi
+    persistentVolumeClaimRetentionPolicy:
+      whenDeleted: Retain
+      whenScaled: Retain
 kubeApiServer:
   enabled: true
 kubelet:
@@ -120,10 +238,16 @@ grafana:
   datasources:
     datasources.yaml:
       apiVersion: 1
-      deleteDatasources:
-        - name: Alertmanager
-          orgId: 1
       datasources:
+        - name: Alertmanager
+          uid: alertmanager
+          type: alertmanager
+          access: proxy
+          url: http://kube-prometheus-stack-alertmanager.monitoring.svc.cluster.local:9093
+          editable: false
+          jsonData:
+            implementation: prometheus
+            handleGrafanaManagedAlerts: false
         - name: Prometheus
           uid: prometheus
           type: prometheus
