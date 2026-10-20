@@ -1,8 +1,10 @@
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
+  # Retain the existing identity so Argo CD updates the policy in place.
   name: traefik-egress-phase1
 spec:
+  description: "Traefik egress restricted to routed backends and explicit infrastructure dependencies."
   endpointSelector:
     matchLabels:
       app.kubernetes.io/instance: traefik-traefik
@@ -76,34 +78,188 @@ spec:
     - ports:
       - port: "8080"
         protocol: TCP
-  # Phase 1 compromise:
-  # allow Traefik to reach cluster backends only on the small set of ports
-  # that are currently used by routed services. This is broader than a
-  # service-by-service allowlist, but much less brittle during Gateway/API
-  # migration and still materially tighter than unrestricted egress.
-  - toEntities:
-    - cluster
+  # Routed backends: scope each pod target port to its Service's selectors.
+  # Review this allowlist for every app/route/chart/Service change (see AGENTS.md).
+  # New routes do not automatically authorize egress to their backends.
+  # argocd/argocd-server
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: argocd
+        app.kubernetes.io/name: argocd-server
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+  # gitea/gitea-http
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: gitea
+        app.kubernetes.io/instance: gitea
+        app.kubernetes.io/name: gitea
+    toPorts:
+    - ports:
+      - port: "3000"
+        protocol: TCP
+  # harbor/harbor-core
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app: harbor
+        component: core
+        release: harbor
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+  # harbor/harbor-portal
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: harbor
+        app: harbor
+        component: portal
+        release: harbor
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+  # homepage-external/homepage-external
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: homepage-external
+        app.kubernetes.io/controller: homepage-external
+        app.kubernetes.io/instance: homepage-external
+        app.kubernetes.io/name: homepage-external
+    toPorts:
+    - ports:
+      - port: "3000"
+        protocol: TCP
+  # homepage/homepage
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: homepage
+        app.kubernetes.io/controller: homepage
+        app.kubernetes.io/instance: homepage
+        app.kubernetes.io/name: homepage
+    toPorts:
+    - ports:
+      - port: "3000"
+        protocol: TCP
+  # immich/immich-server
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: immich
+        app.kubernetes.io/controller: main
+        app.kubernetes.io/instance: immich
+        app.kubernetes.io/name: server
+    toPorts:
+    - ports:
+      - port: "2283"
+        protocol: TCP
+  # media-video/jellyfin
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: media-video
+        app.kubernetes.io/controller: jellyfin
+        app.kubernetes.io/instance: jellyfin
+        app.kubernetes.io/name: jellyfin
+    toPorts:
+    - ports:
+      - port: "8096"
+        protocol: TCP
+  # media-video/jellyseerr
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: media-video
+        app.kubernetes.io/controller: jellyseerr
+        app.kubernetes.io/instance: jellyseerr
+        app.kubernetes.io/name: jellyseerr
+    toPorts:
+    - ports:
+      - port: "5055"
+        protocol: TCP
+  # media-video/prowlarr
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: media-video
+        app.kubernetes.io/controller: prowlarr
+        app.kubernetes.io/instance: prowlarr
+        app.kubernetes.io/name: prowlarr
+    toPorts:
+    - ports:
+      - port: "9696"
+        protocol: TCP
+  # media-video/qbittorrent
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: media-video
+        app.kubernetes.io/controller: qbittorrent
+        app.kubernetes.io/instance: qbittorrent
+        app.kubernetes.io/name: qbittorrent
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+  # media-video/radarr
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: media-video
+        app.kubernetes.io/controller: radarr
+        app.kubernetes.io/instance: radarr
+        app.kubernetes.io/name: radarr
+    toPorts:
+    - ports:
+      - port: "7878"
+        protocol: TCP
+  # media-video/sonarr
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: media-video
+        app.kubernetes.io/controller: sonarr
+        app.kubernetes.io/instance: sonarr
+        app.kubernetes.io/name: sonarr
+    toPorts:
+    - ports:
+      - port: "8989"
+        protocol: TCP
+  # monitoring/kube-prometheus-stack-grafana
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: monitoring
+        app.kubernetes.io/instance: kube-prometheus-stack
+        app.kubernetes.io/name: grafana
+    toPorts:
+    - ports:
+      - port: "3000"
+        protocol: TCP
+  # paperless-ngx/paperless-ngx
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: paperless-ngx
+        app.kubernetes.io/controller: paperless-ngx
+        app.kubernetes.io/instance: paperless-ngx
+        app.kubernetes.io/name: paperless-ngx
+    toPorts:
+    - ports:
+      - port: "8000"
+        protocol: TCP
+  # speedtest/speedtest-tracker
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: speedtest
+        app.kubernetes.io/controller: speedtest-tracker
+        app.kubernetes.io/instance: speedtest-tracker
+        app.kubernetes.io/name: speedtest-tracker
     toPorts:
     - ports:
       - port: "80"
         protocol: TCP
-      - port: "3000"
-        protocol: TCP
-      - port: "5055"
-        protocol: TCP
-      - port: "7878"
-        protocol: TCP
-      - port: "8000"
-        protocol: TCP
+  # traefik/traefik-dashboard-internal
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: traefik
+        app.kubernetes.io/instance: traefik-traefik
+        app.kubernetes.io/name: traefik
+    toPorts:
+    - ports:
       - port: "8080"
-        protocol: TCP
-      - port: "8096"
-        protocol: TCP
-      - port: "8989"
-        protocol: TCP
-      - port: "9000"
-        protocol: TCP
-      - port: "9696"
-        protocol: TCP
-      - port: "2283"
         protocol: TCP
