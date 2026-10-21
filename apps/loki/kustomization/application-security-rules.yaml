@@ -1,0 +1,103 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: loki-application-security-rules
+  namespace: monitoring
+data:
+  application-security.yaml: |
+    groups:
+      - name: homelab.application-security
+        interval: 1m
+        rules:
+          # Parse selected fields only; aggregate away all source/log labels.
+          # Created Event excludes HTTP logs mentioning an event's name.
+          - alert: AuthentikFailedLoginBurst
+            expr: |
+              sum(count_over_time({cluster="homelab",namespace="authentik",container=~"server|worker"}
+                |= "Created Event"
+                | json action="action", logger="logger", event="event"
+                | __error__="" | logger="authentik.events.models" | event="Created Event"
+                | action="login_failed" [10m])) >= 10
+            for: 1m
+            labels:
+              severity: warning
+              notification_class: security-event
+              detector: loki-ruler
+              namespace: authentik
+              app: authentik
+            annotations:
+              summary: Repeated Authentik login failures
+              description: At least 10 canonical login_failed events in 10 minutes. Check user mistakes, stale credentials and abuse; private source addresses are not individual client attribution.
+              event_count: '{{ printf "%.0f" $value }}'
+          - alert: AuthentikSuspiciousRequestBurst
+            expr: |
+              sum(count_over_time({cluster="homelab",namespace="authentik",container=~"server|worker"}
+                |= "Created Event"
+                | json action="action", logger="logger", event="event"
+                | __error__="" | logger="authentik.events.models" | event="Created Event"
+                | action="suspicious_request" [10m])) >= 5
+            for: 1m
+            labels:
+              severity: warning
+              notification_class: security-event
+              detector: loki-ruler
+              namespace: authentik
+              app: authentik
+            annotations:
+              summary: Authentik reported repeated suspicious requests
+              description: At least 5 explicit suspicious_request events in 10 minutes. Inspect the local event cause; this is not a generic HTTP error detector or proof of compromise.
+              event_count: '{{ printf "%.0f" $value }}'
+          - alert: AuthentikSensitiveConfigurationChanged
+            expr: |
+              sum(count_over_time({cluster="homelab",namespace="authentik",container=~"server|worker"}
+                |= "Created Event"
+                | json action="action", logger="logger", event="event", model_app="context.model.app", model_name="context.model.model_name"
+                | __error__="" | logger="authentik.events.models" | event="Created Event"
+                | action=~"model_created|model_updated|model_deleted"
+                | (model_app=~"authentik_providers_.*|authentik_policies.*|authentik_flows|authentik_rbac|guardian"
+                   or (model_app="authentik_core" and model_name="group")) [15m])) > 0
+            labels:
+              severity: warning
+              notification_class: security-event
+              detector: loki-ruler
+              namespace: authentik
+              app: authentik
+            annotations:
+              summary: Authentik access configuration changed
+              description: A provider, policy, flow, RBAC/guardian object or group changed. Review authorized administration or blueprint reconciliation. Does not identify field-level privilege changes or every MFA/user change.
+              event_count: '{{ printf "%.0f" $value }}'
+          - alert: AuthentikImpersonationStarted
+            expr: |
+              sum(count_over_time({cluster="homelab",namespace="authentik",container=~"server|worker"}
+                |= "Created Event"
+                | json action="action", logger="logger", event="event"
+                | __error__="" | logger="authentik.events.models" | event="Created Event"
+                | action="impersonation_started" [15m])) > 0
+            labels:
+              severity: warning
+              notification_class: security-event
+              detector: loki-ruler
+              namespace: authentik
+              app: authentik
+            annotations:
+              summary: An Authentik impersonation session started
+              description: Review the actor and target in local logs and confirm this was authorized support or administration. No session is revoked automatically.
+              event_count: '{{ printf "%.0f" $value }}'
+          - alert: ArgoCDAccessDeniedBurst
+            expr: |
+              sum(count_over_time({cluster="homelab",namespace="argocd",container="argocd-server"}
+                |= "finished call"
+                | json code="[\"grpc.code\"]", component="[\"grpc.component\"]", message="msg"
+                | __error__="" | message="finished call" | component="server"
+                | code="PermissionDenied" [10m])) >= 30
+            for: 1m
+            labels:
+              severity: warning
+              notification_class: security-event
+              detector: loki-ruler
+              namespace: argocd
+              app: argocd
+            annotations:
+              summary: Repeated Argo CD permission denials
+              description: At least 30 PermissionDenied server calls in 10 minutes. Check RBAC and authorized clients before suspecting abuse. Excludes routine expired-session Unauthenticated responses and IdP availability failures.
+              event_count: '{{ printf "%.0f" $value }}'

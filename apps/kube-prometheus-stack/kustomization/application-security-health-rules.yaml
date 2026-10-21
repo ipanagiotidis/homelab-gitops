@@ -1,0 +1,47 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: homelab-application-security-health
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  groups:
+    - name: homelab.application-security-health
+      rules:
+        # Scrape health alone cannot detect an empty or stopped rule manager.
+        - alert: ApplicationSecurityRulesUnavailable
+          expr: |
+            ((sum(up{namespace="monitoring",job="monitoring/loki"}) or vector(0)) < 1)
+            or ((sum(loki_prometheus_rule_group_rules{namespace="monitoring",job="monitoring/loki",rule_group=~".*homelab[.]application-security"}) or vector(0)) != 5)
+            or (time() - (min(loki_prometheus_rule_group_last_evaluation_timestamp_seconds{namespace="monitoring",job="monitoring/loki",rule_group=~".*homelab[.]application-security"}) or vector(0)) > 300)
+          for: 10m
+          labels:
+            severity: warning
+            namespace: monitoring
+          annotations:
+            summary: Application security rules are unavailable or stale
+            description: Loki is not scraped successfully, the pilot group does not contain exactly five rules, or its evaluation timestamp is stale. Check rule mounts, syntax and the ruler before treating silence as safety.
+        - alert: ApplicationSecurityProcessingFailing
+          expr: |
+            (sum(increase(loki_prometheus_rule_evaluation_failures_total{namespace="monitoring",job="monitoring/loki",rule_group=~".*homelab[.]application-security"}[10m])) > 0)
+            or (sum(increase(loki_prometheus_rule_group_iterations_missed_total{namespace="monitoring",job="monitoring/loki",rule_group=~".*homelab[.]application-security"}[10m])) > 0)
+            or (sum(increase(loki_prometheus_notifications_errors_total{namespace="monitoring",job="monitoring/loki"}[10m])) > 0)
+          for: 5m
+          labels:
+            severity: warning
+            namespace: monitoring
+          annotations:
+            summary: Application security evaluation or alert forwarding is failing
+            description: Loki has pilot rule errors, missed evaluations or errors sending alerts to Alertmanager. Inspect queries, capacity and the Loki-to-Alertmanager CNP path; these errors must not be interpreted as zero security events.
+        - alert: ApplicationSecurityLogIngestionStalled
+          expr: |
+            (sum(increase(loki_distributor_lines_received_total{namespace="monitoring",job="monitoring/loki"}[15m])) == 0)
+            or sum(absent(loki_distributor_lines_received_total{namespace="monitoring",job="monitoring/loki"}))
+          for: 5m
+          labels:
+            severity: warning
+            namespace: monitoring
+          annotations:
+            summary: Cluster log ingestion has stopped or cannot be measured
+            description: No new log lines were received across the cluster for 15 minutes, or ingestion metrics are absent. Check Alloy and Loki. This global check does not prove each application feed is healthy; quiet login-failure streams must not alert on absence.

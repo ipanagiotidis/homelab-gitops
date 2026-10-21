@@ -30,6 +30,12 @@ alertmanager:
           repeat_interval: 1m
         - receiver: 'null'
           matchers: ['alertname="InfoInhibitor"']
+        - receiver: pushover-application-security
+          matchers: ['notification_class="security-event"', 'detector="loki-ruler"']
+          group_by: [namespace, app, alertname, severity]
+          group_wait: 1m
+          group_interval: 5m
+          repeat_interval: 24h
         # Event windows expiring are not incident resolutions. Keep these
         # grouped by detector/severity, with no per-IP/pod notification fanout.
         - receiver: pushover-security
@@ -71,6 +77,27 @@ alertmanager:
               Firing: {{ len .Alerts.Firing }}; resolved: {{ len .Alerts.Resolved }}.
               Open Grafana for details; raw annotations and logs are not sent.
             # Explicitly empty: omission defaults to Alertmanager's own URL.
+            url: ''
+            url_title: ''
+      - name: pushover-application-security
+        pushover_configs:
+          - user_key_file: /etc/alertmanager/secrets/alertmanager-notification-credentials/pushover-user-key
+            token_file: /etc/alertmanager/secrets/alertmanager-notification-credentials/pushover-api-token
+            send_resolved: false
+            priority: '0'
+            title: '[Homelab security] {{ .CommonLabels.alertname }}'
+            # Explanations are static; the only exported annotation is a bounded number.
+            message: |-
+              Application: {{ .CommonLabels.app }}. Namespace: {{ .CommonLabels.namespace }}.
+              {{ if eq .CommonLabels.alertname "AuthentikFailedLoginBurst" }}At least 10 failed logins in 10 minutes. Check mistakes, stale credentials or abuse.
+              {{ else if eq .CommonLabels.alertname "AuthentikSuspiciousRequestBurst" }}At least 5 explicit suspicious requests in 10 minutes. Review the local event cause.
+              {{ else if eq .CommonLabels.alertname "AuthentikSensitiveConfigurationChanged" }}Identity access configuration changed within 15 minutes. Check authorized admin or blueprint activity.
+              {{ else if eq .CommonLabels.alertname "AuthentikImpersonationStarted" }}An impersonation session started within 15 minutes. Confirm authorized administration.
+              {{ else if eq .CommonLabels.alertname "ArgoCDAccessDeniedBurst" }}At least 30 permission denials in 10 minutes. Check RBAC, clients or abuse.
+              {{ else }}Inspect local logs for the event context.
+              {{ end }}{{ range $i, $alert := .Alerts.Firing }}{{ if lt $i 1 }}{{ $count := index $alert.Annotations "event_count" }}{{ if match "^[0-9]{1,9}$" $count }}Matched log records: {{ $count }}.
+              {{ end }}Alert started: {{ $alert.StartsAt | tz "Europe/Zurich" | date "2006-01-02 15:04:05 MST" }}.
+              {{ end }}{{ end }}Review local logs; not proof of compromise. No automatic blocking. Alert start is not event time.
             url: ''
             url_title: ''
       - name: pushover-security

@@ -15,6 +15,18 @@ loki:
     delete_request_store: filesystem
   limits_config:
     retention_period: 336h
+  rulerConfig:
+    storage:
+      type: local
+      local:
+        directory: /etc/loki/security-rules
+    rule_path: /tmp/loki-ruler
+    evaluation_interval: 1m
+    poll_interval: 1m
+    enable_api: false
+    enable_sharding: false
+    enable_alertmanager_v2: true
+    alertmanager_url: http://kube-prometheus-stack-alertmanager.monitoring.svc.cluster.local:9093
   analytics:
     reporting_enabled: false
     usage_stats_url: ""
@@ -40,6 +52,17 @@ gateway:
     digest: sha256:378d0c32f6562f7fd9629170797f57d2b953aa09be983b3daaf4809bb039ca00
 singleBinary:
   replicas: 1
+  extraVolumes:
+    - name: security-rules
+      configMap:
+        name: loki-application-security-rules
+        items:
+          - key: application-security.yaml
+            path: fake/application-security.yaml
+  extraVolumeMounts:
+    - name: security-rules
+      mountPath: /etc/loki/security-rules
+      readOnly: true
   resources:
     requests:
       cpu: 100m
@@ -82,6 +105,9 @@ resultsCache:
   allocatedMemory: 128
   allocatedCPU: 50m
 sidecar:
+  # Rules have one GitOps owner; no API-based ConfigMap/Secret discovery.
+  rules:
+    enabled: false
   image:
     registry: reg.yiannis.io
     repository: proxy-dockerhub/kiwigrid/k8s-sidecar
