@@ -80,11 +80,23 @@ alertmanager:
             send_resolved: false
             priority: '{{ if eq .CommonLabels.severity "critical" }}1{{ else }}0{{ end }}'
             title: '[Homelab security] {{ .CommonLabels.alertname }}'
-            message: >-
+            # Only selected labels and static explanations leave the cluster.
+            # Bound grouped detail to stay within Pushover's message limit.
+            message: |-
               Severity: {{ .CommonLabels.severity }}.
-              Detector namespace: {{ .CommonLabels.namespace }}.
+              Detector: {{ .CommonLabels.namespace }} (not the affected workload).
               Active rule/scenario groups: {{ len .Alerts.Firing }}.
-              Review local Grafana/CrowdSec details; this is not confirmation of compromise.
+              {{ range $i, $alert := .Alerts.Firing }}{{ if lt $i 3 }}
+              {{ if $alert.Labels.rule_name }}Rule: {{ printf "%.80s" $alert.Labels.rule_name }}
+              {{ else if $alert.Labels.reason }}Scenario: {{ printf "%.80s" $alert.Labels.reason }}
+              {{ else }}Event: {{ printf "%.80s" $alert.Labels.alertname }}
+              {{ end }}Alert started: {{ $alert.StartsAt | tz "Europe/Zurich" | date "2006-01-02 15:04:05 MST" }}
+              {{ if eq $alert.Labels.rule_name "Local Shell Spawned In Restricted Namespace" }}A shell ran in a restricted namespace. Check authorized maintenance.
+              {{ else if eq $alert.Labels.rule_name "Local Download Tool Executed In Restricted Namespace" }}A download/network tool ran in a restricted namespace. Check authorized maintenance.
+              {{ else if eq $alert.Labels.alertname "CrowdSecLocalBanActive" }}CrowdSec has an active local ban for this scenario.
+              {{ else }}Inspect local logs to establish the affected workload and context.
+              {{ end }}{{ end }}{{ end }}{{ if gt (len .Alerts.Firing) 3 }}Additional groups omitted; inspect local logs.
+              {{ end }}Alert start is not the event time. Review local logs; not proof of compromise.
             url: ''
             url_title: ''
   alertmanagerSpec:
