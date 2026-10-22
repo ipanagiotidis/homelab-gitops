@@ -112,7 +112,8 @@ alertmanager:
             # Explanations are static; the only exported annotation is a bounded number.
             message: |-
               Application: {{ .CommonLabels.app }}. Namespace: {{ .CommonLabels.namespace }}.
-              {{ if eq .CommonLabels.alertname "AuthentikFailedLoginBurst" }}At least 10 failed logins in 10 minutes. Check mistakes, stale credentials or abuse.
+              {{ if eq .CommonLabels.alertname "TESTHomelabLogPipeline" }}TEST ONLY: an approved one-shot Job emitted a synthetic marker. This checks Alloy, Loki and phone delivery; no authentication failure or security incident was generated.
+              {{ else if eq .CommonLabels.alertname "AuthentikFailedLoginBurst" }}At least 10 failed logins in 10 minutes. Check mistakes, stale credentials or abuse.
               {{ else if eq .CommonLabels.alertname "AuthentikSuspiciousRequestBurst" }}At least 5 explicit suspicious requests in 10 minutes. Review the local event cause.
               {{ else if eq .CommonLabels.alertname "AuthentikSensitiveConfigurationChanged" }}Identity access configuration changed within 15 minutes. Check authorized admin or blueprint activity.
               {{ else if eq .CommonLabels.alertname "AuthentikImpersonationStarted" }}An impersonation session started within 15 minutes. Confirm authorized administration.

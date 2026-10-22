@@ -101,3 +101,22 @@ data:
               summary: Repeated Argo CD permission denials
               description: At least 30 PermissionDenied server calls in 10 minutes. Check RBAC and authorized clients before suspecting abuse. Excludes routine expired-session Unauthenticated responses and IdP availability failures.
               event_count: '{{ printf "%.0f" $value }}'
+      # Temporary, separately counted acceptance group. Remove after owner testing.
+      - name: homelab.pipeline-test
+        interval: 1m
+        rules:
+          - alert: TESTHomelabLogPipeline
+            expr: |
+              sum(count_over_time({cluster="homelab",namespace="monitoring",app="homelab-log-pipeline-test",job="monitoring/test-log-emitter",container="test-log-emitter",pod=~"homelab-log-pipeline-test-20261022-01-[a-z0-9]{5}"}
+                |~ "^TEST homelab-log-pipeline run=20261022-01 synthetic=true no-auth-event=true$" [10m])) > 0
+            for: 1m
+            labels:
+              severity: warning
+              notification_class: security-event
+              detector: loki-ruler
+              namespace: monitoring
+              app: TEST-log-pipeline
+            annotations:
+              summary: TEST synthetic log pipeline acceptance
+              description: TEST only. A dedicated Job emitted a harmless marker, not an authentication or security event. Owner must confirm phone receipt separately.
+              event_count: '{{ printf "%.0f" $value }}'
