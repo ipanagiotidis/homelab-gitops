@@ -10,6 +10,17 @@ alertmanager:
       http_config:
         follow_redirects: false
     inhibit_rules:
+      # A cluster-wide delivery failure supersedes its matching instance warning.
+      - source_matchers:
+          - 'alertname="AlertmanagerClusterFailedToSendAlerts"'
+          - 'severity="critical"'
+          - 'namespace!=""'
+          - 'service!=""'
+          - 'integration!=""'
+        target_matchers:
+          - 'alertname="AlertmanagerFailedToSendAlerts"'
+          - 'severity="warning"'
+        equal: [namespace, service, integration]
       - source_matchers: ['severity="critical"']
         target_matchers: ['severity=~"warning|info"']
         equal: [namespace, alertname, instance]
@@ -75,6 +86,18 @@ alertmanager:
               Severity: {{ .CommonLabels.severity }}.
               Namespace: {{ .CommonLabels.namespace }}.
               Firing: {{ len .Alerts.Firing }}; resolved: {{ len .Alerts.Resolved }}.
+              {{ if or (eq .CommonLabels.alertname "AlertmanagerClusterFailedToSendAlerts") (eq .CommonLabels.alertname "AlertmanagerFailedToSendAlerts") }}
+              {{ if eq .CommonLabels.integration "webhook" }}
+              {{ if eq .Status "firing" }}Healthchecks heartbeat delivery is failing. Check outbound connectivity and Healthchecks availability. This does not mean Pushover delivery has failed.
+              {{ else }}Healthchecks heartbeat delivery alert has cleared. Verify heartbeat reception if Healthchecks still reports an outage.
+              {{ end }}
+              {{ else if eq .CommonLabels.integration "pushover" }}
+              {{ if eq .Status "firing" }}Pushover notification delivery is failing. Check outbound connectivity and Pushover availability; phone notifications may be delayed or missing.
+              {{ else }}Pushover delivery alert has cleared. Check for missed notifications locally.
+              {{ end }}
+              {{ else }}Alert-delivery integration status changed. Check affected receivers locally; this group may contain multiple integrations.
+              {{ end }}
+              {{ end }}
               Open Grafana for details; raw annotations and logs are not sent.
             # Explicitly empty: omission defaults to Alertmanager's own URL.
             url: ''
