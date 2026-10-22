@@ -108,7 +108,7 @@ data:
           - alert: TESTHomelabLogPipeline
             expr: |
               sum(count_over_time({cluster="homelab",namespace="monitoring",app="homelab-log-pipeline-test",job="monitoring/test-log-emitter",container="test-log-emitter",pod=~"homelab-log-pipeline-test-20261022-01-[a-z0-9]{5}"}
-                |~ "^TEST homelab-log-pipeline run=20261022-01 synthetic=true no-auth-event=true$" [10m])) > 0
+                |~ "^TEST homelab-log-pipeline run=20261022-01 synthetic=true no-auth-event=true\\r?\\n?$" [10m])) > 0
             for: 1m
             labels:
               severity: warning
