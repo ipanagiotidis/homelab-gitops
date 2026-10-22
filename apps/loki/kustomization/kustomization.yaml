@@ -4,5 +4,3 @@ kind: Kustomization
 resources:
   - ./application-security-rules.yaml
   - ./cilium-network-policy.yaml
-  # Cleanup stage 1: retain isolation until Argo prunes the completed test pod.
-  - ./validation/deny-all.yaml
