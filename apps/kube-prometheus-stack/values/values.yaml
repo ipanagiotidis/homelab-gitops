@@ -414,7 +414,11 @@ prometheus:
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:
-              storage: 20Gi  # Sized for ~30d retention with headroom on current ingestion
+              # Existing claim: local-path does not enforce this as a quota.
+              # Do not resize it; retention is budgeted against node 4's real disk.
+              storage: 20Gi
           storageClassName: "local-path"  # Specify your storage class
-    retention: "30d"
-    retentionSize: "12GiB"
+    # First limit reached wins; 60 days is a target, not guaranteed history.
+    retention: "60d"
+    # Conservative budget on the ~50 GiB backing filesystem; expand disk before raising.
+    retentionSize: "32GiB"

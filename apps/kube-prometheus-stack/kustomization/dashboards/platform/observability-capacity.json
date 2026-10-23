@@ -89,8 +89,9 @@
           "refId": "A"
         }
       ],
-      "title": "Prometheus Est. Daily Ingest",
-      "type": "stat"
+      "title": "Prometheus Compaction Writes / Day",
+      "type": "stat",
+      "description": "Compaction rewrites existing data. This is write activity, not new daily storage growth."
     },
     {
       "datasource": {
@@ -147,8 +148,9 @@
           "refId": "A"
         }
       ],
-      "title": "Loki Est. Daily Ingest",
-      "type": "stat"
+      "title": "Loki Raw Ingest / Day",
+      "type": "stat",
+      "description": "Uncompressed incoming log bytes, not compressed on-disk growth or a capacity forecast."
     },
     {
       "datasource": {
@@ -263,8 +265,9 @@
           "refId": "A"
         }
       ],
-      "title": "Prometheus Current Size",
-      "type": "stat"
+      "title": "Prometheus Stored Blocks",
+      "type": "stat",
+      "description": "TSDB blocks only; excludes WAL, head chunks and temporary compaction space."
     },
     {
       "collapsed": false,
@@ -330,12 +333,13 @@
             "type": "prometheus",
             "uid": "$datasource"
           },
-          "expr": "kube_persistentvolumeclaim_resource_requests_storage_bytes{namespace=\"monitoring\",persistentvolumeclaim=\"prometheus-kube-prometheus-stack-prometheus-db-prometheus-kube-prometheus-stack-prometheus-0\"}",
+          "expr": "homelab:monitoring_storage_size_bytes{namespace=\"monitoring\",app=\"prometheus\"}",
           "refId": "A"
         }
       ],
-      "title": "Prometheus Requested Capacity",
-      "type": "stat"
+      "title": "Prometheus Backing Filesystem Capacity",
+      "type": "stat",
+      "description": "Measured shared filesystem size, not a dedicated PVC allocation. Mapping is guarded by expected pod placement."
     },
     {
       "datasource": {
@@ -388,12 +392,13 @@
             "type": "prometheus",
             "uid": "$datasource"
           },
-          "expr": "kube_persistentvolumeclaim_resource_requests_storage_bytes{namespace=\"monitoring\",persistentvolumeclaim=\"storage-loki-0\"}",
+          "expr": "homelab:monitoring_storage_size_bytes{namespace=\"monitoring\",app=\"loki\"}",
           "refId": "A"
         }
       ],
-      "title": "Loki Requested Capacity",
-      "type": "stat"
+      "title": "Loki Backing Filesystem Capacity",
+      "type": "stat",
+      "description": "Loki currently shares node 2 system storage. This is the whole filesystem, not a PVC quota."
     },
     {
       "datasource": {
@@ -454,12 +459,13 @@
             "type": "prometheus",
             "uid": "$datasource"
           },
-          "expr": "clamp_min((sum(kube_persistentvolumeclaim_resource_requests_storage_bytes{namespace=\"monitoring\",persistentvolumeclaim=\"prometheus-kube-prometheus-stack-prometheus-db-prometheus-kube-prometheus-stack-prometheus-0\"}) - sum(prometheus_tsdb_storage_blocks_bytes)) / clamp_min(sum(rate(prometheus_tsdb_compaction_chunk_size_bytes_sum[6h])) * 86400, 1), 0)",
+          "expr": "(time() - min(prometheus_tsdb_lowest_timestamp_seconds{namespace=\"monitoring\",job=\"kube-prometheus-stack-prometheus\"})) / 86400",
           "refId": "A"
         }
       ],
-      "title": "Prometheus Est. Days to Fill",
-      "type": "stat"
+      "title": "Prometheus Available History",
+      "type": "stat",
+      "description": "Age of oldest stored sample. The 60-day target is constrained by the 32 GiB size limit; not every series has this much history."
     },
     {
       "datasource": {
@@ -481,15 +487,15 @@
               },
               {
                 "color": "orange",
-                "value": 14
+                "value": 10
               },
               {
                 "color": "green",
-                "value": 30
+                "value": 20
               }
             ]
           },
-          "unit": "d"
+          "unit": "percent"
         },
         "overrides": []
       },
@@ -520,12 +526,13 @@
             "type": "prometheus",
             "uid": "$datasource"
           },
-          "expr": "sum(kube_persistentvolumeclaim_resource_requests_storage_bytes{namespace=\"monitoring\",persistentvolumeclaim=\"storage-loki-0\"}) / (sum(rate(loki_distributor_bytes_received_total[2h])) * 86400)",
+          "expr": "100 * homelab:monitoring_storage_available_bytes{namespace=\"monitoring\",app=\"loki\"} / homelab:monitoring_storage_size_bytes{namespace=\"monitoring\",app=\"loki\"}",
           "refId": "A"
         }
       ],
-      "title": "Loki Est. Days to Fill",
-      "type": "stat"
+      "title": "Loki Backing Filesystem Free (%)",
+      "type": "stat",
+      "description": "Actual shared-filesystem headroom; includes all disk users, not only Loki."
     },
     {
       "datasource": {
@@ -586,11 +593,11 @@
             "type": "prometheus",
             "uid": "$datasource"
           },
-          "expr": "clamp_min(sum(kube_persistentvolumeclaim_resource_requests_storage_bytes{namespace=\"monitoring\",persistentvolumeclaim=\"prometheus-kube-prometheus-stack-prometheus-db-prometheus-kube-prometheus-stack-prometheus-0\"}) - sum(prometheus_tsdb_storage_blocks_bytes), 0)",
+          "expr": "homelab:monitoring_storage_available_bytes{namespace=\"monitoring\",app=\"prometheus\"}",
           "refId": "A"
         }
       ],
-      "title": "Prometheus Free Space Left",
+      "title": "Prometheus Backing Filesystem Free",
       "type": "stat"
     },
     {
@@ -652,11 +659,11 @@
             "type": "prometheus",
             "uid": "$datasource"
           },
-          "expr": "clamp_min(sum(kube_persistentvolumeclaim_resource_requests_storage_bytes{namespace=\"monitoring\",persistentvolumeclaim=\"storage-loki-0\"}) - (sum(rate(loki_distributor_bytes_received_total[2h])) * 86400 * 14), 0)",
+          "expr": "homelab:monitoring_storage_available_bytes{namespace=\"monitoring\",app=\"loki\"}",
           "refId": "A"
         }
       ],
-      "title": "Loki Free Space Left (14d est.)",
+      "title": "Loki Backing Filesystem Free",
       "type": "stat"
     }
   ],

@@ -14,7 +14,8 @@ loki:
     retention_enabled: true
     delete_request_store: filesystem
   limits_config:
-    retention_period: 336h
+    # 30 days for newly ingested logs; no size-based eviction on filesystem storage.
+    retention_period: 720h
   rulerConfig:
     storage:
       type: local

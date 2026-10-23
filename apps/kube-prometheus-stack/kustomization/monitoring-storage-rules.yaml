@@ -1,0 +1,78 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: homelab-monitoring-storage
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  groups:
+    - name: homelab.monitoring-storage
+      rules:
+        # Verified local-path backing filesystems, not PVC requests or quotas.
+        # Revalidate after storage migration. Pod-node guards deliberately make
+        # these series absent after relocation rather than report the wrong disk.
+        - record: homelab:monitoring_storage_available_bytes
+          expr: |
+            max by (instance, device, mountpoint) (
+              node_filesystem_avail_bytes{job="node-exporter",instance="192.168.88.117:9100",device="/dev/sdb1",mountpoint="/var/mnt/extra",fstype="xfs"}
+            ) and on () (kube_pod_info{namespace="monitoring",pod="prometheus-kube-prometheus-stack-prometheus-0",node="k8s-node-4"} == 1)
+          labels:
+            namespace: monitoring
+            app: prometheus
+        - record: homelab:monitoring_storage_size_bytes
+          expr: |
+            max by (instance, device, mountpoint) (
+              node_filesystem_size_bytes{job="node-exporter",instance="192.168.88.117:9100",device="/dev/sdb1",mountpoint="/var/mnt/extra",fstype="xfs"}
+            ) and on () (kube_pod_info{namespace="monitoring",pod="prometheus-kube-prometheus-stack-prometheus-0",node="k8s-node-4"} == 1)
+          labels:
+            namespace: monitoring
+            app: prometheus
+        - record: homelab:monitoring_storage_available_bytes
+          expr: |
+            max by (instance, device, mountpoint) (
+              node_filesystem_avail_bytes{job="node-exporter",instance="192.168.88.119:9100",device="/dev/sda6",mountpoint="/var",fstype="xfs"}
+            ) and on () (kube_pod_info{namespace="monitoring",pod="loki-0",node="k8s-node-2"} == 1)
+          labels:
+            namespace: monitoring
+            app: loki
+        - record: homelab:monitoring_storage_size_bytes
+          expr: |
+            max by (instance, device, mountpoint) (
+              node_filesystem_size_bytes{job="node-exporter",instance="192.168.88.119:9100",device="/dev/sda6",mountpoint="/var",fstype="xfs"}
+            ) and on () (kube_pod_info{namespace="monitoring",pod="loki-0",node="k8s-node-2"} == 1)
+          labels:
+            namespace: monitoring
+            app: loki
+        - alert: MonitoringStorageHeadroomLow
+          expr: |
+            homelab:monitoring_storage_available_bytes
+            / homelab:monitoring_storage_size_bytes < 0.20
+          for: 15m
+          labels:
+            severity: warning
+          annotations:
+            summary: Monitoring backing filesystem has less than 20% free
+            description: '{{ $labels.app }} shares {{ $labels.instance }} {{ $labels.mountpoint }} with other data. Check disk growth and retention; local-path PVC sizes are not enforced quotas. Do not delete a live PVC.'
+        - alert: MonitoringStorageHeadroomLow
+          expr: |
+            homelab:monitoring_storage_available_bytes
+            / homelab:monitoring_storage_size_bytes < 0.10
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Monitoring backing filesystem has less than 10% free
+            description: '{{ $labels.app }} backing filesystem {{ $labels.instance }} {{ $labels.mountpoint }} risks filling. Check storage immediately; Loki does not evict logs on low disk space. Do not delete a live PVC.'
+        - alert: MonitoringStorageMetricsMissing
+          expr: |
+            absent(homelab:monitoring_storage_available_bytes{namespace="monitoring",app="prometheus"})
+            or absent(homelab:monitoring_storage_available_bytes{namespace="monitoring",app="loki"})
+            or absent(homelab:monitoring_storage_size_bytes{namespace="monitoring",app="prometheus"})
+            or absent(homelab:monitoring_storage_size_bytes{namespace="monitoring",app="loki"})
+          for: 15m
+          labels:
+            severity: warning
+          annotations:
+            summary: Monitoring backing filesystem metrics are missing
+            description: 'Cannot verify storage headroom for {{ $labels.app }}. Check node-exporter, kube-state-metrics and pod placement; revalidate the pinned filesystem mapping after any migration.'
