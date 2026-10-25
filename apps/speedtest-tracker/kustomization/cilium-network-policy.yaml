@@ -55,6 +55,13 @@ spec:
     - ports:
       - port: "443"
         protocol: TCP
+  # The dashboard synchronously checks the latest release through GitHub's API.
+  - toFQDNs:
+    - matchName: api.github.com
+    toPorts:
+    - ports:
+      - port: "443"
+        protocol: TCP
   # Pinned Swiss Ookla servers from SPEEDTEST_SERVERS.
   - toFQDNs:
     - matchName: speedtest-ls.wingo.ch

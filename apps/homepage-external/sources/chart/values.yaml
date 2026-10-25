@@ -49,11 +49,10 @@ controllers:
           HOMEPAGE_ALLOWED_HOSTS: dashboard.yiannis.io
         resources:
           requests:
-            cpu: 10m
-            memory: 10Mi
-          limits:
-            cpu: 250m
+            cpu: 25m
             memory: 128Mi
+          limits:
+            memory: 512Mi
         securityContext:
           runAsUser: 1000
           runAsGroup: 1000
@@ -68,28 +67,40 @@ controllers:
             enabled: true
             custom: true
             spec:
-              tcpSocket:
+              httpGet:
+                path: /api/healthcheck
                 port: 3000
+                httpHeaders:
+                  - name: Host
+                    value: dashboard.yiannis.io
               periodSeconds: 10
-              timeoutSeconds: 1
+              timeoutSeconds: 5
               failureThreshold: 3
           readiness:
             enabled: true
             custom: true
             spec:
-              tcpSocket:
+              httpGet:
+                path: /api/healthcheck
                 port: 3000
+                httpHeaders:
+                  - name: Host
+                    value: dashboard.yiannis.io
               periodSeconds: 10
-              timeoutSeconds: 1
+              timeoutSeconds: 5
               failureThreshold: 3
           startup:
             enabled: true
             custom: true
             spec:
-              tcpSocket:
+              httpGet:
+                path: /api/healthcheck
                 port: 3000
+                httpHeaders:
+                  - name: Host
+                    value: dashboard.yiannis.io
               periodSeconds: 5
-              timeoutSeconds: 1
+              timeoutSeconds: 3
               failureThreshold: 30
 
 configMaps:
