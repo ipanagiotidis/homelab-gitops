@@ -32,8 +32,8 @@ controllers:
       speedtest-tracker:
         image:
           repository: reg.yiannis.io/proxy-lscr/linuxserver/speedtest-tracker
-          # pinned release: v1.15.0-ls175
-          digest: sha256:1eeed2307699c083407bd4c1eb86f14d5179f9e1cd960f57d4cbab6f1f8b8a42
+          # pinned release: v1.15.1-ls178 (PHP 8.5.12, updated CA trust)
+          digest: sha256:8d3c2826b708c18be7fb46c1afebc6bb3b1ab7c519473df1be89f5ecaa8bb31f
         env:
           PUID: "1000"
           PGID: "1000"
@@ -42,6 +42,8 @@ controllers:
           APP_URL: "https://speed.yiannis.io"
           ASSET_URL: "https://speed.yiannis.io"
           DISPLAY_TIMEZONE: "Europe/Zurich"
+          # Preserve image/local settings, then load the read-only security override.
+          PHP_INI_SCAN_DIR: ":/config/php:/etc/php-security"
           DB_CONNECTION: sqlite
           SPEEDTEST_SCHEDULE: "17 */4 * * *"
           SPEEDTEST_SERVERS: "42082,65487,68506,41691,16522"
@@ -132,7 +134,24 @@ ingress:
               identifier: speedtest-tracker
               port: http
 
+configMaps:
+  php-security:
+    enabled: true
+    data:
+      zz-security.ini: |
+        ; PHP's October 23, 2026 advisory recommends disabling session upload progress.
+        session.upload_progress.enabled = 0
+
 persistence:
+  php-security:
+    enabled: true
+    type: configMap
+    identifier: php-security
+    advancedMounts:
+      speedtest-tracker:
+        speedtest-tracker:
+          - path: /etc/php-security
+            readOnly: true
   config:
     enabled: true
     type: persistentVolumeClaim
