@@ -3,7 +3,8 @@ kind: Deployment
 metadata:
   name: cloudflared
 spec:
-  replicas: 2
+  # Public tunnel paused intentionally. Restore 2 to re-enable public access.
+  replicas: 0
   revisionHistoryLimit: 2
   selector:
     matchLabels:
