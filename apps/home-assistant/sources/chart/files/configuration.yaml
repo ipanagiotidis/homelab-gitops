@@ -25,11 +25,7 @@ recorder:
   auto_purge: true
   auto_repack: true
   commit_interval: 5
-http:
-  use_x_forwarded_for: true
-  # CNP restricts pod callers to Traefik; optional monitoring needs a separate grant.
-  trusted_proxies:
-    - 10.245.0.0/16
+# HTTP proxy settings are UI-managed and persisted in /config/.storage/http.
 logger:
   default: warning
 prometheus:

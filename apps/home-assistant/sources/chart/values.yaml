@@ -19,7 +19,7 @@ defaultPodOptions:
     seccompProfile:
       type: RuntimeDefault
 
-# Do not activate Zigbee2MQTT until hardware IP, network key, and CNP are ready.
+# Owner-confirmed Ethernet coordinator and DHCP reservation; key is in Infisical.
 hardware:
   coordinatorAddress: "192.168.88.73"
   coordinatorPort: 6638
@@ -152,7 +152,7 @@ controllers:
               periodSeconds: 10
           liveness: *mqttProbe
   zigbee2mqtt:
-    replicas: 0
+    replicas: 1
     strategy: Recreate
     annotations:
       secret.reloader.stakater.com/reload: home-assistant-secrets,home-assistant-zigbee-network,home-assistant-mqtt-tls
