@@ -6,7 +6,7 @@ import stat
 import sys
 import zipfile
 
-EXPECTED = "e5badaaacaa63cfd6fe733924a05e76d75058836190398598fb24de57cd47ccd"
+EXPECTED = "ff987029cf5888bb922ba3374e758aa44824d28944a5b4e5a1515965e7dddccb"
 archive = Path(sys.argv[1])
 target = Path(sys.argv[2]).resolve()
 if hashlib.sha256(archive.read_bytes()).hexdigest() != EXPECTED:

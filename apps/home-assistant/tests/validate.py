@@ -67,7 +67,8 @@ class Manifests(unittest.TestCase):
 
     def test_hardware_gate(self):
         self.assertEqual(self.deployments["home-assistant-zigbee2mqtt"]["spec"]["replicas"], 0)
-        failed = render("--set", "controllers.zigbee2mqtt.replicas=1", check=False)
+        failed = render("--set", "controllers.zigbee2mqtt.replicas=1",
+                        "--set-string", "hardware.coordinatorAddress=", check=False)
         self.assertNotEqual(failed.returncode, 0)
         self.assertIn("Reserve the coordinator", failed.stderr)
         for address in ("192.168.88.0/24", "999.1.1.1"):
@@ -79,6 +80,13 @@ class Manifests(unittest.TestCase):
                                      "--set-string", "hardware.coordinatorAddress=192.0.2.10").stdout)
         cnp = next(d for d in candidate if d["metadata"]["name"] == "home-assistant-zigbee-coordinator")
         self.assertEqual(cnp["spec"]["egress"][0]["toCIDR"], ["192.0.2.10/32"])
+        configured = documents(render("--set", "controllers.zigbee2mqtt.replicas=1").stdout)
+        cnp = next(d for d in configured if d["metadata"]["name"] == "home-assistant-zigbee-coordinator")
+        self.assertEqual(cnp["spec"]["egress"][0]["toCIDR"], ["192.168.88.73/32"])
+        self.assertEqual(cnp["spec"]["egress"][0]["toPorts"][0]["ports"],
+                         [{"port": "6638", "protocol": "TCP"}])
+        self.assertFalse(any(d["metadata"]["name"] == "home-assistant-zigbee-network"
+                             for d in self.rendered))
 
     def test_sso_and_history(self):
         self.assertEqual(self.config["homeassistant"]["auth_providers"], [{"type": "homeassistant"}])
@@ -93,18 +101,44 @@ class Manifests(unittest.TestCase):
         self.assertTrue(self.config["prometheus"]["requires_auth"])
 
     def test_vendored_archive(self):
-        archive = CHART / "files/vendor/hass-oidc-auth-v1.2.1.zip"
-        expected = "e5badaaacaa63cfd6fe733924a05e76d75058836190398598fb24de57cd47ccd"
+        archive = CHART / "files/vendor/hass-oidc-auth-v1.3.0.zip"
+        expected = "ff987029cf5888bb922ba3374e758aa44824d28944a5b4e5a1515965e7dddccb"
         self.assertEqual(hashlib.sha256(archive.read_bytes()).hexdigest(), expected)
         cm = next(d for d in self.rendered if d["metadata"]["name"] == "home-assistant-sso")
         self.assertEqual(base64.b64decode(cm["binaryData"]["plugin.zip"]), archive.read_bytes())
         with zipfile.ZipFile(archive) as bundle:
-            self.assertEqual(json.loads(bundle.read("manifest.json"))["version"], "1.2.1")
+            self.assertEqual(json.loads(bundle.read("manifest.json"))["version"], "1.3.0")
             for name in bundle.namelist():
                 self.assertFalse(name.startswith("/"))
                 self.assertNotIn("..", Path(name).parts)
         self.assertTrue((CHART / "files/vendor/hass-oidc-auth-LICENSE.md").is_file())
         self.assertFalse(list((CHART / "files/vendor").glob("*.whl")))
+        self.assertIn(expected, (CHART / "files/install_plugin.py").read_text())
+
+    def test_shared_activation_dependencies(self):
+        root_apps = documents(command("kubectl", "kustomize", ".").stdout)
+        names = {d["metadata"]["name"] for d in root_apps if d["kind"] == "Application"}
+        self.assertTrue({"home-assistant", "home-assistant-db"}.issubset(names))
+        gateway = documents((ROOT / "apps/traefik/kustomization/gateway-private.yaml").read_text())[0]
+        listener = next(l for l in gateway["spec"]["listeners"] if l["name"] == "websecure-home")
+        self.assertEqual(listener["hostname"], "home.yiannis.io")
+        self.assertEqual(listener["protocol"], "HTTPS")
+        policy = documents((ROOT / "apps/traefik/kustomization/cilium-network-policy-egress-phase1.yaml").read_text())[0]
+        rules = [e for e in policy["spec"]["egress"] if any(
+            target.get("matchLabels", {}).get("k8s:io.kubernetes.pod.namespace") == "home-assistant"
+            for target in e.get("toEndpoints", []))]
+        self.assertEqual(len(rules), 1)
+        self.assertEqual(rules[0]["toPorts"], [{"ports": [{"port": "8123", "protocol": "TCP"}]}])
+        labels = self.deployments["home-assistant"]["spec"]["template"]["metadata"]["labels"]
+        for key, value in rules[0]["toEndpoints"][0]["matchLabels"].items():
+            if key != "k8s:io.kubernetes.pod.namespace":
+                self.assertEqual(labels[key], value)
+        operator = documents((ROOT / "apps/cloudnative-pg/kustomization/cilium-network-policy.yaml").read_text())[0]
+        self.assertTrue(any("home-assistant" in match.get("values", [])
+                            for e in operator["spec"]["egress"]
+                            for endpoint in e.get("toEndpoints", [])
+                            for match in endpoint.get("matchExpressions", [])
+                            if match["key"] == "k8s:io.kubernetes.pod.namespace"))
 
     def test_services_and_monitoring(self):
         services = [d for d in self.rendered if d["kind"] == "Service"]

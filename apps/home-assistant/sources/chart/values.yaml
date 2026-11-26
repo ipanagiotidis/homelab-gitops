@@ -21,7 +21,7 @@ defaultPodOptions:
 
 # Do not activate Zigbee2MQTT until hardware IP, network key, and CNP are ready.
 hardware:
-  coordinatorAddress: ""
+  coordinatorAddress: "192.168.88.73"
   coordinatorPort: 6638
 
 # Requires a separate HA long-lived token created after onboarding.

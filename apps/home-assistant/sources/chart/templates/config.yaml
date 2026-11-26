@@ -15,7 +15,7 @@ kind: ConfigMap
 metadata:
   name: home-assistant-sso
 binaryData:
-  plugin.zip: {{ .Files.Get "files/vendor/hass-oidc-auth-v1.2.1.zip" | b64enc | quote }}
+  plugin.zip: {{ .Files.Get "files/vendor/hass-oidc-auth-v1.3.0.zip" | b64enc | quote }}
 ---
 apiVersion: v1
 kind: ConfigMap

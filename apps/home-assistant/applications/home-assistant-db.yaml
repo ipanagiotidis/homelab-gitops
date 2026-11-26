@@ -1,4 +1,4 @@
-# Prepared only: registration in the root Kustomization is paused until hardware arrives.
+# Manual rollout after the database password is available in Infisical.
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
