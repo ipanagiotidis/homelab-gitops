@@ -4,8 +4,11 @@ metadata:
   name: home-assistant-default-deny
 spec:
   endpointSelector: {}
-  ingress: []
-  egress: []
+  # Cilium needs a rule entry; empty lists are rejected as having no rules.
+  ingress:
+    - {}
+  egress:
+    - {}
 ---
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy

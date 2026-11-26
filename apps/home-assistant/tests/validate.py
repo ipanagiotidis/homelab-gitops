@@ -168,7 +168,8 @@ class Manifests(unittest.TestCase):
         self.assertEqual(route["spec"]["hostnames"], ["home.yiannis.io"])
         self.assertNotIn("filters", route["spec"]["rules"][0])
         deny = next(d for d in self.database if d["metadata"]["name"] == "home-assistant-default-deny")
-        self.assertEqual(deny["spec"], {"endpointSelector": {}, "ingress": [], "egress": []})
+        # CNP default-deny uses empty rule objects, not empty rule lists.
+        self.assertEqual(deny["spec"], {"endpointSelector": {}, "ingress": [{}], "egress": [{}]})
         for d in self.resources + self.database:
             if d["kind"] == "CiliumNetworkPolicy":
                 self.assertNotIn('"world"', json.dumps(d))
