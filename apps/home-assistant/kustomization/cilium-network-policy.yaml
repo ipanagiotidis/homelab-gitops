@@ -49,6 +49,12 @@ spec:
       toPorts:
         - ports:
             - {port: "8883", protocol: TCP}
+    # Apollo MSR-2 native ESPHome API; owner-confirmed DHCP reservation.
+    - toCIDR:
+        - 192.168.88.72/32
+      toPorts:
+        - ports:
+            - {port: "6053", protocol: TCP}
     # SNI limits TLS handshakes, not encrypted HTTP Host headers. This is
     # defense in depth, not full virtual-host isolation on shared Traefik.
     - toEndpoints:
