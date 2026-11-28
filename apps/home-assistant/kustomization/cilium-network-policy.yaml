@@ -49,6 +49,12 @@ spec:
       toPorts:
         - ports:
             - {port: "8883", protocol: TCP}
+    # SMLIGHT integration management API; separate from Zigbee2MQTT TCP6638.
+    - toCIDR:
+        - 192.168.88.73/32
+      toPorts:
+        - ports:
+            - {port: "80", protocol: TCP}
     # Apollo MSR-2 native ESPHome API; owner-confirmed DHCP reservation.
     - toCIDR:
         - 192.168.88.72/32
